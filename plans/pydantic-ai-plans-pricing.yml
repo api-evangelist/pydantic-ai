@@ -1,0 +1,170 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+provider: PydanticAI
+providerId: pydantic-ai
+created: '2026-06-12'
+modified: '2026-06-12'
+reconciled: true
+note: >
+  PydanticAI itself is a free open-source framework (Apache 2.0 / MIT licensed).
+  Pricing below applies to Pydantic Logfire, the companion observability and AI
+  Gateway platform from Pydantic. The framework can be used independently of
+  Logfire with any OpenTelemetry-compatible backend or no observability platform.
+plans:
+  - name: Personal
+    type: free
+    description: >
+      Free tier for individual developers and early-stage side projects. Includes
+      full access to Logfire observability, AI Gateway with 3 provider
+      credentials (0% markup on BYOK), and 10M included records per month.
+    price:
+      amount: 0
+      currency: USD
+      interval: month
+    quotas:
+      - metric: logs_spans_metrics
+        limit: 10000000
+        timeFrame: month
+        type: quota
+      - metric: seats
+        limit: 1
+        type: boolean
+        note: 1 admin seat
+      - metric: guest_seats
+        limit: 2
+        type: boolean
+        note: 2 read-only guests
+      - metric: projects
+        limit: 3
+        type: boolean
+      - metric: data_retention_days
+        limit: 30
+        type: boolean
+      - metric: ai_gateway_credentials
+        limit: 3
+        type: boolean
+        note: BYOK credentials; built-in providers at 5% markup
+
+  - name: Team
+    type: paid
+    description: >
+      For small teams building AI applications. Includes 5 seats, priority
+      observability features, overage pricing for records beyond the included
+      10M, and spend cap controls.
+    price:
+      amount: 49
+      currency: USD
+      interval: month
+    quotas:
+      - metric: logs_spans_metrics
+        limit: 10000000
+        timeFrame: month
+        type: quota
+      - metric: logs_spans_metrics_overage
+        limit: 1000000
+        price: 2.00
+        currency: USD
+        type: metered
+        note: $2 per million records beyond included 10M
+      - metric: seats
+        limit: 5
+        type: boolean
+        note: Additional seats at $25/seat/month
+      - metric: guest_seats
+        limit: 10
+        type: boolean
+      - metric: projects
+        limit: 5
+        type: boolean
+      - metric: data_retention_days
+        limit: 30
+        type: boolean
+      - metric: spend_cap
+        limit: 1
+        type: boolean
+
+  - name: Growth
+    type: paid
+    description: >
+      For growing teams with unlimited seats and projects, up to 90-day data
+      retention, self-service GDPR deletion, public API access, and priority
+      support. AI Gateway allows unlimited BYOK credentials at 0% markup and
+      built-in providers at 3% markup.
+    price:
+      amount: 249
+      currency: USD
+      interval: month
+    quotas:
+      - metric: logs_spans_metrics
+        limit: 10000000
+        timeFrame: month
+        type: quota
+      - metric: logs_spans_metrics_overage
+        limit: 1000000
+        price: 2.00
+        currency: USD
+        type: metered
+        note: $2 per million records beyond included 10M
+      - metric: seats
+        limit: -1
+        type: boolean
+        note: Unlimited seats
+      - metric: guest_seats
+        limit: -1
+        type: boolean
+        note: Unlimited guests
+      - metric: projects
+        limit: -1
+        type: boolean
+        note: Unlimited projects
+      - metric: data_retention_days
+        limit: 90
+        type: boolean
+      - metric: ai_gateway_credentials
+        limit: -1
+        type: boolean
+        note: Unlimited BYOK at 0%, built-in providers at 3% markup
+      - metric: public_api
+        limit: 1
+        type: boolean
+      - metric: priority_support
+        limit: 1
+        type: boolean
+      - metric: gdpr_deletion
+        limit: 1
+        type: boolean
+
+  - name: Enterprise
+    type: enterprise
+    description: >
+      Custom enterprise contracts available in three deployment models: Cloud
+      (SLA-backed fully managed), Dedicated (single-tenant with CMEK), and
+      Self-hosted (Kubernetes, on-premise). All enterprise tiers include
+      unlimited seats, SSO, audit logs, and custom compliance agreements.
+    price:
+      amount: 0
+      currency: USD
+      interval: month
+      note: Custom pricing — contact Pydantic sales
+    quotas:
+      - metric: seats
+        limit: -1
+        type: boolean
+        note: Unlimited
+      - metric: projects
+        limit: -1
+        type: boolean
+        note: Unlimited
+      - metric: data_retention_days
+        limit: -1
+        type: boolean
+        note: Custom retention
+      - metric: sso
+        limit: 1
+        type: boolean
+      - metric: audit_logs
+        limit: 1
+        type: boolean
+      - metric: sla
+        limit: 1
+        type: boolean

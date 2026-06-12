@@ -1,0 +1,77 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+provider: PydanticAI
+providerId: pydantic-ai
+created: '2026-06-12'
+modified: '2026-06-12'
+note: >
+  PydanticAI is a client-side open-source framework that routes requests to
+  upstream model providers (OpenAI, Anthropic, Google, etc.). PydanticAI itself
+  does not impose rate limits — rate limiting is enforced by the chosen model
+  provider. When using Pydantic Logfire for observability, ingestion rate limits
+  apply to span/log/metric records as described below. The Pydantic AI Gateway
+  proxies model provider calls and may enforce gateway-level limits in addition
+  to upstream provider limits.
+headers:
+  retryAfter: Retry-After
+responseCodes:
+  throttled: 429
+  unauthorized: 401
+  forbidden: 403
+limits:
+  - name: Logfire Personal Plan Monthly Records
+    scope: account
+    metric: logs_spans_metrics
+    limit: 10000000
+    timeFrame: month
+    plan: Personal
+    note: Hard cap; upgrade to Team or Growth to get overage billing
+  - name: Logfire Team Plan Included Records
+    scope: account
+    metric: logs_spans_metrics
+    limit: 10000000
+    timeFrame: month
+    plan: Team
+    note: Additional records billed at $2/M; configurable spend cap available
+  - name: Logfire Growth Plan Included Records
+    scope: account
+    metric: logs_spans_metrics
+    limit: 10000000
+    timeFrame: month
+    plan: Growth
+    note: Additional records billed at $2/M
+  - name: Logfire Personal AI Gateway Credentials
+    scope: account
+    metric: ai_gateway_provider_credentials
+    limit: 3
+    timeFrame: static
+    plan: Personal
+    note: BYOK credentials; built-in providers at 5% markup
+  - name: Logfire Growth AI Gateway Credentials
+    scope: account
+    metric: ai_gateway_provider_credentials
+    limit: -1
+    timeFrame: static
+    plan: Growth
+    note: Unlimited BYOK at 0% markup; built-in providers at 3% markup
+  - name: Upstream Model Provider Rate Limits
+    scope: request
+    metric: requests
+    limit: -1
+    timeFrame: varies
+    note: >
+      Actual per-request rate limits are imposed by the upstream model provider
+      (e.g., OpenAI, Anthropic, Google). PydanticAI propagates these errors and
+      will return a 429-equivalent exception. Use exponential backoff and
+      configure retries at the Agent level with model_settings or custom retry
+      logic.
+retryGuidance:
+  strategy: exponential_backoff
+  initialDelayMs: 1000
+  maxDelayMs: 60000
+  maxAttempts: 5
+  note: >
+    PydanticAI's Agent loop has built-in retry support for tool call failures
+    and model validation retries. For Logfire API 429 responses, honor the
+    Retry-After header and implement client-side back-pressure before retrying
+    span ingestion.

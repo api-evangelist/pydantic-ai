@@ -1,0 +1,113 @@
+aid: pydantic-ai
+name: PydanticAI
+description: >
+  PydanticAI is an open-source, model-agnostic Python agent framework built by
+  the Pydantic team, designed to bring the ergonomic, type-safe design
+  philosophy of FastAPI to production-grade generative AI application
+  development. It provides structured outputs, dependency injection, and
+  first-class support for leading model providers including OpenAI, Anthropic,
+  Google Gemini, xAI, AWS Bedrock, Cohere, Mistral, Groq, and many more. The
+  framework integrates seamlessly with Pydantic Logfire for OpenTelemetry-based
+  observability, and includes pydantic-graph for complex agentic workflows,
+  pydantic-evals for systematic agent evaluation, and clai for a CLI chat
+  interface. PydanticAI is maintained by Pydantic, a London-based developer
+  tooling company backed by Sequoia Capital, and forms a core part of their
+  end-to-end AI engineering stack.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - AI
+  - Agents
+  - Python
+  - LLM
+  - Type Safety
+  - Structured Outputs
+  - Dependency Injection
+  - OpenAI
+  - Anthropic
+  - Gemini
+  - Observability
+  - Framework
+url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/apis.yml
+created: '2026-06-12'
+modified: '2026-06-12'
+specificationVersion: '0.19'
+apis:
+  - aid: pydantic-ai:pydantic-ai-agent-framework
+    name: PydanticAI Agent Framework
+    description: >
+      The core PydanticAI Python agent framework providing the Agent class,
+      model provider integrations, tool registration, structured output
+      validation, dependency injection, streaming, and durable execution
+      capabilities for building production-grade GenAI applications.
+    humanURL: https://pydantic.dev/docs/ai/overview/
+    baseURL: https://pydantic.dev
+    tags:
+      - AI Agents
+      - Python
+      - LLM
+      - Type Safety
+    properties:
+      - type: Documentation
+        url: https://pydantic.dev/docs/ai/overview/
+      - type: APIReference
+        url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+      - type: GettingStarted
+        url: https://pydantic.dev/docs/ai/overview/install/
+      - type: ModelProviders
+        url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - aid: pydantic-ai:pydantic-logfire
+    name: Pydantic Logfire
+    description: >
+      Pydantic Logfire is an OpenTelemetry-based observability platform with
+      purpose-built features for LLM applications, including conversation
+      panels, token tracking, cost monitoring, tool call inspection, and
+      SQL-queryable production data. It also provides an AI Gateway for
+      routing and FinOps management of model provider calls.
+    humanURL: https://pydantic.dev/docs/logfire/
+    baseURL: https://logfire.pydantic.dev
+    tags:
+      - Observability
+      - OpenTelemetry
+      - LLM
+      - AI Gateway
+      - FinOps
+    properties:
+      - type: Documentation
+        url: https://pydantic.dev/docs/logfire/
+      - type: Pricing
+        url: https://pydantic.dev/pricing
+      - type: StatusPage
+        url: https://logfirestatus.pydantic.dev/
+common:
+  - type: Website
+    url: https://pydantic.dev/
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: GitHubOrganization
+    url: https://github.com/pydantic
+  - type: GitHubRepository
+    url: https://github.com/pydantic/pydantic-ai
+  - type: Blog
+    url: https://pydantic.dev/articles
+  - type: Changelog
+    url: https://pydantic.dev/docs/ai/changelog/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/pydantic
+  - type: X
+    url: https://x.com/pydantic
+  - type: PyPI
+    url: https://pypi.org/project/pydantic-ai/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/plans/pydantic-ai-plans-pricing.yml
+  - type: RateLimits
+    url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/rate-limits/pydantic-ai-rate-limits.yml
+  - type: FinOps
+    url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/finops/pydantic-ai-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

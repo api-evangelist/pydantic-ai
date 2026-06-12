@@ -1,0 +1,126 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+provider: PydanticAI
+providerId: pydantic-ai
+created: '2026-06-12'
+modified: '2026-06-12'
+note: >
+  PydanticAI is a free open-source framework; FinOps considerations apply to
+  two cost surfaces: (1) Pydantic Logfire observability platform usage, and
+  (2) upstream model provider API costs (OpenAI, Anthropic, Google, etc.)
+  which are routed through PydanticAI agents. The Pydantic AI Gateway provides
+  built-in cost tracking and routing to manage model provider spend.
+billingModel:
+  type: hybrid
+  description: >
+    Logfire platform charges per-span (not per-host), with a generous free
+    tier of 10M records/month. Overage is metered at $2 per million additional
+    records. Upstream model provider costs are separate and billed directly by
+    each provider or through the AI Gateway using BYOK credentials.
+  components:
+    - name: Logfire Platform
+      model: subscription_plus_metered
+      baseUnit: log/span/metric record
+      includedUnits: 10000000
+      includedUnitTimeFrame: month
+      overageRate: 2.00
+      overageCurrency: USD
+      overageUnit: 1000000 records
+    - name: AI Gateway (BYOK)
+      model: passthrough
+      markup: 0
+      note: BYOK credentials on Growth plan; 0% markup on pass-through to provider
+    - name: AI Gateway (Built-in Providers)
+      model: metered_markup
+      markupPersonal: 5
+      markupTeamGrowth: 3
+      markupUnit: percent
+      note: Pydantic proxies requests to built-in providers and adds a percentage markup
+    - name: Upstream Model Provider Costs
+      model: external
+      note: >
+        Costs for OpenAI, Anthropic, Google, Groq, Cohere, Mistral, etc. are
+        billed directly by those providers. PydanticAI does not mark up these
+        costs when using BYOK credentials; Logfire traces include token counts
+        and cost estimates per call.
+focusColumns:
+  - BilledCost
+  - UsageQuantity
+  - UsageUnit
+  - ResourceId
+  - ServiceCategory
+  - ServiceName
+  - SkuId
+  - SubAccountId
+  - Tags
+meters:
+  - name: logfire_records
+    unit: records
+    description: Total logs, spans, and metrics ingested into Logfire per month
+    granularity: daily
+    aggregation: sum
+    dimensions:
+      - project_id
+      - region
+      - record_type
+  - name: ai_gateway_requests
+    unit: requests
+    description: Model provider requests routed through the Pydantic AI Gateway
+    granularity: hourly
+    aggregation: sum
+    dimensions:
+      - provider
+      - model
+      - credential_type
+  - name: llm_tokens_input
+    unit: tokens
+    description: Input tokens consumed across model provider calls traced by Logfire
+    granularity: daily
+    aggregation: sum
+    dimensions:
+      - provider
+      - model
+      - agent_id
+  - name: llm_tokens_output
+    unit: tokens
+    description: Output tokens generated across model provider calls traced by Logfire
+    granularity: daily
+    aggregation: sum
+    dimensions:
+      - provider
+      - model
+      - agent_id
+  - name: llm_estimated_cost_usd
+    unit: USD
+    description: Estimated cost of upstream model calls as reported by Logfire cost monitoring
+    granularity: daily
+    aggregation: sum
+    dimensions:
+      - provider
+      - model
+principles:
+  - name: Visibility
+    description: >
+      Pydantic Logfire provides per-request token tracking, cost monitoring,
+      and conversation-level trace panels. All observability data is queryable
+      via PostgreSQL-compatible SQL, enabling ad hoc cost attribution without
+      predefined dashboards. Use structured tags on agent runs and tool calls
+      to enable cost attribution by team, product feature, or customer.
+    actions:
+      - Enable Logfire integration in PydanticAI agents using logfire.instrument_pydantic_ai()
+      - Tag agent runs with metadata (user_id, feature, environment) for cost attribution
+      - Query span data via Logfire SQL to compute per-model and per-feature costs
+      - Export OpenTelemetry traces to third-party FinOps tools if needed
+  - name: Optimization
+    description: >
+      Reduce costs by selecting the most cost-effective model for each task,
+      using the AI Gateway for BYOK credentials to avoid markup, caching
+      repeated outputs, and setting spend caps on Logfire plans. PydanticAI's
+      model-agnostic design makes it easy to switch or A/B test models.
+    actions:
+      - Use BYOK credentials via the AI Gateway to eliminate provider markup
+      - Configure a spend cap on Team/Growth plans to prevent billing surprises
+      - Route simpler tasks to lower-cost models using conditional model selection
+      - Use pydantic-evals to benchmark cost vs. quality trade-offs before production
+      - Cache tool results and agent outputs where deterministic responses are acceptable
+      - Monitor token usage trends in Logfire to identify unexpectedly expensive agents
