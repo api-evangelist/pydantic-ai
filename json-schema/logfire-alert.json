@@ -1,0 +1,135 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://pydantic.dev/schemas/AlertRead",
+  "title": "AlertRead",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+    },
+    "organization_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Organization Id"
+    },
+    "project_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Project Id"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+    },
+    "updated_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Updated At"
+    },
+    "created_by_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Created By Name"
+    },
+    "updated_by_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Updated By Name"
+    },
+    "name": {
+      "type": "string",
+      "title": "Name"
+    },
+    "description": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Description"
+    },
+    "query": {
+      "type": "string",
+      "title": "Query"
+    },
+    "time_window": {
+      "type": "string",
+      "format": "duration",
+      "title": "Time Window"
+    },
+    "frequency": {
+      "type": "string",
+      "format": "duration",
+      "title": "Frequency"
+    },
+    "watermark": {
+      "type": "string",
+      "format": "duration",
+      "title": "Watermark"
+    },
+    "channels": {
+      "items": {
+        "$ref": "#/components/schemas/AlertChannelRead"
+      },
+      "type": "array",
+      "title": "Channels"
+    },
+    "notify_when": {
+      "type": "string",
+      "enum": [
+        "has_matches",
+        "has_matches_changed",
+        "matches_changed",
+        "starts_having_matches"
+      ],
+      "title": "Notify When"
+    },
+    "active": {
+      "type": "boolean",
+      "title": "Active"
+    }
+  },
+  "type": "object",
+  "required": [
+    "id",
+    "organization_id",
+    "project_id",
+    "created_at",
+    "updated_at",
+    "created_by_name",
+    "updated_by_name",
+    "name",
+    "description",
+    "query",
+    "time_window",
+    "frequency",
+    "watermark",
+    "channels",
+    "notify_when",
+    "active"
+  ]
+}

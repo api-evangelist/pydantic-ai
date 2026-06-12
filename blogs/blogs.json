@@ -1,0 +1,8 @@
+{
+  "name": "PydanticAI Blog",
+  "description": "Articles and announcements from the Pydantic team covering PydanticAI, Logfire, and the broader AI engineering ecosystem.",
+  "url": "https://pydantic.dev/articles",
+  "rss": null,
+  "note": "No RSS/Atom feed detected at standard paths. Blog content is available at https://pydantic.dev/articles.",
+  "posts": []
+}

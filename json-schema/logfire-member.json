@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://pydantic.dev/schemas/OrganizationMemberReadV1",
+  "title": "OrganizationMemberReadV1",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+    },
+    "name": {
+      "type": "string",
+      "title": "Name"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email"
+    },
+    "role_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Role Id"
+    },
+    "member_since": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Member Since"
+    },
+    "github_username": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Github Username"
+    },
+    "avatar": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Avatar"
+    },
+    "role": {
+      "type": "string",
+      "title": "Role"
+    }
+  },
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "email",
+    "role_id",
+    "member_since",
+    "github_username",
+    "avatar",
+    "role"
+  ]
+}

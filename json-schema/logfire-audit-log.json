@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://pydantic.dev/schemas/AuditLogInfoRead",
+  "title": "AuditLogInfoRead",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+    },
+    "organization_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Organization Name"
+    },
+    "project_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Project Name"
+    },
+    "user_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "User Name"
+    },
+    "action": {
+      "type": "string",
+      "enum": [
+        "INSERT",
+        "UPDATE",
+        "DELETE",
+        "VIEW",
+        "LOGIN",
+        "FAILED_LOGIN",
+        "LOGOUT",
+        "CLAIM_INVITATION",
+        "REVOKE_INVITATION",
+        "VERIFY"
+      ],
+      "title": "Action"
+    },
+    "resource_type": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Resource Type"
+    },
+    "record_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uuid"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Record Id"
+    },
+    "ip_address": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "ipv4"
+        },
+        {
+          "type": "string",
+          "format": "ipv6"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Ip Address"
+    }
+  },
+  "type": "object",
+  "required": [
+    "id",
+    "created_at",
+    "organization_name",
+    "project_name",
+    "user_name",
+    "action",
+    "resource_type",
+    "record_id",
+    "ip_address"
+  ]
+}

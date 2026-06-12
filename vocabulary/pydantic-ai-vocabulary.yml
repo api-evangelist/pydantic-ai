@@ -1,0 +1,149 @@
+vocabulary:
+  - term: Agent
+    definition: >
+      The core PydanticAI class that orchestrates LLM interactions, tool registration,
+      structured output validation, and dependency injection for building AI applications.
+    type: class
+    domain: pydantic-ai
+
+  - term: Tool
+    definition: >
+      A Python function registered with an Agent that the LLM can call during execution,
+      supporting synchronous and asynchronous functions with automatic schema generation.
+    type: class
+    domain: pydantic-ai
+
+  - term: RunContext
+    definition: >
+      The context object passed to tools during agent execution, providing access to
+      dependencies, usage statistics, prompt, and current message history.
+    type: class
+    domain: pydantic-ai
+
+  - term: ModelProvider
+    definition: >
+      An integration adapter connecting PydanticAI to a specific LLM backend such as
+      OpenAI, Anthropic, Google Gemini, Mistral, Groq, AWS Bedrock, or Cohere.
+    type: class
+    domain: pydantic-ai
+
+  - term: StructuredOutput
+    definition: >
+      A Pydantic model or dataclass used to define and validate the typed return value
+      of an agent run, ensuring LLM responses conform to an explicit schema.
+    type: class
+    domain: pydantic-ai
+
+  - term: DependencyInjection
+    definition: >
+      A pattern used in PydanticAI to supply runtime dependencies (database connections,
+      HTTP clients, configuration) to agents and tools via a typed dependency container.
+    type: pattern
+    domain: pydantic-ai
+
+  - term: StreamingResponse
+    definition: >
+      An incremental LLM response delivered token-by-token, supported by PydanticAI
+      with both text streaming and structured output streaming.
+    type: class
+    domain: pydantic-ai
+
+  - term: PydanticGraph
+    definition: >
+      A subpackage of PydanticAI providing a graph-based execution engine for complex
+      multi-step agentic workflows with explicit state management and cycle support.
+    type: module
+    domain: pydantic-ai
+
+  - term: PydanticEvals
+    definition: >
+      A subpackage providing systematic evaluation tooling for PydanticAI agents,
+      including dataset management, scoring, and LLM-as-judge capabilities.
+    type: module
+    domain: pydantic-ai
+
+  - term: Logfire
+    definition: >
+      Pydantic's OpenTelemetry-based observability platform providing conversation
+      panels, token tracking, cost monitoring, and SQL-queryable production traces
+      for LLM applications built with PydanticAI.
+    type: service
+    domain: pydantic-logfire
+
+  - term: AIGateway
+    definition: >
+      A Logfire feature that proxies and routes model provider API calls for
+      centralized FinOps tracking, cost attribution, and provider switching.
+    type: feature
+    domain: pydantic-logfire
+
+  - term: WriteToken
+    definition: >
+      A Logfire credential granting permission to ingest OpenTelemetry traces and
+      spans into a specific Logfire project.
+    type: credential
+    domain: pydantic-logfire
+
+  - term: ReadToken
+    definition: >
+      A Logfire credential granting read access to query traces and metrics from
+      a specific Logfire project.
+    type: credential
+    domain: pydantic-logfire
+
+  - term: APIKey
+    definition: >
+      A Logfire personal or service account credential used to authenticate
+      management API requests for administering organizations, projects, and resources.
+    type: credential
+    domain: pydantic-logfire
+
+  - term: Project
+    definition: >
+      A Logfire resource namespace that groups related observability data, dashboards,
+      alerts, and tokens under a single organizational unit.
+    type: resource
+    domain: pydantic-logfire
+
+  - term: Dashboard
+    definition: >
+      A Logfire visualization resource containing a grid layout of panels displaying
+      time-series metrics, logs, and LLM traces.
+    type: resource
+    domain: pydantic-logfire
+
+  - term: Alert
+    definition: >
+      A Logfire monitoring rule that triggers notifications via configured channels
+      (email, webhook, PagerDuty) when metric thresholds are exceeded.
+    type: resource
+    domain: pydantic-logfire
+
+  - term: AuditLog
+    definition: >
+      An enterprise Logfire feature providing immutable records of all administrative
+      actions (INSERT, UPDATE, DELETE, LOGIN) performed within an organization.
+    type: feature
+    domain: pydantic-logfire
+
+  - term: SCIM
+    definition: >
+      System for Cross-domain Identity Management support in Logfire enabling
+      automated user and group provisioning from identity providers.
+    type: protocol
+    domain: pydantic-logfire
+
+  - term: OAuthApp
+    definition: >
+      A registered Logfire OAuth 2.0 client application supporting Authorization Code
+      with PKCE, Device Flow, and Dynamic Client Registration.
+    type: resource
+    domain: pydantic-logfire
+
+  - term: Region
+    definition: >
+      A geographic deployment partition of the Logfire API, currently US
+      (logfire-us.pydantic.dev) and EU (logfire-eu.pydantic.dev), providing
+      data residency options.
+    type: concept
+    domain: pydantic-logfire

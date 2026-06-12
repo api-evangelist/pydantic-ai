@@ -56,6 +56,12 @@ apis:
         url: https://pydantic.dev/docs/ai/overview/install/
       - type: ModelProviders
         url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/openapi/pydantic-ai-discovery-openapi.yml
+      - type: JSONLDContext
+        url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+      - type: Vocabulary
+        url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
   - aid: pydantic-ai:pydantic-logfire
     name: Pydantic Logfire
     description: >
@@ -79,6 +85,14 @@ apis:
         url: https://pydantic.dev/pricing
       - type: StatusPage
         url: https://logfirestatus.pydantic.dev/
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/openapi/pydantic-ai-logfire-openapi.yml
+      - type: OpenAPISource
+        url: https://logfire-us.pydantic.dev/api/openapi.json
+      - type: JSONSchema
+        url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
+      - type: JSONLDContext
+        url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
 common:
   - type: Website
     url: https://pydantic.dev/
@@ -90,6 +104,8 @@ common:
     url: https://github.com/pydantic/pydantic-ai
   - type: Blog
     url: https://pydantic.dev/articles
+  - type: BlogIndex
+    url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/blogs/blogs.json
   - type: Changelog
     url: https://pydantic.dev/docs/ai/changelog/
   - type: Pricing

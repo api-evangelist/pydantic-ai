@@ -1,0 +1,189 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://pydantic.dev/schemas/OrganizationReadV1",
+  "title": "OrganizationReadV1",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+    },
+    "organization_name": {
+      "type": "string",
+      "title": "Organization Name"
+    },
+    "subscription_plan": {
+      "anyOf": [
+        {
+          "$ref": "#/components/schemas/SubscriptionPlanId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "has_admin_panel": {
+      "type": "boolean",
+      "title": "Has Admin Panel"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Updated At"
+    },
+    "billing_email": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Billing Email"
+    },
+    "organization_display_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Organization Display Name"
+    },
+    "github_handle": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Github Handle"
+    },
+    "location": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Location"
+    },
+    "avatar": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Avatar"
+    },
+    "links": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/components/schemas/OrganizationLink"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Links"
+    },
+    "description": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Description"
+    },
+    "spending_cap": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Spending Cap"
+    },
+    "spending_cap_reached_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Spending Cap Reached At"
+    },
+    "planless_grace_period_ends_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Planless Grace Period Ends At"
+    },
+    "gateway_enabled": {
+      "type": "boolean",
+      "title": "Gateway Enabled"
+    },
+    "ai_enabled": {
+      "type": "boolean",
+      "title": "Ai Enabled"
+    },
+    "ai_training_enabled": {
+      "type": "boolean",
+      "title": "Ai Training Enabled"
+    }
+  },
+  "type": "object",
+  "required": [
+    "id",
+    "organization_name",
+    "subscription_plan",
+    "has_admin_panel",
+    "created_at",
+    "updated_at",
+    "billing_email",
+    "organization_display_name",
+    "github_handle",
+    "location",
+    "avatar",
+    "links",
+    "description",
+    "spending_cap",
+    "spending_cap_reached_at",
+    "planless_grace_period_ends_at",
+    "gateway_enabled",
+    "ai_enabled",
+    "ai_training_enabled"
+  ]
+}
