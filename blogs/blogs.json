@@ -4,5 +4,24 @@
   "url": "https://pydantic.dev/articles",
   "rss": null,
   "note": "No RSS/Atom feed detected at standard paths. Blog content is available at https://pydantic.dev/articles.",
-  "posts": []
+  "posts": [],
+  "repo": "pydantic-ai",
+  "feeds": [
+    {
+      "source": "https://github.com/pydantic/pydantic-ai",
+      "feed_url": "https://github.com/pydantic/pydantic-ai",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://pydantic.dev/articles",
+      "feed_url": "https://pydantic.dev/articles",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-06-14T20:42:17Z"
 }
