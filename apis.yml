@@ -106,7 +106,7 @@ common:
     url: https://pydantic.dev/articles
   - type: BlogIndex
     url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/blogs/blogs.json
-  - type: Changelog
+  - type: ChangeLog
     url: https://pydantic.dev/docs/ai/changelog/
   - type: Pricing
     url: https://pydantic.dev/pricing
