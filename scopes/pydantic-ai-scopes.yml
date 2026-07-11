@@ -1,0 +1,240 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/pydantic-ai-logfire-openapi.yml
+schemes:
+- name: OAuth2AuthorizationCodeBearer
+  source: openapi/pydantic-ai-logfire-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: api/oauth/authorize
+    tokenUrl: /api/oauth/token
+scopes:
+- scope: instance:admin
+  description: Platform admin access to manage the whole self-hosted instance
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: instance:billing
+  description: Read billing and usage data across the whole self-hosted instance
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: organization:admin
+  description: Platform admin access to manage organizations across the instance (self-hosted
+    only)
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: organization:auditlog
+  description: Read audit logs for the organization
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: organization:create_api_key
+  description: Create new API keys for the organization
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: organization:create_project
+  description: Ability to create projects within the organization
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: organization:payment
+  description: Read billing usage data for the organization
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: organization:read
+  description: Read access to organizations
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: organization:read_api_key
+  description: Read API keys across the organization
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: organization:read_channel
+  description: Read notification channels across the organization
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: organization:read_invitation
+  description: Read organization invitations
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: organization:read_member
+  description: Read organization members and roles
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: organization:read_trust_policy
+  description: Read OIDC trust policies and their token exchange history
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: organization:scim
+  description: SCIM access to organizations
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: organization:write
+  description: Write access to organizations
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: organization:write_api_key
+  description: Edit or revoke existing API keys across the organization
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: organization:write_channel
+  description: Create or modify notification channels across the organization
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: organization:write_invitation
+  description: Create organization invitations
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: organization:write_member
+  description: Modify organization member roles and membership
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: organization:write_trust_policy
+  description: Create, modify, or delete OIDC trust policies and revoke issued workload tokens
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: project:gateway_proxy
+  description: Proxy AI model requests through the project AI Gateway
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: project:read
+  description: Read access to projects
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: project:read_alert
+  description: Read alerts within a project
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: project:read_api_key
+  description: Read API keys within a project
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: project:read_dashboard
+  description: Read dashboards within a project
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: project:read_datasets
+  description: Read datasets within a project
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: project:read_external_variables
+  description: Read external managed variables within a project via OFREP
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: project:read_otlp
+  description: Query trace data submitted to the project via OTLP
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: project:read_token
+  description: Create read tokens
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: project:read_variables
+  description: Read managed variables and prompts within a project
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: project:write
+  description: Write access to projects
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: project:write_alert
+  description: Create or modify alerts within a project
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: project:write_api_key
+  description: Create, edit, or revoke API keys within a project
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: project:write_dashboard
+  description: Create or modify dashboards within a project
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: project:write_datasets
+  description: Create or modify datasets within a project
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: project:write_otlp
+  description: Send OTLP traces, logs, and metrics to the project
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: project:write_token
+  description: Create write tokens
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml
+- scope: project:write_variables
+  description: Create or modify managed variables and prompts within a project
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/pydantic-ai-logfire-openapi.yml

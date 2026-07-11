@@ -94,6 +94,10 @@ apis:
       - type: JSONLDContext
         url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
 common:
+  - type: Authentication
+    url: authentication/pydantic-ai-authentication.yml
+  - type: OAuthScopes
+    url: scopes/pydantic-ai-scopes.yml
   - type: Website
     url: https://pydantic.dev/
   - type: Documentation
