@@ -7,13 +7,21 @@
   "repo": "pydantic-ai",
   "feeds": [
     {
+      "source": "https://github.com/pydantic/pydantic-ai",
+      "feed_url": "https://github.com/pydantic/pydantic-ai",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
       "source": "https://pydantic.dev/articles",
-      "feed_url": "",
-      "saved": 5,
-      "method": "agent-scrape"
+      "feed_url": "https://pydantic.dev/articles",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "post_count": 10,
-  "fetched": "2026-06-27T13:03:48Z",
-  "agent_pulled": "2026-06-27"
+  "post_count": 13,
+  "fetched": "2026-07-11T11:50:51Z",
+  "agent_pulled": "2026-07-04"
 }
