@@ -94,6 +94,8 @@ apis:
       - type: JSONLDContext
         url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
 common:
+  - type: AgenticAccess
+    url: agentic-access/pydantic-ai-agentic-access.yml
   - type: TrustCenter
     url: security/pydantic-ai-trust-center.yml
   - type: VulnerabilityDisclosure
