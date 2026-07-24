@@ -1,0 +1,3836 @@
+openapi: 3.0.3
+info:
+  title: Pydantic API Discovery Alerts Projects API
+  version: 1.0.0
+  summary: Discovery document for Pydantic's region-partitioned APIs.
+  description: 'Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly — it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.
+
+
+    - **US region**: https://logfire-us.pydantic.dev/api/openapi.json
+
+    - **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json
+
+
+    ## Versioning
+
+
+    This discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).
+
+
+    Responses include an `X-API-Version` header identifying the version that served the request.
+
+
+    Related discovery resources:
+
+
+    - [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) — RFC 9727 Linkset of available API descriptions.
+
+    - [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) — JSON list of per-region OpenAPI specs.
+
+    - [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) — RFC 9728 OAuth protected resource metadata.'
+  contact:
+    name: Pydantic
+    url: https://pydantic.dev
+    email: hello@pydantic.dev
+  license:
+    name: Pydantic Terms of Service
+    url: https://pydantic.dev/legal/terms-of-service
+servers:
+- url: https://pydantic.dev/api/v1
+  description: Host Discovery — version 1
+tags:
+- name: Projects
+paths:
+  /v1/projects/:
+    get:
+      tags:
+      - Projects
+      summary: List Projects
+      operationId: list_projects_v1_projects__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProjectListRead'
+                type: array
+                title: Response List Projects V1 Projects  Get
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:read
+    post:
+      tags:
+      - Projects
+      summary: Create Project
+      operationId: create_project_v1_projects__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCreate'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:create_project
+  /v1/projects/{project_id}/:
+    get:
+      tags:
+      - Projects
+      summary: Get Project Info
+      operationId: get_project_info_v1_projects__project_id___get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:read
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectListRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+      - Projects
+      summary: Update Project
+      operationId: update_project_v1_projects__project_id___put
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectUpdate'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - Projects
+      summary: Delete Project
+      operationId: delete_project_v1_projects__project_id___delete
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '204':
+          description: Successful Response
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/dashboards/:
+    get:
+      tags:
+      - Projects
+      summary: List Dashboards
+      operationId: list_dashboards_v1_projects__project_id__dashboards__get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:read_dashboard
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DashboardSummary'
+                title: Response List Dashboards V1 Projects  Project Id  Dashboards  Get
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - Projects
+      summary: Create Dashboard
+      operationId: create_dashboard_v1_projects__project_id__dashboards__post
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write_dashboard
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DashboardCreateRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '409':
+          description: Dashboard with this slug already exists
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/dashboards/{dashboard_id}/:
+    get:
+      tags:
+      - Projects
+      summary: Get Dashboard
+      operationId: get_dashboard_v1_projects__project_id__dashboards__dashboard_id___get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:read_dashboard
+      parameters:
+      - name: dashboard_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Dashboard Id
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDashboardResponse'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+      - Projects
+      summary: Update Dashboard
+      operationId: update_dashboard_v1_projects__project_id__dashboards__dashboard_id___put
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write_dashboard
+      parameters:
+      - name: dashboard_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Dashboard Id
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DashboardUpdateRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '409':
+          description: Dashboard version conflict
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - Projects
+      summary: Delete Dashboard
+      operationId: delete_dashboard_v1_projects__project_id__dashboards__dashboard_id___delete
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write_dashboard
+      parameters:
+      - name: dashboard_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Dashboard Id
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '204':
+          description: Successful Response
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/alerts/:
+    get:
+      tags:
+      - Projects
+      summary: List Alerts
+      description: List all alerts for a project.
+      operationId: list_alerts_v1_projects__project_id__alerts__get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:read_alert
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AlertWithLastRun'
+                title: Response List Alerts V1 Projects  Project Id  Alerts  Get
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - Projects
+      summary: Create Alert
+      description: Create a new alert.
+      operationId: create_alert_v1_projects__project_id__alerts__post
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write_alert
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertCreate'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/alerts/{alert_id}/:
+    get:
+      tags:
+      - Projects
+      summary: Get Alert
+      description: Get an alert.
+      operationId: get_alert_v1_projects__project_id__alerts__alert_id___get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:read_alert
+      parameters:
+      - name: alert_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Alert Id
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertWithLastRun'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+      - Projects
+      summary: Update Alert
+      description: Update an alert.
+      operationId: update_alert_v1_projects__project_id__alerts__alert_id___put
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write_alert
+      parameters:
+      - name: alert_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Alert Id
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertUpdate'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - Projects
+      summary: Delete Alert
+      description: Delete an alert.
+      operationId: delete_alert_v1_projects__project_id__alerts__alert_id___delete
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write_alert
+      parameters:
+      - name: alert_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Alert Id
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '204':
+          description: Successful Response
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/write-tokens/:
+    post:
+      tags:
+      - Projects
+      summary: Create Write Token
+      description: 'Creates a write token for a project.
+
+
+        The write token allows you to add data to your project.'
+      operationId: create_write_token_v1_projects__project_id__write_tokens__post
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write_token
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWriteTokenInput'
+              default: {}
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateWriteTokenOutput'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    get:
+      tags:
+      - Projects
+      summary: List Write Tokens
+      description: List write tokens for a project.
+      operationId: list_write_tokens_v1_projects__project_id__write_tokens__get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write_token
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WriteTokenRead'
+                title: Response List Write Tokens V1 Projects  Project Id  Write Tokens  Get
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/write-tokens/{token_id}/rotate/:
+    post:
+      tags:
+      - Projects
+      summary: Rotate Write Token
+      description: 'Rotate a write token: expire the existing token and create a new one.
+
+
+        The old token is immediately expired (expires_at set to now) and a new token is created
+
+        in a single atomic operation. Returns the newly created token.'
+      operationId: rotate_write_token_v1_projects__project_id__write_tokens__token_id__rotate__post
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write_token
+      parameters:
+      - name: token_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Token Id
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateWriteTokenOutput'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '404':
+          description: Project token not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/write-tokens/{token_id}/expire/:
+    patch:
+      tags:
+      - Projects
+      summary: Expire Write Token
+      description: Force-expire a write token immediately by setting its expiry to now.
+      operationId: expire_write_token_v1_projects__project_id__write_tokens__token_id__expire__patch
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write_token
+      parameters:
+      - name: token_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Token Id
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '204':
+          description: Successful Response
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '404':
+          description: Project token not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/write-tokens/{token_id}/:
+    delete:
+      tags:
+      - Projects
+      summary: Revoke Write Token
+      description: Revoke a write token.
+      operationId: revoke_write_token_v1_projects__project_id__write_tokens__token_id___delete
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write_token
+      parameters:
+      - name: token_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Token Id
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '204':
+          description: Successful Response
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '404':
+          description: Project token not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/read-tokens/:
+    post:
+      tags:
+      - Projects
+      summary: Create Read Token
+      operationId: create_read_token_v1_projects__project_id__read_tokens__post
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:read_token
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReadTokenInput'
+              default: {}
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadTokenPublicAPIRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    get:
+      tags:
+      - Projects
+      summary: List Read Tokens
+      operationId: list_read_tokens_v1_projects__project_id__read_tokens__get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:read_token
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReadTokenRead'
+                title: Response List Read Tokens V1 Projects  Project Id  Read Tokens  Get
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/read-tokens/{token_id}/rotate/:
+    post:
+      tags:
+      - Projects
+      summary: Rotate Read Token
+      description: 'Rotate a read token: expire the existing token and create a new one.
+
+
+        The old token is immediately expired (expires_at set to now) and a new token is created
+
+        in a single atomic operation. Returns the newly created token.'
+      operationId: rotate_read_token_v1_projects__project_id__read_tokens__token_id__rotate__post
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:read_token
+      parameters:
+      - name: token_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Token Id
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadTokenPublicAPIRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '404':
+          description: Project read token not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/read-tokens/{token_id}/expire/:
+    patch:
+      tags:
+      - Projects
+      summary: Expire Read Token
+      description: Force-expire a read token immediately by setting its expiry to now.
+      operationId: expire_read_token_v1_projects__project_id__read_tokens__token_id__expire__patch
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:read_token
+      parameters:
+      - name: token_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Token Id
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '204':
+          description: Successful Response
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '404':
+          description: Project read token not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/read-tokens/{token_id}/:
+    delete:
+      tags:
+      - Projects
+      summary: Revoke Read Token
+      operationId: revoke_read_token_v1_projects__project_id__read_tokens__token_id___delete
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:read_token
+      parameters:
+      - name: token_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Token Id
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '204':
+          description: Successful Response
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '404':
+          description: Project token not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/variables/:
+    get:
+      tags:
+      - Projects
+      summary: Get Variables Config
+      description: 'Get the full variables configuration for a project.
+
+
+        Returns the complete configuration in a format compatible with the
+
+        logfire SDK''s VariablesConfig, suitable for use with remote variable providers.
+
+
+        Requires: User token with project:read_variables scope.'
+      operationId: get_variables_config_v1_projects__project_id__variables__get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:read_variables
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariablesConfig'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - Projects
+      summary: Create Variable
+      description: 'Create a new variable definition, optionally with labels and versions.
+
+
+        Requires: User token with project:write_variables scope.'
+      operationId: create_variable_v1_projects__project_id__variables__post
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write_variables
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VariableDefinitionCreateRequest'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableDefinitionRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/variables/{name}/:
+    get:
+      tags:
+      - Projects
+      summary: Get Variable By Name
+      description: 'Get a variable definition by name with current labels and latest version.
+
+
+        Requires: User token with project:read_variables scope.'
+      operationId: get_variable_by_name_v1_projects__project_id__variables__name___get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:read_variables
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Name
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableConfig'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+      - Projects
+      summary: Update Variable
+      description: 'Update an existing variable definition, optionally with labels and versions.
+
+
+        Fields present and set to None will be cleared.
+
+        Fields not present will not be changed.
+
+
+        Requires: User token with project:write_variables scope.'
+      operationId: update_variable_v1_projects__project_id__variables__name___put
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write_variables
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Name
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VariableDefinitionUpdateRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableDefinitionRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    LabeledValue:
+      properties:
+        version:
+          type: integer
+          title: Version
+        serialized_value:
+          type: string
+          title: Serialized Value
+      type: object
+      required:
+      - version
+      - serialized_value
+      title: LabeledValue
+      description: A label pointing to a version with an inline serialized value.
+    DashboardGridItem:
+      properties:
+        x:
+          type: integer
+          title: X
+        y:
+          type: integer
+          title: Y
+        width:
+          type: integer
+          title: Width
+        height:
+          type: integer
+          title: Height
+        content:
+          $ref: '#/components/schemas/PanelRef'
+      type: object
+      required:
+      - x
+      - y
+      - width
+      - height
+      - content
+      title: DashboardGridItem
+    DashboardPanel-Input:
+      properties:
+        kind:
+          type: string
+          enum:
+          - Panel
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardPanelSpec-Input'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardPanel
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    RolloutData:
+      properties:
+        labels:
+          additionalProperties:
+            type: number
+          type: object
+          title: Labels
+        latest_weight:
+          type: number
+          title: Latest Weight
+      type: object
+      required:
+      - labels
+      title: RolloutData
+      description: Rollout configuration stored as JSONB.
+    DashboardSummary:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+        dashboard_name:
+          type: string
+          title: Dashboard Name
+        dashboard_slug:
+          type: string
+          title: Dashboard Slug
+        version:
+          type: integer
+          title: Version
+      type: object
+      required:
+      - id
+      - project_id
+      - created_at
+      - updated_at
+      - created_by_name
+      - updated_by_name
+      - dashboard_name
+      - dashboard_slug
+      - version
+      title: DashboardSummary
+    DashboardPanelDisplay:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+      type: object
+      required:
+      - name
+      title: DashboardPanelDisplay
+    DashboardGridSpec-Output:
+      properties:
+        display:
+          $ref: '#/components/schemas/DashboardGridDisplay'
+        items:
+          items:
+            $ref: '#/components/schemas/DashboardGridItem'
+          type: array
+          title: Items
+      type: object
+      required:
+      - items
+      title: DashboardGridSpec
+    CreateReadTokenInput:
+      properties:
+        expires_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Expires At
+      type: object
+      title: CreateReadTokenInput
+    LatestLabelData:
+      properties:
+        target_type:
+          type: string
+          enum:
+          - latest
+          title: Target Type
+      type: object
+      required:
+      - target_type
+      title: LatestLabelData
+      description: Label data pointing to the latest version.
+    AlertRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+        name:
+          type: string
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        query:
+          type: string
+          title: Query
+        time_window:
+          type: string
+          format: duration
+          title: Time Window
+        frequency:
+          type: string
+          format: duration
+          title: Frequency
+        watermark:
+          type: string
+          format: duration
+          title: Watermark
+        channels:
+          items:
+            $ref: '#/components/schemas/AlertChannelRead'
+          type: array
+          title: Channels
+        notify_when:
+          type: string
+          enum:
+          - has_matches
+          - has_matches_changed
+          - matches_changed
+          - starts_having_matches
+          title: Notify When
+        active:
+          type: boolean
+          title: Active
+      type: object
+      required:
+      - id
+      - organization_id
+      - project_id
+      - created_at
+      - updated_at
+      - created_by_name
+      - updated_by_name
+      - name
+      - description
+      - query
+      - time_window
+      - frequency
+      - watermark
+      - channels
+      - notify_when
+      - active
+      title: AlertRead
+    JSONBData:
+      anyOf:
+      - additionalProperties:
+          $ref: '#/components/schemas/JSONBData'
+        type: object
+      - items:
+          $ref: '#/components/schemas/JSONBData'
+        type: array
+      - type: string
+      - type: integer
+      - type: boolean
+      - type: number
+      - type: 'null'
+    DashboardTextVariable-Output:
+      properties:
+        kind:
+          type: string
+          enum:
+          - TextVariable
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardTextVariableSpec'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardTextVariable
+    WebhookFormat:
+      type: string
+      enum:
+      - auto
+      - slack-blockkit
+      - slack-legacy
+      - raw-data
+    LabelRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        variable_definition_id:
+          type: string
+          format: uuid
+          title: Variable Definition Id
+        label:
+          type: string
+          title: Label
+        target_type:
+          type: string
+          title: Target Type
+        target_label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Target Label
+        version_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Version Id
+        version_number:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Version Number
+        serialized_value:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Serialized Value
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        updated_by:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Updated By
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+      type: object
+      required:
+      - id
+      - variable_definition_id
+      - label
+      - target_type
+      - target_label
+      - version_id
+      - version_number
+      - serialized_value
+      - updated_at
+      - updated_by
+      - updated_by_name
+      title: LabelRead
+      description: A label as read from the database.
+    VersionLabelData:
+      properties:
+        target_type:
+          type: string
+          enum:
+          - version
+          title: Target Type
+        serialized_value:
+          type: string
+          title: Serialized Value
+        version:
+          type: integer
+          title: Version
+      type: object
+      required:
+      - target_type
+      - serialized_value
+      title: VersionLabelData
+      description: Label data pointing to a version by serialized value.
+    DashboardPanel-Output:
+      properties:
+        kind:
+          type: string
+          enum:
+          - Panel
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardPanelSpec-Output'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardPanel
+    KeyIsNotPresent:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        kind:
+          type: string
+          enum:
+          - key-is-not-present
+          title: Kind
+          default: key-is-not-present
+      type: object
+      required:
+      - attribute
+      title: KeyIsNotPresent
+      description: Condition that matches when an attribute key is not present.
+    ValueIsNotIn:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        values:
+          items: {}
+          type: array
+          title: Values
+        kind:
+          type: string
+          enum:
+          - value-is-not-in
+          title: Kind
+          default: value-is-not-in
+      type: object
+      required:
+      - attribute
+      - values
+      title: ValueIsNotIn
+      description: Condition that matches when an attribute value is not in a set of values.
+    DashboardDisplay:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+      type: object
+      required:
+      - name
+      title: DashboardDisplay
+    DashboardTextVariable-Input:
+      properties:
+        kind:
+          type: string
+          enum:
+          - TextVariable
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardTextVariableSpec'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardTextVariable
+    CreateWriteTokenInput:
+      properties:
+        expires_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Expires At
+      type: object
+      title: CreateWriteTokenInput
+    DashboardQuery:
+      properties:
+        kind:
+          type: string
+          title: Kind
+        spec:
+          title: Spec
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardQuery
+    DashboardCollapse:
+      properties:
+        open:
+          type: boolean
+          title: Open
+      type: object
+      required:
+      - open
+      title: DashboardCollapse
+    ValueMatchesRegex:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        pattern:
+          anyOf:
+          - type: string
+          - type: string
+            format: regex
+          title: Pattern
+        kind:
+          type: string
+          enum:
+          - value-matches-regex
+          title: Kind
+          default: value-matches-regex
+      type: object
+      required:
+      - attribute
+      - pattern
+      title: ValueMatchesRegex
+      description: Condition that matches when an attribute value matches a regex pattern.
+    DashboardVariable-Input:
+      oneOf:
+      - $ref: '#/components/schemas/DashboardTextVariable-Input'
+      - $ref: '#/components/schemas/DashboardListVariable-Input'
+      discriminator:
+        propertyName: kind
+        mapping:
+          ListVariable: '#/components/schemas/DashboardListVariable-Input'
+          TextVariable: '#/components/schemas/DashboardTextVariable-Input'
+    DashboardListVariable-Output:
+      properties:
+        kind:
+          type: string
+          enum:
+          - ListVariable
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardListVariableSpec'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardListVariable
+    VariablesConfig:
+      properties:
+        variables:
+          additionalProperties:
+            $ref: '#/components/schemas/VariableConfig'
+          type: object
+          title: Variables
+      type: object
+      required:
+      - variables
+      title: VariablesConfig
+      description: Container for all managed variable configurations.
+    Notification:
+      properties:
+        type:
+          type: string
+          enum:
+          - notification
+          title: Type
+        recipients:
+          items:
+            type: string
+            format: uuid
+          type: array
+          title: Recipients
+      type: object
+      required:
+      - type
+      - recipients
+      title: Notification
+    LabelRef:
+      properties:
+        version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Version
+        ref:
+          type: string
+          title: Ref
+      type: object
+      required:
+      - ref
+      title: LabelRef
+      description: A label pointing via reference to another label, 'latest', or 'code_default'.
+    WriteTokenRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        expires_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Expires At
+        project_name:
+          type: string
+          title: Project Name
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        token_prefix:
+          type: string
+          title: Token Prefix
+        active:
+          type: boolean
+          title: Active
+      type: object
+      required:
+      - id
+      - project_id
+      - created_at
+      - description
+      - expires_at
+      - project_name
+      - created_by_name
+      - token_prefix
+      - active
+      title: WriteTokenRead
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    VariableDefinitionRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        type_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Type Id
+        type_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Type Name
+        kind:
+          type: string
+          enum:
+          - general
+          - prompt
+          title: Kind
+        name:
+          type: string
+          title: Name
+        display_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display Name
+        prompt_slug:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prompt Slug
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        json_schema:
+          anyOf:
+          - $ref: '#/components/schemas/JSONBData'
+          - type: 'null'
+        template_inputs_schema:
+          anyOf:
+          - $ref: '#/components/schemas/JSONBData'
+          - type: 'null'
+        labels:
+          additionalProperties:
+            $ref: '#/components/schemas/LabelRead'
+          type: object
+          title: Labels
+        latest_version:
+          anyOf:
+          - $ref: '#/components/schemas/VersionRead'
+          - type: 'null'
+        rollout:
+          $ref: '#/components/schemas/RolloutData'
+        overrides:
+          items:
+            $ref: '#/components/schemas/OverrideData'
+          type: array
+          title: Overrides
+        aliases:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Aliases
+        example:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Example
+        external:
+          type: boolean
+          title: External
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+      type: object
+      required:
+      - id
+      - project_id
+      - type_id
+      - type_name
+      - kind
+      - name
+      - display_name
+      - prompt_slug
+      - description
+      - json_schema
+      - template_inputs_schema
+      - labels
+      - latest_version
+      - rollout
+      - overrides
+      - aliases
+      - example
+      - external
+      - created_at
+      - updated_at
+      - created_by_name
+      - updated_by_name
+      title: VariableDefinitionRead
+      description: Variable definition with current labels and latest version assembled.
+    DashboardCreateRequest:
+      properties:
+        name:
+          type: string
+          title: Name
+        slug:
+          type: string
+          title: Slug
+        definition:
+          $ref: '#/components/schemas/DashboardCreate'
+      type: object
+      required:
+      - name
+      - slug
+      - definition
+      title: DashboardCreateRequest
+    DashboardListVariable-Input:
+      properties:
+        kind:
+          type: string
+          enum:
+          - ListVariable
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardListVariableSpec'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardListVariable
+    OverrideData:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        conditions:
+          items:
+            $ref: '#/components/schemas/ConditionData'
+          type: array
+          title: Conditions
+        rollout:
+          $ref: '#/components/schemas/RolloutData'
+      type: object
+      required:
+      - conditions
+      - rollout
+      title: OverrideData
+      description: Override configuration stored as JSONB.
+    AlertWithLastRun:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+        name:
+          type: string
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        query:
+          type: string
+          title: Query
+        time_window:
+          type: string
+          format: duration
+          title: Time Window
+        frequency:
+          type: string
+          format: duration
+          title: Frequency
+        watermark:
+          type: string
+          format: duration
+          title: Watermark
+        channels:
+          items:
+            $ref: '#/components/schemas/AlertChannelRead'
+          type: array
+          title: Channels
+        notify_when:
+          type: string
+          enum:
+          - has_matches
+          - has_matches_changed
+          - matches_changed
+          - starts_having_matches
+          title: Notify When
+        active:
+          type: boolean
+          title: Active
+        last_run:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Last Run
+        has_matches:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Has Matches
+        has_errors:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Has Errors
+        result:
+          $ref: '#/components/schemas/JSONBData'
+        result_length:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Result Length
+      type: object
+      required:
+      - id
+      - organization_id
+      - project_id
+      - created_at
+      - updated_at
+      - created_by_name
+      - updated_by_name
+      - name
+      - description
+      - query
+      - time_window
+      - frequency
+      - watermark
+      - channels
+      - notify_when
+      - active
+      - last_run
+      - has_matches
+      - has_errors
+      - result
+      - result_length
+      title: AlertWithLastRun
+    DashboardVariable-Output:
+      oneOf:
+      - $ref: '#/components/schemas/DashboardTextVariable-Output'
+      - $ref: '#/components/schemas/DashboardListVariable-Output'
+      discriminator:
+        propertyName: kind
+        mapping:
+          ListVariable: '#/components/schemas/DashboardListVariable-Output'
+          TextVariable: '#/components/schemas/DashboardTextVariable-Output'
+    LatestVersion:
+      properties:
+        version:
+          type: integer
+          title: Version
+        serialized_value:
+          type: string
+          title: Serialized Value
+      type: object
+      required:
+      - version
+      - serialized_value
+      title: LatestVersion
+      description: The latest version of a variable, always carrying its serialized value.
+    Rollout:
+      properties:
+        labels:
+          additionalProperties:
+            type: number
+          propertyNames:
+            maxLength: 200
+            minLength: 1
+          type: object
+          title: Labels
+      type: object
+      required:
+      - labels
+      title: Rollout
+      description: Configuration for label selection with weighted probabilities.
+    Opsgenie:
+      properties:
+        type:
+          type: string
+          enum:
+          - opsgenie
+          title: Type
+        auth_key:
+          type: string
+          title: Auth Key
+        base_url:
+          type: string
+          title: Base Url
+      type: object
+      required:
+      - type
+      - auth_key
+      title: Opsgenie
+    ReadTokenRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        expires_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Expires At
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        project_name:
+          type: string
+          title: Project Name
+        token_prefix:
+          type: string
+          title: Token Prefix
+        active:
+          type: boolean
+          title: Active
+      type: object
+      required:
+      - id
+      - project_id
+      - created_at
+      - description
+      - expires_at
+      - created_by_name
+      - project_name
+      - token_prefix
+      - active
+      title: ReadTokenRead
+    GetDashboardResponse:
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/DashboardDefinitionRead'
+      type: object
+      required:
+      - dashboard
+      title: GetDashboardResponse
+    DashboardProjectMetadataRead:
+      properties:
+        name:
+          type: string
+          title: Name
+        createdAt:
+          type: string
+          format: date-time
+          title: Createdat
+        updatedAt:
+          type: string
+          format: date-time
+          title: Updatedat
+        version:
+          type: integer
+          title: Version
+        project:
+          type: string
+          title: Project
+      type: object
+      required:
+      - name
+      - project
+      title: DashboardProjectMetadataRead
+    DashboardDefinitionRead:
+      properties:
+        kind:
+          type: string
+          enum:
+          - Dashboard
+          title: Kind
+        metadata:
+          $ref: '#/components/schemas/DashboardProjectMetadataRead'
+        spec:
+          $ref: '#/components/schemas/DashboardSpec'
+      type: object
+      required:
+      - kind
+      - metadata
+      - spec
+      title: DashboardDefinitionRead
+    PanelRef:
+      properties:
+        $ref:
+          type: string
+      type: object
+      required:
+      - $ref
+      title: PanelRef
+    DashboardPanelLink:
+      properties:
+        name:
+          type: string
+          title: Name
+        url:
+          type: string
+          title: Url
+        tooltip:
+          type: string
+          title: Tooltip
+        renderVariables:
+          type: boolean
+          title: Rendervariables
+        targetBlank:
+          type: boolean
+          title: Targetblank
+      type: object
+      title: DashboardPanelLink
+    VariableConfig:
+      properties:
+        name:
+          type: string
+          title: Name
+        kind:
+          type: string
+          enum:
+          - general
+          - prompt
+          title: Kind
+          default: general
+        labels:
+          additionalProperties:
+            anyOf:
+            - $ref: '#/components/schemas/LabeledValue'
+            - $ref: '#/components/schemas/LabelRef'
+          propertyNames:
+            maxLength: 200
+            minLength: 1
+          type: object
+          title: Labels
+        latest_version:
+          anyOf:
+          - $ref: '#/components/schemas/LatestVersion'
+          - type: 'null'
+        rollout:
+          $ref: '#/components/schemas/Rollout'
+        overrides:
+          items:
+            $ref: '#/components/schemas/RolloutOverride'
+          type: array
+          title: Overrides
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        json_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Json Schema
+        template_inputs_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Template Inputs Schema
+        type_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Type Name
+        aliases:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Aliases
+        example:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Example
+        display_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display Name
+        prompt_slug:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prompt Slug
+      type: object
+      required:
+      - name
+      - labels
+      - rollout
+      - overrides
+      title: VariableConfig
+      description: Configuration for a single managed variable including labels and rollout rules.
+    DashboardGridDisplay:
+      properties:
+        title:
+          type: string
+          title: Title
+        collapse:
+          $ref: '#/components/schemas/DashboardCollapse'
+      type: object
+      title: DashboardGridDisplay
+    DashboardLayout-Input:
+      properties:
+        kind:
+          type: string
+          enum:
+          - Grid
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardGridSpec-Input'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardLayout
+    ProjectUpdate:
+      properties:
+        project_name:
+          anyOf:
+          - type: string
+            maxLength: 50
+            minLength: 2
+            pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
+          - type: 'null'
+          title: Project Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        visibility:
+          anyOf:
+          - type: string
+            enum:
+            - private
+            - public
+          - type: 'null'
+          title: Visibility
+      type: object
+      title: ProjectUpdate
+    AlertChannelRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        label:
+          type: string
+          title: Label
+        active:
+          type: boolean
+          title: Active
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+        config:
+          oneOf:
+          - $ref: '#/components/schemas/Webhook'
+          - $ref: '#/components/schemas/Opsgenie'
+          - $ref: '#/components/schemas/Notification'
+          title: Config
+          discriminator:
+            propertyName: type
+            mapping:
+              notification: '#/components/schemas/Notification'
+              opsgenie: '#/components/schemas/Opsgenie'
+              webhook: '#/components/schemas/Webhook'
+        schedule_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Schedule Id
+      type: object
+      required:
+      - id
+      - organization_id
+      - label
+      - active
+      - created_at
+      - updated_at
+      - created_by_name
+      - updated_by_name
+      - config
+      - schedule_id
+      title: AlertChannelRead
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AlertUpdate:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        time_window:
+          type: string
+          format: duration
+          title: Time Window
+        frequency:
+          type: string
+          format: duration
+          title: Frequency
+        watermark:
+          type: string
+          format: duration
+          title: Watermark
+        active:
+          type: boolean
+          title: Active
+        query:
+          type: string
+          title: Query
+        channel_ids:
+          anyOf:
+          - items:
+              type: string
+              format: uuid
+            type: array
+          - type: 'null'
+          title: Channel Ids
+          description: Legacy shorthand for assigning channels without schedules.
+        channel_assignments:
+          items:
+            $ref: '#/components/schemas/AlertChannelAssignment'
+          type: array
+          title: Channel Assignments
+          description: Schedule-aware channel configuration. When both `channel_assignments` and `channel_ids` are provided, `channel_assignments` is used.
+        notify_when:
+          type: string
+          enum:
+          - has_matches
+          - has_matches_changed
+          - matches_changed
+          - starts_having_matches
+          title: Notify When
+      type: object
+      title: AlertUpdate
+      description: The fields that can be updated on an alert.
+    DashboardTextVariableSpec:
+      properties:
+        name:
+          type: string
+          title: Name
+        display:
+          $ref: '#/components/schemas/DashboardVariableDisplay'
+        value:
+          type: string
+          title: Value
+        constant:
+          type: boolean
+          title: Constant
+      type: object
+      required:
+      - name
+      - value
+      title: DashboardTextVariableSpec
+    DashboardDatasourceSpec:
+      properties:
+        display:
+          anyOf:
+          - $ref: '#/components/schemas/DashboardDisplay'
+          - type: 'null'
+        default:
+          type: boolean
+          title: Default
+          default: false
+        plugin:
+          $ref: '#/components/schemas/DashboardPlugin'
+      type: object
+      required:
+      - display
+      - plugin
+      title: DashboardDatasourceSpec
+    ConditionData:
+      properties:
+        kind:
+          type: string
+          title: Kind
+        attribute:
+          type: string
+          title: Attribute
+        value:
+          title: Value
+        values:
+          items: {}
+          type: array
+          title: Values
+        pattern:
+          type: string
+          title: Pattern
+      type: object
+      title: ConditionData
+      description: 'Condition for targeting, stored as JSONB.
+
+
+        Different condition types have different fields, so all are optional.
+
+        The ''kind'' field determines which other fields are relevant.'
+    ProjectRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        project_name:
+          type: string
+          title: Project Name
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        organization_name:
+          type: string
+          title: Organization Name
+        visibility:
+          type: string
+          enum:
+          - private
+          - public
+          title: Visibility
+      type: object
+      required:
+      - id
+      - project_name
+      - created_at
+      - description
+      - organization_name
+      - visibility
+      title: ProjectRead
+    VersionRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        variable_definition_id:
+          type: string
+          format: uuid
+          title: Variable Definition Id
+        version:
+          type: integer
+          title: Version
+        serialized_value:
+          type: string
+          title: Serialized Value
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        created_by:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Created By
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+      type: object
+      required:
+      - id
+      - variable_definition_id
+      - version
+      - serialized_value
+      - description
+      - created_at
+      - created_by
+      - created_by_name
+      title: VersionRead
+      description: A version as read from the database.
+    CreateWriteTokenOutput:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        expires_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Expires At
+        token:
+          type: string
+          title: Token
+      type: object
+      required:
+      - id
+      - project_id
+      - created_at
+      - description
+      - expires_at
+      - token
+      title: CreateWriteTokenOutput
+    RolloutOverride:
+      properties:
+        conditions:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ValueEquals'
+            - $ref: '#/components/schemas/ValueDoesNotEqual'
+            - $ref: '#/components/schemas/ValueIsIn'
+            - $ref: '#/components/schemas/ValueIsNotIn'
+            - $ref: '#/components/schemas/ValueMatchesRegex'
+            - $ref: '#/components/schemas/ValueDoesNotMatchRegex'
+            - $ref: '#/components/schemas/KeyIsPresent'
+            - $ref: '#/components/schemas/KeyIsNotPresent'
+            discriminator:
+              propertyName: kind
+              mapping:
+                key-is-not-present: '#/components/schemas/KeyIsNotPresent'
+                key-is-present: '#/components/schemas/KeyIsPresent'
+                value-does-not-equal: '#/components/schemas/ValueDoesNotEqual'
+                value-does-not-match-regex: '#/components/schemas/ValueDoesNotMatchRegex'
+                value-equals: '#/components/schemas/ValueEquals'
+                value-is-in: '#/components/schemas/ValueIsIn'
+                value-is-not-in: '#/components/schemas/ValueIsNotIn'
+                value-matches-regex: '#/components/schemas/ValueMatchesRegex'
+          type: array
+          title: Conditions
+        rollout:
+          $ref: '#/components/schemas/Rollout'
+      type: object
+      required:
+      - conditions
+      - rollout
+      title: RolloutOverride
+      description: An override of the default rollout when specific conditions are met.
+    DashboardListVariableSpec:
+      properties:
+        name:
+          type: string
+          title: Name
+        display:
+          $ref: '#/components/schemas/DashboardVariableDisplay'
+        defaultValue:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Defaultvalue
+        allowMultiple:
+          type: boolean
+          title: Allowmultiple
+        allowAllValue:
+          type: boolean
+          title: Allowallvalue
+        customAllValue:
+          type: string
+          title: Customallvalue
+        capturingRegexp:
+          type: string
+          title: Capturingregexp
+        sort:
+          type: string
+          title: Sort
+        plugin:
+          $ref: '#/components/schemas/DashboardPlugin'
+      type: object
+      required:
+      - name
+      - allowMultiple
+      - allowAllValue
+      - plugin
+      title: DashboardListVariableSpec
+    DashboardPlugin:
+      properties:
+        kind:
+          type: string
+          minLength: 1
+          title: Kind
+        spec:
+          title: Spec
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardPlugin
+    DashboardCreate:
+      properties:
+        kind:
+          type: string
+          enum:
+          - Dashboard
+          title: Kind
+        metadata:
+          $ref: '#/components/schemas/DashboardMetadataCreate'
+        spec:
+          $ref: '#/components/schemas/DashboardCreateSpec'
+      type: object
+      required:
+      - kind
+      - metadata
+      - spec
+      title: DashboardCreate
+    DashboardGridSpec-Input:
+      properties:
+        display:
+          $ref: '#/components/schemas/DashboardGridDisplay'
+        items:
+          items:
+            $ref: '#/components/schemas/DashboardGridItem'
+          type: array
+          title: Items
+      type: object
+      required:
+      - items
+      title: DashboardGridSpec
+    LabelRefLabelData:
+      properties:
+        target_type:
+          type: string
+          enum:
+          - label
+          title: Target Type
+        target_label:
+          type: string
+          title: Target Label
+      type: object
+      required:
+      - target_type
+      - target_label
+      title: LabelRefLabelData
+      description: Label data pointing to another label.
+    DashboardLayout-Output:
+      properties:
+        kind:
+          type: string
+          enum:
+          - Grid
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardGridSpec-Output'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardLayout
+    Dashboard:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+        dashboard_name:
+          type: string
+          title: Dashboard Name
+        dashboard_slug:
+          type: string
+          title: Dashboard Slug
+        version:
+          type: integer
+          title: Version
+        definition:
+          $ref: '#/components/schemas/DashboardDefinitionRead'
+      type: object
+      required:
+      - id
+      - project_id
+      - created_at
+      - updated_at
+      - created_by_name
+      - updated_by_name
+      - dashboard_name
+      - dashboard_slug
+      - version
+      - definition
+      title: Dashboard
+    DashboardMetadataCreate:
+      properties:
+        name:
+          type: string
+          title: Name
+        project:
+          type: string
+          title: Project
+      type: object
+      required:
+      - name
+      - project
+      title: DashboardMetadataCreate
+    Webhook:
+      properties:
+        type:
+          type: string
+          enum:
+          - webhook
+          title: Type
+        format:
+          $ref: '#/components/schemas/WebhookFormat'
+        url:
+          type: string
+          title: Url
+      type: object
+      required:
+      - type
+      - format
+      - url
+      title: Webhook
+    ValueIsIn:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        values:
+          items: {}
+          type: array
+          title: Values
+        kind:
+          type: string
+          enum:
+          - value-is-in
+          title: Kind
+          default: value-is-in
+      type: object
+      required:
+      - attribute
+      - values
+      title: ValueIsIn
+      description: Condition that matches when an attribute value is in a set of values.
+    DashboardPanelSpec-Input:
+      properties:
+        display:
+          $ref: '#/components/schemas/DashboardPanelDisplay'
+        plugin:
+          $ref: '#/components/schemas/DashboardPlugin'
+        queries:
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+          type: array
+          title: Queries
+        links:
+          items:
+            $ref: '#/components/schemas/DashboardPanelLink'
+          type: array
+          title: Links
+        variables:
+          items:
+            $ref: '#/components/schemas/DashboardVariable-Input'
+          type: array
+          title: Variables
+      type: object
+      required:
+      - display
+      - plugin
+      title: DashboardPanelSpec
+    DashboardCreateSpec:
+      properties:
+        display:
+          anyOf:
+          - $ref: '#/components/schemas/DashboardDisplay'
+          - type: 'null'
+        datasources:
+          additionalProperties:
+            $ref: '#/components/schemas/DashboardDatasourceSpec'
+          type: object
+          title: Datasources
+        variables:
+          items:
+            $ref: '#/components/schemas/DashboardVariable-Input'
+          type: array
+          title: Variables
+        panels:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/DashboardPanel-Input'
+            type: object
+          - type: 'null'
+          title: Panels
+        layouts:
+          items:
+            $ref: '#/components/schemas/DashboardLayout-Input'
+          type: array
+          title: Layouts
+        duration:
+          anyOf:
+          - type: string
+            pattern: ^((([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?|0)$
+          - type: 'null'
+          title: Duration
+          default: 1h
+        refreshInterval:
+          type: string
+          pattern: ^((([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?|0)$
+          title: Refreshinterval
+          default: 0s
+      type: object
+      required:
+      - display
+      - panels
+      - layouts
+      title: DashboardCreateSpec
+    DashboardVariableDisplay:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        hidden:
+          type: boolean
+          title: Hidden
+      type: object
+      title: DashboardVariableDisplay
+    ProjectCreate:
+      properties:
+        project_name:
+          type: string
+          maxLength: 50
+          minLength: 2
+          pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
+          title: Project Name
+        description:
+          anyOf:
+          - type: string
+            maxLength: 500
+          - type: 'null'
+          title: Description
+        visibility:
+          type: string
+          enum:
+          - private
+          - public
+          title: Visibility
+          default: public
+      type: object
+      required:
+      - project_name
+      title: ProjectCreate
+    ReadTokenPublicAPIRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        expires_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Expires At
+        token:
+          type: string
+          title: Token
+      type: object
+      required:
+      - id
+      - project_id
+      - created_at
+      - description
+      - expires_at
+      - token
+      title: ReadTokenPublicAPIRead
+    ValueDoesNotMatchRegex:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        pattern:
+          anyOf:
+          - type: string
+          - type: string
+            format: regex
+          title: Pattern
+        kind:
+          type: string
+          enum:
+          - value-does-not-match-regex
+          title: Kind
+          default: value-does-not-match-regex
+      type: object
+      required:
+      - attribute
+      - pattern
+      title: ValueDoesNotMatchRegex
+      description: Condition that matches when an attribute value does not match a regex pattern.
+    ValueEquals:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        value:
+          title: Value
+        kind:
+          type: string
+          enum:
+          - value-equals
+          title: Kind
+          default: value-equals
+      type: object
+      required:
+      - attribute
+      - value
+      title: ValueEquals
+      description: Condition that matches when an attribute equals a specific value.
+    VariableDefinitionCreateRequest:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          anyOf:
+          - type: string
+            maxLength: 500
+          - type: 'null'
+          title: Description
+        json_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Json Schema
+        template_inputs_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Template Inputs Schema
+        type_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Type Id
+        rollout:
+          $ref: '#/components/schemas/RolloutData'
+        overrides:
+          items:
+            $ref: '#/components/schemas/OverrideData'
+          type: array
+          title: Overrides
+        aliases:
+          items:
+            type: string
+          type: array
+          title: Aliases
+        example:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Example
+        external:
+          type: boolean
+          title: External
+        labels:
+          additionalProperties:
+            anyOf:
+            - $ref: '#/components/schemas/VersionLabelData'
+            - $ref: '#/components/schemas/LatestLabelData'
+            - $ref: '#/components/schemas/CodeDefaultLabelData'
+            - $ref: '#/components/schemas/LabelRefLabelData'
+          type: object
+          title: Labels
+      type: object
+      required:
+      - name
+      - description
+      - json_schema
+      - rollout
+      - overrides
+      title: VariableDefinitionCreateRequest
+      description: Request model for creating a variable definition.
+    AlertChannelAssignment:
+      properties:
+        channel_id:
+          type: string
+          format: uuid
+          title: Channel Id
+        schedule_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Schedule Id
+      type: object
+      required:
+      - channel_id
+      title: AlertChannelAssignment
+    ValueDoesNotEqual:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        value:
+          title: Value
+        kind:
+          type: string
+          enum:
+          - value-does-not-equal
+          title: Kind
+          default: value-does-not-equal
+      type: object
+      required:
+      - attribute
+      - value
+      title: ValueDoesNotEqual
+      description: Condition that matches when an attribute does not equal a specific value.
+    DashboardUpdateRequest:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        definition:
+          anyOf:
+          - $ref: '#/components/schemas/DashboardCreate'
+          - type: 'null'
+        version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Version
+      type: object
+      title: DashboardUpdateRequest
+    AlertCreate:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        query:
+          title: Query
+          examples:
+          - SELECT 1
+        time_window:
+          type: string
+          format: duration
+          title: Time Window
+        frequency:
+          type: string
+          format: duration
+          title: Frequency
+        watermark:
+          type: string
+          format: duration
+          title: Watermark
+        active:
+          type: boolean
+          title: Active
+          description: Whether the alert starts enabled.
+          default: true
+        channel_ids:
+          anyOf:
+          - items:
+              type: string
+              format: uuid
+            type: array
+          - type: 'null'
+          title: Channel Ids
+          description: Legacy shorthand for assigning channels without schedules.
+        channel_assignments:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/AlertChannelAssignment'
+            type: array
+          - type: 'null'
+          title: Channel Assignments
+          description: Schedule-aware channel configuration. When both `channel_assignments` and `channel_ids` are provided, `channel_assignments` is used.
+        notify_when:
+          type: string
+          enum:
+          - has_matches
+          - has_matches_changed
+          - matches_changed
+          - starts_having_matches
+          title: Notify When
+      type: object
+      required:
+      - name
+      - description
+      - query
+      - time_window
+      - frequency
+      - watermark
+      - notify_when
+      title: AlertCreate
+    DashboardSpec:
+      properties:
+        display:
+          anyOf:
+          - $ref: '#/components/schemas/DashboardDisplay'
+          - type: 'null'
+        datasources:
+          additionalProperties:
+            $ref: '#/components/schemas/DashboardDatasourceSpec'
+          type: object
+          title: Datasources
+        variables:
+          items:
+            $ref: '#/components/schemas/DashboardVariable-Output'
+          type: array
+          title: Variables
+        panels:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/DashboardPanel-Output'
+            type: object
+          - type: 'null'
+          title: Panels
+        layouts:
+          items:
+            $ref: '#/components/schemas/DashboardLayout-Output'
+          type: array
+          title: Layouts
+        duration:
+          anyOf:
+          - type: string
+            pattern: ^((([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?|0)$
+          - type: 'null'
+          title: Duration
+          default: 1h
+        refreshInterval:
+          type: string
+          pattern: ^((([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?|0)$
+          title: Refreshinterval
+          default: 0s
+      type: object
+      required:
+      - display
+      - variables
+      - panels
+      - layouts
+      title: DashboardSpec
+    CodeDefaultLabelData:
+      properties:
+        target_type:
+          type: string
+          enum:
+          - code_default
+          title: Target Type
+      type: object
+      required:
+      - target_type
+      title: CodeDefaultLabelData
+      description: Label data indicating to use the code default value.
+    VariableDefinitionUpdateRequest:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          anyOf:
+          - type: string
+            maxLength: 500
+          - type: 'null'
+          title: Description
+        json_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Json Schema
+        template_inputs_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Template Inputs Schema
+        type_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Type Id
+        rollout:
+          $ref: '#/components/schemas/RolloutData'
+        overrides:
+          items:
+            $ref: '#/components/schemas/OverrideData'
+          type: array
+          title: Overrides
+        aliases:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Aliases
+        example:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Example
+        external:
+          type: boolean
+          title: External
+        labels:
+          additionalProperties:
+            anyOf:
+            - $ref: '#/components/schemas/VersionLabelData'
+            - $ref: '#/components/schemas/LatestLabelData'
+            - $ref: '#/components/schemas/CodeDefaultLabelData'
+            - $ref: '#/components/schemas/LabelRefLabelData'
+          type: object
+          title: Labels
+      type: object
+      title: VariableDefinitionUpdateRequest
+      description: 'Request model for updating a variable definition.
+
+
+        Should be the same as `VariableDefinitionCreateRequest`, just with `total=False`.'
+    DashboardPanelSpec-Output:
+      properties:
+        display:
+          $ref: '#/components/schemas/DashboardPanelDisplay'
+        plugin:
+          $ref: '#/components/schemas/DashboardPlugin'
+        queries:
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+          type: array
+          title: Queries
+        links:
+          items:
+            $ref: '#/components/schemas/DashboardPanelLink'
+          type: array
+          title: Links
+        variables:
+          items:
+            $ref: '#/components/schemas/DashboardVariable-Output'
+          type: array
+          title: Variables
+      type: object
+      required:
+      - display
+      - plugin
+      title: DashboardPanelSpec
+    ProjectListRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        project_name:
+          type: string
+          title: Project Name
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        organization_name:
+          type: string
+          title: Organization Name
+        visibility:
+          type: string
+          enum:
+          - private
+          - public
+          title: Visibility
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - project_name
+      - created_at
+      - description
+      - organization_name
+      - visibility
+      - updated_at
+      title: ProjectListRead
+    KeyIsPresent:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        kind:
+          type: string
+          enum:
+          - key-is-present
+          title: Kind
+          default: key-is-present
+      type: object
+      required:
+      - attribute
+      title: KeyIsPresent
+      description: Condition that matches when an attribute key is present.

@@ -1,0 +1,268 @@
+openapi: 3.0.3
+info:
+  title: Pydantic API Discovery Alerts Billing API
+  version: 1.0.0
+  summary: Discovery document for Pydantic's region-partitioned APIs.
+  description: 'Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly — it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.
+
+
+    - **US region**: https://logfire-us.pydantic.dev/api/openapi.json
+
+    - **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json
+
+
+    ## Versioning
+
+
+    This discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).
+
+
+    Responses include an `X-API-Version` header identifying the version that served the request.
+
+
+    Related discovery resources:
+
+
+    - [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) — RFC 9727 Linkset of available API descriptions.
+
+    - [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) — JSON list of per-region OpenAPI specs.
+
+    - [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) — RFC 9728 OAuth protected resource metadata.'
+  contact:
+    name: Pydantic
+    url: https://pydantic.dev
+    email: hello@pydantic.dev
+  license:
+    name: Pydantic Terms of Service
+    url: https://pydantic.dev/legal/terms-of-service
+servers:
+- url: https://pydantic.dev/api/v1
+  description: Host Discovery — version 1
+tags:
+- name: Billing
+paths:
+  /v1/billing/usage/:
+    get:
+      tags:
+      - Billing
+      summary: Get Billing Usage
+      description: 'Get billing usage data for the current or a previous billing period.
+
+
+        Use periodOffset=0 for the current period, -1 for the previous, -2 for two periods ago.
+
+
+        Returns usage totals, per-project breakdown, and cost calculations
+
+        for enterprise cloud organizations.'
+      operationId: get_billing_usage_v1_billing_usage__get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:payment
+      parameters:
+      - name: periodOffset
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 0
+          minimum: -2
+          default: 0
+          title: Periodoffset
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingUsageResponse'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    UsageSummary:
+      properties:
+        total_observations:
+          type: integer
+          title: Total Observations
+        breakdown:
+          $ref: '#/components/schemas/UsageBreakdown'
+        included_observations:
+          type: integer
+          title: Included Observations
+        billable_observations:
+          type: integer
+          title: Billable Observations
+        project_breakdown:
+          items:
+            $ref: '#/components/schemas/ProjectUsage'
+          type: array
+          title: Project Breakdown
+      type: object
+      required:
+      - total_observations
+      - breakdown
+      - included_observations
+      - billable_observations
+      - project_breakdown
+      title: UsageSummary
+    CostSummary:
+      properties:
+        currency:
+          type: string
+          title: Currency
+        price_per_million_observations:
+          type: number
+          title: Price Per Million Observations
+        included_observations_value:
+          type: number
+          title: Included Observations Value
+        usage_cost:
+          type: number
+          title: Usage Cost
+        discount:
+          type: number
+          title: Discount
+        total_cost:
+          type: number
+          title: Total Cost
+      type: object
+      required:
+      - currency
+      - price_per_million_observations
+      - included_observations_value
+      - usage_cost
+      - discount
+      - total_cost
+      title: CostSummary
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ProjectUsage:
+      properties:
+        project_name:
+          type: string
+          title: Project Name
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        observations:
+          type: integer
+          title: Observations
+      type: object
+      required:
+      - project_name
+      - project_id
+      - observations
+      title: ProjectUsage
+    UsageBreakdown:
+      properties:
+        spans:
+          type: integer
+          title: Spans
+        metrics:
+          type: integer
+          title: Metrics
+      type: object
+      required:
+      - spans
+      - metrics
+      title: UsageBreakdown
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    BillingUsageResponse:
+      properties:
+        organization:
+          type: string
+          title: Organization
+        billing_period:
+          $ref: '#/components/schemas/BillingPeriod'
+        plan:
+          type: string
+          title: Plan
+        usage:
+          $ref: '#/components/schemas/UsageSummary'
+        cost:
+          $ref: '#/components/schemas/CostSummary'
+      type: object
+      required:
+      - organization
+      - billing_period
+      - plan
+      - usage
+      - cost
+      title: BillingUsageResponse
+    BillingPeriod:
+      properties:
+        start:
+          type: string
+          format: date
+          title: Start
+        end:
+          type: string
+          format: date
+          title: End
+        anchor_day:
+          type: integer
+          title: Anchor Day
+      type: object
+      required:
+      - start
+      - end
+      - anchor_day
+      title: BillingPeriod

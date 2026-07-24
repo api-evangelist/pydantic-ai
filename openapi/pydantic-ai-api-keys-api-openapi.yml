@@ -1,0 +1,578 @@
+openapi: 3.0.3
+info:
+  title: Pydantic API Discovery Alerts API Keys API
+  version: 1.0.0
+  summary: Discovery document for Pydantic's region-partitioned APIs.
+  description: 'Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly — it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.
+
+
+    - **US region**: https://logfire-us.pydantic.dev/api/openapi.json
+
+    - **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json
+
+
+    ## Versioning
+
+
+    This discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).
+
+
+    Responses include an `X-API-Version` header identifying the version that served the request.
+
+
+    Related discovery resources:
+
+
+    - [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) — RFC 9727 Linkset of available API descriptions.
+
+    - [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) — JSON list of per-region OpenAPI specs.
+
+    - [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) — RFC 9728 OAuth protected resource metadata.'
+  contact:
+    name: Pydantic
+    url: https://pydantic.dev
+    email: hello@pydantic.dev
+  license:
+    name: Pydantic Terms of Service
+    url: https://pydantic.dev/legal/terms-of-service
+servers:
+- url: https://pydantic.dev/api/v1
+  description: Host Discovery — version 1
+tags:
+- name: API Keys
+paths:
+  /v1/api-keys/:
+    get:
+      tags:
+      - API Keys
+      summary: List Organization Api Keys
+      description: 'List the organization''s API keys, including project-scoped keys.
+
+
+        A non-personal (service) caller sees only service keys (`user_id IS NULL`). A
+
+        personal caller additionally sees its own personal keys; another user''s personal
+
+        keys are always hidden, matching the ownership guard on update/delete.'
+      operationId: list_organization_api_keys_v1_api_keys__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/APIKeyRead'
+                type: array
+                title: Response List Organization Api Keys V1 Api Keys  Get
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:read_api_key
+    post:
+      tags:
+      - API Keys
+      summary: Create Organization Api Key
+      description: 'Create an API key delegated from the calling credential.
+
+
+        The new key can never exceed the caller''s own grant: its scopes, personal/service
+
+        kind, and project scope are all constrained to the caller. Creation is audit-logged
+
+        by the service layer.'
+      operationId: create_organization_api_key_v1_api_keys__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APIKeyCreate'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIKeyCreateOutput'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '403':
+          description: Requested scopes or project scoping exceed the caller's own grant
+        '404':
+          description: Project not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:create_api_key
+  /v1/api-keys/{api_key_id}/:
+    patch:
+      tags:
+      - API Keys
+      summary: Update Organization Api Key
+      description: 'Update an API key''s title, description, and/or per-scope `claims`.
+
+
+        An empty body is rejected with 422.'
+      operationId: update_organization_api_key_v1_api_keys__api_key_id___patch
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:write_api_key
+      parameters:
+      - name: api_key_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Api Key Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APIKeyUpdate'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIKeyRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '404':
+          description: API key not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - API Keys
+      summary: Revoke Organization Api Key
+      description: Revoke (soft-delete) an API key. The key stops authenticating immediately.
+      operationId: revoke_organization_api_key_v1_api_keys__api_key_id___delete
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:write_api_key
+      parameters:
+      - name: api_key_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Api Key Id
+      responses:
+        '204':
+          description: Successful Response
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '404':
+          description: API key not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    APIKeyCreateOutput:
+      properties:
+        api_key:
+          $ref: '#/components/schemas/APIKeyRead'
+        token:
+          type: string
+          title: Token
+      type: object
+      required:
+      - api_key
+      - token
+      title: APIKeyCreateOutput
+      description: The created key plus its plaintext token (returned only once, at creation).
+    APIKeyRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        name:
+          type: string
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        scopes:
+          items:
+            $ref: '#/components/schemas/OAuthScopeId'
+          type: array
+          title: Scopes
+        project_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Project Id
+        project_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Project Name
+        all_projects:
+          type: boolean
+          title: All Projects
+        created_by:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Created By
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        last_used_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Last Used At
+        expires_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Expires At
+        user_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: User Id
+        active:
+          type: boolean
+          title: Active
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        updated_by:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Updated By
+        claims:
+          $ref: '#/components/schemas/APIKeyClaims'
+      type: object
+      required:
+      - id
+      - organization_id
+      - name
+      - description
+      - scopes
+      - project_id
+      - project_name
+      - all_projects
+      - created_by
+      - created_by_name
+      - created_at
+      - last_used_at
+      - expires_at
+      - user_id
+      - active
+      - updated_at
+      - updated_by
+      title: APIKeyRead
+    GatewayProxyClaims:
+      properties:
+        spending_limit_daily:
+          anyOf:
+          - type: integer
+            minimum: 0.0
+          - type: 'null'
+          title: Spending Limit Daily
+        spending_limit_weekly:
+          anyOf:
+          - type: integer
+            minimum: 0.0
+          - type: 'null'
+          title: Spending Limit Weekly
+        spending_limit_monthly:
+          anyOf:
+          - type: integer
+            minimum: 0.0
+          - type: 'null'
+          title: Spending Limit Monthly
+        spending_limit_total:
+          anyOf:
+          - type: integer
+            minimum: 0.0
+          - type: 'null'
+          title: Spending Limit Total
+        cache_enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Cache Enabled
+      additionalProperties: false
+      type: object
+      title: GatewayProxyClaims
+      description: Settings carried by the `project:gateway_proxy` scope.
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    APIKeyClaims:
+      properties:
+        project:gateway_proxy:
+          $ref: '#/components/schemas/GatewayKeySettings'
+      type: object
+      title: APIKeyClaims
+    ScopeClaims:
+      properties:
+        project:gateway_proxy:
+          $ref: '#/components/schemas/GatewayProxyClaims'
+      additionalProperties: false
+      type: object
+      title: ScopeClaims
+    APIKeyCreate:
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Name
+        scopes:
+          items:
+            $ref: '#/components/schemas/OAuthScopeId'
+          type: array
+          minItems: 1
+          title: Scopes
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        claims:
+          $ref: '#/components/schemas/ScopeClaims'
+        project_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Project Id
+        expires_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Expires At
+      type: object
+      required:
+      - name
+      - scopes
+      title: APIKeyCreate
+      description: 'Request body for creating an API key via the public API.
+
+
+        `scopes` must be a subset of the caller''s own scopes. Omitting `project_id` (or
+
+        passing `null`) mints an org-wide key; giving a `project_id` scopes the key to that
+
+        project. `claims` carries optional per-scope settings (today only
+
+        `project:gateway_proxy`). Whether the new key is personal or a service key is
+
+        derived from the caller, not chosen here.'
+    OAuthScopeId:
+      type: string
+      enum:
+      - instance:admin
+      - instance:billing
+      - organization:admin
+      - organization:read
+      - organization:create_project
+      - organization:write
+      - organization:scim
+      - organization:read_invitation
+      - organization:write_invitation
+      - organization:read_member
+      - organization:write_member
+      - organization:read_channel
+      - organization:write_channel
+      - organization:create_api_key
+      - organization:read_api_key
+      - organization:write_api_key
+      - organization:auditlog
+      - organization:payment
+      - organization:read_trust_policy
+      - organization:write_trust_policy
+      - project:read
+      - project:write
+      - project:write_token
+      - project:read_token
+      - project:read_dashboard
+      - project:write_dashboard
+      - project:read_alert
+      - project:write_alert
+      - project:read_datasets
+      - project:write_datasets
+      - project:read_variables
+      - project:write_variables
+      - project:read_external_variables
+      - project:gateway_proxy
+      - project:read_otlp
+      - project:write_otlp
+      - project:read_api_key
+      - project:write_api_key
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    APIKeyUpdate:
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        claims:
+          $ref: '#/components/schemas/ScopeClaims'
+      type: object
+      minProperties: 1
+      title: APIKeyUpdate
+      description: 'Partial update of an API key: display metadata and/or per-scope `claims`.'
+    GatewayKeySettings:
+      properties:
+        spending_limit_daily:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Spending Limit Daily
+        spending_limit_weekly:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Spending Limit Weekly
+        spending_limit_monthly:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Spending Limit Monthly
+        spending_limit_total:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Spending Limit Total
+        cache_enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Cache Enabled
+      type: object
+      title: GatewayKeySettings
+      description: 'AI Gateway spend caps and response caching for a `project:gateway_proxy` key.
+
+
+        All fields are optional: an omitted or `null` spending limit means no limit
+
+        for that window, and `cache_enabled=null` inherits the project default.'

@@ -1,0 +1,571 @@
+openapi: 3.0.3
+info:
+  title: Pydantic API Discovery Alerts Organizations API
+  version: 1.0.0
+  summary: Discovery document for Pydantic's region-partitioned APIs.
+  description: 'Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly — it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.
+
+
+    - **US region**: https://logfire-us.pydantic.dev/api/openapi.json
+
+    - **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json
+
+
+    ## Versioning
+
+
+    This discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).
+
+
+    Responses include an `X-API-Version` header identifying the version that served the request.
+
+
+    Related discovery resources:
+
+
+    - [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) — RFC 9727 Linkset of available API descriptions.
+
+    - [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) — JSON list of per-region OpenAPI specs.
+
+    - [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) — RFC 9728 OAuth protected resource metadata.'
+  contact:
+    name: Pydantic
+    url: https://pydantic.dev
+    email: hello@pydantic.dev
+  license:
+    name: Pydantic Terms of Service
+    url: https://pydantic.dev/legal/terms-of-service
+servers:
+- url: https://pydantic.dev/api/v1
+  description: Host Discovery — version 1
+tags:
+- name: Organizations
+paths:
+  /v1/organizations/:
+    get:
+      tags:
+      - Organizations
+      summary: List Organizations
+      description: 'List all organizations (self-hosted admin only).
+
+
+        This endpoint is deprecated and has moved to `/api/v1/instance/organizations/`.'
+      operationId: list_organizations_v1_organizations__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OrganizationReadV1'
+                type: array
+                title: Response List Organizations V1 Organizations  Get
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+      deprecated: true
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:admin
+    post:
+      tags:
+      - Organizations
+      summary: Create Organization
+      description: 'Create an organization owned by the token''s user (on-prem only).
+
+
+        This endpoint is deprecated and has moved to `/api/v1/instance/organizations/`.'
+      operationId: create_organization_v1_organizations__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationCreate'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationReadV1'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: true
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:admin
+  /v1/organizations/{organization_id}/:
+    get:
+      tags:
+      - Organizations
+      summary: Get Organization
+      description: Read an organization by id (self-hosted admin only).
+      operationId: get_organization_v1_organizations__organization_id___get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:admin
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Organization Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationReadV1'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+      - Organizations
+      summary: Update Organization
+      description: Update an organization (self-hosted admin only).
+      operationId: update_organization_v1_organizations__organization_id___put
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:admin
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Organization Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationUpdate'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationReadV1'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - Organizations
+      summary: Delete Organization
+      description: Delete an organization (self-hosted admin only).
+      operationId: delete_organization_v1_organizations__organization_id___delete
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:admin
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Organization Id
+      responses:
+        '204':
+          description: Successful Response
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/organizations/{organization_id}/invitations/:
+    post:
+      tags:
+      - Organizations
+      summary: Create Self Hosted Organization Invitation
+      description: 'Create a single-use organization invitation and return its join URL (self-hosted admin only).
+
+
+        This endpoint is deprecated. Use `/api/v1/invitations/` with an org-context token instead.'
+      operationId: create_self_hosted_organization_invitation_v1_organizations__organization_id__invitations__post
+      deprecated: true
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:admin
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Organization Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationInvitationCreateV1'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationInvitationCreateResponseV1'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    OrganizationInvitationCreateV1:
+      properties:
+        role:
+          type: string
+          enum:
+          - admin
+          - member
+          - guest
+          - billing
+          title: Role
+        expiration:
+          type: string
+          format: date-time
+          title: Expiration
+      type: object
+      required:
+      - role
+      title: OrganizationInvitationCreateV1
+    OrganizationUpdate:
+      properties:
+        organization_name:
+          type: string
+          maxLength: 50
+          minLength: 2
+          pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
+          title: Organization Name
+        billing_email:
+          type: string
+          title: Billing Email
+        organization_display_name:
+          type: string
+          title: Organization Display Name
+        github_handle:
+          type: string
+          title: Github Handle
+        location:
+          type: string
+          title: Location
+        avatar:
+          type: string
+          title: Avatar
+        links:
+          items:
+            $ref: '#/components/schemas/OrganizationLink'
+          type: array
+          title: Links
+        description:
+          type: string
+          title: Description
+      type: object
+      title: OrganizationUpdate
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    OrganizationLink:
+      properties:
+        url:
+          type: string
+          title: Url
+        icon:
+          type: string
+          title: Icon
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - url
+      - icon
+      - name
+      title: OrganizationLink
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    OrganizationInvitationCreateResponseV1:
+      properties:
+        invite_url:
+          type: string
+          title: Invite Url
+      type: object
+      required:
+      - invite_url
+      title: OrganizationInvitationCreateResponseV1
+    OrganizationCreate:
+      properties:
+        organization_name:
+          type: string
+          maxLength: 50
+          minLength: 2
+          pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
+          title: Organization Name
+        organization_display_name:
+          type: string
+          title: Organization Display Name
+        github_handle:
+          type: string
+          title: Github Handle
+        location:
+          type: string
+          title: Location
+        avatar:
+          type: string
+          title: Avatar
+        links:
+          items:
+            $ref: '#/components/schemas/OrganizationLink'
+          type: array
+          title: Links
+        description:
+          type: string
+          title: Description
+      type: object
+      required:
+      - organization_name
+      title: OrganizationCreate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    OrganizationReadV1:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        organization_name:
+          type: string
+          title: Organization Name
+        subscription_plan:
+          anyOf:
+          - $ref: '#/components/schemas/SubscriptionPlanId'
+          - type: 'null'
+        has_admin_panel:
+          type: boolean
+          title: Has Admin Panel
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        billing_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Billing Email
+        organization_display_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Display Name
+        github_handle:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Github Handle
+        location:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Location
+        avatar:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Avatar
+        links:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/OrganizationLink'
+            type: array
+          - type: 'null'
+          title: Links
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        spending_cap:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Spending Cap
+        spending_cap_reached_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Spending Cap Reached At
+        planless_grace_period_ends_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Planless Grace Period Ends At
+        gateway_enabled:
+          type: boolean
+          title: Gateway Enabled
+        ai_enabled:
+          type: boolean
+          title: Ai Enabled
+        ai_training_enabled:
+          type: boolean
+          title: Ai Training Enabled
+      type: object
+      required:
+      - id
+      - organization_name
+      - subscription_plan
+      - has_admin_panel
+      - created_at
+      - updated_at
+      - billing_email
+      - organization_display_name
+      - github_handle
+      - location
+      - avatar
+      - links
+      - description
+      - spending_cap
+      - spending_cap_reached_at
+      - planless_grace_period_ends_at
+      - gateway_enabled
+      - ai_enabled
+      - ai_training_enabled
+      title: OrganizationReadV1
+    SubscriptionPlanId:
+      type: string
+      enum:
+      - personal
+      - team
+      - growth
+      - enterprise_cloud
+      - non_stripe

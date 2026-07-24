@@ -1,0 +1,1161 @@
+openapi: 3.0.3
+info:
+  title: Pydantic API Discovery Alerts Variables API
+  version: 1.0.0
+  summary: Discovery document for Pydantic's region-partitioned APIs.
+  description: 'Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly — it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.
+
+
+    - **US region**: https://logfire-us.pydantic.dev/api/openapi.json
+
+    - **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json
+
+
+    ## Versioning
+
+
+    This discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).
+
+
+    Responses include an `X-API-Version` header identifying the version that served the request.
+
+
+    Related discovery resources:
+
+
+    - [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) — RFC 9727 Linkset of available API descriptions.
+
+    - [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) — JSON list of per-region OpenAPI specs.
+
+    - [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) — RFC 9728 OAuth protected resource metadata.'
+  contact:
+    name: Pydantic
+    url: https://pydantic.dev
+    email: hello@pydantic.dev
+  license:
+    name: Pydantic Terms of Service
+    url: https://pydantic.dev/legal/terms-of-service
+servers:
+- url: https://pydantic.dev/api/v1
+  description: Host Discovery — version 1
+tags:
+- name: Variables
+paths:
+  /v1/projects/{project_id}/variables/:
+    get:
+      tags:
+      - Variables
+      summary: Get Variables Config
+      description: 'Get the full variables configuration for a project.
+
+
+        Returns the complete configuration in a format compatible with the
+
+        logfire SDK''s VariablesConfig, suitable for use with remote variable providers.
+
+
+        Requires: User token with project:read_variables scope.'
+      operationId: get_variables_config_v1_projects__project_id__variables__get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:read_variables
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariablesConfig'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - Variables
+      summary: Create Variable
+      description: 'Create a new variable definition, optionally with labels and versions.
+
+
+        Requires: User token with project:write_variables scope.'
+      operationId: create_variable_v1_projects__project_id__variables__post
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write_variables
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VariableDefinitionCreateRequest'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableDefinitionRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/variables/{name}/:
+    get:
+      tags:
+      - Variables
+      summary: Get Variable By Name
+      description: 'Get a variable definition by name with current labels and latest version.
+
+
+        Requires: User token with project:read_variables scope.'
+      operationId: get_variable_by_name_v1_projects__project_id__variables__name___get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:read_variables
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Name
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableConfig'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+      - Variables
+      summary: Update Variable
+      description: 'Update an existing variable definition, optionally with labels and versions.
+
+
+        Fields present and set to None will be cleared.
+
+        Fields not present will not be changed.
+
+
+        Requires: User token with project:write_variables scope.'
+      operationId: update_variable_v1_projects__project_id__variables__name___put
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write_variables
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Name
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VariableDefinitionUpdateRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableDefinitionRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    LabeledValue:
+      properties:
+        version:
+          type: integer
+          title: Version
+        serialized_value:
+          type: string
+          title: Serialized Value
+      type: object
+      required:
+      - version
+      - serialized_value
+      title: LabeledValue
+      description: A label pointing to a version with an inline serialized value.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ValueDoesNotMatchRegex:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        pattern:
+          anyOf:
+          - type: string
+          - type: string
+            format: regex
+          title: Pattern
+        kind:
+          type: string
+          enum:
+          - value-does-not-match-regex
+          title: Kind
+          default: value-does-not-match-regex
+      type: object
+      required:
+      - attribute
+      - pattern
+      title: ValueDoesNotMatchRegex
+      description: Condition that matches when an attribute value does not match a regex pattern.
+    VariablesConfig:
+      properties:
+        variables:
+          additionalProperties:
+            $ref: '#/components/schemas/VariableConfig'
+          type: object
+          title: Variables
+      type: object
+      required:
+      - variables
+      title: VariablesConfig
+      description: Container for all managed variable configurations.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    LabelRef:
+      properties:
+        version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Version
+        ref:
+          type: string
+          title: Ref
+      type: object
+      required:
+      - ref
+      title: LabelRef
+      description: A label pointing via reference to another label, 'latest', or 'code_default'.
+    RolloutData:
+      properties:
+        labels:
+          additionalProperties:
+            type: number
+          type: object
+          title: Labels
+        latest_weight:
+          type: number
+          title: Latest Weight
+      type: object
+      required:
+      - labels
+      title: RolloutData
+      description: Rollout configuration stored as JSONB.
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    ValueEquals:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        value:
+          title: Value
+        kind:
+          type: string
+          enum:
+          - value-equals
+          title: Kind
+          default: value-equals
+      type: object
+      required:
+      - attribute
+      - value
+      title: ValueEquals
+      description: Condition that matches when an attribute equals a specific value.
+    VariableDefinitionRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        type_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Type Id
+        type_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Type Name
+        kind:
+          type: string
+          enum:
+          - general
+          - prompt
+          title: Kind
+        name:
+          type: string
+          title: Name
+        display_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display Name
+        prompt_slug:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prompt Slug
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        json_schema:
+          anyOf:
+          - $ref: '#/components/schemas/JSONBData'
+          - type: 'null'
+        template_inputs_schema:
+          anyOf:
+          - $ref: '#/components/schemas/JSONBData'
+          - type: 'null'
+        labels:
+          additionalProperties:
+            $ref: '#/components/schemas/LabelRead'
+          type: object
+          title: Labels
+        latest_version:
+          anyOf:
+          - $ref: '#/components/schemas/VersionRead'
+          - type: 'null'
+        rollout:
+          $ref: '#/components/schemas/RolloutData'
+        overrides:
+          items:
+            $ref: '#/components/schemas/OverrideData'
+          type: array
+          title: Overrides
+        aliases:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Aliases
+        example:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Example
+        external:
+          type: boolean
+          title: External
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+      type: object
+      required:
+      - id
+      - project_id
+      - type_id
+      - type_name
+      - kind
+      - name
+      - display_name
+      - prompt_slug
+      - description
+      - json_schema
+      - template_inputs_schema
+      - labels
+      - latest_version
+      - rollout
+      - overrides
+      - aliases
+      - example
+      - external
+      - created_at
+      - updated_at
+      - created_by_name
+      - updated_by_name
+      title: VariableDefinitionRead
+      description: Variable definition with current labels and latest version assembled.
+    ConditionData:
+      properties:
+        kind:
+          type: string
+          title: Kind
+        attribute:
+          type: string
+          title: Attribute
+        value:
+          title: Value
+        values:
+          items: {}
+          type: array
+          title: Values
+        pattern:
+          type: string
+          title: Pattern
+      type: object
+      title: ConditionData
+      description: 'Condition for targeting, stored as JSONB.
+
+
+        Different condition types have different fields, so all are optional.
+
+        The ''kind'' field determines which other fields are relevant.'
+    VariableDefinitionCreateRequest:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          anyOf:
+          - type: string
+            maxLength: 500
+          - type: 'null'
+          title: Description
+        json_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Json Schema
+        template_inputs_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Template Inputs Schema
+        type_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Type Id
+        rollout:
+          $ref: '#/components/schemas/RolloutData'
+        overrides:
+          items:
+            $ref: '#/components/schemas/OverrideData'
+          type: array
+          title: Overrides
+        aliases:
+          items:
+            type: string
+          type: array
+          title: Aliases
+        example:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Example
+        external:
+          type: boolean
+          title: External
+        labels:
+          additionalProperties:
+            anyOf:
+            - $ref: '#/components/schemas/VersionLabelData'
+            - $ref: '#/components/schemas/LatestLabelData'
+            - $ref: '#/components/schemas/CodeDefaultLabelData'
+            - $ref: '#/components/schemas/LabelRefLabelData'
+          type: object
+          title: Labels
+      type: object
+      required:
+      - name
+      - description
+      - json_schema
+      - rollout
+      - overrides
+      title: VariableDefinitionCreateRequest
+      description: Request model for creating a variable definition.
+    LatestLabelData:
+      properties:
+        target_type:
+          type: string
+          enum:
+          - latest
+          title: Target Type
+      type: object
+      required:
+      - target_type
+      title: LatestLabelData
+      description: Label data pointing to the latest version.
+    OverrideData:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        conditions:
+          items:
+            $ref: '#/components/schemas/ConditionData'
+          type: array
+          title: Conditions
+        rollout:
+          $ref: '#/components/schemas/RolloutData'
+      type: object
+      required:
+      - conditions
+      - rollout
+      title: OverrideData
+      description: Override configuration stored as JSONB.
+    VersionRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        variable_definition_id:
+          type: string
+          format: uuid
+          title: Variable Definition Id
+        version:
+          type: integer
+          title: Version
+        serialized_value:
+          type: string
+          title: Serialized Value
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        created_by:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Created By
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+      type: object
+      required:
+      - id
+      - variable_definition_id
+      - version
+      - serialized_value
+      - description
+      - created_at
+      - created_by
+      - created_by_name
+      title: VersionRead
+      description: A version as read from the database.
+    JSONBData:
+      anyOf:
+      - additionalProperties:
+          $ref: '#/components/schemas/JSONBData'
+        type: object
+      - items:
+          $ref: '#/components/schemas/JSONBData'
+        type: array
+      - type: string
+      - type: integer
+      - type: boolean
+      - type: number
+      - type: 'null'
+    ValueDoesNotEqual:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        value:
+          title: Value
+        kind:
+          type: string
+          enum:
+          - value-does-not-equal
+          title: Kind
+          default: value-does-not-equal
+      type: object
+      required:
+      - attribute
+      - value
+      title: ValueDoesNotEqual
+      description: Condition that matches when an attribute does not equal a specific value.
+    RolloutOverride:
+      properties:
+        conditions:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ValueEquals'
+            - $ref: '#/components/schemas/ValueDoesNotEqual'
+            - $ref: '#/components/schemas/ValueIsIn'
+            - $ref: '#/components/schemas/ValueIsNotIn'
+            - $ref: '#/components/schemas/ValueMatchesRegex'
+            - $ref: '#/components/schemas/ValueDoesNotMatchRegex'
+            - $ref: '#/components/schemas/KeyIsPresent'
+            - $ref: '#/components/schemas/KeyIsNotPresent'
+            discriminator:
+              propertyName: kind
+              mapping:
+                key-is-not-present: '#/components/schemas/KeyIsNotPresent'
+                key-is-present: '#/components/schemas/KeyIsPresent'
+                value-does-not-equal: '#/components/schemas/ValueDoesNotEqual'
+                value-does-not-match-regex: '#/components/schemas/ValueDoesNotMatchRegex'
+                value-equals: '#/components/schemas/ValueEquals'
+                value-is-in: '#/components/schemas/ValueIsIn'
+                value-is-not-in: '#/components/schemas/ValueIsNotIn'
+                value-matches-regex: '#/components/schemas/ValueMatchesRegex'
+          type: array
+          title: Conditions
+        rollout:
+          $ref: '#/components/schemas/Rollout'
+      type: object
+      required:
+      - conditions
+      - rollout
+      title: RolloutOverride
+      description: An override of the default rollout when specific conditions are met.
+    LatestVersion:
+      properties:
+        version:
+          type: integer
+          title: Version
+        serialized_value:
+          type: string
+          title: Serialized Value
+      type: object
+      required:
+      - version
+      - serialized_value
+      title: LatestVersion
+      description: The latest version of a variable, always carrying its serialized value.
+    Rollout:
+      properties:
+        labels:
+          additionalProperties:
+            type: number
+          propertyNames:
+            maxLength: 200
+            minLength: 1
+          type: object
+          title: Labels
+      type: object
+      required:
+      - labels
+      title: Rollout
+      description: Configuration for label selection with weighted probabilities.
+    LabelRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        variable_definition_id:
+          type: string
+          format: uuid
+          title: Variable Definition Id
+        label:
+          type: string
+          title: Label
+        target_type:
+          type: string
+          title: Target Type
+        target_label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Target Label
+        version_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Version Id
+        version_number:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Version Number
+        serialized_value:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Serialized Value
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        updated_by:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Updated By
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+      type: object
+      required:
+      - id
+      - variable_definition_id
+      - label
+      - target_type
+      - target_label
+      - version_id
+      - version_number
+      - serialized_value
+      - updated_at
+      - updated_by
+      - updated_by_name
+      title: LabelRead
+      description: A label as read from the database.
+    VersionLabelData:
+      properties:
+        target_type:
+          type: string
+          enum:
+          - version
+          title: Target Type
+        serialized_value:
+          type: string
+          title: Serialized Value
+        version:
+          type: integer
+          title: Version
+      type: object
+      required:
+      - target_type
+      - serialized_value
+      title: VersionLabelData
+      description: Label data pointing to a version by serialized value.
+    LabelRefLabelData:
+      properties:
+        target_type:
+          type: string
+          enum:
+          - label
+          title: Target Type
+        target_label:
+          type: string
+          title: Target Label
+      type: object
+      required:
+      - target_type
+      - target_label
+      title: LabelRefLabelData
+      description: Label data pointing to another label.
+    CodeDefaultLabelData:
+      properties:
+        target_type:
+          type: string
+          enum:
+          - code_default
+          title: Target Type
+      type: object
+      required:
+      - target_type
+      title: CodeDefaultLabelData
+      description: Label data indicating to use the code default value.
+    KeyIsNotPresent:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        kind:
+          type: string
+          enum:
+          - key-is-not-present
+          title: Kind
+          default: key-is-not-present
+      type: object
+      required:
+      - attribute
+      title: KeyIsNotPresent
+      description: Condition that matches when an attribute key is not present.
+    VariableDefinitionUpdateRequest:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          anyOf:
+          - type: string
+            maxLength: 500
+          - type: 'null'
+          title: Description
+        json_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Json Schema
+        template_inputs_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Template Inputs Schema
+        type_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Type Id
+        rollout:
+          $ref: '#/components/schemas/RolloutData'
+        overrides:
+          items:
+            $ref: '#/components/schemas/OverrideData'
+          type: array
+          title: Overrides
+        aliases:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Aliases
+        example:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Example
+        external:
+          type: boolean
+          title: External
+        labels:
+          additionalProperties:
+            anyOf:
+            - $ref: '#/components/schemas/VersionLabelData'
+            - $ref: '#/components/schemas/LatestLabelData'
+            - $ref: '#/components/schemas/CodeDefaultLabelData'
+            - $ref: '#/components/schemas/LabelRefLabelData'
+          type: object
+          title: Labels
+      type: object
+      title: VariableDefinitionUpdateRequest
+      description: 'Request model for updating a variable definition.
+
+
+        Should be the same as `VariableDefinitionCreateRequest`, just with `total=False`.'
+    ValueIsNotIn:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        values:
+          items: {}
+          type: array
+          title: Values
+        kind:
+          type: string
+          enum:
+          - value-is-not-in
+          title: Kind
+          default: value-is-not-in
+      type: object
+      required:
+      - attribute
+      - values
+      title: ValueIsNotIn
+      description: Condition that matches when an attribute value is not in a set of values.
+    VariableConfig:
+      properties:
+        name:
+          type: string
+          title: Name
+        kind:
+          type: string
+          enum:
+          - general
+          - prompt
+          title: Kind
+          default: general
+        labels:
+          additionalProperties:
+            anyOf:
+            - $ref: '#/components/schemas/LabeledValue'
+            - $ref: '#/components/schemas/LabelRef'
+          propertyNames:
+            maxLength: 200
+            minLength: 1
+          type: object
+          title: Labels
+        latest_version:
+          anyOf:
+          - $ref: '#/components/schemas/LatestVersion'
+          - type: 'null'
+        rollout:
+          $ref: '#/components/schemas/Rollout'
+        overrides:
+          items:
+            $ref: '#/components/schemas/RolloutOverride'
+          type: array
+          title: Overrides
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        json_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Json Schema
+        template_inputs_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Template Inputs Schema
+        type_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Type Name
+        aliases:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Aliases
+        example:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Example
+        display_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display Name
+        prompt_slug:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prompt Slug
+      type: object
+      required:
+      - name
+      - labels
+      - rollout
+      - overrides
+      title: VariableConfig
+      description: Configuration for a single managed variable including labels and rollout rules.
+    ValueMatchesRegex:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        pattern:
+          anyOf:
+          - type: string
+          - type: string
+            format: regex
+          title: Pattern
+        kind:
+          type: string
+          enum:
+          - value-matches-regex
+          title: Kind
+          default: value-matches-regex
+      type: object
+      required:
+      - attribute
+      - pattern
+      title: ValueMatchesRegex
+      description: Condition that matches when an attribute value matches a regex pattern.
+    ValueIsIn:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        values:
+          items: {}
+          type: array
+          title: Values
+        kind:
+          type: string
+          enum:
+          - value-is-in
+          title: Kind
+          default: value-is-in
+      type: object
+      required:
+      - attribute
+      - values
+      title: ValueIsIn
+      description: Condition that matches when an attribute value is in a set of values.
+    KeyIsPresent:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        kind:
+          type: string
+          enum:
+          - key-is-present
+          title: Kind
+          default: key-is-present
+      type: object
+      required:
+      - attribute
+      title: KeyIsPresent
+      description: Condition that matches when an attribute key is present.

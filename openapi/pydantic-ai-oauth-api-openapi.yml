@@ -1,0 +1,931 @@
+openapi: 3.0.3
+info:
+  title: Pydantic API Discovery Alerts OAuth API
+  version: 1.0.0
+  summary: Discovery document for Pydantic's region-partitioned APIs.
+  description: 'Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly — it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.
+
+
+    - **US region**: https://logfire-us.pydantic.dev/api/openapi.json
+
+    - **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json
+
+
+    ## Versioning
+
+
+    This discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).
+
+
+    Responses include an `X-API-Version` header identifying the version that served the request.
+
+
+    Related discovery resources:
+
+
+    - [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) — RFC 9727 Linkset of available API descriptions.
+
+    - [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) — JSON list of per-region OpenAPI specs.
+
+    - [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) — RFC 9728 OAuth protected resource metadata.'
+  contact:
+    name: Pydantic
+    url: https://pydantic.dev
+    email: hello@pydantic.dev
+  license:
+    name: Pydantic Terms of Service
+    url: https://pydantic.dev/legal/terms-of-service
+servers:
+- url: https://pydantic.dev/api/v1
+  description: Host Discovery — version 1
+tags:
+- name: OAuth
+paths:
+  /oauth/authorize:
+    get:
+      tags:
+      - OAuth
+      summary: Oauth Authorize Get
+      description: 'OAuth 2.0 authorization endpoint (GET).
+
+
+        This endpoint validates the request and redirects to the consent page where the user
+
+        can select a project and authorize the client.
+
+
+        Implements RFC 6749 Section 4.1.1 (Authorization Request) and 4.1.2.1 (Error Response).
+
+
+        **SECURITY POLICY:** PKCE (RFC 7636) with S256 is REQUIRED for all clients.
+
+        Clients must provide code_challenge and code_challenge_method=S256 parameters.
+
+
+        RFC 8707: The `resource` parameter identifies the target resource server
+
+        for which the token will be issued.
+
+
+        Note: While RFC 6749 lists redirect_uri as OPTIONAL, Section 3.1.2 states it MUST be
+
+        included if multiple redirect URIs are registered. This implementation requires it.'
+      operationId: oauth_authorize_get_oauth_authorize_get
+      parameters:
+      - name: response_type
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Response Type
+      - name: client_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Id
+      - name: redirect_uri
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Redirect Uri
+      - name: scope
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scope
+      - name: state
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: State
+      - name: code_challenge
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code Challenge
+      - name: code_challenge_method
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code Challenge Method
+      - name: resource
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Resource
+      - name: logfire_token
+        in: cookie
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Logfire Token
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - OAuth
+      summary: Oauth Authorize Post
+      description: 'OAuth 2.0 authorization endpoint (POST).
+
+
+        This endpoint receives the user''s consent (with selected organization and project)
+
+        and generates an authorization code.
+
+
+        RFC 8707: The `resource` parameter identifies the target resource server.
+
+
+        When called with Accept: application/json, returns the redirect URL as JSON
+
+        instead of a 303 redirect. This avoids CSP form-action restrictions that block
+
+        cross-origin redirects in the OAuth flow''s redirect chain.'
+      operationId: oauth_authorize_post_oauth_authorize_post
+      parameters:
+      - name: logfire_token
+        in: cookie
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Logfire Token
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Body_oauth_authorize_post_oauth_authorize_post'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /oauth/grantable-scopes:
+    get:
+      tags:
+      - OAuth
+      summary: Oauth Grantable Scopes
+      description: 'Return the subset of `scopes` the authenticated user can actually grant.
+
+
+        Used by the consent UI to show which scopes the current user can grant for the
+
+        currently-selected org/project, so the user isn''t asked to approve scopes that
+
+        would be silently filtered server-side during the POST /authorize step.
+
+
+        Scopes not recognized by the platform (e.g. OIDC scopes like `openid`) are
+
+        passed through — only platform resource scopes are filtered by permissions.'
+      operationId: oauth_grantable_scopes_oauth_grantable_scopes_get
+      parameters:
+      - name: organization_id
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Organization Id
+      - name: scopes
+        in: query
+        required: true
+        schema:
+          type: string
+          description: Space-separated list of scopes to check
+          title: Scopes
+        description: Space-separated list of scopes to check
+      - name: project_id
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Project Id
+      - name: logfire_token
+        in: cookie
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Logfire Token
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrantableScopesResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /oauth/token:
+    post:
+      tags:
+      - OAuth
+      summary: Oauth Token
+      description: 'OAuth 2.0 token endpoint.
+
+
+        Supports `authorization_code`, `refresh_token`,
+
+        `urn:ietf:params:oauth:grant-type:device_code` (RFC 8628), and
+
+        `urn:ietf:params:oauth:grant-type:token-exchange` (RFC 8693) grant types.
+
+
+        **SECURITY POLICY:** PKCE (RFC 7636) with S256 is REQUIRED for authorization_code grant.
+
+        Clients must provide code_verifier parameter when exchanging authorization codes.
+
+
+        RFC 8707: The `resource` parameter identifies the target resource server for which
+
+        the token is being requested.
+
+
+        Per RFC 6749 Section 2.3.1, clients can authenticate via:
+
+        - HTTP Basic authentication (Authorization header)
+
+        - Request body parameters (client_id and client_secret)
+
+
+        Clients MUST NOT use both authentication methods simultaneously.
+
+
+        Per RFC 6749 Section 4.1.3, client_id is REQUIRED only if the client is not
+
+        authenticating with the authorization server (e.g., via Authorization header).
+
+
+        RFC 8693: The `token-exchange` grant type is unauthenticated (the subject_token
+
+        JWT is itself the credential), so it skips the client-credentials handling
+
+        below and is dispatched first via `handle_token_exchange`.'
+      operationId: oauth_token_oauth_token_post
+      parameters:
+      - name: authorization
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Authorization
+      - name: user-agent
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User-Agent
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Body_oauth_token_oauth_token_post'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/TokenResponse'
+                - $ref: '#/components/schemas/TokenExchangeResponse'
+                title: Response Oauth Token Oauth Token Post
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Unauthorized
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /oauth/device/code:
+    post:
+      tags:
+      - OAuth
+      summary: Device Authorization Request
+      description: 'RFC 8628 Section 3.1 - Device Authorization Request.
+
+
+        The client requests a device code from the authorization server.
+
+        The user will then visit the verification_uri and enter the user_code
+
+        to authorize the device.
+
+
+        Returns device_code, user_code, verification_uri, and polling interval.'
+      operationId: device_authorization_oauth_device_code_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Body_device_authorization_oauth_device_code_post'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceAuthorizationResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /oauth/register:
+    post:
+      tags:
+      - OAuth
+      summary: Dynamic Client Registration (RFC 7591)
+      description: "RFC 7591 — Dynamic Client Registration.\n\nAllows MCP clients and other OAuth clients to register themselves\nwithout prior manual setup.  Creates a **public** OAuth client\n(`token_endpoint_auth_method: \"none\"`) with no organization binding.\nThe organization is determined later when the user authorizes.\n\nThis endpoint is unauthenticated per the MCP/OAuth specification.\n\nSecurity considerations (RFC 7591 Section 5):\n- DCR clients are **public** (no secret) — security relies on PKCE (S256),\n  redirect_uri validation, and the user's explicit consent on the authorization page.\n- Scopes are restricted to a safe subset (`_DCR_ALLOWED_SCOPES`); no admin scopes.\n- Rate limiting is enforced per IP (60/min, 600/hour) to prevent resource exhaustion.\n- Client IDs use `lf_dcr_` prefix for easy identification and auditing."
+      operationId: oauth_register_oauth_register_post
+      parameters:
+      - name: user-agent
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User-Agent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DCRRequest'
+              default: {}
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DCRResponse'
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DCRErrorResponse'
+          description: Bad Request
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /oauth/register/{client_id}:
+    delete:
+      tags:
+      - OAuth
+      summary: Delete Dynamic Client Registration (RFC 7592)
+      description: 'RFC 7592 — Client Configuration Endpoint (DELETE).
+
+
+        Allows a DCR-registered client to deregister itself using the
+
+        `registration_access_token` issued during registration.
+
+
+        On success, the client and all associated tokens are invalidated.'
+      operationId: oauth_deregister_oauth_register__client_id__delete
+      parameters:
+      - name: client_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Client Id
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    DCRResponse:
+      properties:
+        client_id:
+          type: string
+          title: Client Id
+        client_id_issued_at:
+          type: integer
+          title: Client Id Issued At
+        client_name:
+          type: string
+          title: Client Name
+        client_uri:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Uri
+        logo_uri:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Logo Uri
+        redirect_uris:
+          items:
+            type: string
+          type: array
+          title: Redirect Uris
+        grant_types:
+          items:
+            type: string
+          type: array
+          title: Grant Types
+        response_types:
+          items:
+            type: string
+          type: array
+          title: Response Types
+        token_endpoint_auth_method:
+          type: string
+          title: Token Endpoint Auth Method
+        scope:
+          type: string
+          title: Scope
+        application_type:
+          type: string
+          title: Application Type
+        registration_client_uri:
+          type: string
+          title: Registration Client Uri
+        registration_access_token:
+          type: string
+          title: Registration Access Token
+      type: object
+      required:
+      - client_id
+      - client_id_issued_at
+      - client_name
+      - redirect_uris
+      - grant_types
+      - response_types
+      - token_endpoint_auth_method
+      - scope
+      - application_type
+      - registration_client_uri
+      - registration_access_token
+      title: DCRResponse
+      description: RFC 7591/7592 Client Information Response.
+    DCRErrorResponse:
+      properties:
+        error:
+          type: string
+          enum:
+          - invalid_client_metadata
+          - invalid_redirect_uri
+          title: Error
+        error_description:
+          type: string
+          title: Error Description
+      type: object
+      required:
+      - error
+      - error_description
+      title: DCRErrorResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    Body_device_authorization_oauth_device_code_post:
+      properties:
+        client_id:
+          type: string
+          title: Client Id
+        scope:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scope
+        code_challenge:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code Challenge
+        code_challenge_method:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code Challenge Method
+        resource:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Resource
+      type: object
+      required:
+      - client_id
+      title: Body_device_authorization_oauth_device_code_post
+    Body_oauth_authorize_post_oauth_authorize_post:
+      properties:
+        client_id:
+          type: string
+          title: Client Id
+        redirect_uri:
+          type: string
+          title: Redirect Uri
+        scope:
+          type: string
+          title: Scope
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        project_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Project Id
+        state:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: State
+        code_challenge:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code Challenge
+        code_challenge_method:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code Challenge Method
+        resource:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Resource
+        csrf_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Csrf Token
+        limits:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Limits
+      type: object
+      required:
+      - client_id
+      - redirect_uri
+      - scope
+      - organization_id
+      title: Body_oauth_authorize_post_oauth_authorize_post
+    ErrorResponse:
+      properties:
+        error:
+          type: string
+          enum:
+          - invalid_request
+          - unauthorized_client
+          - access_denied
+          - unsupported_response_type
+          - invalid_scope
+          - server_error
+          - temporarily_unavailable
+          - invalid_client
+          - invalid_grant
+          - unsupported_grant_type
+          - invalid_target
+          - authorization_pending
+          - slow_down
+          - expired_token
+          - unsupported_token_type
+          title: Error
+        error_description:
+          type: string
+          title: Error Description
+      type: object
+      required:
+      - error
+      - error_description
+      title: ErrorResponse
+    DeviceAuthorizationResponse:
+      properties:
+        device_code:
+          type: string
+          title: Device Code
+        user_code:
+          type: string
+          title: User Code
+        verification_uri:
+          type: string
+          title: Verification Uri
+        verification_uri_complete:
+          type: string
+          title: Verification Uri Complete
+        expires_in:
+          type: integer
+          title: Expires In
+        interval:
+          type: integer
+          title: Interval
+      type: object
+      required:
+      - device_code
+      - user_code
+      - verification_uri
+      - verification_uri_complete
+      - expires_in
+      - interval
+      title: DeviceAuthorizationResponse
+      description: RFC 8628 Section 3.2 - Device Authorization Response.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    GrantableScopesResponse:
+      properties:
+        grantable_scopes:
+          items:
+            type: string
+          type: array
+          title: Grantable Scopes
+      type: object
+      required:
+      - grantable_scopes
+      title: GrantableScopesResponse
+      description: Subset of `scopes` the authenticated user can grant in the given org/project.
+    Body_oauth_token_oauth_token_post:
+      properties:
+        grant_type:
+          type: string
+          title: Grant Type
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+        redirect_uri:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Redirect Uri
+        client_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Id
+        client_secret:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Secret
+        refresh_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Refresh Token
+        scope:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scope
+        code_verifier:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code Verifier
+        resource:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Resource
+        device_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Device Code
+        client_assertion_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Assertion Type
+        client_assertion:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Assertion
+      type: object
+      required:
+      - grant_type
+      title: Body_oauth_token_oauth_token_post
+    TokenResponse:
+      properties:
+        access_token:
+          type: string
+          title: Access Token
+        token_type:
+          type: string
+          enum:
+          - Bearer
+          title: Token Type
+        expires_in:
+          type: integer
+          title: Expires In
+        refresh_token:
+          type: string
+          title: Refresh Token
+        scope:
+          type: string
+          title: Scope
+      type: object
+      required:
+      - access_token
+      - token_type
+      - expires_in
+      - refresh_token
+      - scope
+      title: TokenResponse
+    DCRRequest:
+      properties:
+        client_name:
+          type: string
+          title: Client Name
+        client_uri:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Uri
+        logo_uri:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Logo Uri
+        redirect_uris:
+          items:
+            type: string
+          type: array
+          title: Redirect Uris
+        grant_types:
+          items:
+            type: string
+          type: array
+          title: Grant Types
+        response_types:
+          items:
+            type: string
+          type: array
+          title: Response Types
+        token_endpoint_auth_method:
+          type: string
+          title: Token Endpoint Auth Method
+        scope:
+          type: string
+          title: Scope
+        application_type:
+          type: string
+          title: Application Type
+      type: object
+      title: DCRRequest
+      description: RFC 7591 Client Metadata for Dynamic Client Registration.
+    TokenExchangeResponse:
+      properties:
+        access_token:
+          type: string
+          title: Access Token
+        issued_token_type:
+          type: string
+          title: Issued Token Type
+        token_type:
+          type: string
+          title: Token Type
+        expires_in:
+          type: integer
+          title: Expires In
+        scope:
+          type: string
+          title: Scope
+      type: object
+      required:
+      - access_token
+      - issued_token_type
+      - token_type
+      - expires_in
+      - scope
+      title: TokenExchangeResponse
+      description: 'RFC 8693 §2.2 successful token-exchange response.
+
+
+        Distinct from the OAuth 2.0 token endpoint''s `TokenResponse` (RFC 6749 §5.1):
+
+        `issued_token_type` is mandatory per §2.2.1, and there''s no `refresh_token`
+
+        (workload tokens are short-lived and not re-issuable through this flow).'

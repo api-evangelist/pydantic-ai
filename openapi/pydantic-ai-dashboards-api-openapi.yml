@@ -1,0 +1,1055 @@
+openapi: 3.0.3
+info:
+  title: Pydantic API Discovery Alerts Dashboards API
+  version: 1.0.0
+  summary: Discovery document for Pydantic's region-partitioned APIs.
+  description: 'Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly — it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.
+
+
+    - **US region**: https://logfire-us.pydantic.dev/api/openapi.json
+
+    - **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json
+
+
+    ## Versioning
+
+
+    This discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).
+
+
+    Responses include an `X-API-Version` header identifying the version that served the request.
+
+
+    Related discovery resources:
+
+
+    - [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) — RFC 9727 Linkset of available API descriptions.
+
+    - [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) — JSON list of per-region OpenAPI specs.
+
+    - [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) — RFC 9728 OAuth protected resource metadata.'
+  contact:
+    name: Pydantic
+    url: https://pydantic.dev
+    email: hello@pydantic.dev
+  license:
+    name: Pydantic Terms of Service
+    url: https://pydantic.dev/legal/terms-of-service
+servers:
+- url: https://pydantic.dev/api/v1
+  description: Host Discovery — version 1
+tags:
+- name: Dashboards
+paths:
+  /v1/projects/{project_id}/dashboards/:
+    get:
+      tags:
+      - Dashboards
+      summary: List Dashboards
+      operationId: list_dashboards_v1_projects__project_id__dashboards__get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:read_dashboard
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DashboardSummary'
+                title: Response List Dashboards V1 Projects  Project Id  Dashboards  Get
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - Dashboards
+      summary: Create Dashboard
+      operationId: create_dashboard_v1_projects__project_id__dashboards__post
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write_dashboard
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DashboardCreateRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '409':
+          description: Dashboard with this slug already exists
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/projects/{project_id}/dashboards/{dashboard_id}/:
+    get:
+      tags:
+      - Dashboards
+      summary: Get Dashboard
+      operationId: get_dashboard_v1_projects__project_id__dashboards__dashboard_id___get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:read_dashboard
+      parameters:
+      - name: dashboard_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Dashboard Id
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDashboardResponse'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+      - Dashboards
+      summary: Update Dashboard
+      operationId: update_dashboard_v1_projects__project_id__dashboards__dashboard_id___put
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write_dashboard
+      parameters:
+      - name: dashboard_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Dashboard Id
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DashboardUpdateRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dashboard'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '409':
+          description: Dashboard version conflict
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - Dashboards
+      summary: Delete Dashboard
+      operationId: delete_dashboard_v1_projects__project_id__dashboards__dashboard_id___delete
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - project:write_dashboard
+      parameters:
+      - name: dashboard_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Dashboard Id
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+      responses:
+        '204':
+          description: Successful Response
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    DashboardGridItem:
+      properties:
+        x:
+          type: integer
+          title: X
+        y:
+          type: integer
+          title: Y
+        width:
+          type: integer
+          title: Width
+        height:
+          type: integer
+          title: Height
+        content:
+          $ref: '#/components/schemas/PanelRef'
+      type: object
+      required:
+      - x
+      - y
+      - width
+      - height
+      - content
+      title: DashboardGridItem
+    DashboardVariable-Input:
+      oneOf:
+      - $ref: '#/components/schemas/DashboardTextVariable-Input'
+      - $ref: '#/components/schemas/DashboardListVariable-Input'
+      discriminator:
+        propertyName: kind
+        mapping:
+          ListVariable: '#/components/schemas/DashboardListVariable-Input'
+          TextVariable: '#/components/schemas/DashboardTextVariable-Input'
+    DashboardPanel-Input:
+      properties:
+        kind:
+          type: string
+          enum:
+          - Panel
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardPanelSpec-Input'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardPanel
+    DashboardListVariable-Output:
+      properties:
+        kind:
+          type: string
+          enum:
+          - ListVariable
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardListVariableSpec'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardListVariable
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    DashboardLayout-Input:
+      properties:
+        kind:
+          type: string
+          enum:
+          - Grid
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardGridSpec-Input'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardLayout
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    DashboardSummary:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+        dashboard_name:
+          type: string
+          title: Dashboard Name
+        dashboard_slug:
+          type: string
+          title: Dashboard Slug
+        version:
+          type: integer
+          title: Version
+      type: object
+      required:
+      - id
+      - project_id
+      - created_at
+      - updated_at
+      - created_by_name
+      - updated_by_name
+      - dashboard_name
+      - dashboard_slug
+      - version
+      title: DashboardSummary
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    DashboardPanelDisplay:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+      type: object
+      required:
+      - name
+      title: DashboardPanelDisplay
+    DashboardGridSpec-Output:
+      properties:
+        display:
+          $ref: '#/components/schemas/DashboardGridDisplay'
+        items:
+          items:
+            $ref: '#/components/schemas/DashboardGridItem'
+          type: array
+          title: Items
+      type: object
+      required:
+      - items
+      title: DashboardGridSpec
+    DashboardTextVariableSpec:
+      properties:
+        name:
+          type: string
+          title: Name
+        display:
+          $ref: '#/components/schemas/DashboardVariableDisplay'
+        value:
+          type: string
+          title: Value
+        constant:
+          type: boolean
+          title: Constant
+      type: object
+      required:
+      - name
+      - value
+      title: DashboardTextVariableSpec
+    DashboardDatasourceSpec:
+      properties:
+        display:
+          anyOf:
+          - $ref: '#/components/schemas/DashboardDisplay'
+          - type: 'null'
+        default:
+          type: boolean
+          title: Default
+          default: false
+        plugin:
+          $ref: '#/components/schemas/DashboardPlugin'
+      type: object
+      required:
+      - display
+      - plugin
+      title: DashboardDatasourceSpec
+    DashboardCreateRequest:
+      properties:
+        name:
+          type: string
+          title: Name
+        slug:
+          type: string
+          title: Slug
+        definition:
+          $ref: '#/components/schemas/DashboardCreate'
+      type: object
+      required:
+      - name
+      - slug
+      - definition
+      title: DashboardCreateRequest
+    DashboardListVariable-Input:
+      properties:
+        kind:
+          type: string
+          enum:
+          - ListVariable
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardListVariableSpec'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardListVariable
+    DashboardVariable-Output:
+      oneOf:
+      - $ref: '#/components/schemas/DashboardTextVariable-Output'
+      - $ref: '#/components/schemas/DashboardListVariable-Output'
+      discriminator:
+        propertyName: kind
+        mapping:
+          ListVariable: '#/components/schemas/DashboardListVariable-Output'
+          TextVariable: '#/components/schemas/DashboardTextVariable-Output'
+    DashboardUpdateRequest:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        definition:
+          anyOf:
+          - $ref: '#/components/schemas/DashboardCreate'
+          - type: 'null'
+        version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Version
+      type: object
+      title: DashboardUpdateRequest
+    DashboardTextVariable-Output:
+      properties:
+        kind:
+          type: string
+          enum:
+          - TextVariable
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardTextVariableSpec'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardTextVariable
+    DashboardListVariableSpec:
+      properties:
+        name:
+          type: string
+          title: Name
+        display:
+          $ref: '#/components/schemas/DashboardVariableDisplay'
+        defaultValue:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Defaultvalue
+        allowMultiple:
+          type: boolean
+          title: Allowmultiple
+        allowAllValue:
+          type: boolean
+          title: Allowallvalue
+        customAllValue:
+          type: string
+          title: Customallvalue
+        capturingRegexp:
+          type: string
+          title: Capturingregexp
+        sort:
+          type: string
+          title: Sort
+        plugin:
+          $ref: '#/components/schemas/DashboardPlugin'
+      type: object
+      required:
+      - name
+      - allowMultiple
+      - allowAllValue
+      - plugin
+      title: DashboardListVariableSpec
+    DashboardPlugin:
+      properties:
+        kind:
+          type: string
+          minLength: 1
+          title: Kind
+        spec:
+          title: Spec
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardPlugin
+    DashboardCreate:
+      properties:
+        kind:
+          type: string
+          enum:
+          - Dashboard
+          title: Kind
+        metadata:
+          $ref: '#/components/schemas/DashboardMetadataCreate'
+        spec:
+          $ref: '#/components/schemas/DashboardCreateSpec'
+      type: object
+      required:
+      - kind
+      - metadata
+      - spec
+      title: DashboardCreate
+    DashboardGridSpec-Input:
+      properties:
+        display:
+          $ref: '#/components/schemas/DashboardGridDisplay'
+        items:
+          items:
+            $ref: '#/components/schemas/DashboardGridItem'
+          type: array
+          title: Items
+      type: object
+      required:
+      - items
+      title: DashboardGridSpec
+    DashboardSpec:
+      properties:
+        display:
+          anyOf:
+          - $ref: '#/components/schemas/DashboardDisplay'
+          - type: 'null'
+        datasources:
+          additionalProperties:
+            $ref: '#/components/schemas/DashboardDatasourceSpec'
+          type: object
+          title: Datasources
+        variables:
+          items:
+            $ref: '#/components/schemas/DashboardVariable-Output'
+          type: array
+          title: Variables
+        panels:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/DashboardPanel-Output'
+            type: object
+          - type: 'null'
+          title: Panels
+        layouts:
+          items:
+            $ref: '#/components/schemas/DashboardLayout-Output'
+          type: array
+          title: Layouts
+        duration:
+          anyOf:
+          - type: string
+            pattern: ^((([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?|0)$
+          - type: 'null'
+          title: Duration
+          default: 1h
+        refreshInterval:
+          type: string
+          pattern: ^((([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?|0)$
+          title: Refreshinterval
+          default: 0s
+      type: object
+      required:
+      - display
+      - variables
+      - panels
+      - layouts
+      title: DashboardSpec
+    DashboardLayout-Output:
+      properties:
+        kind:
+          type: string
+          enum:
+          - Grid
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardGridSpec-Output'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardLayout
+    DashboardPanel-Output:
+      properties:
+        kind:
+          type: string
+          enum:
+          - Panel
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardPanelSpec-Output'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardPanel
+    Dashboard:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+        dashboard_name:
+          type: string
+          title: Dashboard Name
+        dashboard_slug:
+          type: string
+          title: Dashboard Slug
+        version:
+          type: integer
+          title: Version
+        definition:
+          $ref: '#/components/schemas/DashboardDefinitionRead'
+      type: object
+      required:
+      - id
+      - project_id
+      - created_at
+      - updated_at
+      - created_by_name
+      - updated_by_name
+      - dashboard_name
+      - dashboard_slug
+      - version
+      - definition
+      title: Dashboard
+    GetDashboardResponse:
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/DashboardDefinitionRead'
+      type: object
+      required:
+      - dashboard
+      title: GetDashboardResponse
+    DashboardDisplay:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+      type: object
+      required:
+      - name
+      title: DashboardDisplay
+    DashboardMetadataCreate:
+      properties:
+        name:
+          type: string
+          title: Name
+        project:
+          type: string
+          title: Project
+      type: object
+      required:
+      - name
+      - project
+      title: DashboardMetadataCreate
+    DashboardProjectMetadataRead:
+      properties:
+        name:
+          type: string
+          title: Name
+        createdAt:
+          type: string
+          format: date-time
+          title: Createdat
+        updatedAt:
+          type: string
+          format: date-time
+          title: Updatedat
+        version:
+          type: integer
+          title: Version
+        project:
+          type: string
+          title: Project
+      type: object
+      required:
+      - name
+      - project
+      title: DashboardProjectMetadataRead
+    DashboardPanelSpec-Output:
+      properties:
+        display:
+          $ref: '#/components/schemas/DashboardPanelDisplay'
+        plugin:
+          $ref: '#/components/schemas/DashboardPlugin'
+        queries:
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+          type: array
+          title: Queries
+        links:
+          items:
+            $ref: '#/components/schemas/DashboardPanelLink'
+          type: array
+          title: Links
+        variables:
+          items:
+            $ref: '#/components/schemas/DashboardVariable-Output'
+          type: array
+          title: Variables
+      type: object
+      required:
+      - display
+      - plugin
+      title: DashboardPanelSpec
+    DashboardDefinitionRead:
+      properties:
+        kind:
+          type: string
+          enum:
+          - Dashboard
+          title: Kind
+        metadata:
+          $ref: '#/components/schemas/DashboardProjectMetadataRead'
+        spec:
+          $ref: '#/components/schemas/DashboardSpec'
+      type: object
+      required:
+      - kind
+      - metadata
+      - spec
+      title: DashboardDefinitionRead
+    PanelRef:
+      properties:
+        $ref:
+          type: string
+      type: object
+      required:
+      - $ref
+      title: PanelRef
+    DashboardCollapse:
+      properties:
+        open:
+          type: boolean
+          title: Open
+      type: object
+      required:
+      - open
+      title: DashboardCollapse
+    DashboardPanelLink:
+      properties:
+        name:
+          type: string
+          title: Name
+        url:
+          type: string
+          title: Url
+        tooltip:
+          type: string
+          title: Tooltip
+        renderVariables:
+          type: boolean
+          title: Rendervariables
+        targetBlank:
+          type: boolean
+          title: Targetblank
+      type: object
+      title: DashboardPanelLink
+    DashboardQuery:
+      properties:
+        kind:
+          type: string
+          title: Kind
+        spec:
+          title: Spec
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardQuery
+    DashboardTextVariable-Input:
+      properties:
+        kind:
+          type: string
+          enum:
+          - TextVariable
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardTextVariableSpec'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardTextVariable
+    DashboardPanelSpec-Input:
+      properties:
+        display:
+          $ref: '#/components/schemas/DashboardPanelDisplay'
+        plugin:
+          $ref: '#/components/schemas/DashboardPlugin'
+        queries:
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+          type: array
+          title: Queries
+        links:
+          items:
+            $ref: '#/components/schemas/DashboardPanelLink'
+          type: array
+          title: Links
+        variables:
+          items:
+            $ref: '#/components/schemas/DashboardVariable-Input'
+          type: array
+          title: Variables
+      type: object
+      required:
+      - display
+      - plugin
+      title: DashboardPanelSpec
+    DashboardCreateSpec:
+      properties:
+        display:
+          anyOf:
+          - $ref: '#/components/schemas/DashboardDisplay'
+          - type: 'null'
+        datasources:
+          additionalProperties:
+            $ref: '#/components/schemas/DashboardDatasourceSpec'
+          type: object
+          title: Datasources
+        variables:
+          items:
+            $ref: '#/components/schemas/DashboardVariable-Input'
+          type: array
+          title: Variables
+        panels:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/DashboardPanel-Input'
+            type: object
+          - type: 'null'
+          title: Panels
+        layouts:
+          items:
+            $ref: '#/components/schemas/DashboardLayout-Input'
+          type: array
+          title: Layouts
+        duration:
+          anyOf:
+          - type: string
+            pattern: ^((([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?|0)$
+          - type: 'null'
+          title: Duration
+          default: 1h
+        refreshInterval:
+          type: string
+          pattern: ^((([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?|0)$
+          title: Refreshinterval
+          default: 0s
+      type: object
+      required:
+      - display
+      - panels
+      - layouts
+      title: DashboardCreateSpec
+    DashboardGridDisplay:
+      properties:
+        title:
+          type: string
+          title: Title
+        collapse:
+          $ref: '#/components/schemas/DashboardCollapse'
+      type: object
+      title: DashboardGridDisplay
+    DashboardVariableDisplay:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        hidden:
+          type: boolean
+          title: Hidden
+      type: object
+      title: DashboardVariableDisplay

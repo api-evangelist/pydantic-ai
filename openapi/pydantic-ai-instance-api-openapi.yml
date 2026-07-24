@@ -1,0 +1,548 @@
+openapi: 3.0.3
+info:
+  title: Pydantic API Discovery Alerts Instance API
+  version: 1.0.0
+  summary: Discovery document for Pydantic's region-partitioned APIs.
+  description: 'Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly — it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.
+
+
+    - **US region**: https://logfire-us.pydantic.dev/api/openapi.json
+
+    - **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json
+
+
+    ## Versioning
+
+
+    This discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).
+
+
+    Responses include an `X-API-Version` header identifying the version that served the request.
+
+
+    Related discovery resources:
+
+
+    - [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) — RFC 9727 Linkset of available API descriptions.
+
+    - [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) — JSON list of per-region OpenAPI specs.
+
+    - [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) — RFC 9728 OAuth protected resource metadata.'
+  contact:
+    name: Pydantic
+    url: https://pydantic.dev
+    email: hello@pydantic.dev
+  license:
+    name: Pydantic Terms of Service
+    url: https://pydantic.dev/legal/terms-of-service
+servers:
+- url: https://pydantic.dev/api/v1
+  description: Host Discovery — version 1
+tags:
+- name: Instance
+paths:
+  /v1/instance/organizations/:
+    get:
+      tags:
+      - Instance
+      summary: List Instance Organizations
+      description: List all organizations across the self-hosted instance.
+      operationId: list_instance_organizations_v1_instance_organizations__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OrganizationReadV1'
+                type: array
+                title: Response List Instance Organizations V1 Instance Organizations  Get
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - instance:admin
+    post:
+      tags:
+      - Instance
+      summary: Create Instance Organization
+      description: Create an organization owned by the token's user across the self-hosted instance.
+      operationId: create_instance_organization_v1_instance_organizations__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationCreate'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationReadV1'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - instance:admin
+  /v1/instance/usage-report/:
+    get:
+      tags:
+      - Instance
+      summary: List Instance Usage Report
+      description: List completed monthly usage for all organizations in a self-hosted instance.
+      operationId: list_instance_usage_report_v1_instance_usage_report__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/InstanceUsageReportRowV1'
+                type: array
+                title: Response List Instance Usage Report V1 Instance Usage Report  Get
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - instance:billing
+  /v1/instance/group-mappings/:
+    get:
+      tags:
+      - Instance
+      summary: Get Group Mappings
+      description: Return the group-organization mapping currently stored in `platform_config` (self-hosted admin only).
+      operationId: get_group_mappings_v1_instance_group_mappings__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupOrganizationMappingRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - instance:admin
+    put:
+      tags:
+      - Instance
+      summary: Update Group Mappings
+      description: 'Replace the group-organization mapping stored in `platform_config` (self-hosted admin only).
+
+
+        Every `organization_name` and `project_name` in the payload must correspond to an existing
+
+        record in the database; otherwise a 400 is returned.'
+      operationId: update_group_mappings_v1_instance_group_mappings__put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupOrganizationMappingUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupOrganizationMappingRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - instance:admin
+components:
+  schemas:
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    GroupOrganizationMapping-Input:
+      properties:
+        group_id:
+          type: string
+          title: Group Id
+        organization_roles:
+          items:
+            $ref: '#/components/schemas/OrganizationRoleDefinition'
+          type: array
+          title: Organization Roles
+      type: object
+      required:
+      - group_id
+      - organization_roles
+      title: GroupOrganizationMapping
+    GroupOrganizationMappingRead:
+      properties:
+        group_organization_mapping:
+          items:
+            $ref: '#/components/schemas/GroupOrganizationMapping-Output'
+          type: array
+          title: Group Organization Mapping
+      type: object
+      required:
+      - group_organization_mapping
+      title: GroupOrganizationMappingRead
+    OrganizationLink:
+      properties:
+        url:
+          type: string
+          title: Url
+        icon:
+          type: string
+          title: Icon
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - url
+      - icon
+      - name
+      title: OrganizationLink
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ProjectRoleDefinition:
+      properties:
+        project_name:
+          type: string
+          title: Project Name
+        role:
+          type: string
+          title: Role
+      type: object
+      required:
+      - project_name
+      - role
+      title: ProjectRoleDefinition
+    GroupOrganizationMappingUpdate:
+      properties:
+        group_organization_mapping:
+          items:
+            $ref: '#/components/schemas/GroupOrganizationMapping-Input'
+          type: array
+          title: Group Organization Mapping
+      type: object
+      required:
+      - group_organization_mapping
+      title: GroupOrganizationMappingUpdate
+    OrganizationCreate:
+      properties:
+        organization_name:
+          type: string
+          maxLength: 50
+          minLength: 2
+          pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
+          title: Organization Name
+        organization_display_name:
+          type: string
+          title: Organization Display Name
+        github_handle:
+          type: string
+          title: Github Handle
+        location:
+          type: string
+          title: Location
+        avatar:
+          type: string
+          title: Avatar
+        links:
+          items:
+            $ref: '#/components/schemas/OrganizationLink'
+          type: array
+          title: Links
+        description:
+          type: string
+          title: Description
+      type: object
+      required:
+      - organization_name
+      title: OrganizationCreate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    InstanceUsageReportRowV1:
+      properties:
+        date:
+          type: string
+          format: date
+          title: Date
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        organization_name:
+          type: string
+          title: Organization Name
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        records_count:
+          type: integer
+          title: Records Count
+        metrics_count:
+          type: integer
+          title: Metrics Count
+        total_observations:
+          type: integer
+          title: Total Observations
+      type: object
+      required:
+      - date
+      - organization_id
+      - organization_name
+      - project_id
+      - records_count
+      - metrics_count
+      - total_observations
+      title: InstanceUsageReportRowV1
+    OrganizationReadV1:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        organization_name:
+          type: string
+          title: Organization Name
+        subscription_plan:
+          anyOf:
+          - $ref: '#/components/schemas/SubscriptionPlanId'
+          - type: 'null'
+        has_admin_panel:
+          type: boolean
+          title: Has Admin Panel
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        billing_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Billing Email
+        organization_display_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Display Name
+        github_handle:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Github Handle
+        location:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Location
+        avatar:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Avatar
+        links:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/OrganizationLink'
+            type: array
+          - type: 'null'
+          title: Links
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        spending_cap:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Spending Cap
+        spending_cap_reached_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Spending Cap Reached At
+        planless_grace_period_ends_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Planless Grace Period Ends At
+        gateway_enabled:
+          type: boolean
+          title: Gateway Enabled
+        ai_enabled:
+          type: boolean
+          title: Ai Enabled
+        ai_training_enabled:
+          type: boolean
+          title: Ai Training Enabled
+      type: object
+      required:
+      - id
+      - organization_name
+      - subscription_plan
+      - has_admin_panel
+      - created_at
+      - updated_at
+      - billing_email
+      - organization_display_name
+      - github_handle
+      - location
+      - avatar
+      - links
+      - description
+      - spending_cap
+      - spending_cap_reached_at
+      - planless_grace_period_ends_at
+      - gateway_enabled
+      - ai_enabled
+      - ai_training_enabled
+      title: OrganizationReadV1
+    OrganizationRoleDefinition:
+      properties:
+        organization_name:
+          type: string
+          title: Organization Name
+        role:
+          type: string
+          title: Role
+        project_roles:
+          items:
+            $ref: '#/components/schemas/ProjectRoleDefinition'
+          type: array
+          title: Project Roles
+          default: []
+      type: object
+      required:
+      - organization_name
+      - role
+      title: OrganizationRoleDefinition
+    GroupOrganizationMapping-Output:
+      properties:
+        group_id:
+          type: string
+          title: Group Id
+        organization_roles:
+          items:
+            $ref: '#/components/schemas/OrganizationRoleDefinition'
+          type: array
+          title: Organization Roles
+      type: object
+      required:
+      - group_id
+      - organization_roles
+      title: GroupOrganizationMapping
+    SubscriptionPlanId:
+      type: string
+      enum:
+      - personal
+      - team
+      - growth
+      - enterprise_cloud
+      - non_stripe

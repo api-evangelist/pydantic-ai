@@ -1,0 +1,317 @@
+openapi: 3.0.3
+info:
+  title: Pydantic API Discovery Alerts Group Mappings API
+  version: 1.0.0
+  summary: Discovery document for Pydantic's region-partitioned APIs.
+  description: 'Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly — it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.
+
+
+    - **US region**: https://logfire-us.pydantic.dev/api/openapi.json
+
+    - **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json
+
+
+    ## Versioning
+
+
+    This discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).
+
+
+    Responses include an `X-API-Version` header identifying the version that served the request.
+
+
+    Related discovery resources:
+
+
+    - [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) — RFC 9727 Linkset of available API descriptions.
+
+    - [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) — JSON list of per-region OpenAPI specs.
+
+    - [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) — RFC 9728 OAuth protected resource metadata.'
+  contact:
+    name: Pydantic
+    url: https://pydantic.dev
+    email: hello@pydantic.dev
+  license:
+    name: Pydantic Terms of Service
+    url: https://pydantic.dev/legal/terms-of-service
+servers:
+- url: https://pydantic.dev/api/v1
+  description: Host Discovery — version 1
+tags:
+- name: Group Mappings
+paths:
+  /v1/group-mappings/:
+    get:
+      tags:
+      - Group Mappings
+      summary: Get Group Mappings
+      description: Return the group-organization mapping currently stored in `platform_config` (self-hosted admin only).
+      operationId: get_group_mappings_v1_group_mappings__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupOrganizationMappingRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - instance:admin
+    put:
+      tags:
+      - Group Mappings
+      summary: Update Group Mappings
+      description: 'Replace the group-organization mapping stored in `platform_config` (self-hosted admin only).
+
+
+        Every `organization_name` and `project_name` in the payload must correspond to an existing
+
+        record in the database; otherwise a 400 is returned.'
+      operationId: update_group_mappings_v1_group_mappings__put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupOrganizationMappingUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupOrganizationMappingRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - instance:admin
+  /v1/instance/group-mappings/:
+    get:
+      tags:
+      - Group Mappings
+      summary: Get Group Mappings
+      description: Return the group-organization mapping currently stored in `platform_config` (self-hosted admin only).
+      operationId: get_group_mappings_v1_instance_group_mappings__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupOrganizationMappingRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - instance:admin
+    put:
+      tags:
+      - Group Mappings
+      summary: Update Group Mappings
+      description: 'Replace the group-organization mapping stored in `platform_config` (self-hosted admin only).
+
+
+        Every `organization_name` and `project_name` in the payload must correspond to an existing
+
+        record in the database; otherwise a 400 is returned.'
+      operationId: update_group_mappings_v1_instance_group_mappings__put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupOrganizationMappingUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupOrganizationMappingRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - instance:admin
+components:
+  schemas:
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    GroupOrganizationMapping-Input:
+      properties:
+        group_id:
+          type: string
+          title: Group Id
+        organization_roles:
+          items:
+            $ref: '#/components/schemas/OrganizationRoleDefinition'
+          type: array
+          title: Organization Roles
+      type: object
+      required:
+      - group_id
+      - organization_roles
+      title: GroupOrganizationMapping
+    GroupOrganizationMappingRead:
+      properties:
+        group_organization_mapping:
+          items:
+            $ref: '#/components/schemas/GroupOrganizationMapping-Output'
+          type: array
+          title: Group Organization Mapping
+      type: object
+      required:
+      - group_organization_mapping
+      title: GroupOrganizationMappingRead
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ProjectRoleDefinition:
+      properties:
+        project_name:
+          type: string
+          title: Project Name
+        role:
+          type: string
+          title: Role
+      type: object
+      required:
+      - project_name
+      - role
+      title: ProjectRoleDefinition
+    GroupOrganizationMappingUpdate:
+      properties:
+        group_organization_mapping:
+          items:
+            $ref: '#/components/schemas/GroupOrganizationMapping-Input'
+          type: array
+          title: Group Organization Mapping
+      type: object
+      required:
+      - group_organization_mapping
+      title: GroupOrganizationMappingUpdate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    OrganizationRoleDefinition:
+      properties:
+        organization_name:
+          type: string
+          title: Organization Name
+        role:
+          type: string
+          title: Role
+        project_roles:
+          items:
+            $ref: '#/components/schemas/ProjectRoleDefinition'
+          type: array
+          title: Project Roles
+          default: []
+      type: object
+      required:
+      - organization_name
+      - role
+      title: OrganizationRoleDefinition
+    GroupOrganizationMapping-Output:
+      properties:
+        group_id:
+          type: string
+          title: Group Id
+        organization_roles:
+          items:
+            $ref: '#/components/schemas/OrganizationRoleDefinition'
+          type: array
+          title: Organization Roles
+      type: object
+      required:
+      - group_id
+      - organization_roles
+      title: GroupOrganizationMapping

@@ -1,0 +1,585 @@
+openapi: 3.0.3
+info:
+  title: Pydantic API Discovery Alerts SCIM API
+  version: 1.0.0
+  summary: Discovery document for Pydantic's region-partitioned APIs.
+  description: 'Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly — it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.
+
+
+    - **US region**: https://logfire-us.pydantic.dev/api/openapi.json
+
+    - **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json
+
+
+    ## Versioning
+
+
+    This discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).
+
+
+    Responses include an `X-API-Version` header identifying the version that served the request.
+
+
+    Related discovery resources:
+
+
+    - [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) — RFC 9727 Linkset of available API descriptions.
+
+    - [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) — JSON list of per-region OpenAPI specs.
+
+    - [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) — RFC 9728 OAuth protected resource metadata.'
+  contact:
+    name: Pydantic
+    url: https://pydantic.dev
+    email: hello@pydantic.dev
+  license:
+    name: Pydantic Terms of Service
+    url: https://pydantic.dev/legal/terms-of-service
+servers:
+- url: https://pydantic.dev/api/v1
+  description: Host Discovery — version 1
+tags:
+- name: SCIM
+paths:
+  /scim/Users:
+    get:
+      tags:
+      - SCIM
+      summary: Get Users On Prem
+      operationId: get_users_on_prem_scim_Users_get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:scim
+      parameters:
+      - name: filter
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Filter
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /scim/Users/{user_email}:
+    get:
+      tags:
+      - SCIM
+      summary: Get User On Prem
+      operationId: get_user_on_prem_scim_Users__user_email__get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:scim
+      parameters:
+      - name: user_email
+        in: path
+        required: true
+        schema:
+          type: string
+          title: User Email
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResourceRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /scim/Groups:
+    get:
+      tags:
+      - SCIM
+      summary: Get Groups On Prem
+      operationId: get_groups_on_prem_scim_Groups_get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:scim
+      parameters:
+      - name: filter
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Filter
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /scim/Groups/{group_id}:
+    get:
+      tags:
+      - SCIM
+      summary: Get Group On Prem
+      operationId: get_group_on_prem_scim_Groups__group_id__get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:scim
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupResourceRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    patch:
+      tags:
+      - SCIM
+      summary: Update Group On Prem
+      operationId: update_group_on_prem_scim_Groups__group_id__patch
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:scim
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupUpdate'
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /scim/{provider_name}/Users:
+    get:
+      tags:
+      - SCIM
+      summary: Get Users Cloud
+      operationId: get_users_cloud_scim__provider_name__Users_get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:scim
+      parameters:
+      - name: provider_name
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Provider Name
+      - name: filter
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Filter
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /scim/{provider_name}/Users/{user_email}:
+    get:
+      tags:
+      - SCIM
+      summary: Get User Cloud
+      operationId: get_user_cloud_scim__provider_name__Users__user_email__get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:scim
+      parameters:
+      - name: user_email
+        in: path
+        required: true
+        schema:
+          type: string
+          title: User Email
+      - name: provider_name
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Provider Name
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResourceRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /scim/{provider_name}/Groups:
+    get:
+      tags:
+      - SCIM
+      summary: Get Groups Cloud
+      operationId: get_groups_cloud_scim__provider_name__Groups_get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:scim
+      parameters:
+      - name: provider_name
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Provider Name
+      - name: filter
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Filter
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /scim/{provider_name}/Groups/{group_id}:
+    get:
+      tags:
+      - SCIM
+      summary: Get Group Cloud
+      operationId: get_group_cloud_scim__provider_name__Groups__group_id__get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:scim
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      - name: provider_name
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Provider Name
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupResourceRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    patch:
+      tags:
+      - SCIM
+      summary: Update Group Cloud
+      operationId: update_group_cloud_scim__provider_name__Groups__group_id__patch
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:scim
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      - name: provider_name
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Provider Name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupUpdate'
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    UserResourceRead:
+      properties:
+        schemas:
+          items:
+            type: string
+          type: array
+          title: Schemas
+        id:
+          type: string
+          title: Id
+        meta:
+          $ref: '#/components/schemas/ResourceMetaRead'
+        userName:
+          type: string
+          title: Username
+        name:
+          $ref: '#/components/schemas/UserReasourceNameRead'
+        active:
+          type: boolean
+          title: Active
+        emails:
+          items:
+            $ref: '#/components/schemas/UserResourceEmailRead'
+          type: array
+          title: Emails
+      type: object
+      required:
+      - schemas
+      - id
+      - meta
+      - userName
+      - name
+      - active
+      - emails
+      title: UserResourceRead
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    GroupResourceRead:
+      properties:
+        schemas:
+          items:
+            type: string
+          type: array
+          title: Schemas
+        id:
+          type: string
+          title: Id
+        meta:
+          $ref: '#/components/schemas/ResourceMetaRead'
+        displayName:
+          type: string
+          title: Displayname
+      type: object
+      required:
+      - schemas
+      - id
+      - meta
+      - displayName
+      title: GroupResourceRead
+    UserResourceEmailRead:
+      properties:
+        value:
+          type: string
+          title: Value
+        type:
+          type: string
+          title: Type
+        primary:
+          type: boolean
+          title: Primary
+      type: object
+      required:
+      - value
+      - type
+      - primary
+      title: UserResourceEmailRead
+    GroupUpdateOperation:
+      properties:
+        op:
+          type: string
+          title: Op
+        path:
+          type: string
+          title: Path
+        value:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/GroupUpdateOperationValue'
+            type: array
+          - type: string
+          title: Value
+      type: object
+      required:
+      - op
+      - path
+      - value
+      title: GroupUpdateOperation
+    UserReasourceNameRead:
+      properties:
+        givenName:
+          type: string
+          title: Givenname
+      type: object
+      required:
+      - givenName
+      title: UserReasourceNameRead
+    ResourceMetaRead:
+      properties:
+        resourceType:
+          type: string
+          title: Resourcetype
+      type: object
+      required:
+      - resourceType
+      title: ResourceMetaRead
+    GroupUpdate:
+      properties:
+        schemas:
+          items:
+            type: string
+          type: array
+          title: Schemas
+        Operations:
+          items:
+            $ref: '#/components/schemas/GroupUpdateOperation'
+          type: array
+          title: Operations
+      type: object
+      required:
+      - schemas
+      - Operations
+      title: GroupUpdate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ListResponse:
+      properties:
+        schemas:
+          items:
+            type: string
+          type: array
+          title: Schemas
+        totalResults:
+          type: integer
+          title: Totalresults
+        Resources:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/UserResourceRead'
+            type: array
+          - items:
+              $ref: '#/components/schemas/GroupResourceRead'
+            type: array
+          title: Resources
+        startIndex:
+          type: integer
+          title: Startindex
+        itemsPerPage:
+          type: integer
+          title: Itemsperpage
+      type: object
+      required:
+      - schemas
+      - totalResults
+      - Resources
+      - startIndex
+      - itemsPerPage
+      title: ListResponse
+    GroupUpdateOperationValue:
+      properties:
+        value:
+          type: string
+          title: Value
+        display:
+          type: string
+          title: Display
+      type: object
+      required:
+      - value
+      title: GroupUpdateOperationValue

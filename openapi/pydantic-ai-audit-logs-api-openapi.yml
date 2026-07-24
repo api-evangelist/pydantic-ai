@@ -1,0 +1,386 @@
+openapi: 3.0.3
+info:
+  title: Pydantic API Discovery Alerts Audit Logs API
+  version: 1.0.0
+  summary: Discovery document for Pydantic's region-partitioned APIs.
+  description: 'Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly — it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.
+
+
+    - **US region**: https://logfire-us.pydantic.dev/api/openapi.json
+
+    - **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json
+
+
+    ## Versioning
+
+
+    This discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).
+
+
+    Responses include an `X-API-Version` header identifying the version that served the request.
+
+
+    Related discovery resources:
+
+
+    - [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) — RFC 9727 Linkset of available API descriptions.
+
+    - [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) — JSON list of per-region OpenAPI specs.
+
+    - [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) — RFC 9728 OAuth protected resource metadata.'
+  contact:
+    name: Pydantic
+    url: https://pydantic.dev
+    email: hello@pydantic.dev
+  license:
+    name: Pydantic Terms of Service
+    url: https://pydantic.dev/legal/terms-of-service
+servers:
+- url: https://pydantic.dev/api/v1
+  description: Host Discovery — version 1
+tags:
+- name: Audit Logs
+paths:
+  /v1/audit-logs/:
+    get:
+      tags:
+      - Audit Logs
+      summary: List Audit Logs
+      description: 'List audit logs for an organization.
+
+
+        Requires an API key with the `organization:auditlog` scope.
+
+        Only available for organizations with an enterprise_cloud subscription or self-hosted deployments.
+
+
+        The time range cannot exceed 90 days.'
+      operationId: list_audit_logs_v1_audit_logs__get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:auditlog
+      parameters:
+      - name: start_time
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date-time
+          description: Start time for audit logs
+          title: Start Time
+        description: Start time for audit logs
+      - name: end_time
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          description: End time for audit logs
+          title: End Time
+        description: End time for audit logs
+      - name: action
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - enum:
+            - INSERT
+            - UPDATE
+            - DELETE
+            - VIEW
+            - LOGIN
+            - FAILED_LOGIN
+            - LOGOUT
+            - CLAIM_INVITATION
+            - REVOKE_INVITATION
+            - VERIFY
+            type: string
+          - type: 'null'
+          description: Filter by action type
+          title: Action
+        description: Filter by action type
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditLogInfoRead'
+                title: Response List Audit Logs V1 Audit Logs  Get
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v1/audit-logs/{audit_log_id}/:
+    get:
+      tags:
+      - Audit Logs
+      summary: Get Audit Log
+      description: 'Get details for a specific audit log.
+
+
+        Requires an API key with the `organization:auditlog` scope.
+
+        Only available for organizations with an enterprise_cloud subscription or self-hosted deployments.'
+      operationId: get_audit_log_v1_audit_logs__audit_log_id___get
+      security:
+      - OAuth2AuthorizationCodeBearer:
+        - organization:auditlog
+      parameters:
+      - name: audit_log_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          description: Audit log ID
+          title: Audit Log Id
+        description: Audit log ID
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditLogDetailRead'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              description: Seconds to wait before retrying.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPExceptionError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AuditLogInfoRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        organization_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Name
+        project_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Project Name
+        user_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Name
+        action:
+          type: string
+          enum:
+          - INSERT
+          - UPDATE
+          - DELETE
+          - VIEW
+          - LOGIN
+          - FAILED_LOGIN
+          - LOGOUT
+          - CLAIM_INVITATION
+          - REVOKE_INVITATION
+          - VERIFY
+          title: Action
+        resource_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Resource Type
+        record_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Record Id
+        ip_address:
+          anyOf:
+          - type: string
+            format: ipv4
+          - type: string
+            format: ipv6
+          - type: 'null'
+          title: Ip Address
+      type: object
+      required:
+      - id
+      - created_at
+      - organization_name
+      - project_name
+      - user_name
+      - action
+      - resource_type
+      - record_id
+      - ip_address
+      title: AuditLogInfoRead
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AuditLogDetailRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        organization_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Name
+        project_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Project Name
+        user_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Name
+        action:
+          type: string
+          enum:
+          - INSERT
+          - UPDATE
+          - DELETE
+          - VIEW
+          - LOGIN
+          - FAILED_LOGIN
+          - LOGOUT
+          - CLAIM_INVITATION
+          - REVOKE_INVITATION
+          - VERIFY
+          title: Action
+        resource_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Resource Type
+        record_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Record Id
+        ip_address:
+          anyOf:
+          - type: string
+            format: ipv4
+          - type: string
+            format: ipv6
+          - type: 'null'
+          title: Ip Address
+        metadata:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/JSONBData'
+            type: object
+          - type: 'null'
+          title: Metadata
+      type: object
+      required:
+      - id
+      - created_at
+      - organization_name
+      - project_name
+      - user_name
+      - action
+      - resource_type
+      - record_id
+      - ip_address
+      - metadata
+      title: AuditLogDetailRead
+    JSONBData:
+      anyOf:
+      - additionalProperties:
+          $ref: '#/components/schemas/JSONBData'
+        type: object
+      - items:
+          $ref: '#/components/schemas/JSONBData'
+        type: array
+      - type: string
+      - type: integer
+      - type: boolean
+      - type: number
+      - type: 'null'
