@@ -1,0 +1,128 @@
+{
+  "protocolVersion": "0.3.0",
+  "name": "Pydantic",
+  "description": "Pydantic is the end-to-end AI engineering stack for Python: data validation, type-safe agents, LLM proxy, and observability. This A2A card represents the Pydantic Logfire MCP server, the primary agent-callable surface for the Pydantic platform.",
+  "url": "https://logfire.pydantic.dev/mcp",
+  "preferredTransport": "MCP",
+  "additionalInterfaces": [
+    {
+      "transport": "MCP",
+      "url": "https://logfire.pydantic.dev/mcp"
+    },
+    {
+      "transport": "MCP",
+      "url": "https://logfire-eu.pydantic.dev/mcp"
+    }
+  ],
+  "version": "1.0.0",
+  "documentationUrl": "https://pydantic.dev/docs/logfire/guides/mcp-server/",
+  "iconUrl": "https://pydantic.dev/favicon/apple-touch-icon.png",
+  "provider": {
+    "organization": "Pydantic",
+    "url": "https://pydantic.dev"
+  },
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": false,
+    "extensions": []
+  },
+  "securitySchemes": {
+    "oauth2": {
+      "type": "oauth2",
+      "description": "OAuth2 \u2014 log in with a Logfire account.",
+      "flows": {
+        "authorizationCode": {
+          "authorizationUrl": "https://logfire.pydantic.dev/oauth/authorize",
+          "tokenUrl": "https://logfire.pydantic.dev/oauth/token",
+          "scopes": {
+            "read": "Read project data and telemetry",
+            "write": "Manage dashboards, alerts, issues, and feature-flag variables"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2": [
+        "read"
+      ]
+    }
+  ],
+  "defaultInputModes": [
+    "application/json",
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "application/json",
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "query-telemetry",
+      "name": "Query telemetry data",
+      "description": "Run SQL SELECT queries against a Logfire project's traces, logs, metrics, and exceptions for investigation and exploration.",
+      "tags": [
+        "observability",
+        "telemetry",
+        "sql",
+        "logfire"
+      ],
+      "examples": [
+        "Find the 10 slowest LLM calls in the last hour",
+        "Show me all exceptions in the checkout service today",
+        "What is the p95 latency for the agent loop this week?"
+      ]
+    },
+    {
+      "id": "manage-dashboards",
+      "name": "Manage dashboards",
+      "description": "Create, read, update, and delete Logfire dashboards and their panels, variables, and layout groups using Perses-compatible JSON.",
+      "tags": [
+        "observability",
+        "dashboards",
+        "logfire"
+      ]
+    },
+    {
+      "id": "manage-alerts",
+      "name": "Manage alerts",
+      "description": "Configure SQL-based alerts that periodically run and notify channels when results match. Inspect alert history and current firing state.",
+      "tags": [
+        "alerts",
+        "monitoring",
+        "logfire"
+      ]
+    },
+    {
+      "id": "manage-feature-flags",
+      "name": "Manage feature flags",
+      "description": "Create and update managed variables (feature flags), version snapshots, rollouts, targeting overrides, and labels.",
+      "tags": [
+        "feature-flags",
+        "rollouts",
+        "logfire"
+      ]
+    },
+    {
+      "id": "manage-notification-channels",
+      "name": "Manage notification channels",
+      "description": "Create and update Slack, Discord, Opsgenie, and webhook notification channels for alerts.",
+      "tags": [
+        "notifications",
+        "logfire"
+      ]
+    },
+    {
+      "id": "exec-python-sandbox",
+      "name": "Execute Python in a sandbox",
+      "description": "Run Python code in a secure sandbox with access to Logfire platform helper functions for advanced analysis.",
+      "tags": [
+        "python",
+        "sandbox",
+        "logfire"
+      ]
+    }
+  ]
+}

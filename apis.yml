@@ -94,6 +94,10 @@ apis:
       - type: JSONLDContext
         url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
 common:
+  - type: AgentCard
+    url: a2a/pydantic-ai-a2a.yml
+    name: A2A Agent Card
+    description: Agent Card served at /.well-known/agent-card.json (conformant against A2A 1.0.0).
   - type: AgenticAccess
     url: agentic-access/pydantic-ai-agentic-access.yml
   - type: TrustCenter
