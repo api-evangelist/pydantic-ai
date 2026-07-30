@@ -33,66 +33,601 @@ created: '2026-06-12'
 modified: '2026-06-12'
 specificationVersion: '0.19'
 apis:
-  - aid: pydantic-ai:pydantic-ai-agent-framework
-    name: PydanticAI Agent Framework
-    description: >
-      The core PydanticAI Python agent framework providing the Agent class,
-      model provider integrations, tool registration, structured output
-      validation, dependency injection, streaming, and durable execution
-      capabilities for building production-grade GenAI applications.
-    humanURL: https://pydantic.dev/docs/ai/overview/
-    baseURL: https://pydantic.dev
-    tags:
-      - AI Agents
-      - Python
-      - LLM
-      - Type Safety
-    properties:
-      - type: Documentation
-        url: https://pydantic.dev/docs/ai/overview/
-      - type: APIReference
-        url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
-      - type: GettingStarted
-        url: https://pydantic.dev/docs/ai/overview/install/
-      - type: ModelProviders
-        url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/openapi/pydantic-ai-discovery-openapi.yml
-      - type: JSONLDContext
-        url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
-      - type: Vocabulary
-        url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
-  - aid: pydantic-ai:pydantic-logfire
-    name: Pydantic Logfire
-    description: >
-      Pydantic Logfire is an OpenTelemetry-based observability platform with
-      purpose-built features for LLM applications, including conversation
-      panels, token tracking, cost monitoring, tool call inspection, and
-      SQL-queryable production data. It also provides an AI Gateway for
-      routing and FinOps management of model provider calls.
-    humanURL: https://pydantic.dev/docs/logfire/
-    baseURL: https://logfire.pydantic.dev
-    tags:
-      - Observability
-      - OpenTelemetry
-      - LLM
-      - AI Gateway
-      - FinOps
-    properties:
-      - type: Documentation
-        url: https://pydantic.dev/docs/logfire/
-      - type: Pricing
-        url: https://pydantic.dev/pricing
-      - type: StatusPage
-        url: https://logfirestatus.pydantic.dev/
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/openapi/pydantic-ai-logfire-openapi.yml
-      - type: OpenAPISource
-        url: https://logfire-us.pydantic.dev/api/openapi.json
-      - type: JSONSchema
-        url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
-      - type: JSONLDContext
-        url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+- aid: pydantic-ai:pydantic-ai-alerts-api
+  name: PydanticAI Alerts API
+  description: The Alerts API from PydanticAI — 2 operation(s) for alerts.
+  humanURL: https://pydantic.dev/docs/ai/overview/
+  baseURL: https://pydantic.dev
+  tags:
+  - Alerts
+  properties:
+  - type: OpenAPI
+    url: openapi/pydantic-ai-alerts-api-openapi.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: APIReference
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+  - type: GettingStarted
+    url: https://pydantic.dev/docs/ai/overview/install/
+  - type: ModelProviders
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/logfire/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: OpenAPISource
+    url: https://logfire-us.pydantic.dev/api/openapi.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
+- aid: pydantic-ai:pydantic-ai-api-keys-api
+  name: PydanticAI API Keys API
+  description: The API Keys API from PydanticAI — 2 operation(s) for api keys.
+  humanURL: https://pydantic.dev/docs/ai/overview/
+  baseURL: https://pydantic.dev
+  tags:
+  - API Keys
+  properties:
+  - type: OpenAPI
+    url: openapi/pydantic-ai-api-keys-api-openapi.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: APIReference
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+  - type: GettingStarted
+    url: https://pydantic.dev/docs/ai/overview/install/
+  - type: ModelProviders
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/logfire/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: OpenAPISource
+    url: https://logfire-us.pydantic.dev/api/openapi.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
+- aid: pydantic-ai:pydantic-ai-audit-logs-api
+  name: PydanticAI Audit Logs API
+  description: The Audit Logs API from PydanticAI — 2 operation(s) for audit logs.
+  humanURL: https://pydantic.dev/docs/ai/overview/
+  baseURL: https://pydantic.dev
+  tags:
+  - Audit Logs
+  properties:
+  - type: OpenAPI
+    url: openapi/pydantic-ai-audit-logs-api-openapi.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: APIReference
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+  - type: GettingStarted
+    url: https://pydantic.dev/docs/ai/overview/install/
+  - type: ModelProviders
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/logfire/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: OpenAPISource
+    url: https://logfire-us.pydantic.dev/api/openapi.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
+- aid: pydantic-ai:pydantic-ai-billing-api
+  name: PydanticAI Billing API
+  description: The Billing API from PydanticAI — 1 operation(s) for billing.
+  humanURL: https://pydantic.dev/docs/ai/overview/
+  baseURL: https://pydantic.dev
+  tags:
+  - Billing
+  properties:
+  - type: OpenAPI
+    url: openapi/pydantic-ai-billing-api-openapi.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: APIReference
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+  - type: GettingStarted
+    url: https://pydantic.dev/docs/ai/overview/install/
+  - type: ModelProviders
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/logfire/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: OpenAPISource
+    url: https://logfire-us.pydantic.dev/api/openapi.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
+- aid: pydantic-ai:pydantic-ai-channels-api
+  name: PydanticAI Channels API
+  description: The Channels API from PydanticAI — 2 operation(s) for channels.
+  humanURL: https://pydantic.dev/docs/ai/overview/
+  baseURL: https://pydantic.dev
+  tags:
+  - Channels
+  properties:
+  - type: OpenAPI
+    url: openapi/pydantic-ai-channels-api-openapi.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: APIReference
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+  - type: GettingStarted
+    url: https://pydantic.dev/docs/ai/overview/install/
+  - type: ModelProviders
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/logfire/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: OpenAPISource
+    url: https://logfire-us.pydantic.dev/api/openapi.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
+- aid: pydantic-ai:pydantic-ai-dashboards-api
+  name: PydanticAI Dashboards API
+  description: The Dashboards API from PydanticAI — 2 operation(s) for dashboards.
+  humanURL: https://pydantic.dev/docs/ai/overview/
+  baseURL: https://pydantic.dev
+  tags:
+  - Dashboards
+  properties:
+  - type: OpenAPI
+    url: openapi/pydantic-ai-dashboards-api-openapi.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: APIReference
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+  - type: GettingStarted
+    url: https://pydantic.dev/docs/ai/overview/install/
+  - type: ModelProviders
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/logfire/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: OpenAPISource
+    url: https://logfire-us.pydantic.dev/api/openapi.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
+- aid: pydantic-ai:pydantic-ai-discovery-api
+  name: PydanticAI discovery API
+  description: The discovery API from PydanticAI — 1 operation(s) for discovery.
+  humanURL: https://pydantic.dev/docs/ai/overview/
+  baseURL: https://pydantic.dev
+  tags:
+  - discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/pydantic-ai-discovery-api-openapi.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: APIReference
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+  - type: GettingStarted
+    url: https://pydantic.dev/docs/ai/overview/install/
+  - type: ModelProviders
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/logfire/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: OpenAPISource
+    url: https://logfire-us.pydantic.dev/api/openapi.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
+- aid: pydantic-ai:pydantic-ai-group-mappings-api
+  name: PydanticAI Group Mappings API
+  description: The Group Mappings API from PydanticAI — 2 operation(s) for group mappings.
+  humanURL: https://pydantic.dev/docs/ai/overview/
+  baseURL: https://pydantic.dev
+  tags:
+  - Group Mappings
+  properties:
+  - type: OpenAPI
+    url: openapi/pydantic-ai-group-mappings-api-openapi.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: APIReference
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+  - type: GettingStarted
+    url: https://pydantic.dev/docs/ai/overview/install/
+  - type: ModelProviders
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/logfire/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: OpenAPISource
+    url: https://logfire-us.pydantic.dev/api/openapi.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
+- aid: pydantic-ai:pydantic-ai-instance-api
+  name: PydanticAI Instance API
+  description: The Instance API from PydanticAI — 3 operation(s) for instance.
+  humanURL: https://pydantic.dev/docs/ai/overview/
+  baseURL: https://pydantic.dev
+  tags:
+  - Instance
+  properties:
+  - type: OpenAPI
+    url: openapi/pydantic-ai-instance-api-openapi.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: APIReference
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+  - type: GettingStarted
+    url: https://pydantic.dev/docs/ai/overview/install/
+  - type: ModelProviders
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/logfire/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: OpenAPISource
+    url: https://logfire-us.pydantic.dev/api/openapi.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
+- aid: pydantic-ai:pydantic-ai-invitations-api
+  name: PydanticAI Invitations API
+  description: The Invitations API from PydanticAI — 1 operation(s) for invitations.
+  humanURL: https://pydantic.dev/docs/ai/overview/
+  baseURL: https://pydantic.dev
+  tags:
+  - Invitations
+  properties:
+  - type: OpenAPI
+    url: openapi/pydantic-ai-invitations-api-openapi.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: APIReference
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+  - type: GettingStarted
+    url: https://pydantic.dev/docs/ai/overview/install/
+  - type: ModelProviders
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/logfire/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: OpenAPISource
+    url: https://logfire-us.pydantic.dev/api/openapi.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
+- aid: pydantic-ai:pydantic-ai-members-api
+  name: PydanticAI Members API
+  description: The Members API from PydanticAI — 2 operation(s) for members.
+  humanURL: https://pydantic.dev/docs/ai/overview/
+  baseURL: https://pydantic.dev
+  tags:
+  - Members
+  properties:
+  - type: OpenAPI
+    url: openapi/pydantic-ai-members-api-openapi.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: APIReference
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+  - type: GettingStarted
+    url: https://pydantic.dev/docs/ai/overview/install/
+  - type: ModelProviders
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/logfire/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: OpenAPISource
+    url: https://logfire-us.pydantic.dev/api/openapi.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
+- aid: pydantic-ai:pydantic-ai-oauth-api
+  name: PydanticAI OAuth API
+  description: The OAuth API from PydanticAI — 6 operation(s) for oauth.
+  humanURL: https://pydantic.dev/docs/ai/overview/
+  baseURL: https://pydantic.dev
+  tags:
+  - OAuth
+  properties:
+  - type: OpenAPI
+    url: openapi/pydantic-ai-oauth-api-openapi.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: APIReference
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+  - type: GettingStarted
+    url: https://pydantic.dev/docs/ai/overview/install/
+  - type: ModelProviders
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/logfire/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: OpenAPISource
+    url: https://logfire-us.pydantic.dev/api/openapi.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
+- aid: pydantic-ai:pydantic-ai-organizations-api
+  name: PydanticAI Organizations API
+  description: The Organizations API from PydanticAI — 3 operation(s) for organizations.
+  humanURL: https://pydantic.dev/docs/ai/overview/
+  baseURL: https://pydantic.dev
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/pydantic-ai-organizations-api-openapi.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: APIReference
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+  - type: GettingStarted
+    url: https://pydantic.dev/docs/ai/overview/install/
+  - type: ModelProviders
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/logfire/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: OpenAPISource
+    url: https://logfire-us.pydantic.dev/api/openapi.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
+- aid: pydantic-ai:pydantic-ai-projects-api
+  name: PydanticAI Projects API
+  description: The Projects API from PydanticAI — 16 operation(s) for projects.
+  humanURL: https://pydantic.dev/docs/ai/overview/
+  baseURL: https://pydantic.dev
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/pydantic-ai-projects-api-openapi.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: APIReference
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+  - type: GettingStarted
+    url: https://pydantic.dev/docs/ai/overview/install/
+  - type: ModelProviders
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/logfire/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: OpenAPISource
+    url: https://logfire-us.pydantic.dev/api/openapi.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
+- aid: pydantic-ai:pydantic-ai-scim-api
+  name: PydanticAI SCIM API
+  description: The SCIM API from PydanticAI — 8 operation(s) for scim.
+  humanURL: https://pydantic.dev/docs/ai/overview/
+  baseURL: https://pydantic.dev
+  tags:
+  - SCIM
+  properties:
+  - type: OpenAPI
+    url: openapi/pydantic-ai-scim-api-openapi.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: APIReference
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+  - type: GettingStarted
+    url: https://pydantic.dev/docs/ai/overview/install/
+  - type: ModelProviders
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/logfire/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: OpenAPISource
+    url: https://logfire-us.pydantic.dev/api/openapi.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
+- aid: pydantic-ai:pydantic-ai-usage-api
+  name: PydanticAI Usage API
+  description: The Usage API from PydanticAI — 6 operation(s) for usage.
+  humanURL: https://pydantic.dev/docs/ai/overview/
+  baseURL: https://pydantic.dev
+  tags:
+  - Usage
+  properties:
+  - type: OpenAPI
+    url: openapi/pydantic-ai-usage-api-openapi.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: APIReference
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+  - type: GettingStarted
+    url: https://pydantic.dev/docs/ai/overview/install/
+  - type: ModelProviders
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/logfire/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: OpenAPISource
+    url: https://logfire-us.pydantic.dev/api/openapi.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
+- aid: pydantic-ai:pydantic-ai-variables-api
+  name: PydanticAI Variables API
+  description: The Variables API from PydanticAI — 2 operation(s) for variables.
+  humanURL: https://pydantic.dev/docs/ai/overview/
+  baseURL: https://pydantic.dev
+  tags:
+  - Variables
+  properties:
+  - type: OpenAPI
+    url: openapi/pydantic-ai-variables-api-openapi.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: APIReference
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+  - type: GettingStarted
+    url: https://pydantic.dev/docs/ai/overview/install/
+  - type: ModelProviders
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/logfire/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: OpenAPISource
+    url: https://logfire-us.pydantic.dev/api/openapi.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
 common:
   - type: AgentCard
     url: a2a/pydantic-ai-a2a.yml
