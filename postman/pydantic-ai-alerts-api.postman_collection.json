@@ -1,0 +1,1174 @@
+{
+  "info": {
+    "_postman_id": "649e5a42-7d93-4b38-ab0e-467e257d3280",
+    "name": "Pydantic API Discovery Alerts API",
+    "description": "Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly \u2014 it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.\n\n- **US region**: https://logfire-us.pydantic.dev/api/openapi.json\n- **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json\n\n## Versioning\n\nThis discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).\n\nResponses include an `X-API-Version` header identifying the version that served the request.\n\nRelated discovery resources:\n\n- [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) \u2014 RFC 9727 Linkset of available API descriptions.\n- [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) \u2014 JSON list of per-region OpenAPI specs.\n- [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) \u2014 RFC 9728 OAuth protected resource metadata.\n\nContact Support:\n Name: Pydantic\n Email: hello@pydantic.dev",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:41:31.000Z",
+    "updatedAt": "2026-07-28T02:41:31.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-649e5a42-7d93-4b38-ab0e-467e257d3280"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "projects",
+          "item": [
+            {
+              "name": "{project_id}",
+              "item": [
+                {
+                  "name": "alerts",
+                  "item": [
+                    {
+                      "name": "{alert_id}",
+                      "item": [
+                        {
+                          "name": "Get Alert",
+                          "id": "d8ce13fc-b5e0-4df3-886d-2b500d37b4cb",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/:alert_id/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "alerts",
+                                ":alert_id",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "id": "8c1a522d-6268-4f82-b7fe-04ceadc27973",
+                                  "key": "project_id",
+                                  "value": "<uuid>",
+                                  "description": "(Required) "
+                                },
+                                {
+                                  "id": "721e9546-4835-40cd-b89c-b993c44b595d",
+                                  "key": "alert_id",
+                                  "value": "<uuid>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            },
+                            "description": "Get an alert."
+                          },
+                          "response": [
+                            {
+                              "id": "ac6da614-7ae1-4abc-be6e-d44115b912c0",
+                              "name": "Successful Response",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/:alert_id/",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "alerts",
+                                    ":alert_id",
+                                    ""
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "alert_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"id\": \"<uuid>\",\n  \"organization_id\": \"<uuid>\",\n  \"project_id\": \"<uuid>\",\n  \"created_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"created_by_name\": \"<string>\",\n  \"updated_by_name\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"query\": \"<string>\",\n  \"time_window\": \"<string>\",\n  \"frequency\": \"<string>\",\n  \"watermark\": \"<string>\",\n  \"channels\": [\n    {\n      \"id\": \"<uuid>\",\n      \"organization_id\": \"<uuid>\",\n      \"label\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"created_by_name\": \"<string>\",\n      \"updated_by_name\": \"<string>\",\n      \"config\": {\n        \"type\": \"webhook\",\n        \"format\": \"slack-legacy\",\n        \"url\": \"<string>\"\n      },\n      \"schedule_id\": \"<uuid>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"organization_id\": \"<uuid>\",\n      \"label\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"created_by_name\": \"<string>\",\n      \"updated_by_name\": \"<string>\",\n      \"config\": {\n        \"type\": \"webhook\",\n        \"format\": \"auto\",\n        \"url\": \"<string>\"\n      },\n      \"schedule_id\": \"<uuid>\"\n    }\n  ],\n  \"notify_when\": \"starts_having_matches\",\n  \"active\": \"<boolean>\",\n  \"last_run\": \"<dateTime>\",\n  \"has_matches\": \"<boolean>\",\n  \"has_errors\": \"<boolean>\",\n  \"result\": {\n    \"ad7c7\": {\n      \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n    },\n    \"incididuntf1a\": {\n      \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n    }\n  },\n  \"result_length\": \"<integer>\"\n}",
+                              "createdAt": "2026-07-28T02:41:32.000Z",
+                              "updatedAt": "2026-07-28T02:41:32.000Z",
+                              "uid": "35240-ac6da614-7ae1-4abc-be6e-d44115b912c0"
+                            },
+                            {
+                              "id": "18946bf7-ccd1-436d-880b-564f4fe44223",
+                              "name": "Validation Error",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/:alert_id/",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "alerts",
+                                    ":alert_id",
+                                    ""
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "alert_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                              "code": 422,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T02:41:32.000Z",
+                              "updatedAt": "2026-07-28T02:41:32.000Z",
+                              "uid": "35240-18946bf7-ccd1-436d-880b-564f4fe44223"
+                            },
+                            {
+                              "id": "c792dbe4-235b-4cc7-b6c4-a0dec37fcdf4",
+                              "name": "Rate limit exceeded",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/:alert_id/",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "alerts",
+                                    ":alert_id",
+                                    ""
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "alert_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Too Many Requests",
+                              "code": 429,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "Seconds to wait before retrying.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Retry-After",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"detail\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T02:41:32.000Z",
+                              "updatedAt": "2026-07-28T02:41:32.000Z",
+                              "uid": "35240-c792dbe4-235b-4cc7-b6c4-a0dec37fcdf4"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:41:32.000Z",
+                          "updatedAt": "2026-07-28T02:41:32.000Z",
+                          "uid": "35240-d8ce13fc-b5e0-4df3-886d-2b500d37b4cb"
+                        },
+                        {
+                          "name": "Update Alert",
+                          "id": "8f4d8922-d099-402f-a715-81b7894e1def",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"time_window\": \"<string>\",\n  \"frequency\": \"<string>\",\n  \"watermark\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"query\": \"<string>\",\n  \"channel_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"channel_assignments\": [\n    {\n      \"channel_id\": \"<uuid>\",\n      \"schedule_id\": \"<uuid>\"\n    },\n    {\n      \"channel_id\": \"<uuid>\",\n      \"schedule_id\": \"<uuid>\"\n    }\n  ],\n  \"notify_when\": \"has_matches\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/:alert_id/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "alerts",
+                                ":alert_id",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "id": "304fd20a-8bfc-4b23-8ef8-47ca6e53c791",
+                                  "key": "project_id",
+                                  "value": "<uuid>",
+                                  "description": "(Required) "
+                                },
+                                {
+                                  "id": "6ed2f28d-d15c-4926-b477-bb813364d8d3",
+                                  "key": "alert_id",
+                                  "value": "<uuid>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            },
+                            "description": "Update an alert."
+                          },
+                          "response": [
+                            {
+                              "id": "45787e1f-9f3f-42f5-8849-5c67a2c66a49",
+                              "name": "Successful Response",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"time_window\": \"<string>\",\n  \"frequency\": \"<string>\",\n  \"watermark\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"query\": \"<string>\",\n  \"channel_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"channel_assignments\": [\n    {\n      \"channel_id\": \"<uuid>\",\n      \"schedule_id\": \"<uuid>\"\n    },\n    {\n      \"channel_id\": \"<uuid>\",\n      \"schedule_id\": \"<uuid>\"\n    }\n  ],\n  \"notify_when\": \"has_matches\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/:alert_id/",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "alerts",
+                                    ":alert_id",
+                                    ""
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "alert_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"id\": \"<uuid>\",\n  \"organization_id\": \"<uuid>\",\n  \"project_id\": \"<uuid>\",\n  \"created_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"created_by_name\": \"<string>\",\n  \"updated_by_name\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"query\": \"<string>\",\n  \"time_window\": \"<string>\",\n  \"frequency\": \"<string>\",\n  \"watermark\": \"<string>\",\n  \"channels\": [\n    {\n      \"id\": \"<uuid>\",\n      \"organization_id\": \"<uuid>\",\n      \"label\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"created_by_name\": \"<string>\",\n      \"updated_by_name\": \"<string>\",\n      \"config\": {\n        \"type\": \"webhook\",\n        \"format\": \"raw-data\",\n        \"url\": \"<string>\"\n      },\n      \"schedule_id\": \"<uuid>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"organization_id\": \"<uuid>\",\n      \"label\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"created_by_name\": \"<string>\",\n      \"updated_by_name\": \"<string>\",\n      \"config\": {\n        \"type\": \"webhook\",\n        \"format\": \"slack-legacy\",\n        \"url\": \"<string>\"\n      },\n      \"schedule_id\": \"<uuid>\"\n    }\n  ],\n  \"notify_when\": \"starts_having_matches\",\n  \"active\": \"<boolean>\"\n}",
+                              "createdAt": "2026-07-28T02:41:32.000Z",
+                              "updatedAt": "2026-07-28T02:41:32.000Z",
+                              "uid": "35240-45787e1f-9f3f-42f5-8849-5c67a2c66a49"
+                            },
+                            {
+                              "id": "623c12b7-7385-477e-a298-a1fb3770777e",
+                              "name": "Validation Error",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"time_window\": \"<string>\",\n  \"frequency\": \"<string>\",\n  \"watermark\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"query\": \"<string>\",\n  \"channel_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"channel_assignments\": [\n    {\n      \"channel_id\": \"<uuid>\",\n      \"schedule_id\": \"<uuid>\"\n    },\n    {\n      \"channel_id\": \"<uuid>\",\n      \"schedule_id\": \"<uuid>\"\n    }\n  ],\n  \"notify_when\": \"has_matches\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/:alert_id/",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "alerts",
+                                    ":alert_id",
+                                    ""
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "alert_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                              "code": 422,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T02:41:32.000Z",
+                              "updatedAt": "2026-07-28T02:41:32.000Z",
+                              "uid": "35240-623c12b7-7385-477e-a298-a1fb3770777e"
+                            },
+                            {
+                              "id": "df49e227-0ef9-4b3c-8b65-f38f7a307bcf",
+                              "name": "Rate limit exceeded",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"time_window\": \"<string>\",\n  \"frequency\": \"<string>\",\n  \"watermark\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"query\": \"<string>\",\n  \"channel_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"channel_assignments\": [\n    {\n      \"channel_id\": \"<uuid>\",\n      \"schedule_id\": \"<uuid>\"\n    },\n    {\n      \"channel_id\": \"<uuid>\",\n      \"schedule_id\": \"<uuid>\"\n    }\n  ],\n  \"notify_when\": \"has_matches\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/:alert_id/",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "alerts",
+                                    ":alert_id",
+                                    ""
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "alert_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Too Many Requests",
+                              "code": 429,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "Seconds to wait before retrying.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Retry-After",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"detail\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T02:41:32.000Z",
+                              "updatedAt": "2026-07-28T02:41:32.000Z",
+                              "uid": "35240-df49e227-0ef9-4b3c-8b65-f38f7a307bcf"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:41:32.000Z",
+                          "updatedAt": "2026-07-28T02:41:32.000Z",
+                          "uid": "35240-8f4d8922-d099-402f-a715-81b7894e1def"
+                        },
+                        {
+                          "name": "Delete Alert",
+                          "id": "2e946f97-461d-4e98-96aa-5b6e148b5909",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/:alert_id/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "alerts",
+                                ":alert_id",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "id": "82777415-4e4e-4f0e-8093-aed4e8cc275a",
+                                  "key": "project_id",
+                                  "value": "<uuid>",
+                                  "description": "(Required) "
+                                },
+                                {
+                                  "id": "e85c4634-f052-411a-8e9c-8d9fe02b1fc8",
+                                  "key": "alert_id",
+                                  "value": "<uuid>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            },
+                            "description": "Delete an alert."
+                          },
+                          "response": [
+                            {
+                              "id": "39fa1a9a-796f-4b53-86b3-259c8a062631",
+                              "name": "Successful Response",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/:alert_id/",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "alerts",
+                                    ":alert_id",
+                                    ""
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "alert_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "No Content",
+                              "code": 204,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T02:41:32.000Z",
+                              "updatedAt": "2026-07-28T02:41:32.000Z",
+                              "uid": "35240-39fa1a9a-796f-4b53-86b3-259c8a062631"
+                            },
+                            {
+                              "id": "77d77fba-96de-453e-8e8a-57b792bf869d",
+                              "name": "Validation Error",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/:alert_id/",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "alerts",
+                                    ":alert_id",
+                                    ""
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "alert_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                              "code": 422,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T02:41:32.000Z",
+                              "updatedAt": "2026-07-28T02:41:32.000Z",
+                              "uid": "35240-77d77fba-96de-453e-8e8a-57b792bf869d"
+                            },
+                            {
+                              "id": "58d99c6a-0bc6-4360-894c-a78d7692bf09",
+                              "name": "Rate limit exceeded",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/:alert_id/",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "alerts",
+                                    ":alert_id",
+                                    ""
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "alert_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Too Many Requests",
+                              "code": 429,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "Seconds to wait before retrying.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Retry-After",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"detail\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T02:41:32.000Z",
+                              "updatedAt": "2026-07-28T02:41:32.000Z",
+                              "uid": "35240-58d99c6a-0bc6-4360-894c-a78d7692bf09"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:41:32.000Z",
+                          "updatedAt": "2026-07-28T02:41:32.000Z",
+                          "uid": "35240-2e946f97-461d-4e98-96aa-5b6e148b5909"
+                        }
+                      ],
+                      "id": "2b818491-7526-4c7a-8caa-a99488917e9e",
+                      "createdAt": "2026-07-28T02:41:32.000Z",
+                      "updatedAt": "2026-07-28T02:41:32.000Z",
+                      "uid": "35240-2b818491-7526-4c7a-8caa-a99488917e9e"
+                    },
+                    {
+                      "name": "List Alerts",
+                      "id": "81ed006c-f596-47e9-958e-a7d3a9c84ed1",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "projects",
+                            ":project_id",
+                            "alerts",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "id": "e6de724d-a66f-4642-9828-16fb23a530ad",
+                              "key": "project_id",
+                              "value": "<uuid>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        },
+                        "description": "List all alerts for a project."
+                      },
+                      "response": [
+                        {
+                          "id": "c3ed5a70-d105-45ff-9cf2-47ca9d92e6c9",
+                          "name": "Successful Response",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "alerts",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "[\n  {\n    \"id\": \"<uuid>\",\n    \"organization_id\": \"<uuid>\",\n    \"project_id\": \"<uuid>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"created_by_name\": \"<string>\",\n    \"updated_by_name\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"query\": \"<string>\",\n    \"time_window\": \"<string>\",\n    \"frequency\": \"<string>\",\n    \"watermark\": \"<string>\",\n    \"channels\": [\n      {\n        \"id\": \"<uuid>\",\n        \"organization_id\": \"<uuid>\",\n        \"label\": \"<string>\",\n        \"active\": \"<boolean>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"created_by_name\": \"<string>\",\n        \"updated_by_name\": \"<string>\",\n        \"config\": {\n          \"type\": \"webhook\",\n          \"format\": \"auto\",\n          \"url\": \"<string>\"\n        },\n        \"schedule_id\": \"<uuid>\"\n      },\n      {\n        \"id\": \"<uuid>\",\n        \"organization_id\": \"<uuid>\",\n        \"label\": \"<string>\",\n        \"active\": \"<boolean>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"created_by_name\": \"<string>\",\n        \"updated_by_name\": \"<string>\",\n        \"config\": {\n          \"type\": \"webhook\",\n          \"format\": \"auto\",\n          \"url\": \"<string>\"\n        },\n        \"schedule_id\": \"<uuid>\"\n      }\n    ],\n    \"notify_when\": \"starts_having_matches\",\n    \"active\": \"<boolean>\",\n    \"last_run\": \"<dateTime>\",\n    \"has_matches\": \"<boolean>\",\n    \"has_errors\": \"<boolean>\",\n    \"result\": {\n      \"commodo22_\": {\n        \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n      },\n      \"ad_8c\": {\n        \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n      }\n    },\n    \"result_length\": \"<integer>\"\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"organization_id\": \"<uuid>\",\n    \"project_id\": \"<uuid>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"created_by_name\": \"<string>\",\n    \"updated_by_name\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"query\": \"<string>\",\n    \"time_window\": \"<string>\",\n    \"frequency\": \"<string>\",\n    \"watermark\": \"<string>\",\n    \"channels\": [\n      {\n        \"id\": \"<uuid>\",\n        \"organization_id\": \"<uuid>\",\n        \"label\": \"<string>\",\n        \"active\": \"<boolean>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"created_by_name\": \"<string>\",\n        \"updated_by_name\": \"<string>\",\n        \"config\": {\n          \"type\": \"webhook\",\n          \"format\": \"auto\",\n          \"url\": \"<string>\"\n        },\n        \"schedule_id\": \"<uuid>\"\n      },\n      {\n        \"id\": \"<uuid>\",\n        \"organization_id\": \"<uuid>\",\n        \"label\": \"<string>\",\n        \"active\": \"<boolean>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"created_by_name\": \"<string>\",\n        \"updated_by_name\": \"<string>\",\n        \"config\": {\n          \"type\": \"webhook\",\n          \"format\": \"raw-data\",\n          \"url\": \"<string>\"\n        },\n        \"schedule_id\": \"<uuid>\"\n      }\n    ],\n    \"notify_when\": \"has_matches\",\n    \"active\": \"<boolean>\",\n    \"last_run\": \"<dateTime>\",\n    \"has_matches\": \"<boolean>\",\n    \"has_errors\": \"<boolean>\",\n    \"result\": {\n      \"enim_80e\": {\n        \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n      },\n      \"ullamco_a\": {\n        \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n      },\n      \"adipisicing46f\": {\n        \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n      }\n    },\n    \"result_length\": \"<integer>\"\n  }\n]",
+                          "createdAt": "2026-07-28T02:41:32.000Z",
+                          "updatedAt": "2026-07-28T02:41:32.000Z",
+                          "uid": "35240-c3ed5a70-d105-45ff-9cf2-47ca9d92e6c9"
+                        },
+                        {
+                          "id": "4a0eaf72-d4ae-4e6d-802a-4e31f70fdafc",
+                          "name": "Validation Error",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "alerts",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:41:32.000Z",
+                          "updatedAt": "2026-07-28T02:41:32.000Z",
+                          "uid": "35240-4a0eaf72-d4ae-4e6d-802a-4e31f70fdafc"
+                        },
+                        {
+                          "id": "e5ac1af8-f1af-4594-ae8e-b57c0e898eb7",
+                          "name": "Rate limit exceeded",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "alerts",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Too Many Requests",
+                          "code": 429,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            },
+                            {
+                              "disabled": false,
+                              "description": {
+                                "content": "Seconds to wait before retrying.",
+                                "type": "text/plain"
+                              },
+                              "key": "Retry-After",
+                              "value": "<string>"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:41:32.000Z",
+                          "updatedAt": "2026-07-28T02:41:32.000Z",
+                          "uid": "35240-e5ac1af8-f1af-4594-ae8e-b57c0e898eb7"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:41:32.000Z",
+                      "updatedAt": "2026-07-28T02:41:32.000Z",
+                      "uid": "35240-81ed006c-f596-47e9-958e-a7d3a9c84ed1"
+                    },
+                    {
+                      "name": "Create Alert",
+                      "id": "9d0e832f-d6b3-4bbc-9386-463670b54d88",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"query\": {\n    \"title\": \"Query\",\n    \"examples\": [\n      \"SELECT 1\"\n    ]\n  },\n  \"time_window\": \"<string>\",\n  \"frequency\": \"<string>\",\n  \"watermark\": \"<string>\",\n  \"notify_when\": \"has_matches_changed\",\n  \"active\": true,\n  \"channel_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"channel_assignments\": [\n    {\n      \"channel_id\": \"<uuid>\",\n      \"schedule_id\": \"<uuid>\"\n    },\n    {\n      \"channel_id\": \"<uuid>\",\n      \"schedule_id\": \"<uuid>\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "projects",
+                            ":project_id",
+                            "alerts",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "id": "05651967-9889-4fb5-817d-9a76027f570c",
+                              "key": "project_id",
+                              "value": "<uuid>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        },
+                        "description": "Create a new alert."
+                      },
+                      "response": [
+                        {
+                          "id": "6a31eaa8-daf6-4410-b74b-08d0acd49734",
+                          "name": "Successful Response",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"query\": {\n    \"title\": \"Query\",\n    \"examples\": [\n      \"SELECT 1\"\n    ]\n  },\n  \"time_window\": \"<string>\",\n  \"frequency\": \"<string>\",\n  \"watermark\": \"<string>\",\n  \"notify_when\": \"has_matches_changed\",\n  \"active\": true,\n  \"channel_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"channel_assignments\": [\n    {\n      \"channel_id\": \"<uuid>\",\n      \"schedule_id\": \"<uuid>\"\n    },\n    {\n      \"channel_id\": \"<uuid>\",\n      \"schedule_id\": \"<uuid>\"\n    }\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "alerts",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Created",
+                          "code": 201,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<uuid>\",\n  \"organization_id\": \"<uuid>\",\n  \"project_id\": \"<uuid>\",\n  \"created_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"created_by_name\": \"<string>\",\n  \"updated_by_name\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"query\": \"<string>\",\n  \"time_window\": \"<string>\",\n  \"frequency\": \"<string>\",\n  \"watermark\": \"<string>\",\n  \"channels\": [\n    {\n      \"id\": \"<uuid>\",\n      \"organization_id\": \"<uuid>\",\n      \"label\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"created_by_name\": \"<string>\",\n      \"updated_by_name\": \"<string>\",\n      \"config\": {\n        \"type\": \"webhook\",\n        \"format\": \"raw-data\",\n        \"url\": \"<string>\"\n      },\n      \"schedule_id\": \"<uuid>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"organization_id\": \"<uuid>\",\n      \"label\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"created_by_name\": \"<string>\",\n      \"updated_by_name\": \"<string>\",\n      \"config\": {\n        \"type\": \"webhook\",\n        \"format\": \"slack-legacy\",\n        \"url\": \"<string>\"\n      },\n      \"schedule_id\": \"<uuid>\"\n    }\n  ],\n  \"notify_when\": \"starts_having_matches\",\n  \"active\": \"<boolean>\"\n}",
+                          "createdAt": "2026-07-28T02:41:32.000Z",
+                          "updatedAt": "2026-07-28T02:41:32.000Z",
+                          "uid": "35240-6a31eaa8-daf6-4410-b74b-08d0acd49734"
+                        },
+                        {
+                          "id": "bdb98b3a-00db-4bf1-a4a7-7c1b330f421e",
+                          "name": "Validation Error",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"query\": {\n    \"title\": \"Query\",\n    \"examples\": [\n      \"SELECT 1\"\n    ]\n  },\n  \"time_window\": \"<string>\",\n  \"frequency\": \"<string>\",\n  \"watermark\": \"<string>\",\n  \"notify_when\": \"has_matches_changed\",\n  \"active\": true,\n  \"channel_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"channel_assignments\": [\n    {\n      \"channel_id\": \"<uuid>\",\n      \"schedule_id\": \"<uuid>\"\n    },\n    {\n      \"channel_id\": \"<uuid>\",\n      \"schedule_id\": \"<uuid>\"\n    }\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "alerts",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:41:32.000Z",
+                          "updatedAt": "2026-07-28T02:41:32.000Z",
+                          "uid": "35240-bdb98b3a-00db-4bf1-a4a7-7c1b330f421e"
+                        },
+                        {
+                          "id": "69369eb4-a172-4515-8043-2f85935529fb",
+                          "name": "Rate limit exceeded",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"query\": {\n    \"title\": \"Query\",\n    \"examples\": [\n      \"SELECT 1\"\n    ]\n  },\n  \"time_window\": \"<string>\",\n  \"frequency\": \"<string>\",\n  \"watermark\": \"<string>\",\n  \"notify_when\": \"has_matches_changed\",\n  \"active\": true,\n  \"channel_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"channel_assignments\": [\n    {\n      \"channel_id\": \"<uuid>\",\n      \"schedule_id\": \"<uuid>\"\n    },\n    {\n      \"channel_id\": \"<uuid>\",\n      \"schedule_id\": \"<uuid>\"\n    }\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/alerts/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "alerts",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Too Many Requests",
+                          "code": 429,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            },
+                            {
+                              "disabled": false,
+                              "description": {
+                                "content": "Seconds to wait before retrying.",
+                                "type": "text/plain"
+                              },
+                              "key": "Retry-After",
+                              "value": "<string>"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:41:32.000Z",
+                          "updatedAt": "2026-07-28T02:41:32.000Z",
+                          "uid": "35240-69369eb4-a172-4515-8043-2f85935529fb"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:41:32.000Z",
+                      "updatedAt": "2026-07-28T02:41:32.000Z",
+                      "uid": "35240-9d0e832f-d6b3-4bbc-9386-463670b54d88"
+                    }
+                  ],
+                  "id": "b563237e-f6a7-4652-9ecf-79281d89555e",
+                  "createdAt": "2026-07-28T02:41:32.000Z",
+                  "updatedAt": "2026-07-28T02:41:32.000Z",
+                  "uid": "35240-b563237e-f6a7-4652-9ecf-79281d89555e"
+                }
+              ],
+              "id": "4a38a0a0-8df2-40f5-a50c-457eb38b8e08",
+              "createdAt": "2026-07-28T02:41:32.000Z",
+              "updatedAt": "2026-07-28T02:41:32.000Z",
+              "uid": "35240-4a38a0a0-8df2-40f5-a50c-457eb38b8e08"
+            }
+          ],
+          "id": "60c9edfd-d0ac-47d0-8efb-c9647f0e3f06",
+          "createdAt": "2026-07-28T02:41:32.000Z",
+          "updatedAt": "2026-07-28T02:41:32.000Z",
+          "uid": "35240-60c9edfd-d0ac-47d0-8efb-c9647f0e3f06"
+        }
+      ],
+      "id": "bd54b043-b6d1-4951-a396-aab1fdc14af8",
+      "createdAt": "2026-07-28T02:41:32.000Z",
+      "updatedAt": "2026-07-28T02:41:32.000Z",
+      "uid": "35240-bd54b043-b6d1-4951-a396-aab1fdc14af8"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://pydantic.dev/api/v1"
+    }
+  ]
+}

@@ -1,0 +1,733 @@
+{
+  "info": {
+    "_postman_id": "894f0ab4-3775-4b1e-8947-1a12a67753e5",
+    "name": "Pydantic API Discovery Alerts Group Mappings API",
+    "description": "Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly \u2014 it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.\n\n- **US region**: https://logfire-us.pydantic.dev/api/openapi.json\n- **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json\n\n## Versioning\n\nThis discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).\n\nResponses include an `X-API-Version` header identifying the version that served the request.\n\nRelated discovery resources:\n\n- [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) \u2014 RFC 9727 Linkset of available API descriptions.\n- [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) \u2014 JSON list of per-region OpenAPI specs.\n- [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) \u2014 RFC 9728 OAuth protected resource metadata.\n\nContact Support:\n Name: Pydantic\n Email: hello@pydantic.dev",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:41:38.000Z",
+    "updatedAt": "2026-07-28T02:41:39.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-894f0ab4-3775-4b1e-8947-1a12a67753e5"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "group-mappings",
+          "item": [
+            {
+              "name": "Get Group Mappings",
+              "id": "7150bdf8-1dbd-4752-8aa4-2d3d22309827",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/group-mappings/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "group-mappings",
+                    ""
+                  ]
+                },
+                "description": "Return the group-organization mapping currently stored in `platform_config` (self-hosted admin only)."
+              },
+              "response": [
+                {
+                  "id": "357e58f9-30f6-4b7e-a5c1-a99f5a677c3a",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/group-mappings/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "group-mappings",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:41:39.000Z",
+                  "updatedAt": "2026-07-28T02:41:39.000Z",
+                  "uid": "35240-357e58f9-30f6-4b7e-a5c1-a99f5a677c3a"
+                },
+                {
+                  "id": "1649db80-f273-4366-b6a4-f02c32ee70f0",
+                  "name": "Rate limit exceeded",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/group-mappings/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "group-mappings",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Seconds to wait before retrying.",
+                        "type": "text/plain"
+                      },
+                      "key": "Retry-After",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:41:39.000Z",
+                  "updatedAt": "2026-07-28T02:41:39.000Z",
+                  "uid": "35240-1649db80-f273-4366-b6a4-f02c32ee70f0"
+                }
+              ],
+              "createdAt": "2026-07-28T02:41:39.000Z",
+              "updatedAt": "2026-07-28T02:41:39.000Z",
+              "uid": "35240-7150bdf8-1dbd-4752-8aa4-2d3d22309827"
+            },
+            {
+              "name": "Update Group Mappings",
+              "id": "af55aa03-4b72-4f73-a107-57d614c753dd",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/group-mappings/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "group-mappings",
+                    ""
+                  ]
+                },
+                "description": "Replace the group-organization mapping stored in `platform_config` (self-hosted admin only).\n\nEvery `organization_name` and `project_name` in the payload must correspond to an existing\nrecord in the database; otherwise a 400 is returned."
+              },
+              "response": [
+                {
+                  "id": "764144c4-28ae-4476-ae41-22d85f15f9b8",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/group-mappings/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "group-mappings",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:41:39.000Z",
+                  "updatedAt": "2026-07-28T02:41:39.000Z",
+                  "uid": "35240-764144c4-28ae-4476-ae41-22d85f15f9b8"
+                },
+                {
+                  "id": "05149345-649f-4e3b-9c26-9becfd7f40e4",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/group-mappings/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "group-mappings",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:41:39.000Z",
+                  "updatedAt": "2026-07-28T02:41:39.000Z",
+                  "uid": "35240-05149345-649f-4e3b-9c26-9becfd7f40e4"
+                },
+                {
+                  "id": "14573931-ffe2-4d1d-9e94-33b50e06989f",
+                  "name": "Rate limit exceeded",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/group-mappings/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "group-mappings",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Seconds to wait before retrying.",
+                        "type": "text/plain"
+                      },
+                      "key": "Retry-After",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:41:39.000Z",
+                  "updatedAt": "2026-07-28T02:41:39.000Z",
+                  "uid": "35240-14573931-ffe2-4d1d-9e94-33b50e06989f"
+                }
+              ],
+              "createdAt": "2026-07-28T02:41:39.000Z",
+              "updatedAt": "2026-07-28T02:41:39.000Z",
+              "uid": "35240-af55aa03-4b72-4f73-a107-57d614c753dd"
+            }
+          ],
+          "id": "98ccca09-9278-4bb2-8ecd-3ba092ee48a9",
+          "createdAt": "2026-07-28T02:41:39.000Z",
+          "updatedAt": "2026-07-28T02:41:39.000Z",
+          "uid": "35240-98ccca09-9278-4bb2-8ecd-3ba092ee48a9"
+        },
+        {
+          "name": "instance",
+          "item": [
+            {
+              "name": "group-mappings",
+              "item": [
+                {
+                  "name": "Get Group Mappings",
+                  "id": "fdb93d4b-a016-4366-868b-deb82b1dc396",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/instance/group-mappings/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "instance",
+                        "group-mappings",
+                        ""
+                      ]
+                    },
+                    "description": "Return the group-organization mapping currently stored in `platform_config` (self-hosted admin only)."
+                  },
+                  "response": [
+                    {
+                      "id": "cbf27ed8-1fa1-4132-92fa-22b8c3caa002",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/instance/group-mappings/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "instance",
+                            "group-mappings",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:39.000Z",
+                      "updatedAt": "2026-07-28T02:41:39.000Z",
+                      "uid": "35240-cbf27ed8-1fa1-4132-92fa-22b8c3caa002"
+                    },
+                    {
+                      "id": "e4d6803d-c00c-4774-ad1e-eb1535636b4d",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/instance/group-mappings/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "instance",
+                            "group-mappings",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Seconds to wait before retrying.",
+                            "type": "text/plain"
+                          },
+                          "key": "Retry-After",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:41:39.000Z",
+                      "updatedAt": "2026-07-28T02:41:39.000Z",
+                      "uid": "35240-e4d6803d-c00c-4774-ad1e-eb1535636b4d"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:39.000Z",
+                  "updatedAt": "2026-07-28T02:41:39.000Z",
+                  "uid": "35240-fdb93d4b-a016-4366-868b-deb82b1dc396"
+                },
+                {
+                  "name": "Update Group Mappings",
+                  "id": "583223ef-7b08-46ff-9f91-64d0b010cef6",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/instance/group-mappings/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "instance",
+                        "group-mappings",
+                        ""
+                      ]
+                    },
+                    "description": "Replace the group-organization mapping stored in `platform_config` (self-hosted admin only).\n\nEvery `organization_name` and `project_name` in the payload must correspond to an existing\nrecord in the database; otherwise a 400 is returned."
+                  },
+                  "response": [
+                    {
+                      "id": "707eecd4-fa2c-4918-bdf9-ff34b2aaf2a7",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/instance/group-mappings/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "instance",
+                            "group-mappings",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:39.000Z",
+                      "updatedAt": "2026-07-28T02:41:39.000Z",
+                      "uid": "35240-707eecd4-fa2c-4918-bdf9-ff34b2aaf2a7"
+                    },
+                    {
+                      "id": "e93e370d-28ed-4a4a-86fb-12fca89b05e8",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/instance/group-mappings/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "instance",
+                            "group-mappings",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:39.000Z",
+                      "updatedAt": "2026-07-28T02:41:39.000Z",
+                      "uid": "35240-e93e370d-28ed-4a4a-86fb-12fca89b05e8"
+                    },
+                    {
+                      "id": "7c7afd28-f576-4961-a3e9-2f1e5390b092",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/instance/group-mappings/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "instance",
+                            "group-mappings",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Seconds to wait before retrying.",
+                            "type": "text/plain"
+                          },
+                          "key": "Retry-After",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:41:39.000Z",
+                      "updatedAt": "2026-07-28T02:41:39.000Z",
+                      "uid": "35240-7c7afd28-f576-4961-a3e9-2f1e5390b092"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:39.000Z",
+                  "updatedAt": "2026-07-28T02:41:39.000Z",
+                  "uid": "35240-583223ef-7b08-46ff-9f91-64d0b010cef6"
+                }
+              ],
+              "id": "e8924f10-de2f-49a8-81c3-77ee946986ff",
+              "createdAt": "2026-07-28T02:41:39.000Z",
+              "updatedAt": "2026-07-28T02:41:39.000Z",
+              "uid": "35240-e8924f10-de2f-49a8-81c3-77ee946986ff"
+            }
+          ],
+          "id": "3a14c6e3-015f-4684-9526-a208e0f85f65",
+          "createdAt": "2026-07-28T02:41:39.000Z",
+          "updatedAt": "2026-07-28T02:41:39.000Z",
+          "uid": "35240-3a14c6e3-015f-4684-9526-a208e0f85f65"
+        }
+      ],
+      "id": "64612283-8419-4340-b5d0-47121dd6aeea",
+      "createdAt": "2026-07-28T02:41:39.000Z",
+      "updatedAt": "2026-07-28T02:41:39.000Z",
+      "uid": "35240-64612283-8419-4340-b5d0-47121dd6aeea"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://pydantic.dev/api/v1"
+    }
+  ]
+}

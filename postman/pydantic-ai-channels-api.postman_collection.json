@@ -1,0 +1,986 @@
+{
+  "info": {
+    "_postman_id": "c0698194-07fd-4ea2-a3c5-7eae904f97f4",
+    "name": "Pydantic API Discovery Alerts Channels API",
+    "description": "Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly \u2014 it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.\n\n- **US region**: https://logfire-us.pydantic.dev/api/openapi.json\n- **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json\n\n## Versioning\n\nThis discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).\n\nResponses include an `X-API-Version` header identifying the version that served the request.\n\nRelated discovery resources:\n\n- [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) \u2014 RFC 9727 Linkset of available API descriptions.\n- [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) \u2014 JSON list of per-region OpenAPI specs.\n- [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) \u2014 RFC 9728 OAuth protected resource metadata.\n\nContact Support:\n Name: Pydantic\n Email: hello@pydantic.dev",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:41:35.000Z",
+    "updatedAt": "2026-07-28T02:41:35.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-c0698194-07fd-4ea2-a3c5-7eae904f97f4"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "channels",
+          "item": [
+            {
+              "name": "{channel_id}",
+              "item": [
+                {
+                  "name": "Get Channel",
+                  "id": "5b5736e8-c2b0-4380-870b-e8cead166689",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/channels/:channel_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "channels",
+                        ":channel_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "968977cb-fb84-4c1b-894f-72425c3f58e7",
+                          "key": "channel_id",
+                          "value": "<uuid>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Get a single notification channel by ID"
+                  },
+                  "response": [
+                    {
+                      "id": "6f585dd1-3bca-4da0-81f5-cbde8b4b5f2e",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/channels/:channel_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "channels",
+                            ":channel_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "channel_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"organization_id\": \"<uuid>\",\n  \"label\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"created_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"created_by_name\": \"<string>\",\n  \"updated_by_name\": \"<string>\",\n  \"config\": {\n    \"type\": \"webhook\",\n    \"format\": \"auto\",\n    \"url\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T02:41:36.000Z",
+                      "updatedAt": "2026-07-28T02:41:36.000Z",
+                      "uid": "35240-6f585dd1-3bca-4da0-81f5-cbde8b4b5f2e"
+                    },
+                    {
+                      "id": "f7b20f73-01b1-4e50-8c69-9301dd59041b",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/channels/:channel_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "channels",
+                            ":channel_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "channel_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:36.000Z",
+                      "updatedAt": "2026-07-28T02:41:36.000Z",
+                      "uid": "35240-f7b20f73-01b1-4e50-8c69-9301dd59041b"
+                    },
+                    {
+                      "id": "c8a22261-bfb0-4544-8250-7a8db6184d71",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/channels/:channel_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "channels",
+                            ":channel_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "channel_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Seconds to wait before retrying.",
+                            "type": "text/plain"
+                          },
+                          "key": "Retry-After",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:41:36.000Z",
+                      "updatedAt": "2026-07-28T02:41:36.000Z",
+                      "uid": "35240-c8a22261-bfb0-4544-8250-7a8db6184d71"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:36.000Z",
+                  "updatedAt": "2026-07-28T02:41:36.000Z",
+                  "uid": "35240-5b5736e8-c2b0-4380-870b-e8cead166689"
+                },
+                {
+                  "name": "Update Channel",
+                  "id": "5684bdea-25fe-43d9-940b-23f64b2dce13",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"label\": \"<string>\",\n  \"config\": {\n    \"type\": \"webhook\",\n    \"format\": \"slack-blockkit\",\n    \"url\": \"<string>\"\n  },\n  \"active\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/channels/:channel_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "channels",
+                        ":channel_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "6da5c73f-8222-4f52-8f72-41c61d507d4e",
+                          "key": "channel_id",
+                          "value": "<uuid>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Update a notification channel."
+                  },
+                  "response": [
+                    {
+                      "id": "547a8094-5e76-485a-9edf-c26a041092ba",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"label\": \"<string>\",\n  \"config\": {\n    \"type\": \"webhook\",\n    \"format\": \"slack-blockkit\",\n    \"url\": \"<string>\"\n  },\n  \"active\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/channels/:channel_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "channels",
+                            ":channel_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "channel_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"organization_id\": \"<uuid>\",\n  \"label\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"created_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"created_by_name\": \"<string>\",\n  \"updated_by_name\": \"<string>\",\n  \"config\": {\n    \"type\": \"webhook\",\n    \"format\": \"auto\",\n    \"url\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T02:41:36.000Z",
+                      "updatedAt": "2026-07-28T02:41:36.000Z",
+                      "uid": "35240-547a8094-5e76-485a-9edf-c26a041092ba"
+                    },
+                    {
+                      "id": "1767b416-c3ae-4525-afb5-ff83b749b552",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"label\": \"<string>\",\n  \"config\": {\n    \"type\": \"webhook\",\n    \"format\": \"slack-blockkit\",\n    \"url\": \"<string>\"\n  },\n  \"active\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/channels/:channel_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "channels",
+                            ":channel_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "channel_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:36.000Z",
+                      "updatedAt": "2026-07-28T02:41:36.000Z",
+                      "uid": "35240-1767b416-c3ae-4525-afb5-ff83b749b552"
+                    },
+                    {
+                      "id": "f91413f3-2587-48c2-b34e-21b6a5e768d9",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"label\": \"<string>\",\n  \"config\": {\n    \"type\": \"webhook\",\n    \"format\": \"slack-blockkit\",\n    \"url\": \"<string>\"\n  },\n  \"active\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/channels/:channel_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "channels",
+                            ":channel_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "channel_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Seconds to wait before retrying.",
+                            "type": "text/plain"
+                          },
+                          "key": "Retry-After",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:41:36.000Z",
+                      "updatedAt": "2026-07-28T02:41:36.000Z",
+                      "uid": "35240-f91413f3-2587-48c2-b34e-21b6a5e768d9"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:36.000Z",
+                  "updatedAt": "2026-07-28T02:41:36.000Z",
+                  "uid": "35240-5684bdea-25fe-43d9-940b-23f64b2dce13"
+                },
+                {
+                  "name": "Delete Channel",
+                  "id": "17640097-5e5b-4c37-992b-fcadcfc6b3e6",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/channels/:channel_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "channels",
+                        ":channel_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "0d69900a-97f0-490e-9105-8a5c021dfa61",
+                          "key": "channel_id",
+                          "value": "<uuid>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Delete a notification channel."
+                  },
+                  "response": [
+                    {
+                      "id": "ecc71603-75cf-4444-9c11-81d6f682db37",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/channels/:channel_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "channels",
+                            ":channel_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "channel_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:41:36.000Z",
+                      "updatedAt": "2026-07-28T02:41:36.000Z",
+                      "uid": "35240-ecc71603-75cf-4444-9c11-81d6f682db37"
+                    },
+                    {
+                      "id": "70cb6fa6-fbff-450e-95ff-7325b7f777ff",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/channels/:channel_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "channels",
+                            ":channel_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "channel_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:36.000Z",
+                      "updatedAt": "2026-07-28T02:41:36.000Z",
+                      "uid": "35240-70cb6fa6-fbff-450e-95ff-7325b7f777ff"
+                    },
+                    {
+                      "id": "a0a74c85-8358-47cd-a357-94187ffae038",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/channels/:channel_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "channels",
+                            ":channel_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "channel_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Seconds to wait before retrying.",
+                            "type": "text/plain"
+                          },
+                          "key": "Retry-After",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:41:36.000Z",
+                      "updatedAt": "2026-07-28T02:41:36.000Z",
+                      "uid": "35240-a0a74c85-8358-47cd-a357-94187ffae038"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:36.000Z",
+                  "updatedAt": "2026-07-28T02:41:36.000Z",
+                  "uid": "35240-17640097-5e5b-4c37-992b-fcadcfc6b3e6"
+                }
+              ],
+              "id": "a31ba552-c232-49c3-85af-40b0946e1aa0",
+              "createdAt": "2026-07-28T02:41:36.000Z",
+              "updatedAt": "2026-07-28T02:41:36.000Z",
+              "uid": "35240-a31ba552-c232-49c3-85af-40b0946e1aa0"
+            },
+            {
+              "name": "List Channels",
+              "id": "229b9037-6f8f-4687-84c6-5aab13b49d4f",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/channels/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "channels",
+                    ""
+                  ]
+                },
+                "description": "List all notification channels for the organization the project belongs to."
+              },
+              "response": [
+                {
+                  "id": "b150abe2-127d-4b37-8141-b0f1cbc84236",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/channels/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "channels",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  {\n    \"id\": \"<uuid>\",\n    \"organization_id\": \"<uuid>\",\n    \"label\": \"<string>\",\n    \"active\": \"<boolean>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"created_by_name\": \"<string>\",\n    \"updated_by_name\": \"<string>\",\n    \"config\": {\n      \"type\": \"webhook\",\n      \"format\": \"slack-blockkit\",\n      \"url\": \"<string>\"\n    }\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"organization_id\": \"<uuid>\",\n    \"label\": \"<string>\",\n    \"active\": \"<boolean>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"created_by_name\": \"<string>\",\n    \"updated_by_name\": \"<string>\",\n    \"config\": {\n      \"type\": \"webhook\",\n      \"format\": \"slack-blockkit\",\n      \"url\": \"<string>\"\n    }\n  }\n]",
+                  "createdAt": "2026-07-28T02:41:36.000Z",
+                  "updatedAt": "2026-07-28T02:41:36.000Z",
+                  "uid": "35240-b150abe2-127d-4b37-8141-b0f1cbc84236"
+                },
+                {
+                  "id": "52c4b910-458e-4a0e-ac28-89cc68f4deb5",
+                  "name": "Rate limit exceeded",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/channels/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "channels",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Seconds to wait before retrying.",
+                        "type": "text/plain"
+                      },
+                      "key": "Retry-After",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:41:36.000Z",
+                  "updatedAt": "2026-07-28T02:41:36.000Z",
+                  "uid": "35240-52c4b910-458e-4a0e-ac28-89cc68f4deb5"
+                }
+              ],
+              "createdAt": "2026-07-28T02:41:36.000Z",
+              "updatedAt": "2026-07-28T02:41:36.000Z",
+              "uid": "35240-229b9037-6f8f-4687-84c6-5aab13b49d4f"
+            },
+            {
+              "name": "Create Channel",
+              "id": "585a48a2-a81f-4082-81ae-20f85632e5a9",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"<string>\",\n  \"config\": {\n    \"type\": \"webhook\",\n    \"format\": \"slack-blockkit\",\n    \"url\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/channels/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "channels",
+                    ""
+                  ]
+                },
+                "description": "Create a notification channel."
+              },
+              "response": [
+                {
+                  "id": "df6bdaa8-d056-4eff-abef-50647367caac",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"label\": \"<string>\",\n  \"config\": {\n    \"type\": \"webhook\",\n    \"format\": \"slack-blockkit\",\n    \"url\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/channels/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "channels",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"organization_id\": \"<uuid>\",\n  \"label\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"created_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"created_by_name\": \"<string>\",\n  \"updated_by_name\": \"<string>\",\n  \"config\": {\n    \"type\": \"webhook\",\n    \"format\": \"auto\",\n    \"url\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T02:41:36.000Z",
+                  "updatedAt": "2026-07-28T02:41:36.000Z",
+                  "uid": "35240-df6bdaa8-d056-4eff-abef-50647367caac"
+                },
+                {
+                  "id": "19bcab4c-6011-4368-bfe1-ed63044df085",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"label\": \"<string>\",\n  \"config\": {\n    \"type\": \"webhook\",\n    \"format\": \"slack-blockkit\",\n    \"url\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/channels/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "channels",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:41:36.000Z",
+                  "updatedAt": "2026-07-28T02:41:36.000Z",
+                  "uid": "35240-19bcab4c-6011-4368-bfe1-ed63044df085"
+                },
+                {
+                  "id": "2a4e2ab0-a6d2-4ac1-a0a9-8ae1b2d85a91",
+                  "name": "Rate limit exceeded",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"label\": \"<string>\",\n  \"config\": {\n    \"type\": \"webhook\",\n    \"format\": \"slack-blockkit\",\n    \"url\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/channels/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "channels",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Seconds to wait before retrying.",
+                        "type": "text/plain"
+                      },
+                      "key": "Retry-After",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:41:36.000Z",
+                  "updatedAt": "2026-07-28T02:41:36.000Z",
+                  "uid": "35240-2a4e2ab0-a6d2-4ac1-a0a9-8ae1b2d85a91"
+                }
+              ],
+              "createdAt": "2026-07-28T02:41:36.000Z",
+              "updatedAt": "2026-07-28T02:41:36.000Z",
+              "uid": "35240-585a48a2-a81f-4082-81ae-20f85632e5a9"
+            }
+          ],
+          "id": "ddf22da5-0264-4d7d-a999-0921c3a209a2",
+          "createdAt": "2026-07-28T02:41:36.000Z",
+          "updatedAt": "2026-07-28T02:41:36.000Z",
+          "uid": "35240-ddf22da5-0264-4d7d-a999-0921c3a209a2"
+        }
+      ],
+      "id": "42f8e8f8-4723-4991-b325-ca8ef942d901",
+      "createdAt": "2026-07-28T02:41:36.000Z",
+      "updatedAt": "2026-07-28T02:41:36.000Z",
+      "uid": "35240-42f8e8f8-4723-4991-b325-ca8ef942d901"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://pydantic.dev/api/v1"
+    }
+  ]
+}

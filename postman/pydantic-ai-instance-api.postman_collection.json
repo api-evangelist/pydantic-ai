@@ -1,0 +1,872 @@
+{
+  "info": {
+    "_postman_id": "1eb5b3a8-af55-4208-ab97-abf958e89cbc",
+    "name": "Pydantic API Discovery Alerts Instance API",
+    "description": "Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly \u2014 it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.\n\n- **US region**: https://logfire-us.pydantic.dev/api/openapi.json\n- **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json\n\n## Versioning\n\nThis discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).\n\nResponses include an `X-API-Version` header identifying the version that served the request.\n\nRelated discovery resources:\n\n- [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) \u2014 RFC 9727 Linkset of available API descriptions.\n- [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) \u2014 JSON list of per-region OpenAPI specs.\n- [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) \u2014 RFC 9728 OAuth protected resource metadata.\n\nContact Support:\n Name: Pydantic\n Email: hello@pydantic.dev",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:41:41.000Z",
+    "updatedAt": "2026-07-28T02:41:41.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-1eb5b3a8-af55-4208-ab97-abf958e89cbc"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "instance",
+          "item": [
+            {
+              "name": "organizations",
+              "item": [
+                {
+                  "name": "List Instance Organizations",
+                  "id": "04bfe563-9119-4399-8ce7-64f269945907",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/instance/organizations/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "instance",
+                        "organizations",
+                        ""
+                      ]
+                    },
+                    "description": "List all organizations across the self-hosted instance."
+                  },
+                  "response": [
+                    {
+                      "id": "e445fee3-27a4-4829-9d23-49ef35f07356",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/instance/organizations/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "instance",
+                            "organizations",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"id\": \"<uuid>\",\n    \"organization_name\": \"<string>\",\n    \"subscription_plan\": \"growth\",\n    \"has_admin_panel\": \"<boolean>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"billing_email\": \"<string>\",\n    \"organization_display_name\": \"<string>\",\n    \"github_handle\": \"<string>\",\n    \"location\": \"<string>\",\n    \"avatar\": \"<string>\",\n    \"links\": [\n      {\n        \"url\": \"<string>\",\n        \"icon\": \"<string>\",\n        \"name\": \"<string>\"\n      },\n      {\n        \"url\": \"<string>\",\n        \"icon\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    ],\n    \"description\": \"<string>\",\n    \"spending_cap\": \"<integer>\",\n    \"spending_cap_reached_at\": \"<dateTime>\",\n    \"planless_grace_period_ends_at\": \"<dateTime>\",\n    \"gateway_enabled\": \"<boolean>\",\n    \"ai_enabled\": \"<boolean>\",\n    \"ai_training_enabled\": \"<boolean>\"\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"organization_name\": \"<string>\",\n    \"subscription_plan\": \"non_stripe\",\n    \"has_admin_panel\": \"<boolean>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"billing_email\": \"<string>\",\n    \"organization_display_name\": \"<string>\",\n    \"github_handle\": \"<string>\",\n    \"location\": \"<string>\",\n    \"avatar\": \"<string>\",\n    \"links\": [\n      {\n        \"url\": \"<string>\",\n        \"icon\": \"<string>\",\n        \"name\": \"<string>\"\n      },\n      {\n        \"url\": \"<string>\",\n        \"icon\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    ],\n    \"description\": \"<string>\",\n    \"spending_cap\": \"<integer>\",\n    \"spending_cap_reached_at\": \"<dateTime>\",\n    \"planless_grace_period_ends_at\": \"<dateTime>\",\n    \"gateway_enabled\": \"<boolean>\",\n    \"ai_enabled\": \"<boolean>\",\n    \"ai_training_enabled\": \"<boolean>\"\n  }\n]",
+                      "createdAt": "2026-07-28T02:41:41.000Z",
+                      "updatedAt": "2026-07-28T02:41:41.000Z",
+                      "uid": "35240-e445fee3-27a4-4829-9d23-49ef35f07356"
+                    },
+                    {
+                      "id": "16f27b48-0f04-4ace-b23e-3ff0ab634e2b",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/instance/organizations/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "instance",
+                            "organizations",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Seconds to wait before retrying.",
+                            "type": "text/plain"
+                          },
+                          "key": "Retry-After",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:41:41.000Z",
+                      "updatedAt": "2026-07-28T02:41:41.000Z",
+                      "uid": "35240-16f27b48-0f04-4ace-b23e-3ff0ab634e2b"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:41.000Z",
+                  "updatedAt": "2026-07-28T02:41:41.000Z",
+                  "uid": "35240-04bfe563-9119-4399-8ce7-64f269945907"
+                },
+                {
+                  "name": "Create Instance Organization",
+                  "id": "59c0eb64-4659-4821-8ece-fb1eab3c2da0",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"organization_name\": \"e8x8-z\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/instance/organizations/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "instance",
+                        "organizations",
+                        ""
+                      ]
+                    },
+                    "description": "Create an organization owned by the token's user across the self-hosted instance."
+                  },
+                  "response": [
+                    {
+                      "id": "4a1ca278-67f9-44a3-9b3a-8c658e595ce7",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"organization_name\": \"e8x8-z\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/instance/organizations/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "instance",
+                            "organizations",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"organization_name\": \"<string>\",\n  \"subscription_plan\": \"personal\",\n  \"has_admin_panel\": \"<boolean>\",\n  \"created_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"billing_email\": \"<string>\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\",\n  \"spending_cap\": \"<integer>\",\n  \"spending_cap_reached_at\": \"<dateTime>\",\n  \"planless_grace_period_ends_at\": \"<dateTime>\",\n  \"gateway_enabled\": \"<boolean>\",\n  \"ai_enabled\": \"<boolean>\",\n  \"ai_training_enabled\": \"<boolean>\"\n}",
+                      "createdAt": "2026-07-28T02:41:41.000Z",
+                      "updatedAt": "2026-07-28T02:41:41.000Z",
+                      "uid": "35240-4a1ca278-67f9-44a3-9b3a-8c658e595ce7"
+                    },
+                    {
+                      "id": "e735381a-b9b6-4ecd-a495-5e03bca396d0",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"organization_name\": \"e8x8-z\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/instance/organizations/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "instance",
+                            "organizations",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:41.000Z",
+                      "updatedAt": "2026-07-28T02:41:41.000Z",
+                      "uid": "35240-e735381a-b9b6-4ecd-a495-5e03bca396d0"
+                    },
+                    {
+                      "id": "9289bbc7-8bce-47dc-95ec-b4991219fa28",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"organization_name\": \"e8x8-z\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/instance/organizations/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "instance",
+                            "organizations",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Seconds to wait before retrying.",
+                            "type": "text/plain"
+                          },
+                          "key": "Retry-After",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:41:41.000Z",
+                      "updatedAt": "2026-07-28T02:41:41.000Z",
+                      "uid": "35240-9289bbc7-8bce-47dc-95ec-b4991219fa28"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:41.000Z",
+                  "updatedAt": "2026-07-28T02:41:41.000Z",
+                  "uid": "35240-59c0eb64-4659-4821-8ece-fb1eab3c2da0"
+                }
+              ],
+              "id": "0b0cc449-fc48-4a16-9702-6ca3a97089f9",
+              "createdAt": "2026-07-28T02:41:41.000Z",
+              "updatedAt": "2026-07-28T02:41:41.000Z",
+              "uid": "35240-0b0cc449-fc48-4a16-9702-6ca3a97089f9"
+            },
+            {
+              "name": "usage-report",
+              "item": [
+                {
+                  "name": "List Instance Usage Report",
+                  "id": "6d0b6b9e-7755-4ec9-9469-70f5209ebed9",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/instance/usage-report/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "instance",
+                        "usage-report",
+                        ""
+                      ]
+                    },
+                    "description": "List completed monthly usage for all organizations in a self-hosted instance."
+                  },
+                  "response": [
+                    {
+                      "id": "d65c0c80-6b04-49c3-a4bc-6cb8c9197a24",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/instance/usage-report/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "instance",
+                            "usage-report",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"date\": \"<date>\",\n    \"organization_id\": \"<uuid>\",\n    \"organization_name\": \"<string>\",\n    \"project_id\": \"<uuid>\",\n    \"records_count\": \"<integer>\",\n    \"metrics_count\": \"<integer>\",\n    \"total_observations\": \"<integer>\"\n  },\n  {\n    \"date\": \"<date>\",\n    \"organization_id\": \"<uuid>\",\n    \"organization_name\": \"<string>\",\n    \"project_id\": \"<uuid>\",\n    \"records_count\": \"<integer>\",\n    \"metrics_count\": \"<integer>\",\n    \"total_observations\": \"<integer>\"\n  }\n]",
+                      "createdAt": "2026-07-28T02:41:41.000Z",
+                      "updatedAt": "2026-07-28T02:41:41.000Z",
+                      "uid": "35240-d65c0c80-6b04-49c3-a4bc-6cb8c9197a24"
+                    },
+                    {
+                      "id": "ce6b3289-17f5-461a-b8c9-f785311be7b0",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/instance/usage-report/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "instance",
+                            "usage-report",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Seconds to wait before retrying.",
+                            "type": "text/plain"
+                          },
+                          "key": "Retry-After",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:41:41.000Z",
+                      "updatedAt": "2026-07-28T02:41:41.000Z",
+                      "uid": "35240-ce6b3289-17f5-461a-b8c9-f785311be7b0"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:41.000Z",
+                  "updatedAt": "2026-07-28T02:41:41.000Z",
+                  "uid": "35240-6d0b6b9e-7755-4ec9-9469-70f5209ebed9"
+                }
+              ],
+              "id": "b6fb6422-d567-4fd9-87d9-7bec018b96a3",
+              "createdAt": "2026-07-28T02:41:41.000Z",
+              "updatedAt": "2026-07-28T02:41:41.000Z",
+              "uid": "35240-b6fb6422-d567-4fd9-87d9-7bec018b96a3"
+            },
+            {
+              "name": "group-mappings",
+              "item": [
+                {
+                  "name": "Get Group Mappings",
+                  "id": "96075835-7a46-4cb1-97c2-4cf2fdf31c32",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/instance/group-mappings/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "instance",
+                        "group-mappings",
+                        ""
+                      ]
+                    },
+                    "description": "Return the group-organization mapping currently stored in `platform_config` (self-hosted admin only)."
+                  },
+                  "response": [
+                    {
+                      "id": "1db00b26-70d0-4330-b1df-75afcbdd0e86",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/instance/group-mappings/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "instance",
+                            "group-mappings",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:41.000Z",
+                      "updatedAt": "2026-07-28T02:41:41.000Z",
+                      "uid": "35240-1db00b26-70d0-4330-b1df-75afcbdd0e86"
+                    },
+                    {
+                      "id": "ae1ad97e-8cd2-4f11-b65b-af9f5ffa3cbd",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/instance/group-mappings/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "instance",
+                            "group-mappings",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Seconds to wait before retrying.",
+                            "type": "text/plain"
+                          },
+                          "key": "Retry-After",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:41:41.000Z",
+                      "updatedAt": "2026-07-28T02:41:41.000Z",
+                      "uid": "35240-ae1ad97e-8cd2-4f11-b65b-af9f5ffa3cbd"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:41.000Z",
+                  "updatedAt": "2026-07-28T02:41:41.000Z",
+                  "uid": "35240-96075835-7a46-4cb1-97c2-4cf2fdf31c32"
+                },
+                {
+                  "name": "Update Group Mappings",
+                  "id": "fce91bd1-f25c-49fb-9597-911ded053e9f",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/instance/group-mappings/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "instance",
+                        "group-mappings",
+                        ""
+                      ]
+                    },
+                    "description": "Replace the group-organization mapping stored in `platform_config` (self-hosted admin only).\n\nEvery `organization_name` and `project_name` in the payload must correspond to an existing\nrecord in the database; otherwise a 400 is returned."
+                  },
+                  "response": [
+                    {
+                      "id": "32ce1004-3642-42c6-85b0-64356666d77c",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/instance/group-mappings/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "instance",
+                            "group-mappings",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:41.000Z",
+                      "updatedAt": "2026-07-28T02:41:41.000Z",
+                      "uid": "35240-32ce1004-3642-42c6-85b0-64356666d77c"
+                    },
+                    {
+                      "id": "1054017d-7767-4084-afef-0999d696899b",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/instance/group-mappings/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "instance",
+                            "group-mappings",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:41.000Z",
+                      "updatedAt": "2026-07-28T02:41:41.000Z",
+                      "uid": "35240-1054017d-7767-4084-afef-0999d696899b"
+                    },
+                    {
+                      "id": "fcbe7df4-b524-425f-86d5-915b7ca653dc",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/instance/group-mappings/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "instance",
+                            "group-mappings",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Seconds to wait before retrying.",
+                            "type": "text/plain"
+                          },
+                          "key": "Retry-After",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:41:41.000Z",
+                      "updatedAt": "2026-07-28T02:41:41.000Z",
+                      "uid": "35240-fcbe7df4-b524-425f-86d5-915b7ca653dc"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:41.000Z",
+                  "updatedAt": "2026-07-28T02:41:41.000Z",
+                  "uid": "35240-fce91bd1-f25c-49fb-9597-911ded053e9f"
+                }
+              ],
+              "id": "e54bc54b-b4d2-4045-baac-8257f2048a18",
+              "createdAt": "2026-07-28T02:41:41.000Z",
+              "updatedAt": "2026-07-28T02:41:41.000Z",
+              "uid": "35240-e54bc54b-b4d2-4045-baac-8257f2048a18"
+            }
+          ],
+          "id": "ad432562-0893-4e76-929d-7db71f10dfa4",
+          "createdAt": "2026-07-28T02:41:41.000Z",
+          "updatedAt": "2026-07-28T02:41:41.000Z",
+          "uid": "35240-ad432562-0893-4e76-929d-7db71f10dfa4"
+        }
+      ],
+      "id": "6005c058-b155-49c3-adde-429818411dc3",
+      "createdAt": "2026-07-28T02:41:41.000Z",
+      "updatedAt": "2026-07-28T02:41:41.000Z",
+      "uid": "35240-6005c058-b155-49c3-adde-429818411dc3"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://pydantic.dev/api/v1"
+    }
+  ]
+}

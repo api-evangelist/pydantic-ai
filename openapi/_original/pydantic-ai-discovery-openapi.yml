@@ -1,0 +1,202 @@
+openapi: 3.0.3
+info:
+  title: Pydantic API Discovery
+  version: 1.0.0
+  summary: Discovery document for Pydantic's region-partitioned APIs.
+  description: 'Pydantic Logfire is region-partitioned. This document does not describe
+    the Logfire API directly — it advertises a single discovery endpoint that lists
+    the per-region OpenAPI specifications.
+
+
+    - **US region**: https://logfire-us.pydantic.dev/api/openapi.json
+
+    - **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json
+
+
+    ## Versioning
+
+
+    This discovery API uses URL path versioning. The current major version is `v1`
+    and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api`
+    and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current
+    major version. Breaking changes will be released under a new major version (e.g.
+    `/api/v2/`) and the previous version will be supported for at least 12 months
+    after the new version ships, with the deprecation date advertised in the `Deprecation`
+    and `Sunset` response headers (RFC 8594, RFC 9745).
+
+
+    Responses include an `X-API-Version` header identifying the version that served
+    the request.
+
+
+    Related discovery resources:
+
+
+    - [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) —
+    RFC 9727 Linkset of available API descriptions.
+
+    - [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs)
+    — JSON list of per-region OpenAPI specs.
+
+    - [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource)
+    — RFC 9728 OAuth protected resource metadata.'
+  contact:
+    name: Pydantic
+    url: https://pydantic.dev
+    email: hello@pydantic.dev
+  license:
+    name: Pydantic Terms of Service
+    url: https://pydantic.dev/legal/terms-of-service
+servers:
+- url: https://pydantic.dev/api/v1
+  description: Host Discovery — version 1
+paths:
+  /specs:
+    get:
+      summary: List available API specifications
+      description: Returns a list of region-specific OpenAPI specifications for the
+        Pydantic Logfire API. Use the `openapi_url` of each entry to fetch the full
+        per-region specification.
+      operationId: listApiSpecs
+      tags:
+      - discovery
+      responses:
+        '200':
+          description: Available region-specific API specifications.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpecList'
+        '400':
+          description: Bad request — the request was malformed (for example, an invalid
+            `Idempotency-Key` header).
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: The requested resource was not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '405':
+          description: Method not allowed. This API is read-only; only `GET`, `HEAD`,
+            and `OPTIONS` are accepted.
+          headers:
+            Allow:
+              description: RFC 9110 §10.2.1 — methods accepted on the resource.
+              schema:
+                type: string
+                examples:
+                - GET, HEAD, OPTIONS
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Too many requests — the advertised rate-limit budget has been
+            exceeded.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        default:
+          description: Error response.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+components:
+  schemas:
+    SpecList:
+      type: object
+      required:
+      - specs
+      properties:
+        specs:
+          type: array
+          description: Available API specifications, one per region.
+          items:
+            $ref: '#/components/schemas/SpecRef'
+    SpecRef:
+      type: object
+      required:
+      - region
+      - name
+      - openapi_url
+      - base_url
+      properties:
+        region:
+          type: string
+          description: Short region identifier.
+          examples:
+          - us
+          - eu
+        name:
+          type: string
+          description: Human-readable name for this API.
+          examples:
+          - Pydantic Logfire (US)
+        openapi_url:
+          type: string
+          format: uri
+          description: URL of the OpenAPI specification for this API.
+          examples:
+          - https://logfire-us.pydantic.dev/api/openapi.json
+        base_url:
+          type: string
+          format: uri
+          description: Base URL at which this API is served.
+          examples:
+          - https://logfire-us.pydantic.dev/api
+        documentation_url:
+          type: string
+          format: uri
+          description: URL of human-readable documentation for this API.
+    Problem:
+      type: object
+      description: Typed error response following RFC 9457 Problem Details for HTTP
+        APIs.
+      required:
+      - type
+      - title
+      - status
+      properties:
+        type:
+          type: string
+          format: uri
+          description: URI reference identifying the problem type.
+          default: about:blank
+          examples:
+          - https://pydantic.dev/api/v1/errors/not-found
+        title:
+          type: string
+          description: Short, human-readable summary of the problem type.
+          examples:
+          - Not Found
+        status:
+          type: integer
+          description: HTTP status code mirrored in the response body.
+          minimum: 100
+          maximum: 599
+          examples:
+          - 404
+        detail:
+          type: string
+          description: Human-readable explanation specific to this occurrence.
+          examples:
+          - The requested resource was not found.
+        instance:
+          type: string
+          format: uri-reference
+          description: URI reference identifying the specific occurrence of the problem.
+        code:
+          type: string
+          description: Stable machine-readable error code.
+          examples:
+          - not_found
+          - invalid_idempotency_key
+        request_id:
+          type: string
+          description: Server-assigned request identifier, useful when reporting issues.

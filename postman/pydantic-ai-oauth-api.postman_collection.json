@@ -1,0 +1,1910 @@
+{
+  "info": {
+    "_postman_id": "4e53573b-650b-497f-bdcd-1e567cad7a21",
+    "name": "Pydantic API Discovery Alerts OAuth API",
+    "description": "Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly \u2014 it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.\n\n- **US region**: https://logfire-us.pydantic.dev/api/openapi.json\n- **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json\n\n## Versioning\n\nThis discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).\n\nResponses include an `X-API-Version` header identifying the version that served the request.\n\nRelated discovery resources:\n\n- [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) \u2014 RFC 9727 Linkset of available API descriptions.\n- [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) \u2014 JSON list of per-region OpenAPI specs.\n- [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) \u2014 RFC 9728 OAuth protected resource metadata.\n\nContact Support:\n Name: Pydantic\n Email: hello@pydantic.dev",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:41:46.000Z",
+    "updatedAt": "2026-07-28T02:41:46.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-4e53573b-650b-497f-bdcd-1e567cad7a21"
+  },
+  "item": [
+    {
+      "name": "oauth",
+      "item": [
+        {
+          "name": "authorize",
+          "item": [
+            {
+              "name": "Oauth Authorize Get",
+              "id": "e924c439-d706-431d-9e2a-3dcab1be389b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/oauth/authorize?response_type=<string>&client_id=<string>&redirect_uri=<string>&scope=<string>&state=<string>&code_challenge=<string>&code_challenge_method=<string>&resource=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "oauth",
+                    "authorize"
+                  ],
+                  "query": [
+                    {
+                      "key": "response_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "code_challenge",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "code_challenge_method",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "OAuth 2.0 authorization endpoint (GET).\n\nThis endpoint validates the request and redirects to the consent page where the user\ncan select a project and authorize the client.\n\nImplements RFC 6749 Section 4.1.1 (Authorization Request) and 4.1.2.1 (Error Response).\n\n**SECURITY POLICY:** PKCE (RFC 7636) with S256 is REQUIRED for all clients.\nClients must provide code_challenge and code_challenge_method=S256 parameters.\n\nRFC 8707: The `resource` parameter identifies the target resource server\nfor which the token will be issued.\n\nNote: While RFC 6749 lists redirect_uri as OPTIONAL, Section 3.1.2 states it MUST be\nincluded if multiple redirect URIs are registered. This implementation requires it."
+              },
+              "response": [
+                {
+                  "id": "570ed797-e9b9-4a8f-9ab3-91d71f94785b",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth/authorize?response_type=<string>&client_id=<string>&redirect_uri=<string>&scope=<string>&state=<string>&code_challenge=<string>&code_challenge_method=<string>&resource=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth",
+                        "authorize"
+                      ],
+                      "query": [
+                        {
+                          "key": "response_type",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_id",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "redirect_uri",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "scope",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "state",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code_challenge",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code_challenge_method",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "resource",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{}",
+                  "createdAt": "2026-07-28T02:41:46.000Z",
+                  "updatedAt": "2026-07-28T02:41:46.000Z",
+                  "uid": "35240-570ed797-e9b9-4a8f-9ab3-91d71f94785b"
+                },
+                {
+                  "id": "1ec0b3cd-cec4-4178-8f1e-4ad377ef7725",
+                  "name": "Bad Request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth/authorize?response_type=<string>&client_id=<string>&redirect_uri=<string>&scope=<string>&state=<string>&code_challenge=<string>&code_challenge_method=<string>&resource=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth",
+                        "authorize"
+                      ],
+                      "query": [
+                        {
+                          "key": "response_type",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_id",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "redirect_uri",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "scope",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "state",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code_challenge",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code_challenge_method",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "resource",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"server_error\",\n  \"error_description\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:41:46.000Z",
+                  "updatedAt": "2026-07-28T02:41:46.000Z",
+                  "uid": "35240-1ec0b3cd-cec4-4178-8f1e-4ad377ef7725"
+                },
+                {
+                  "id": "36cf2db9-418d-4fac-b58d-cf5535dd1dfd",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth/authorize?response_type=<string>&client_id=<string>&redirect_uri=<string>&scope=<string>&state=<string>&code_challenge=<string>&code_challenge_method=<string>&resource=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth",
+                        "authorize"
+                      ],
+                      "query": [
+                        {
+                          "key": "response_type",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_id",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "redirect_uri",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "scope",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "state",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code_challenge",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code_challenge_method",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "resource",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:41:46.000Z",
+                  "updatedAt": "2026-07-28T02:41:46.000Z",
+                  "uid": "35240-36cf2db9-418d-4fac-b58d-cf5535dd1dfd"
+                }
+              ],
+              "createdAt": "2026-07-28T02:41:46.000Z",
+              "updatedAt": "2026-07-28T02:41:46.000Z",
+              "uid": "35240-e924c439-d706-431d-9e2a-3dcab1be389b"
+            },
+            {
+              "name": "Oauth Authorize Post",
+              "id": "709cca81-418a-4ed4-b44e-73dd0bd93bd7",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "description": "(Required) ",
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) ",
+                      "key": "redirect_uri",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) ",
+                      "key": "scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) ",
+                      "key": "organization_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "project_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "code_challenge",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "code_challenge_method",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "csrf_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limits",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/oauth/authorize",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "oauth",
+                    "authorize"
+                  ]
+                },
+                "description": "OAuth 2.0 authorization endpoint (POST).\n\nThis endpoint receives the user's consent (with selected organization and project)\nand generates an authorization code.\n\nRFC 8707: The `resource` parameter identifies the target resource server.\n\nWhen called with Accept: application/json, returns the redirect URL as JSON\ninstead of a 303 redirect. This avoids CSP form-action restrictions that block\ncross-origin redirects in the OAuth flow's redirect chain."
+              },
+              "response": [
+                {
+                  "id": "2c460d86-6776-4539-9b49-13f25a7738ea",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "urlencoded",
+                      "urlencoded": [
+                        {
+                          "description": "(Required) ",
+                          "key": "client_id",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) ",
+                          "key": "redirect_uri",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) ",
+                          "key": "scope",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) ",
+                          "key": "organization_id",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "key": "project_id",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "key": "state",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code_challenge",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code_challenge_method",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "resource",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "csrf_token",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "limits",
+                          "value": "<string>"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth/authorize",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth",
+                        "authorize"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{}",
+                  "createdAt": "2026-07-28T02:41:46.000Z",
+                  "updatedAt": "2026-07-28T02:41:46.000Z",
+                  "uid": "35240-2c460d86-6776-4539-9b49-13f25a7738ea"
+                },
+                {
+                  "id": "97a07a97-e3cd-420f-a041-b3b647328fc3",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "urlencoded",
+                      "urlencoded": [
+                        {
+                          "description": "(Required) ",
+                          "key": "client_id",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) ",
+                          "key": "redirect_uri",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) ",
+                          "key": "scope",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) ",
+                          "key": "organization_id",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "key": "project_id",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "key": "state",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code_challenge",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code_challenge_method",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "resource",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "csrf_token",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "limits",
+                          "value": "<string>"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth/authorize",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth",
+                        "authorize"
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:41:46.000Z",
+                  "updatedAt": "2026-07-28T02:41:46.000Z",
+                  "uid": "35240-97a07a97-e3cd-420f-a041-b3b647328fc3"
+                }
+              ],
+              "createdAt": "2026-07-28T02:41:46.000Z",
+              "updatedAt": "2026-07-28T02:41:46.000Z",
+              "uid": "35240-709cca81-418a-4ed4-b44e-73dd0bd93bd7"
+            }
+          ],
+          "id": "12dabaa4-5a45-4b5d-b45a-57f77d0621af",
+          "createdAt": "2026-07-28T02:41:46.000Z",
+          "updatedAt": "2026-07-28T02:41:46.000Z",
+          "uid": "35240-12dabaa4-5a45-4b5d-b45a-57f77d0621af"
+        },
+        {
+          "name": "grantable-scopes",
+          "item": [
+            {
+              "name": "Oauth Grantable Scopes",
+              "id": "d8b913e9-6f6c-400f-ab2f-b25caddf0fbb",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/oauth/grantable-scopes?organization_id=<uuid>&scopes=<string>&project_id=<uuid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "oauth",
+                    "grantable-scopes"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) ",
+                      "key": "organization_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "(Required) Space-separated list of scopes to check",
+                      "key": "scopes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "project_id",
+                      "value": "<uuid>"
+                    }
+                  ]
+                },
+                "description": "Return the subset of `scopes` the authenticated user can actually grant.\n\nUsed by the consent UI to show which scopes the current user can grant for the\ncurrently-selected org/project, so the user isn't asked to approve scopes that\nwould be silently filtered server-side during the POST /authorize step.\n\nScopes not recognized by the platform (e.g. OIDC scopes like `openid`) are\npassed through \u2014 only platform resource scopes are filtered by permissions."
+              },
+              "response": [
+                {
+                  "id": "e6fc81e1-b448-4b6d-91fd-14f6ec9c4b54",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth/grantable-scopes?organization_id=<uuid>&scopes=<string>&project_id=<uuid>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth",
+                        "grantable-scopes"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ",
+                          "key": "organization_id",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "(Required) Space-separated list of scopes to check",
+                          "key": "scopes",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "project_id",
+                          "value": "<uuid>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"grantable_scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "createdAt": "2026-07-28T02:41:46.000Z",
+                  "updatedAt": "2026-07-28T02:41:46.000Z",
+                  "uid": "35240-e6fc81e1-b448-4b6d-91fd-14f6ec9c4b54"
+                },
+                {
+                  "id": "58917e2c-9eb3-48d6-bc29-9951a62ae17f",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth/grantable-scopes?organization_id=<uuid>&scopes=<string>&project_id=<uuid>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth",
+                        "grantable-scopes"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ",
+                          "key": "organization_id",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "(Required) Space-separated list of scopes to check",
+                          "key": "scopes",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "project_id",
+                          "value": "<uuid>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:41:46.000Z",
+                  "updatedAt": "2026-07-28T02:41:46.000Z",
+                  "uid": "35240-58917e2c-9eb3-48d6-bc29-9951a62ae17f"
+                }
+              ],
+              "createdAt": "2026-07-28T02:41:46.000Z",
+              "updatedAt": "2026-07-28T02:41:46.000Z",
+              "uid": "35240-d8b913e9-6f6c-400f-ab2f-b25caddf0fbb"
+            }
+          ],
+          "id": "187be202-88eb-4703-af69-83817cc54655",
+          "createdAt": "2026-07-28T02:41:46.000Z",
+          "updatedAt": "2026-07-28T02:41:46.000Z",
+          "uid": "35240-187be202-88eb-4703-af69-83817cc54655"
+        },
+        {
+          "name": "token",
+          "item": [
+            {
+              "name": "Oauth Token",
+              "id": "cd9f059c-7a9a-416e-bdd2-023a08b0453a",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-agent",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "description": "(Required) ",
+                      "key": "grant_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "client_secret",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "refresh_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "code_verifier",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "client_assertion_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "client_assertion",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/oauth/token",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "oauth",
+                    "token"
+                  ]
+                },
+                "description": "OAuth 2.0 token endpoint.\n\nSupports `authorization_code`, `refresh_token`,\n`urn:ietf:params:oauth:grant-type:device_code` (RFC 8628), and\n`urn:ietf:params:oauth:grant-type:token-exchange` (RFC 8693) grant types.\n\n**SECURITY POLICY:** PKCE (RFC 7636) with S256 is REQUIRED for authorization_code grant.\nClients must provide code_verifier parameter when exchanging authorization codes.\n\nRFC 8707: The `resource` parameter identifies the target resource server for which\nthe token is being requested.\n\nPer RFC 6749 Section 2.3.1, clients can authenticate via:\n- HTTP Basic authentication (Authorization header)\n- Request body parameters (client_id and client_secret)\n\nClients MUST NOT use both authentication methods simultaneously.\n\nPer RFC 6749 Section 4.1.3, client_id is REQUIRED only if the client is not\nauthenticating with the authorization server (e.g., via Authorization header).\n\nRFC 8693: The `token-exchange` grant type is unauthenticated (the subject_token\nJWT is itself the credential), so it skips the client-credentials handling\nbelow and is dispatched first via `handle_token_exchange`."
+              },
+              "response": [
+                {
+                  "id": "3989cda4-fb63-42a1-9e8f-42bd21c795d1",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "user-agent",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "urlencoded",
+                      "urlencoded": [
+                        {
+                          "description": "(Required) ",
+                          "key": "grant_type",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "redirect_uri",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_id",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_secret",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "refresh_token",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "scope",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code_verifier",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "resource",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "device_code",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_assertion_type",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_assertion",
+                          "value": "<string>"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth/token",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth",
+                        "token"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"access_token\": \"<string>\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": \"<integer>\",\n  \"refresh_token\": \"<string>\",\n  \"scope\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:41:46.000Z",
+                  "updatedAt": "2026-07-28T02:41:46.000Z",
+                  "uid": "35240-3989cda4-fb63-42a1-9e8f-42bd21c795d1"
+                },
+                {
+                  "id": "1d3f26a5-75da-4531-8ede-bd314e68a623",
+                  "name": "Bad Request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "user-agent",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "urlencoded",
+                      "urlencoded": [
+                        {
+                          "description": "(Required) ",
+                          "key": "grant_type",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "redirect_uri",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_id",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_secret",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "refresh_token",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "scope",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code_verifier",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "resource",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "device_code",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_assertion_type",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_assertion",
+                          "value": "<string>"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth/token",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth",
+                        "token"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"server_error\",\n  \"error_description\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:41:46.000Z",
+                  "updatedAt": "2026-07-28T02:41:46.000Z",
+                  "uid": "35240-1d3f26a5-75da-4531-8ede-bd314e68a623"
+                },
+                {
+                  "id": "25bc47ea-25ea-40f7-b7d4-3b865f15954a",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "user-agent",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "urlencoded",
+                      "urlencoded": [
+                        {
+                          "description": "(Required) ",
+                          "key": "grant_type",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "redirect_uri",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_id",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_secret",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "refresh_token",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "scope",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code_verifier",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "resource",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "device_code",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_assertion_type",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_assertion",
+                          "value": "<string>"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth/token",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth",
+                        "token"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"server_error\",\n  \"error_description\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:41:46.000Z",
+                  "updatedAt": "2026-07-28T02:41:46.000Z",
+                  "uid": "35240-25bc47ea-25ea-40f7-b7d4-3b865f15954a"
+                },
+                {
+                  "id": "7f1923d4-42d9-4b49-bacf-0a1734a52c5e",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "user-agent",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "urlencoded",
+                      "urlencoded": [
+                        {
+                          "description": "(Required) ",
+                          "key": "grant_type",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "redirect_uri",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_id",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_secret",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "refresh_token",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "scope",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code_verifier",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "resource",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "device_code",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_assertion_type",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "client_assertion",
+                          "value": "<string>"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth/token",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth",
+                        "token"
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:41:46.000Z",
+                  "updatedAt": "2026-07-28T02:41:46.000Z",
+                  "uid": "35240-7f1923d4-42d9-4b49-bacf-0a1734a52c5e"
+                }
+              ],
+              "createdAt": "2026-07-28T02:41:46.000Z",
+              "updatedAt": "2026-07-28T02:41:46.000Z",
+              "uid": "35240-cd9f059c-7a9a-416e-bdd2-023a08b0453a"
+            }
+          ],
+          "id": "a3dac0fb-bb67-410d-b946-36615530a877",
+          "createdAt": "2026-07-28T02:41:46.000Z",
+          "updatedAt": "2026-07-28T02:41:46.000Z",
+          "uid": "35240-a3dac0fb-bb67-410d-b946-36615530a877"
+        },
+        {
+          "name": "device",
+          "item": [
+            {
+              "name": "code",
+              "item": [
+                {
+                  "name": "Device Authorization Request",
+                  "id": "b32c1346-e554-42c1-b7ed-aa55000f8cad",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "urlencoded",
+                      "urlencoded": [
+                        {
+                          "description": "(Required) ",
+                          "key": "client_id",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "scope",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code_challenge",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "code_challenge_method",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "resource",
+                          "value": "<string>"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth/device/code",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth",
+                        "device",
+                        "code"
+                      ]
+                    },
+                    "description": "RFC 8628 Section 3.1 - Device Authorization Request.\n\nThe client requests a device code from the authorization server.\nThe user will then visit the verification_uri and enter the user_code\nto authorize the device.\n\nReturns device_code, user_code, verification_uri, and polling interval."
+                  },
+                  "response": [
+                    {
+                      "id": "2cea1f2a-df4d-42f1-ac63-a42a7cfb6847",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/x-www-form-urlencoded"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "urlencoded",
+                          "urlencoded": [
+                            {
+                              "description": "(Required) ",
+                              "key": "client_id",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "scope",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "code_challenge",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "code_challenge_method",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "resource",
+                              "value": "<string>"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/oauth/device/code",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "oauth",
+                            "device",
+                            "code"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"device_code\": \"<string>\",\n  \"user_code\": \"<string>\",\n  \"verification_uri\": \"<string>\",\n  \"verification_uri_complete\": \"<string>\",\n  \"expires_in\": \"<integer>\",\n  \"interval\": \"<integer>\"\n}",
+                      "createdAt": "2026-07-28T02:41:46.000Z",
+                      "updatedAt": "2026-07-28T02:41:46.000Z",
+                      "uid": "35240-2cea1f2a-df4d-42f1-ac63-a42a7cfb6847"
+                    },
+                    {
+                      "id": "492e4a87-f280-4b4c-9b87-e02933c54df0",
+                      "name": "Bad Request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/x-www-form-urlencoded"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "urlencoded",
+                          "urlencoded": [
+                            {
+                              "description": "(Required) ",
+                              "key": "client_id",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "scope",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "code_challenge",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "code_challenge_method",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "resource",
+                              "value": "<string>"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/oauth/device/code",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "oauth",
+                            "device",
+                            "code"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"server_error\",\n  \"error_description\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:41:46.000Z",
+                      "updatedAt": "2026-07-28T02:41:46.000Z",
+                      "uid": "35240-492e4a87-f280-4b4c-9b87-e02933c54df0"
+                    },
+                    {
+                      "id": "65e8f1fd-26d6-4d54-84b2-ca0ab8151058",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/x-www-form-urlencoded"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "urlencoded",
+                          "urlencoded": [
+                            {
+                              "description": "(Required) ",
+                              "key": "client_id",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "scope",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "code_challenge",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "code_challenge_method",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "resource",
+                              "value": "<string>"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/oauth/device/code",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "oauth",
+                            "device",
+                            "code"
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:46.000Z",
+                      "updatedAt": "2026-07-28T02:41:46.000Z",
+                      "uid": "35240-65e8f1fd-26d6-4d54-84b2-ca0ab8151058"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:46.000Z",
+                  "updatedAt": "2026-07-28T02:41:46.000Z",
+                  "uid": "35240-b32c1346-e554-42c1-b7ed-aa55000f8cad"
+                }
+              ],
+              "id": "f5e487b3-05c0-43f4-8284-1676e2639dd8",
+              "createdAt": "2026-07-28T02:41:46.000Z",
+              "updatedAt": "2026-07-28T02:41:46.000Z",
+              "uid": "35240-f5e487b3-05c0-43f4-8284-1676e2639dd8"
+            }
+          ],
+          "id": "dae62301-8690-475c-95f4-37b6063f7839",
+          "createdAt": "2026-07-28T02:41:46.000Z",
+          "updatedAt": "2026-07-28T02:41:46.000Z",
+          "uid": "35240-dae62301-8690-475c-95f4-37b6063f7839"
+        },
+        {
+          "name": "register",
+          "item": [
+            {
+              "name": "{client_id}",
+              "item": [
+                {
+                  "name": "Delete Dynamic Client Registration (RFC 7592)",
+                  "id": "b218c960-d814-4c63-be64-41508896ba74",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth/register/:client_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth",
+                        "register",
+                        ":client_id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "f54a910c-1fec-4219-b343-21dc8ff80a3e",
+                          "key": "client_id",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "RFC 7592 \u2014 Client Configuration Endpoint (DELETE).\n\nAllows a DCR-registered client to deregister itself using the\n`registration_access_token` issued during registration.\n\nOn success, the client and all associated tokens are invalidated."
+                  },
+                  "response": [
+                    {
+                      "id": "6f45d536-e46c-4ac2-b33f-1ed24413a3ed",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/oauth/register/:client_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "oauth",
+                            "register",
+                            ":client_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "client_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:41:46.000Z",
+                      "updatedAt": "2026-07-28T02:41:46.000Z",
+                      "uid": "35240-6f45d536-e46c-4ac2-b33f-1ed24413a3ed"
+                    },
+                    {
+                      "id": "1baad5cf-38cc-42b2-83bd-55acf004a7fd",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/oauth/register/:client_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "oauth",
+                            "register",
+                            ":client_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "client_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:46.000Z",
+                      "updatedAt": "2026-07-28T02:41:46.000Z",
+                      "uid": "35240-1baad5cf-38cc-42b2-83bd-55acf004a7fd"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:46.000Z",
+                  "updatedAt": "2026-07-28T02:41:46.000Z",
+                  "uid": "35240-b218c960-d814-4c63-be64-41508896ba74"
+                }
+              ],
+              "id": "9fe14840-2530-4e55-8438-7ea784f2f933",
+              "createdAt": "2026-07-28T02:41:46.000Z",
+              "updatedAt": "2026-07-28T02:41:46.000Z",
+              "uid": "35240-9fe14840-2530-4e55-8438-7ea784f2f933"
+            },
+            {
+              "name": "Dynamic Client Registration (RFC 7591)",
+              "id": "cb973ab6-8a0a-4078-bfaf-3fdb5f34b5ce",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "user-agent",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_name\": \"<string>\",\n  \"client_uri\": \"<string>\",\n  \"logo_uri\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"grant_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"response_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"token_endpoint_auth_method\": \"<string>\",\n  \"scope\": \"<string>\",\n  \"application_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/oauth/register",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "oauth",
+                    "register"
+                  ]
+                },
+                "description": "RFC 7591 \u2014 Dynamic Client Registration.\n\nAllows MCP clients and other OAuth clients to register themselves\nwithout prior manual setup.  Creates a **public** OAuth client\n(`token_endpoint_auth_method: \"none\"`) with no organization binding.\nThe organization is determined later when the user authorizes.\n\nThis endpoint is unauthenticated per the MCP/OAuth specification.\n\nSecurity considerations (RFC 7591 Section 5):\n- DCR clients are **public** (no secret) \u2014 security relies on PKCE (S256),\n  redirect_uri validation, and the user's explicit consent on the authorization page.\n- Scopes are restricted to a safe subset (`_DCR_ALLOWED_SCOPES`); no admin scopes.\n- Rate limiting is enforced per IP (60/min, 600/hour) to prevent resource exhaustion.\n- Client IDs use `lf_dcr_` prefix for easy identification and auditing."
+              },
+              "response": [
+                {
+                  "id": "63925ef3-8fc9-4348-8f9c-2fa4f746691b",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "user-agent",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"client_name\": \"<string>\",\n  \"client_uri\": \"<string>\",\n  \"logo_uri\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"grant_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"response_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"token_endpoint_auth_method\": \"<string>\",\n  \"scope\": \"<string>\",\n  \"application_type\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth/register",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth",
+                        "register"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"client_id\": \"<string>\",\n  \"client_id_issued_at\": \"<integer>\",\n  \"client_name\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"grant_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"response_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"token_endpoint_auth_method\": \"<string>\",\n  \"scope\": \"<string>\",\n  \"application_type\": \"<string>\",\n  \"registration_client_uri\": \"<string>\",\n  \"registration_access_token\": \"<string>\",\n  \"client_uri\": \"<string>\",\n  \"logo_uri\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:41:46.000Z",
+                  "updatedAt": "2026-07-28T02:41:46.000Z",
+                  "uid": "35240-63925ef3-8fc9-4348-8f9c-2fa4f746691b"
+                },
+                {
+                  "id": "9203583d-10fd-4c98-a85c-18e8346dfedb",
+                  "name": "Bad Request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "user-agent",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"client_name\": \"<string>\",\n  \"client_uri\": \"<string>\",\n  \"logo_uri\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"grant_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"response_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"token_endpoint_auth_method\": \"<string>\",\n  \"scope\": \"<string>\",\n  \"application_type\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth/register",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth",
+                        "register"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"invalid_client_metadata\",\n  \"error_description\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:41:46.000Z",
+                  "updatedAt": "2026-07-28T02:41:46.000Z",
+                  "uid": "35240-9203583d-10fd-4c98-a85c-18e8346dfedb"
+                },
+                {
+                  "id": "40f9a50f-ac9e-4918-bd29-eafd1540e363",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "user-agent",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"client_name\": \"<string>\",\n  \"client_uri\": \"<string>\",\n  \"logo_uri\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"grant_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"response_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"token_endpoint_auth_method\": \"<string>\",\n  \"scope\": \"<string>\",\n  \"application_type\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth/register",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth",
+                        "register"
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:41:46.000Z",
+                  "updatedAt": "2026-07-28T02:41:46.000Z",
+                  "uid": "35240-40f9a50f-ac9e-4918-bd29-eafd1540e363"
+                }
+              ],
+              "createdAt": "2026-07-28T02:41:46.000Z",
+              "updatedAt": "2026-07-28T02:41:46.000Z",
+              "uid": "35240-cb973ab6-8a0a-4078-bfaf-3fdb5f34b5ce"
+            }
+          ],
+          "id": "3b42622e-7b55-4245-84d4-d979202e1203",
+          "createdAt": "2026-07-28T02:41:46.000Z",
+          "updatedAt": "2026-07-28T02:41:46.000Z",
+          "uid": "35240-3b42622e-7b55-4245-84d4-d979202e1203"
+        }
+      ],
+      "id": "51fd10cf-7405-4995-acfd-303a9bf4c720",
+      "createdAt": "2026-07-28T02:41:46.000Z",
+      "updatedAt": "2026-07-28T02:41:46.000Z",
+      "uid": "35240-51fd10cf-7405-4995-acfd-303a9bf4c720"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://pydantic.dev/api/v1"
+    }
+  ]
+}

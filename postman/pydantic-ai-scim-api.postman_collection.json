@@ -1,0 +1,1531 @@
+{
+  "info": {
+    "_postman_id": "f3d27365-0ee2-4e5e-a129-40fee103ebd2",
+    "name": "Pydantic API Discovery Alerts SCIM API",
+    "description": "Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly \u2014 it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.\n\n- **US region**: https://logfire-us.pydantic.dev/api/openapi.json\n- **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json\n\n## Versioning\n\nThis discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).\n\nResponses include an `X-API-Version` header identifying the version that served the request.\n\nRelated discovery resources:\n\n- [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) \u2014 RFC 9727 Linkset of available API descriptions.\n- [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) \u2014 JSON list of per-region OpenAPI specs.\n- [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) \u2014 RFC 9728 OAuth protected resource metadata.\n\nContact Support:\n Name: Pydantic\n Email: hello@pydantic.dev",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:41:53.000Z",
+    "updatedAt": "2026-07-28T02:41:53.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-f3d27365-0ee2-4e5e-a129-40fee103ebd2"
+  },
+  "item": [
+    {
+      "name": "scim",
+      "item": [
+        {
+          "name": "Users",
+          "item": [
+            {
+              "name": "{user_email}",
+              "item": [
+                {
+                  "name": "Get User On Prem",
+                  "id": "166efaea-e0dd-402a-9ea4-f97cedac6050",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/scim/Users/:user_email",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "scim",
+                        "Users",
+                        ":user_email"
+                      ],
+                      "variable": [
+                        {
+                          "id": "cb50c874-13cd-4c6c-a394-5d960346d4a4",
+                          "key": "user_email",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "c00c2625-c879-4241-9a48-8567f5b04af1",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/scim/Users/:user_email",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "scim",
+                            "Users",
+                            ":user_email"
+                          ],
+                          "variable": [
+                            {
+                              "key": "user_email"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"id\": \"<string>\",\n  \"meta\": {\n    \"resourceType\": \"<string>\"\n  },\n  \"userName\": \"<string>\",\n  \"name\": {\n    \"givenName\": \"<string>\"\n  },\n  \"active\": \"<boolean>\",\n  \"emails\": [\n    {\n      \"value\": \"<string>\",\n      \"type\": \"<string>\",\n      \"primary\": \"<boolean>\"\n    },\n    {\n      \"value\": \"<string>\",\n      \"type\": \"<string>\",\n      \"primary\": \"<boolean>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:53.000Z",
+                      "updatedAt": "2026-07-28T02:41:53.000Z",
+                      "uid": "35240-c00c2625-c879-4241-9a48-8567f5b04af1"
+                    },
+                    {
+                      "id": "0ea4514f-90e4-4852-b259-32df2d595596",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/scim/Users/:user_email",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "scim",
+                            "Users",
+                            ":user_email"
+                          ],
+                          "variable": [
+                            {
+                              "key": "user_email"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:53.000Z",
+                      "updatedAt": "2026-07-28T02:41:53.000Z",
+                      "uid": "35240-0ea4514f-90e4-4852-b259-32df2d595596"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:53.000Z",
+                  "updatedAt": "2026-07-28T02:41:53.000Z",
+                  "uid": "35240-166efaea-e0dd-402a-9ea4-f97cedac6050"
+                }
+              ],
+              "id": "b2130f58-23fc-491d-b9ba-80c4ec67c2b1",
+              "createdAt": "2026-07-28T02:41:53.000Z",
+              "updatedAt": "2026-07-28T02:41:53.000Z",
+              "uid": "35240-b2130f58-23fc-491d-b9ba-80c4ec67c2b1"
+            },
+            {
+              "name": "Get Users On Prem",
+              "id": "a7d6277b-aec4-4404-ace4-550618563bea",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/scim/Users?filter=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "scim",
+                    "Users"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "4826a152-9e13-45d1-a8cc-cd137060fe16",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/scim/Users?filter=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "scim",
+                        "Users"
+                      ],
+                      "query": [
+                        {
+                          "key": "filter",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"totalResults\": \"<integer>\",\n  \"Resources\": [\n    {\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"id\": \"<string>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\"\n      },\n      \"userName\": \"<string>\",\n      \"name\": {\n        \"givenName\": \"<string>\"\n      },\n      \"active\": \"<boolean>\",\n      \"emails\": [\n        {\n          \"value\": \"<string>\",\n          \"type\": \"<string>\",\n          \"primary\": \"<boolean>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"type\": \"<string>\",\n          \"primary\": \"<boolean>\"\n        }\n      ]\n    },\n    {\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"id\": \"<string>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\"\n      },\n      \"userName\": \"<string>\",\n      \"name\": {\n        \"givenName\": \"<string>\"\n      },\n      \"active\": \"<boolean>\",\n      \"emails\": [\n        {\n          \"value\": \"<string>\",\n          \"type\": \"<string>\",\n          \"primary\": \"<boolean>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"type\": \"<string>\",\n          \"primary\": \"<boolean>\"\n        }\n      ]\n    }\n  ],\n  \"startIndex\": \"<integer>\",\n  \"itemsPerPage\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T02:41:53.000Z",
+                  "updatedAt": "2026-07-28T02:41:53.000Z",
+                  "uid": "35240-4826a152-9e13-45d1-a8cc-cd137060fe16"
+                },
+                {
+                  "id": "33e53a57-8332-4616-a35e-d3a169be74ee",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/scim/Users?filter=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "scim",
+                        "Users"
+                      ],
+                      "query": [
+                        {
+                          "key": "filter",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:41:53.000Z",
+                  "updatedAt": "2026-07-28T02:41:53.000Z",
+                  "uid": "35240-33e53a57-8332-4616-a35e-d3a169be74ee"
+                }
+              ],
+              "createdAt": "2026-07-28T02:41:53.000Z",
+              "updatedAt": "2026-07-28T02:41:53.000Z",
+              "uid": "35240-a7d6277b-aec4-4404-ace4-550618563bea"
+            }
+          ],
+          "id": "dbe52c95-9058-47bb-bb76-9062f1f546a8",
+          "createdAt": "2026-07-28T02:41:53.000Z",
+          "updatedAt": "2026-07-28T02:41:53.000Z",
+          "uid": "35240-dbe52c95-9058-47bb-bb76-9062f1f546a8"
+        },
+        {
+          "name": "Groups",
+          "item": [
+            {
+              "name": "{group_id}",
+              "item": [
+                {
+                  "name": "Get Group On Prem",
+                  "id": "59bb335b-14e4-4448-bd1d-6ad597feec1a",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/scim/Groups/:group_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "scim",
+                        "Groups",
+                        ":group_id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "504fd3ae-603f-4942-86ed-31507f39febc",
+                          "key": "group_id",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "e20b70b3-2ae7-4f93-9ee9-bea7c24a2eee",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/scim/Groups/:group_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "scim",
+                            "Groups",
+                            ":group_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "group_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"id\": \"<string>\",\n  \"meta\": {\n    \"resourceType\": \"<string>\"\n  },\n  \"displayName\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:41:53.000Z",
+                      "updatedAt": "2026-07-28T02:41:53.000Z",
+                      "uid": "35240-e20b70b3-2ae7-4f93-9ee9-bea7c24a2eee"
+                    },
+                    {
+                      "id": "0b8f6b8e-f9f4-4fb7-b12f-1b1fc1dc3d68",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/scim/Groups/:group_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "scim",
+                            "Groups",
+                            ":group_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "group_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:53.000Z",
+                      "updatedAt": "2026-07-28T02:41:53.000Z",
+                      "uid": "35240-0b8f6b8e-f9f4-4fb7-b12f-1b1fc1dc3d68"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:53.000Z",
+                  "updatedAt": "2026-07-28T02:41:53.000Z",
+                  "uid": "35240-59bb335b-14e4-4448-bd1d-6ad597feec1a"
+                },
+                {
+                  "name": "Update Group On Prem",
+                  "id": "d297de22-c222-438c-bbb2-700bd5bf897f",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Operations\": [\n    {\n      \"op\": \"<string>\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"op\": \"<string>\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/scim/Groups/:group_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "scim",
+                        "Groups",
+                        ":group_id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "d0c2675f-c2da-4e9f-8f7b-c7081078964e",
+                          "key": "group_id",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "f5809fa3-2914-4840-966e-e45ca8c547fa",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Operations\": [\n    {\n      \"op\": \"<string>\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"op\": \"<string>\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/scim/Groups/:group_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "scim",
+                            "Groups",
+                            ":group_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "group_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:41:53.000Z",
+                      "updatedAt": "2026-07-28T02:41:53.000Z",
+                      "uid": "35240-f5809fa3-2914-4840-966e-e45ca8c547fa"
+                    },
+                    {
+                      "id": "bdccd5e3-7b5f-42bb-80bf-970621d68797",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Operations\": [\n    {\n      \"op\": \"<string>\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"op\": \"<string>\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/scim/Groups/:group_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "scim",
+                            "Groups",
+                            ":group_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "group_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:53.000Z",
+                      "updatedAt": "2026-07-28T02:41:53.000Z",
+                      "uid": "35240-bdccd5e3-7b5f-42bb-80bf-970621d68797"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:53.000Z",
+                  "updatedAt": "2026-07-28T02:41:53.000Z",
+                  "uid": "35240-d297de22-c222-438c-bbb2-700bd5bf897f"
+                }
+              ],
+              "id": "e721cb98-cd0c-4bff-9d5f-17fdfeb95eed",
+              "createdAt": "2026-07-28T02:41:53.000Z",
+              "updatedAt": "2026-07-28T02:41:53.000Z",
+              "uid": "35240-e721cb98-cd0c-4bff-9d5f-17fdfeb95eed"
+            },
+            {
+              "name": "Get Groups On Prem",
+              "id": "7641835f-92a8-4e92-98af-7a77211c7658",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/scim/Groups?filter=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "scim",
+                    "Groups"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "6b760581-bb94-4293-b5df-44e93d3975e2",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/scim/Groups?filter=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "scim",
+                        "Groups"
+                      ],
+                      "query": [
+                        {
+                          "key": "filter",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"totalResults\": \"<integer>\",\n  \"Resources\": [\n    {\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"id\": \"<string>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\"\n      },\n      \"userName\": \"<string>\",\n      \"name\": {\n        \"givenName\": \"<string>\"\n      },\n      \"active\": \"<boolean>\",\n      \"emails\": [\n        {\n          \"value\": \"<string>\",\n          \"type\": \"<string>\",\n          \"primary\": \"<boolean>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"type\": \"<string>\",\n          \"primary\": \"<boolean>\"\n        }\n      ]\n    },\n    {\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"id\": \"<string>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\"\n      },\n      \"userName\": \"<string>\",\n      \"name\": {\n        \"givenName\": \"<string>\"\n      },\n      \"active\": \"<boolean>\",\n      \"emails\": [\n        {\n          \"value\": \"<string>\",\n          \"type\": \"<string>\",\n          \"primary\": \"<boolean>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"type\": \"<string>\",\n          \"primary\": \"<boolean>\"\n        }\n      ]\n    }\n  ],\n  \"startIndex\": \"<integer>\",\n  \"itemsPerPage\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T02:41:53.000Z",
+                  "updatedAt": "2026-07-28T02:41:53.000Z",
+                  "uid": "35240-6b760581-bb94-4293-b5df-44e93d3975e2"
+                },
+                {
+                  "id": "4a157967-b479-47bf-acb9-c8c63818d371",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/scim/Groups?filter=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "scim",
+                        "Groups"
+                      ],
+                      "query": [
+                        {
+                          "key": "filter",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:41:53.000Z",
+                  "updatedAt": "2026-07-28T02:41:53.000Z",
+                  "uid": "35240-4a157967-b479-47bf-acb9-c8c63818d371"
+                }
+              ],
+              "createdAt": "2026-07-28T02:41:53.000Z",
+              "updatedAt": "2026-07-28T02:41:53.000Z",
+              "uid": "35240-7641835f-92a8-4e92-98af-7a77211c7658"
+            }
+          ],
+          "id": "cb7463de-944c-4768-b2fd-ba51eca521e2",
+          "createdAt": "2026-07-28T02:41:53.000Z",
+          "updatedAt": "2026-07-28T02:41:53.000Z",
+          "uid": "35240-cb7463de-944c-4768-b2fd-ba51eca521e2"
+        },
+        {
+          "name": "{provider_name}",
+          "item": [
+            {
+              "name": "Users",
+              "item": [
+                {
+                  "name": "{user_email}",
+                  "item": [
+                    {
+                      "name": "Get User Cloud",
+                      "id": "960e59a7-8cf9-4e1e-abd1-797acd7b46c5",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/scim/:provider_name/Users/:user_email",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "scim",
+                            ":provider_name",
+                            "Users",
+                            ":user_email"
+                          ],
+                          "variable": [
+                            {
+                              "id": "1a9db0ca-5237-472d-a066-23dd3ee951db",
+                              "key": "provider_name",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            },
+                            {
+                              "id": "13ace279-8412-4627-9802-783dae817057",
+                              "key": "user_email",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "d5c8531e-732b-47be-b94a-4a8b4fc800de",
+                          "name": "Successful Response",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/scim/:provider_name/Users/:user_email",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "scim",
+                                ":provider_name",
+                                "Users",
+                                ":user_email"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "provider_name"
+                                },
+                                {
+                                  "key": "user_email"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"id\": \"<string>\",\n  \"meta\": {\n    \"resourceType\": \"<string>\"\n  },\n  \"userName\": \"<string>\",\n  \"name\": {\n    \"givenName\": \"<string>\"\n  },\n  \"active\": \"<boolean>\",\n  \"emails\": [\n    {\n      \"value\": \"<string>\",\n      \"type\": \"<string>\",\n      \"primary\": \"<boolean>\"\n    },\n    {\n      \"value\": \"<string>\",\n      \"type\": \"<string>\",\n      \"primary\": \"<boolean>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:41:53.000Z",
+                          "updatedAt": "2026-07-28T02:41:53.000Z",
+                          "uid": "35240-d5c8531e-732b-47be-b94a-4a8b4fc800de"
+                        },
+                        {
+                          "id": "531f2d10-bd3c-4202-bff3-e543d49bed07",
+                          "name": "Validation Error",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/scim/:provider_name/Users/:user_email",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "scim",
+                                ":provider_name",
+                                "Users",
+                                ":user_email"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "provider_name"
+                                },
+                                {
+                                  "key": "user_email"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:41:53.000Z",
+                          "updatedAt": "2026-07-28T02:41:53.000Z",
+                          "uid": "35240-531f2d10-bd3c-4202-bff3-e543d49bed07"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:41:53.000Z",
+                      "updatedAt": "2026-07-28T02:41:53.000Z",
+                      "uid": "35240-960e59a7-8cf9-4e1e-abd1-797acd7b46c5"
+                    }
+                  ],
+                  "id": "0b07a2fb-a28a-4a8c-9d5f-629871c92942",
+                  "createdAt": "2026-07-28T02:41:53.000Z",
+                  "updatedAt": "2026-07-28T02:41:53.000Z",
+                  "uid": "35240-0b07a2fb-a28a-4a8c-9d5f-629871c92942"
+                },
+                {
+                  "name": "Get Users Cloud",
+                  "id": "4a857239-bcb7-42cc-9af8-55bc4b38d5c6",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/scim/:provider_name/Users?filter=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "scim",
+                        ":provider_name",
+                        "Users"
+                      ],
+                      "query": [
+                        {
+                          "key": "filter",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "adc7fe3f-960f-41fe-af9d-0cad63d91f18",
+                          "key": "provider_name",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "10e7b04e-f051-457d-beac-e1b477208f54",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/scim/:provider_name/Users?filter=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "scim",
+                            ":provider_name",
+                            "Users"
+                          ],
+                          "query": [
+                            {
+                              "key": "filter",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "provider_name"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"totalResults\": \"<integer>\",\n  \"Resources\": [\n    {\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"id\": \"<string>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\"\n      },\n      \"userName\": \"<string>\",\n      \"name\": {\n        \"givenName\": \"<string>\"\n      },\n      \"active\": \"<boolean>\",\n      \"emails\": [\n        {\n          \"value\": \"<string>\",\n          \"type\": \"<string>\",\n          \"primary\": \"<boolean>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"type\": \"<string>\",\n          \"primary\": \"<boolean>\"\n        }\n      ]\n    },\n    {\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"id\": \"<string>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\"\n      },\n      \"userName\": \"<string>\",\n      \"name\": {\n        \"givenName\": \"<string>\"\n      },\n      \"active\": \"<boolean>\",\n      \"emails\": [\n        {\n          \"value\": \"<string>\",\n          \"type\": \"<string>\",\n          \"primary\": \"<boolean>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"type\": \"<string>\",\n          \"primary\": \"<boolean>\"\n        }\n      ]\n    }\n  ],\n  \"startIndex\": \"<integer>\",\n  \"itemsPerPage\": \"<integer>\"\n}",
+                      "createdAt": "2026-07-28T02:41:53.000Z",
+                      "updatedAt": "2026-07-28T02:41:53.000Z",
+                      "uid": "35240-10e7b04e-f051-457d-beac-e1b477208f54"
+                    },
+                    {
+                      "id": "1f16317c-57c0-4309-921d-0b65953b6815",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/scim/:provider_name/Users?filter=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "scim",
+                            ":provider_name",
+                            "Users"
+                          ],
+                          "query": [
+                            {
+                              "key": "filter",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "provider_name"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:53.000Z",
+                      "updatedAt": "2026-07-28T02:41:53.000Z",
+                      "uid": "35240-1f16317c-57c0-4309-921d-0b65953b6815"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:53.000Z",
+                  "updatedAt": "2026-07-28T02:41:53.000Z",
+                  "uid": "35240-4a857239-bcb7-42cc-9af8-55bc4b38d5c6"
+                }
+              ],
+              "id": "e1410d3b-713b-45b1-9aac-d6b7503de822",
+              "createdAt": "2026-07-28T02:41:53.000Z",
+              "updatedAt": "2026-07-28T02:41:53.000Z",
+              "uid": "35240-e1410d3b-713b-45b1-9aac-d6b7503de822"
+            },
+            {
+              "name": "Groups",
+              "item": [
+                {
+                  "name": "{group_id}",
+                  "item": [
+                    {
+                      "name": "Get Group Cloud",
+                      "id": "109efeed-56cd-4d9d-a6d2-93d01d886145",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/scim/:provider_name/Groups/:group_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "scim",
+                            ":provider_name",
+                            "Groups",
+                            ":group_id"
+                          ],
+                          "variable": [
+                            {
+                              "id": "cb9a7797-d0bb-40a0-b497-d1e87806bdea",
+                              "key": "provider_name",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            },
+                            {
+                              "id": "775a821c-775d-43a1-a92f-9b429152173e",
+                              "key": "group_id",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "1ec0728d-e3a3-4bd4-aeef-0cdd5f9a1950",
+                          "name": "Successful Response",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/scim/:provider_name/Groups/:group_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "scim",
+                                ":provider_name",
+                                "Groups",
+                                ":group_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "provider_name"
+                                },
+                                {
+                                  "key": "group_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"id\": \"<string>\",\n  \"meta\": {\n    \"resourceType\": \"<string>\"\n  },\n  \"displayName\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:41:53.000Z",
+                          "updatedAt": "2026-07-28T02:41:53.000Z",
+                          "uid": "35240-1ec0728d-e3a3-4bd4-aeef-0cdd5f9a1950"
+                        },
+                        {
+                          "id": "fedfc26c-475b-4cb2-b06b-38cf7aea09b8",
+                          "name": "Validation Error",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/scim/:provider_name/Groups/:group_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "scim",
+                                ":provider_name",
+                                "Groups",
+                                ":group_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "provider_name"
+                                },
+                                {
+                                  "key": "group_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:41:53.000Z",
+                          "updatedAt": "2026-07-28T02:41:53.000Z",
+                          "uid": "35240-fedfc26c-475b-4cb2-b06b-38cf7aea09b8"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:41:53.000Z",
+                      "updatedAt": "2026-07-28T02:41:53.000Z",
+                      "uid": "35240-109efeed-56cd-4d9d-a6d2-93d01d886145"
+                    },
+                    {
+                      "name": "Update Group Cloud",
+                      "id": "f980c3f1-32dc-40a5-9e9c-e75439650acf",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Operations\": [\n    {\n      \"op\": \"<string>\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"op\": \"<string>\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/scim/:provider_name/Groups/:group_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "scim",
+                            ":provider_name",
+                            "Groups",
+                            ":group_id"
+                          ],
+                          "variable": [
+                            {
+                              "id": "3cadc8d4-4ab1-42f4-b99b-d1d20a8bda57",
+                              "key": "provider_name",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            },
+                            {
+                              "id": "6951ce7b-b962-49c6-801e-445673d71561",
+                              "key": "group_id",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "id": "35f011e5-12f4-492e-aed3-ad0a4acd84c9",
+                          "name": "Successful Response",
+                          "originalRequest": {
+                            "method": "PATCH",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Operations\": [\n    {\n      \"op\": \"<string>\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"op\": \"<string>\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/scim/:provider_name/Groups/:group_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "scim",
+                                ":provider_name",
+                                "Groups",
+                                ":group_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "provider_name"
+                                },
+                                {
+                                  "key": "group_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "No Content",
+                          "code": 204,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:41:53.000Z",
+                          "updatedAt": "2026-07-28T02:41:53.000Z",
+                          "uid": "35240-35f011e5-12f4-492e-aed3-ad0a4acd84c9"
+                        },
+                        {
+                          "id": "b4a5bb5b-b085-479a-b697-7ff45419d16c",
+                          "name": "Validation Error",
+                          "originalRequest": {
+                            "method": "PATCH",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Operations\": [\n    {\n      \"op\": \"<string>\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"op\": \"<string>\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"display\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/scim/:provider_name/Groups/:group_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "scim",
+                                ":provider_name",
+                                "Groups",
+                                ":group_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "provider_name"
+                                },
+                                {
+                                  "key": "group_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:41:53.000Z",
+                          "updatedAt": "2026-07-28T02:41:53.000Z",
+                          "uid": "35240-b4a5bb5b-b085-479a-b697-7ff45419d16c"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:41:53.000Z",
+                      "updatedAt": "2026-07-28T02:41:53.000Z",
+                      "uid": "35240-f980c3f1-32dc-40a5-9e9c-e75439650acf"
+                    }
+                  ],
+                  "id": "701d3dd5-3a03-4e8b-8bb0-c5f38e1d675e",
+                  "createdAt": "2026-07-28T02:41:53.000Z",
+                  "updatedAt": "2026-07-28T02:41:53.000Z",
+                  "uid": "35240-701d3dd5-3a03-4e8b-8bb0-c5f38e1d675e"
+                },
+                {
+                  "name": "Get Groups Cloud",
+                  "id": "ca07e399-5806-4b01-b442-7b8b4ba5e958",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/scim/:provider_name/Groups?filter=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "scim",
+                        ":provider_name",
+                        "Groups"
+                      ],
+                      "query": [
+                        {
+                          "key": "filter",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "23e12e5b-9f8c-4676-854d-8ec82c460ca6",
+                          "key": "provider_name",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "eb5b8ffb-fad1-494c-94af-159472cab078",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/scim/:provider_name/Groups?filter=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "scim",
+                            ":provider_name",
+                            "Groups"
+                          ],
+                          "query": [
+                            {
+                              "key": "filter",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "provider_name"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"schemas\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"totalResults\": \"<integer>\",\n  \"Resources\": [\n    {\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"id\": \"<string>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\"\n      },\n      \"userName\": \"<string>\",\n      \"name\": {\n        \"givenName\": \"<string>\"\n      },\n      \"active\": \"<boolean>\",\n      \"emails\": [\n        {\n          \"value\": \"<string>\",\n          \"type\": \"<string>\",\n          \"primary\": \"<boolean>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"type\": \"<string>\",\n          \"primary\": \"<boolean>\"\n        }\n      ]\n    },\n    {\n      \"schemas\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"id\": \"<string>\",\n      \"meta\": {\n        \"resourceType\": \"<string>\"\n      },\n      \"userName\": \"<string>\",\n      \"name\": {\n        \"givenName\": \"<string>\"\n      },\n      \"active\": \"<boolean>\",\n      \"emails\": [\n        {\n          \"value\": \"<string>\",\n          \"type\": \"<string>\",\n          \"primary\": \"<boolean>\"\n        },\n        {\n          \"value\": \"<string>\",\n          \"type\": \"<string>\",\n          \"primary\": \"<boolean>\"\n        }\n      ]\n    }\n  ],\n  \"startIndex\": \"<integer>\",\n  \"itemsPerPage\": \"<integer>\"\n}",
+                      "createdAt": "2026-07-28T02:41:53.000Z",
+                      "updatedAt": "2026-07-28T02:41:53.000Z",
+                      "uid": "35240-eb5b8ffb-fad1-494c-94af-159472cab078"
+                    },
+                    {
+                      "id": "3af09a94-d57e-478d-b72a-d231af09cb65",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/scim/:provider_name/Groups?filter=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "scim",
+                            ":provider_name",
+                            "Groups"
+                          ],
+                          "query": [
+                            {
+                              "key": "filter",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "provider_name"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:53.000Z",
+                      "updatedAt": "2026-07-28T02:41:53.000Z",
+                      "uid": "35240-3af09a94-d57e-478d-b72a-d231af09cb65"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:53.000Z",
+                  "updatedAt": "2026-07-28T02:41:53.000Z",
+                  "uid": "35240-ca07e399-5806-4b01-b442-7b8b4ba5e958"
+                }
+              ],
+              "id": "8ae60b0b-dd67-4ced-8b47-8d1b2e42ae84",
+              "createdAt": "2026-07-28T02:41:53.000Z",
+              "updatedAt": "2026-07-28T02:41:53.000Z",
+              "uid": "35240-8ae60b0b-dd67-4ced-8b47-8d1b2e42ae84"
+            }
+          ],
+          "id": "15e1969c-cff3-4b55-96bc-f03926088ef4",
+          "createdAt": "2026-07-28T02:41:53.000Z",
+          "updatedAt": "2026-07-28T02:41:53.000Z",
+          "uid": "35240-15e1969c-cff3-4b55-96bc-f03926088ef4"
+        }
+      ],
+      "id": "8756dee0-5ef0-434b-93ae-69054abb59b8",
+      "createdAt": "2026-07-28T02:41:53.000Z",
+      "updatedAt": "2026-07-28T02:41:53.000Z",
+      "uid": "35240-8756dee0-5ef0-434b-93ae-69054abb59b8"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://pydantic.dev/api/v1"
+    }
+  ]
+}

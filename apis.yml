@@ -629,6 +629,8 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/pydanticai/overview
   - type: AgentCard
     url: a2a/pydantic-ai-a2a.yml
     name: A2A Agent Card

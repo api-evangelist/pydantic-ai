@@ -1,0 +1,460 @@
+{
+  "info": {
+    "_postman_id": "51e5333f-4d8c-4fb5-bcf5-4037c375c0a2",
+    "name": "Pydantic API Discovery Alerts Audit Logs API",
+    "description": "Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly \u2014 it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.\n\n- **US region**: https://logfire-us.pydantic.dev/api/openapi.json\n- **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json\n\n## Versioning\n\nThis discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).\n\nResponses include an `X-API-Version` header identifying the version that served the request.\n\nRelated discovery resources:\n\n- [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) \u2014 RFC 9727 Linkset of available API descriptions.\n- [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) \u2014 JSON list of per-region OpenAPI specs.\n- [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) \u2014 RFC 9728 OAuth protected resource metadata.\n\nContact Support:\n Name: Pydantic\n Email: hello@pydantic.dev",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:41:33.000Z",
+    "updatedAt": "2026-07-28T02:41:34.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-51e5333f-4d8c-4fb5-bcf5-4037c375c0a2"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "audit-logs",
+          "item": [
+            {
+              "name": "{audit_log_id}",
+              "item": [
+                {
+                  "name": "Get Audit Log",
+                  "id": "ab2b1d73-3633-45a3-8756-e8e9b986d368",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/audit-logs/:audit_log_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "audit-logs",
+                        ":audit_log_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "07448774-f97e-4fd3-b45b-d6047d090b25",
+                          "key": "audit_log_id",
+                          "value": "<uuid>",
+                          "description": "(Required) Audit log ID"
+                        }
+                      ]
+                    },
+                    "description": "Get details for a specific audit log.\n\nRequires an API key with the `organization:auditlog` scope.\nOnly available for organizations with an enterprise_cloud subscription or self-hosted deployments."
+                  },
+                  "response": [
+                    {
+                      "id": "24348114-d321-4e46-81f7-00cae2dd50f0",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/audit-logs/:audit_log_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "audit-logs",
+                            ":audit_log_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "audit_log_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"created_at\": \"<dateTime>\",\n  \"organization_name\": \"<string>\",\n  \"project_name\": \"<string>\",\n  \"user_name\": \"<string>\",\n  \"action\": \"FAILED_LOGIN\",\n  \"resource_type\": \"<string>\",\n  \"record_id\": \"<uuid>\",\n  \"ip_address\": \"<ipv4>\",\n  \"metadata\": {\n    \"Uta_\": {\n      \"laborum_9\": {\n        \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n      },\n      \"tempor_c84\": {\n        \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n      },\n      \"exercitation_a18\": {\n        \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n      }\n    }\n  }\n}",
+                      "createdAt": "2026-07-28T02:41:34.000Z",
+                      "updatedAt": "2026-07-28T02:41:34.000Z",
+                      "uid": "35240-24348114-d321-4e46-81f7-00cae2dd50f0"
+                    },
+                    {
+                      "id": "a7ff7864-a116-494c-8838-ad179834174a",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/audit-logs/:audit_log_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "audit-logs",
+                            ":audit_log_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "audit_log_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:34.000Z",
+                      "updatedAt": "2026-07-28T02:41:34.000Z",
+                      "uid": "35240-a7ff7864-a116-494c-8838-ad179834174a"
+                    },
+                    {
+                      "id": "120e7f14-f14a-401c-aaf8-20759183c7bd",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/audit-logs/:audit_log_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "audit-logs",
+                            ":audit_log_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "audit_log_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Seconds to wait before retrying.",
+                            "type": "text/plain"
+                          },
+                          "key": "Retry-After",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:41:34.000Z",
+                      "updatedAt": "2026-07-28T02:41:34.000Z",
+                      "uid": "35240-120e7f14-f14a-401c-aaf8-20759183c7bd"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:34.000Z",
+                  "updatedAt": "2026-07-28T02:41:34.000Z",
+                  "uid": "35240-ab2b1d73-3633-45a3-8756-e8e9b986d368"
+                }
+              ],
+              "id": "a2028c7c-4ce5-4f70-ba21-6692038899d8",
+              "createdAt": "2026-07-28T02:41:34.000Z",
+              "updatedAt": "2026-07-28T02:41:34.000Z",
+              "uid": "35240-a2028c7c-4ce5-4f70-ba21-6692038899d8"
+            },
+            {
+              "name": "List Audit Logs",
+              "id": "65fda75e-00b3-4f03-8d07-c90766e21a89",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/audit-logs/?start_time=<dateTime>&end_time=<dateTime>&action=LOGIN",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "audit-logs",
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Start time for audit logs",
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "description": "End time for audit logs",
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "description": "Filter by action type",
+                      "key": "action",
+                      "value": "LOGIN"
+                    }
+                  ]
+                },
+                "description": "List audit logs for an organization.\n\nRequires an API key with the `organization:auditlog` scope.\nOnly available for organizations with an enterprise_cloud subscription or self-hosted deployments.\n\nThe time range cannot exceed 90 days."
+              },
+              "response": [
+                {
+                  "id": "79c5b6bf-e04c-4570-8f09-008e9ec5ef8d",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/audit-logs/?start_time=<dateTime>&end_time=<dateTime>&action=LOGIN",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "audit-logs",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Start time for audit logs",
+                          "key": "start_time",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "End time for audit logs",
+                          "key": "end_time",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter by action type",
+                          "key": "action",
+                          "value": "LOGIN"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  {\n    \"id\": \"<uuid>\",\n    \"created_at\": \"<dateTime>\",\n    \"organization_name\": \"<string>\",\n    \"project_name\": \"<string>\",\n    \"user_name\": \"<string>\",\n    \"action\": \"REVOKE_INVITATION\",\n    \"resource_type\": \"<string>\",\n    \"record_id\": \"<uuid>\",\n    \"ip_address\": \"<ipv4>\"\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"created_at\": \"<dateTime>\",\n    \"organization_name\": \"<string>\",\n    \"project_name\": \"<string>\",\n    \"user_name\": \"<string>\",\n    \"action\": \"DELETE\",\n    \"resource_type\": \"<string>\",\n    \"record_id\": \"<uuid>\",\n    \"ip_address\": \"<ipv4>\"\n  }\n]",
+                  "createdAt": "2026-07-28T02:41:34.000Z",
+                  "updatedAt": "2026-07-28T02:41:34.000Z",
+                  "uid": "35240-79c5b6bf-e04c-4570-8f09-008e9ec5ef8d"
+                },
+                {
+                  "id": "57a0f2a3-4906-4df2-a4dc-8542bdc3f04a",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/audit-logs/?start_time=<dateTime>&end_time=<dateTime>&action=LOGIN",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "audit-logs",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Start time for audit logs",
+                          "key": "start_time",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "End time for audit logs",
+                          "key": "end_time",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter by action type",
+                          "key": "action",
+                          "value": "LOGIN"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:41:34.000Z",
+                  "updatedAt": "2026-07-28T02:41:34.000Z",
+                  "uid": "35240-57a0f2a3-4906-4df2-a4dc-8542bdc3f04a"
+                },
+                {
+                  "id": "2c9c9b4b-8c29-435c-8d2d-078fde9ec839",
+                  "name": "Rate limit exceeded",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/audit-logs/?start_time=<dateTime>&end_time=<dateTime>&action=LOGIN",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "audit-logs",
+                        ""
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Start time for audit logs",
+                          "key": "start_time",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "End time for audit logs",
+                          "key": "end_time",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter by action type",
+                          "key": "action",
+                          "value": "LOGIN"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Seconds to wait before retrying.",
+                        "type": "text/plain"
+                      },
+                      "key": "Retry-After",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:41:34.000Z",
+                  "updatedAt": "2026-07-28T02:41:34.000Z",
+                  "uid": "35240-2c9c9b4b-8c29-435c-8d2d-078fde9ec839"
+                }
+              ],
+              "createdAt": "2026-07-28T02:41:34.000Z",
+              "updatedAt": "2026-07-28T02:41:34.000Z",
+              "uid": "35240-65fda75e-00b3-4f03-8d07-c90766e21a89"
+            }
+          ],
+          "id": "c7236888-9bd9-4bd4-b728-3644fe6049cd",
+          "createdAt": "2026-07-28T02:41:34.000Z",
+          "updatedAt": "2026-07-28T02:41:34.000Z",
+          "uid": "35240-c7236888-9bd9-4bd4-b728-3644fe6049cd"
+        }
+      ],
+      "id": "bfe45e73-df26-44d6-af84-d018532f210e",
+      "createdAt": "2026-07-28T02:41:34.000Z",
+      "updatedAt": "2026-07-28T02:41:34.000Z",
+      "uid": "35240-bfe45e73-df26-44d6-af84-d018532f210e"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://pydantic.dev/api/v1"
+    }
+  ]
+}

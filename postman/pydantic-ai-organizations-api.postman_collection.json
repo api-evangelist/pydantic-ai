@@ -1,0 +1,1241 @@
+{
+  "info": {
+    "_postman_id": "02537df2-9eea-457b-8079-690aad91d6c2",
+    "name": "Pydantic API Discovery Alerts Organizations API",
+    "description": "Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly \u2014 it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.\n\n- **US region**: https://logfire-us.pydantic.dev/api/openapi.json\n- **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json\n\n## Versioning\n\nThis discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).\n\nResponses include an `X-API-Version` header identifying the version that served the request.\n\nRelated discovery resources:\n\n- [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) \u2014 RFC 9727 Linkset of available API descriptions.\n- [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) \u2014 JSON list of per-region OpenAPI specs.\n- [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) \u2014 RFC 9728 OAuth protected resource metadata.\n\nContact Support:\n Name: Pydantic\n Email: hello@pydantic.dev",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:41:47.000Z",
+    "updatedAt": "2026-07-28T02:41:48.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-02537df2-9eea-457b-8079-690aad91d6c2"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "organizations",
+          "item": [
+            {
+              "name": "{organization_id}",
+              "item": [
+                {
+                  "name": "invitations",
+                  "item": [
+                    {
+                      "name": "Create Self Hosted Organization Invitation",
+                      "id": "f6318699-617b-4df9-9a0c-f8338b648c58",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"role\": \"admin\",\n  \"expiration\": \"<dateTime>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/organizations/:organization_id/invitations/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "organizations",
+                            ":organization_id",
+                            "invitations",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "id": "927f7535-a022-47a3-ab17-4df571b37fbf",
+                              "key": "organization_id",
+                              "value": "<uuid>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        },
+                        "description": "Create a single-use organization invitation and return its join URL (self-hosted admin only).\n\nThis endpoint is deprecated. Use `/api/v1/invitations/` with an org-context token instead."
+                      },
+                      "response": [
+                        {
+                          "id": "fd9cc64d-d726-429a-9566-e40c65ed6090",
+                          "name": "Successful Response",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"role\": \"admin\",\n  \"expiration\": \"<dateTime>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/organizations/:organization_id/invitations/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "organizations",
+                                ":organization_id",
+                                "invitations",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "key": "organization_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Created",
+                          "code": 201,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"invite_url\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:41:48.000Z",
+                          "updatedAt": "2026-07-28T02:41:48.000Z",
+                          "uid": "35240-fd9cc64d-d726-429a-9566-e40c65ed6090"
+                        },
+                        {
+                          "id": "447e3de5-8486-4669-8732-44ff6ddc81c0",
+                          "name": "Validation Error",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"role\": \"admin\",\n  \"expiration\": \"<dateTime>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/organizations/:organization_id/invitations/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "organizations",
+                                ":organization_id",
+                                "invitations",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "key": "organization_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:41:48.000Z",
+                          "updatedAt": "2026-07-28T02:41:48.000Z",
+                          "uid": "35240-447e3de5-8486-4669-8732-44ff6ddc81c0"
+                        },
+                        {
+                          "id": "ca388285-e977-4dde-ae92-dd772129eb98",
+                          "name": "Rate limit exceeded",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"role\": \"admin\",\n  \"expiration\": \"<dateTime>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/organizations/:organization_id/invitations/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "organizations",
+                                ":organization_id",
+                                "invitations",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "key": "organization_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Too Many Requests",
+                          "code": 429,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            },
+                            {
+                              "disabled": false,
+                              "description": {
+                                "content": "Seconds to wait before retrying.",
+                                "type": "text/plain"
+                              },
+                              "key": "Retry-After",
+                              "value": "<string>"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:41:48.000Z",
+                          "updatedAt": "2026-07-28T02:41:48.000Z",
+                          "uid": "35240-ca388285-e977-4dde-ae92-dd772129eb98"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:41:48.000Z",
+                      "updatedAt": "2026-07-28T02:41:48.000Z",
+                      "uid": "35240-f6318699-617b-4df9-9a0c-f8338b648c58"
+                    }
+                  ],
+                  "id": "f86a2071-0e2a-449c-bdf8-5dfed6872537",
+                  "createdAt": "2026-07-28T02:41:48.000Z",
+                  "updatedAt": "2026-07-28T02:41:48.000Z",
+                  "uid": "35240-f86a2071-0e2a-449c-bdf8-5dfed6872537"
+                },
+                {
+                  "name": "Get Organization",
+                  "id": "f5a943f9-1de4-44d3-b2c8-93d895b04b29",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/organizations/:organization_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "organizations",
+                        ":organization_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "4bfc5e98-afdd-4efa-94be-7b5a4eecd954",
+                          "key": "organization_id",
+                          "value": "<uuid>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Read an organization by id (self-hosted admin only)."
+                  },
+                  "response": [
+                    {
+                      "id": "e2f11940-04a4-4194-b5f3-bc22f8bd5927",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/organizations/:organization_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "organizations",
+                            ":organization_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"organization_name\": \"<string>\",\n  \"subscription_plan\": \"enterprise_cloud\",\n  \"has_admin_panel\": \"<boolean>\",\n  \"created_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"billing_email\": \"<string>\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\",\n  \"spending_cap\": \"<integer>\",\n  \"spending_cap_reached_at\": \"<dateTime>\",\n  \"planless_grace_period_ends_at\": \"<dateTime>\",\n  \"gateway_enabled\": \"<boolean>\",\n  \"ai_enabled\": \"<boolean>\",\n  \"ai_training_enabled\": \"<boolean>\"\n}",
+                      "createdAt": "2026-07-28T02:41:48.000Z",
+                      "updatedAt": "2026-07-28T02:41:48.000Z",
+                      "uid": "35240-e2f11940-04a4-4194-b5f3-bc22f8bd5927"
+                    },
+                    {
+                      "id": "519a5b35-a2bd-460c-b7b0-782bb8a44468",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/organizations/:organization_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "organizations",
+                            ":organization_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:48.000Z",
+                      "updatedAt": "2026-07-28T02:41:48.000Z",
+                      "uid": "35240-519a5b35-a2bd-460c-b7b0-782bb8a44468"
+                    },
+                    {
+                      "id": "4aed0ac1-0337-4a4f-b07a-13a20b10aa89",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/organizations/:organization_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "organizations",
+                            ":organization_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Seconds to wait before retrying.",
+                            "type": "text/plain"
+                          },
+                          "key": "Retry-After",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:41:48.000Z",
+                      "updatedAt": "2026-07-28T02:41:48.000Z",
+                      "uid": "35240-4aed0ac1-0337-4a4f-b07a-13a20b10aa89"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:48.000Z",
+                  "updatedAt": "2026-07-28T02:41:48.000Z",
+                  "uid": "35240-f5a943f9-1de4-44d3-b2c8-93d895b04b29"
+                },
+                {
+                  "name": "Update Organization",
+                  "id": "d91b2a53-c4cb-49c5-b7a7-1b5168b12080",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"organization_name\": \"ee0zeis6-ta0b16japa\",\n  \"billing_email\": \"<string>\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/organizations/:organization_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "organizations",
+                        ":organization_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "28c6a152-33ec-472f-be2d-1f4040cb606a",
+                          "key": "organization_id",
+                          "value": "<uuid>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Update an organization (self-hosted admin only)."
+                  },
+                  "response": [
+                    {
+                      "id": "cb339c1f-5027-48c5-9e93-62e71a1f7b02",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"organization_name\": \"ee0zeis6-ta0b16japa\",\n  \"billing_email\": \"<string>\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/organizations/:organization_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "organizations",
+                            ":organization_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"organization_name\": \"<string>\",\n  \"subscription_plan\": \"enterprise_cloud\",\n  \"has_admin_panel\": \"<boolean>\",\n  \"created_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"billing_email\": \"<string>\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\",\n  \"spending_cap\": \"<integer>\",\n  \"spending_cap_reached_at\": \"<dateTime>\",\n  \"planless_grace_period_ends_at\": \"<dateTime>\",\n  \"gateway_enabled\": \"<boolean>\",\n  \"ai_enabled\": \"<boolean>\",\n  \"ai_training_enabled\": \"<boolean>\"\n}",
+                      "createdAt": "2026-07-28T02:41:48.000Z",
+                      "updatedAt": "2026-07-28T02:41:48.000Z",
+                      "uid": "35240-cb339c1f-5027-48c5-9e93-62e71a1f7b02"
+                    },
+                    {
+                      "id": "4191b45e-1c81-4248-9542-f368b15f8e82",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"organization_name\": \"ee0zeis6-ta0b16japa\",\n  \"billing_email\": \"<string>\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/organizations/:organization_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "organizations",
+                            ":organization_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:48.000Z",
+                      "updatedAt": "2026-07-28T02:41:48.000Z",
+                      "uid": "35240-4191b45e-1c81-4248-9542-f368b15f8e82"
+                    },
+                    {
+                      "id": "15230899-be09-4542-9621-bce193ef3c8a",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"organization_name\": \"ee0zeis6-ta0b16japa\",\n  \"billing_email\": \"<string>\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/organizations/:organization_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "organizations",
+                            ":organization_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Seconds to wait before retrying.",
+                            "type": "text/plain"
+                          },
+                          "key": "Retry-After",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:41:48.000Z",
+                      "updatedAt": "2026-07-28T02:41:48.000Z",
+                      "uid": "35240-15230899-be09-4542-9621-bce193ef3c8a"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:48.000Z",
+                  "updatedAt": "2026-07-28T02:41:48.000Z",
+                  "uid": "35240-d91b2a53-c4cb-49c5-b7a7-1b5168b12080"
+                },
+                {
+                  "name": "Delete Organization",
+                  "id": "901e588a-b089-4a7d-9f81-230b12392b00",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/organizations/:organization_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "organizations",
+                        ":organization_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "id": "56b4621b-1b5e-4d12-9c49-28cc8a390e6d",
+                          "key": "organization_id",
+                          "value": "<uuid>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Delete an organization (self-hosted admin only)."
+                  },
+                  "response": [
+                    {
+                      "id": "38c3b1f4-a3f5-4f20-9fe0-33fb1d026727",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/organizations/:organization_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "organizations",
+                            ":organization_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:41:48.000Z",
+                      "updatedAt": "2026-07-28T02:41:48.000Z",
+                      "uid": "35240-38c3b1f4-a3f5-4f20-9fe0-33fb1d026727"
+                    },
+                    {
+                      "id": "035e375b-e2b2-46c8-8b67-3b8a4d1014c1",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/organizations/:organization_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "organizations",
+                            ":organization_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:41:48.000Z",
+                      "updatedAt": "2026-07-28T02:41:48.000Z",
+                      "uid": "35240-035e375b-e2b2-46c8-8b67-3b8a4d1014c1"
+                    },
+                    {
+                      "id": "c31f8ad6-0d3b-444c-b27c-9b0be4f21a58",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/organizations/:organization_id/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "organizations",
+                            ":organization_id",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Seconds to wait before retrying.",
+                            "type": "text/plain"
+                          },
+                          "key": "Retry-After",
+                          "value": "<string>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:41:48.000Z",
+                      "updatedAt": "2026-07-28T02:41:48.000Z",
+                      "uid": "35240-c31f8ad6-0d3b-444c-b27c-9b0be4f21a58"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:41:48.000Z",
+                  "updatedAt": "2026-07-28T02:41:48.000Z",
+                  "uid": "35240-901e588a-b089-4a7d-9f81-230b12392b00"
+                }
+              ],
+              "id": "c8789dc1-2c79-4d10-b81c-547ce97fea1f",
+              "createdAt": "2026-07-28T02:41:48.000Z",
+              "updatedAt": "2026-07-28T02:41:48.000Z",
+              "uid": "35240-c8789dc1-2c79-4d10-b81c-547ce97fea1f"
+            },
+            {
+              "name": "List Organizations",
+              "id": "3d9fe403-a7f6-4d7b-919c-0630ac5f3dca",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/organizations/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ""
+                  ]
+                },
+                "description": "List all organizations (self-hosted admin only).\n\nThis endpoint is deprecated and has moved to `/api/v1/instance/organizations/`."
+              },
+              "response": [
+                {
+                  "id": "acbb1011-0316-4e56-9dca-e9cf466e6c30",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/organizations/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "organizations",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  {\n    \"id\": \"<uuid>\",\n    \"organization_name\": \"<string>\",\n    \"subscription_plan\": \"enterprise_cloud\",\n    \"has_admin_panel\": \"<boolean>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"billing_email\": \"<string>\",\n    \"organization_display_name\": \"<string>\",\n    \"github_handle\": \"<string>\",\n    \"location\": \"<string>\",\n    \"avatar\": \"<string>\",\n    \"links\": [\n      {\n        \"url\": \"<string>\",\n        \"icon\": \"<string>\",\n        \"name\": \"<string>\"\n      },\n      {\n        \"url\": \"<string>\",\n        \"icon\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    ],\n    \"description\": \"<string>\",\n    \"spending_cap\": \"<integer>\",\n    \"spending_cap_reached_at\": \"<dateTime>\",\n    \"planless_grace_period_ends_at\": \"<dateTime>\",\n    \"gateway_enabled\": \"<boolean>\",\n    \"ai_enabled\": \"<boolean>\",\n    \"ai_training_enabled\": \"<boolean>\"\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"organization_name\": \"<string>\",\n    \"subscription_plan\": \"personal\",\n    \"has_admin_panel\": \"<boolean>\",\n    \"created_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"billing_email\": \"<string>\",\n    \"organization_display_name\": \"<string>\",\n    \"github_handle\": \"<string>\",\n    \"location\": \"<string>\",\n    \"avatar\": \"<string>\",\n    \"links\": [\n      {\n        \"url\": \"<string>\",\n        \"icon\": \"<string>\",\n        \"name\": \"<string>\"\n      },\n      {\n        \"url\": \"<string>\",\n        \"icon\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    ],\n    \"description\": \"<string>\",\n    \"spending_cap\": \"<integer>\",\n    \"spending_cap_reached_at\": \"<dateTime>\",\n    \"planless_grace_period_ends_at\": \"<dateTime>\",\n    \"gateway_enabled\": \"<boolean>\",\n    \"ai_enabled\": \"<boolean>\",\n    \"ai_training_enabled\": \"<boolean>\"\n  }\n]",
+                  "createdAt": "2026-07-28T02:41:48.000Z",
+                  "updatedAt": "2026-07-28T02:41:48.000Z",
+                  "uid": "35240-acbb1011-0316-4e56-9dca-e9cf466e6c30"
+                },
+                {
+                  "id": "8d45466e-c5a0-4343-8d36-811d3abd01d2",
+                  "name": "Rate limit exceeded",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/organizations/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "organizations",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Seconds to wait before retrying.",
+                        "type": "text/plain"
+                      },
+                      "key": "Retry-After",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:41:48.000Z",
+                  "updatedAt": "2026-07-28T02:41:48.000Z",
+                  "uid": "35240-8d45466e-c5a0-4343-8d36-811d3abd01d2"
+                }
+              ],
+              "createdAt": "2026-07-28T02:41:48.000Z",
+              "updatedAt": "2026-07-28T02:41:48.000Z",
+              "uid": "35240-3d9fe403-a7f6-4d7b-919c-0630ac5f3dca"
+            },
+            {
+              "name": "Create Organization",
+              "id": "76bb39bf-776a-41f8-9723-ad0f186b7fa1",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_name\": \"4h3271e-vh3p5jsp-9hv-tsvluko-rbwn4tolc-4u7-htaz1ck\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/organizations/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ""
+                  ]
+                },
+                "description": "Create an organization owned by the token's user (on-prem only).\n\nThis endpoint is deprecated and has moved to `/api/v1/instance/organizations/`."
+              },
+              "response": [
+                {
+                  "id": "f7082cbc-2714-49aa-a4b5-481b7213d824",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"organization_name\": \"4h3271e-vh3p5jsp-9hv-tsvluko-rbwn4tolc-4u7-htaz1ck\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/organizations/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "organizations",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"organization_name\": \"<string>\",\n  \"subscription_plan\": \"enterprise_cloud\",\n  \"has_admin_panel\": \"<boolean>\",\n  \"created_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"billing_email\": \"<string>\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\",\n  \"spending_cap\": \"<integer>\",\n  \"spending_cap_reached_at\": \"<dateTime>\",\n  \"planless_grace_period_ends_at\": \"<dateTime>\",\n  \"gateway_enabled\": \"<boolean>\",\n  \"ai_enabled\": \"<boolean>\",\n  \"ai_training_enabled\": \"<boolean>\"\n}",
+                  "createdAt": "2026-07-28T02:41:48.000Z",
+                  "updatedAt": "2026-07-28T02:41:48.000Z",
+                  "uid": "35240-f7082cbc-2714-49aa-a4b5-481b7213d824"
+                },
+                {
+                  "id": "e65d2f10-2519-4b85-a1ab-08a5bf8863d6",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"organization_name\": \"4h3271e-vh3p5jsp-9hv-tsvluko-rbwn4tolc-4u7-htaz1ck\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/organizations/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "organizations",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:41:48.000Z",
+                  "updatedAt": "2026-07-28T02:41:48.000Z",
+                  "uid": "35240-e65d2f10-2519-4b85-a1ab-08a5bf8863d6"
+                },
+                {
+                  "id": "c86cda64-9243-46e0-909d-8217800c6a87",
+                  "name": "Rate limit exceeded",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"organization_name\": \"4h3271e-vh3p5jsp-9hv-tsvluko-rbwn4tolc-4u7-htaz1ck\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/organizations/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "organizations",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Seconds to wait before retrying.",
+                        "type": "text/plain"
+                      },
+                      "key": "Retry-After",
+                      "value": "<string>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:41:48.000Z",
+                  "updatedAt": "2026-07-28T02:41:48.000Z",
+                  "uid": "35240-c86cda64-9243-46e0-909d-8217800c6a87"
+                }
+              ],
+              "createdAt": "2026-07-28T02:41:48.000Z",
+              "updatedAt": "2026-07-28T02:41:48.000Z",
+              "uid": "35240-76bb39bf-776a-41f8-9723-ad0f186b7fa1"
+            }
+          ],
+          "id": "3cfdc736-8f19-434e-a608-5b05cfa21a7b",
+          "createdAt": "2026-07-28T02:41:48.000Z",
+          "updatedAt": "2026-07-28T02:41:48.000Z",
+          "uid": "35240-3cfdc736-8f19-434e-a608-5b05cfa21a7b"
+        }
+      ],
+      "id": "209d8497-8995-41bb-aeb3-693eea432513",
+      "createdAt": "2026-07-28T02:41:48.000Z",
+      "updatedAt": "2026-07-28T02:41:48.000Z",
+      "uid": "35240-209d8497-8995-41bb-aeb3-693eea432513"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://pydantic.dev/api/v1"
+    }
+  ]
+}

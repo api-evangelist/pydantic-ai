@@ -1,0 +1,975 @@
+{
+  "info": {
+    "_postman_id": "48c9e42b-cc36-437c-af3f-8f9e82727988",
+    "name": "Pydantic API Discovery Alerts Variables API",
+    "description": "Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly \u2014 it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.\n\n- **US region**: https://logfire-us.pydantic.dev/api/openapi.json\n- **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json\n\n## Versioning\n\nThis discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).\n\nResponses include an `X-API-Version` header identifying the version that served the request.\n\nRelated discovery resources:\n\n- [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) \u2014 RFC 9727 Linkset of available API descriptions.\n- [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) \u2014 JSON list of per-region OpenAPI specs.\n- [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) \u2014 RFC 9728 OAuth protected resource metadata.\n\nContact Support:\n Name: Pydantic\n Email: hello@pydantic.dev",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:41:56.000Z",
+    "updatedAt": "2026-07-28T02:41:56.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-48c9e42b-cc36-437c-af3f-8f9e82727988"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "projects",
+          "item": [
+            {
+              "name": "{project_id}",
+              "item": [
+                {
+                  "name": "variables",
+                  "item": [
+                    {
+                      "name": "{name}",
+                      "item": [
+                        {
+                          "name": "Get Variable By Name",
+                          "id": "ba023291-d916-4a6e-a74f-6882bda44024",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/variables/:name/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "variables",
+                                ":name",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "id": "c2ff4c80-e5bb-4d3c-8881-4a7015358fe9",
+                                  "key": "project_id",
+                                  "value": "<uuid>",
+                                  "description": "(Required) "
+                                },
+                                {
+                                  "id": "710d52f7-72f2-4142-b4cb-f55f6d2ca661",
+                                  "key": "name",
+                                  "value": "<string>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            },
+                            "description": "Get a variable definition by name with current labels and latest version.\n\nRequires: User token with project:read_variables scope."
+                          },
+                          "response": [
+                            {
+                              "id": "bb306a3b-cd05-497b-9dbc-c19503ccf8ad",
+                              "name": "Successful Response",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/variables/:name/",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "variables",
+                                    ":name",
+                                    ""
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"name\": \"<string>\",\n  \"labels\": {\n    \"Ute0\": {\n      \"version\": \"<integer>\",\n      \"serialized_value\": \"<string>\"\n    },\n    \"anim75\": {\n      \"version\": \"<integer>\",\n      \"serialized_value\": \"<string>\"\n    },\n    \"sunt_15d\": {\n      \"version\": \"<integer>\",\n      \"serialized_value\": \"<string>\"\n    }\n  },\n  \"rollout\": {\n    \"labels\": {\n      \"nisi33\": \"<number>\",\n      \"ad3c\": \"<number>\",\n      \"inf\": \"<number>\"\n    }\n  },\n  \"overrides\": [\n    {\n      \"conditions\": [\n        {\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"kind\": \"value-equals\"\n        },\n        {\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"kind\": \"value-equals\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"nulla_924\": \"<number>\",\n          \"in_6e\": \"<number>\"\n        }\n      }\n    },\n    {\n      \"conditions\": [\n        {\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"kind\": \"value-equals\"\n        },\n        {\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"kind\": \"value-equals\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"consequatb\": \"<number>\",\n          \"ut8cf\": \"<number>\"\n        }\n      }\n    }\n  ],\n  \"kind\": \"general\",\n  \"latest_version\": {\n    \"version\": \"<integer>\",\n    \"serialized_value\": \"<string>\"\n  },\n  \"description\": \"<string>\",\n  \"json_schema\": {\n    \"elit_1\": true\n  },\n  \"template_inputs_schema\": {\n    \"incididuntc\": false,\n    \"esse_e\": 1294868.9381296188\n  },\n  \"type_name\": \"<string>\",\n  \"aliases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"example\": \"<string>\",\n  \"display_name\": \"<string>\",\n  \"prompt_slug\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T02:41:56.000Z",
+                              "updatedAt": "2026-07-28T02:41:56.000Z",
+                              "uid": "35240-bb306a3b-cd05-497b-9dbc-c19503ccf8ad"
+                            },
+                            {
+                              "id": "6a731683-fe72-4c61-9189-1a08aa3384ef",
+                              "name": "Validation Error",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/variables/:name/",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "variables",
+                                    ":name",
+                                    ""
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                              "code": 422,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T02:41:56.000Z",
+                              "updatedAt": "2026-07-28T02:41:56.000Z",
+                              "uid": "35240-6a731683-fe72-4c61-9189-1a08aa3384ef"
+                            },
+                            {
+                              "id": "f12f5b83-5647-47f6-96cd-f726da12063d",
+                              "name": "Rate limit exceeded",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/variables/:name/",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "variables",
+                                    ":name",
+                                    ""
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Too Many Requests",
+                              "code": 429,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "Seconds to wait before retrying.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Retry-After",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"detail\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T02:41:56.000Z",
+                              "updatedAt": "2026-07-28T02:41:56.000Z",
+                              "uid": "35240-f12f5b83-5647-47f6-96cd-f726da12063d"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:41:56.000Z",
+                          "updatedAt": "2026-07-28T02:41:56.000Z",
+                          "uid": "35240-ba023291-d916-4a6e-a74f-6882bda44024"
+                        },
+                        {
+                          "name": "Update Variable",
+                          "id": "fcf4e899-2ae5-44b0-9842-69153110f7b4",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"json_schema\": {\n    \"adipisicing_73\": -36851950,\n    \"Utf\": 77307149,\n    \"cillum_4_\": \"pariatur deserunt et\",\n    \"sint_1\": 70985668.53607452\n  },\n  \"template_inputs_schema\": {\n    \"eu_0b6\": 63497830,\n    \"sit_02\": -53049098,\n    \"proident3a\": \"esse minim culpa laborum Ut\"\n  },\n  \"type_id\": \"<uuid>\",\n  \"rollout\": {\n    \"labels\": {\n      \"nonef\": \"<number>\",\n      \"magna05d\": \"<number>\"\n    },\n    \"latest_weight\": \"<number>\"\n  },\n  \"overrides\": [\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"ex1\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"laborum_8\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ],\n  \"aliases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"example\": \"<string>\",\n  \"external\": \"<boolean>\",\n  \"labels\": {\n    \"nisid6f\": {\n      \"target_type\": \"version\",\n      \"serialized_value\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/variables/:name/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "variables",
+                                ":name",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "id": "1baf9754-9fc5-4aae-b839-ef7756d07f5f",
+                                  "key": "project_id",
+                                  "value": "<uuid>",
+                                  "description": "(Required) "
+                                },
+                                {
+                                  "id": "edcd3436-f7b9-4777-b5a5-1da26fab5b83",
+                                  "key": "name",
+                                  "value": "<string>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            },
+                            "description": "Update an existing variable definition, optionally with labels and versions.\n\nFields present and set to None will be cleared.\nFields not present will not be changed.\n\nRequires: User token with project:write_variables scope."
+                          },
+                          "response": [
+                            {
+                              "id": "dbe07180-32c5-4e0a-b532-6636c112d866",
+                              "name": "Successful Response",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"json_schema\": {\n    \"adipisicing_73\": -36851950,\n    \"Utf\": 77307149,\n    \"cillum_4_\": \"pariatur deserunt et\",\n    \"sint_1\": 70985668.53607452\n  },\n  \"template_inputs_schema\": {\n    \"eu_0b6\": 63497830,\n    \"sit_02\": -53049098,\n    \"proident3a\": \"esse minim culpa laborum Ut\"\n  },\n  \"type_id\": \"<uuid>\",\n  \"rollout\": {\n    \"labels\": {\n      \"nonef\": \"<number>\",\n      \"magna05d\": \"<number>\"\n    },\n    \"latest_weight\": \"<number>\"\n  },\n  \"overrides\": [\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"ex1\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"laborum_8\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ],\n  \"aliases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"example\": \"<string>\",\n  \"external\": \"<boolean>\",\n  \"labels\": {\n    \"nisid6f\": {\n      \"target_type\": \"version\",\n      \"serialized_value\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/variables/:name/",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "variables",
+                                    ":name",
+                                    ""
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"id\": \"<uuid>\",\n  \"project_id\": \"<uuid>\",\n  \"type_id\": \"<uuid>\",\n  \"type_name\": \"<string>\",\n  \"kind\": \"general\",\n  \"name\": \"<string>\",\n  \"display_name\": \"<string>\",\n  \"prompt_slug\": \"<string>\",\n  \"description\": \"<string>\",\n  \"json_schema\": {\n    \"occaecatc\": {\n      \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n    },\n    \"sed__2_\": {\n      \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n    },\n    \"adipisicing_04\": {\n      \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n    },\n    \"ut327\": {\n      \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n    }\n  },\n  \"template_inputs_schema\": {\n    \"qui_6f\": {\n      \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n    }\n  },\n  \"labels\": {\n    \"velit96\": {\n      \"id\": \"<uuid>\",\n      \"variable_definition_id\": \"<uuid>\",\n      \"label\": \"<string>\",\n      \"target_type\": \"<string>\",\n      \"target_label\": \"<string>\",\n      \"version_id\": \"<uuid>\",\n      \"version_number\": \"<integer>\",\n      \"serialized_value\": \"<string>\",\n      \"updated_at\": \"<dateTime>\",\n      \"updated_by\": \"<uuid>\",\n      \"updated_by_name\": \"<string>\"\n    },\n    \"sint_31\": {\n      \"id\": \"<uuid>\",\n      \"variable_definition_id\": \"<uuid>\",\n      \"label\": \"<string>\",\n      \"target_type\": \"<string>\",\n      \"target_label\": \"<string>\",\n      \"version_id\": \"<uuid>\",\n      \"version_number\": \"<integer>\",\n      \"serialized_value\": \"<string>\",\n      \"updated_at\": \"<dateTime>\",\n      \"updated_by\": \"<uuid>\",\n      \"updated_by_name\": \"<string>\"\n    }\n  },\n  \"latest_version\": {\n    \"id\": \"<uuid>\",\n    \"variable_definition_id\": \"<uuid>\",\n    \"version\": \"<integer>\",\n    \"serialized_value\": \"<string>\",\n    \"description\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"created_by\": \"<uuid>\",\n    \"created_by_name\": \"<string>\"\n  },\n  \"rollout\": {\n    \"labels\": {\n      \"irure_08\": \"<number>\",\n      \"idc52\": \"<number>\",\n      \"aute0\": \"<number>\"\n    },\n    \"latest_weight\": \"<number>\"\n  },\n  \"overrides\": [\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"ut6\": \"<number>\",\n          \"eu3d\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"do_b\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ],\n  \"aliases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"example\": \"<string>\",\n  \"external\": \"<boolean>\",\n  \"created_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"created_by_name\": \"<string>\",\n  \"updated_by_name\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T02:41:56.000Z",
+                              "updatedAt": "2026-07-28T02:41:56.000Z",
+                              "uid": "35240-dbe07180-32c5-4e0a-b532-6636c112d866"
+                            },
+                            {
+                              "id": "6a2acf0c-8f62-4ed3-8a27-622b16bd0667",
+                              "name": "Validation Error",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"json_schema\": {\n    \"adipisicing_73\": -36851950,\n    \"Utf\": 77307149,\n    \"cillum_4_\": \"pariatur deserunt et\",\n    \"sint_1\": 70985668.53607452\n  },\n  \"template_inputs_schema\": {\n    \"eu_0b6\": 63497830,\n    \"sit_02\": -53049098,\n    \"proident3a\": \"esse minim culpa laborum Ut\"\n  },\n  \"type_id\": \"<uuid>\",\n  \"rollout\": {\n    \"labels\": {\n      \"nonef\": \"<number>\",\n      \"magna05d\": \"<number>\"\n    },\n    \"latest_weight\": \"<number>\"\n  },\n  \"overrides\": [\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"ex1\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"laborum_8\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ],\n  \"aliases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"example\": \"<string>\",\n  \"external\": \"<boolean>\",\n  \"labels\": {\n    \"nisid6f\": {\n      \"target_type\": \"version\",\n      \"serialized_value\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/variables/:name/",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "variables",
+                                    ":name",
+                                    ""
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                              "code": 422,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T02:41:56.000Z",
+                              "updatedAt": "2026-07-28T02:41:56.000Z",
+                              "uid": "35240-6a2acf0c-8f62-4ed3-8a27-622b16bd0667"
+                            },
+                            {
+                              "id": "f47f3341-f2c3-4d89-a7e2-251e762a9282",
+                              "name": "Rate limit exceeded",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"json_schema\": {\n    \"adipisicing_73\": -36851950,\n    \"Utf\": 77307149,\n    \"cillum_4_\": \"pariatur deserunt et\",\n    \"sint_1\": 70985668.53607452\n  },\n  \"template_inputs_schema\": {\n    \"eu_0b6\": 63497830,\n    \"sit_02\": -53049098,\n    \"proident3a\": \"esse minim culpa laborum Ut\"\n  },\n  \"type_id\": \"<uuid>\",\n  \"rollout\": {\n    \"labels\": {\n      \"nonef\": \"<number>\",\n      \"magna05d\": \"<number>\"\n    },\n    \"latest_weight\": \"<number>\"\n  },\n  \"overrides\": [\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"ex1\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"laborum_8\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ],\n  \"aliases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"example\": \"<string>\",\n  \"external\": \"<boolean>\",\n  \"labels\": {\n    \"nisid6f\": {\n      \"target_type\": \"version\",\n      \"serialized_value\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/projects/:project_id/variables/:name/",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "projects",
+                                    ":project_id",
+                                    "variables",
+                                    ":name",
+                                    ""
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "project_id"
+                                    },
+                                    {
+                                      "key": "name"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Too Many Requests",
+                              "code": 429,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "Seconds to wait before retrying.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Retry-After",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"detail\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T02:41:56.000Z",
+                              "updatedAt": "2026-07-28T02:41:56.000Z",
+                              "uid": "35240-f47f3341-f2c3-4d89-a7e2-251e762a9282"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:41:56.000Z",
+                          "updatedAt": "2026-07-28T02:41:56.000Z",
+                          "uid": "35240-fcf4e899-2ae5-44b0-9842-69153110f7b4"
+                        }
+                      ],
+                      "id": "a898894e-3f3e-454f-bb96-ad01ce44c8e2",
+                      "createdAt": "2026-07-28T02:41:56.000Z",
+                      "updatedAt": "2026-07-28T02:41:56.000Z",
+                      "uid": "35240-a898894e-3f3e-454f-bb96-ad01ce44c8e2"
+                    },
+                    {
+                      "name": "Get Variables Config",
+                      "id": "0223b616-aace-4542-b568-95ec55770fe2",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/projects/:project_id/variables/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "projects",
+                            ":project_id",
+                            "variables",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "id": "93ce402b-06dc-419f-8a9e-a390d460c659",
+                              "key": "project_id",
+                              "value": "<uuid>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        },
+                        "description": "Get the full variables configuration for a project.\n\nReturns the complete configuration in a format compatible with the\nlogfire SDK's VariablesConfig, suitable for use with remote variable providers.\n\nRequires: User token with project:read_variables scope."
+                      },
+                      "response": [
+                        {
+                          "id": "8fc42ba5-8cb9-44af-81e8-2db7b6881c0b",
+                          "name": "Successful Response",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/variables/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "variables",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"variables\": {\n    \"dolore_2\": {\n      \"name\": \"<string>\",\n      \"labels\": {\n        \"incididunt9_\": {\n          \"version\": \"<integer>\",\n          \"serialized_value\": \"<string>\"\n        },\n        \"laborec\": {\n          \"version\": \"<integer>\",\n          \"serialized_value\": \"<string>\"\n        }\n      },\n      \"rollout\": {\n        \"labels\": {\n          \"minimc_0\": \"<number>\",\n          \"officiae\": \"<number>\",\n          \"ut1\": \"<number>\"\n        }\n      },\n      \"overrides\": [\n        {\n          \"conditions\": [\n            {\n              \"attribute\": \"<string>\",\n              \"value\": {\n                \"title\": \"Value\"\n              },\n              \"kind\": \"value-equals\"\n            },\n            {\n              \"attribute\": \"<string>\",\n              \"value\": {\n                \"title\": \"Value\"\n              },\n              \"kind\": \"value-equals\"\n            }\n          ],\n          \"rollout\": {\n            \"labels\": {\n              \"aliqua1_9\": \"<number>\"\n            }\n          }\n        },\n        {\n          \"conditions\": [\n            {\n              \"attribute\": \"<string>\",\n              \"value\": {\n                \"title\": \"Value\"\n              },\n              \"kind\": \"value-equals\"\n            },\n            {\n              \"attribute\": \"<string>\",\n              \"value\": {\n                \"title\": \"Value\"\n              },\n              \"kind\": \"value-equals\"\n            }\n          ],\n          \"rollout\": {\n            \"labels\": {\n              \"nisib\": \"<number>\"\n            }\n          }\n        }\n      ],\n      \"kind\": \"general\",\n      \"latest_version\": {\n        \"version\": \"<integer>\",\n        \"serialized_value\": \"<string>\"\n      },\n      \"description\": \"<string>\",\n      \"json_schema\": {\n        \"in_f\": 90328744.59996262\n      },\n      \"template_inputs_schema\": {\n        \"deserunt_7d\": 80285349,\n        \"dolore9\": 10703825\n      },\n      \"type_name\": \"<string>\",\n      \"aliases\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"example\": \"<string>\",\n      \"display_name\": \"<string>\",\n      \"prompt_slug\": \"<string>\"\n    }\n  }\n}",
+                          "createdAt": "2026-07-28T02:41:56.000Z",
+                          "updatedAt": "2026-07-28T02:41:56.000Z",
+                          "uid": "35240-8fc42ba5-8cb9-44af-81e8-2db7b6881c0b"
+                        },
+                        {
+                          "id": "0f0feb2d-ae1d-4f50-aa64-8356c1334cc5",
+                          "name": "Validation Error",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/variables/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "variables",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:41:56.000Z",
+                          "updatedAt": "2026-07-28T02:41:56.000Z",
+                          "uid": "35240-0f0feb2d-ae1d-4f50-aa64-8356c1334cc5"
+                        },
+                        {
+                          "id": "35cac983-3a44-4419-bc66-ca24c47ee5a0",
+                          "name": "Rate limit exceeded",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/variables/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "variables",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Too Many Requests",
+                          "code": 429,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            },
+                            {
+                              "disabled": false,
+                              "description": {
+                                "content": "Seconds to wait before retrying.",
+                                "type": "text/plain"
+                              },
+                              "key": "Retry-After",
+                              "value": "<string>"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:41:56.000Z",
+                          "updatedAt": "2026-07-28T02:41:56.000Z",
+                          "uid": "35240-35cac983-3a44-4419-bc66-ca24c47ee5a0"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:41:56.000Z",
+                      "updatedAt": "2026-07-28T02:41:56.000Z",
+                      "uid": "35240-0223b616-aace-4542-b568-95ec55770fe2"
+                    },
+                    {
+                      "name": "Create Variable",
+                      "id": "a6b21ffc-8456-47dd-adae-29350fcc71fa",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"json_schema\": {\n    \"labore521\": 49270077.65374327\n  },\n  \"rollout\": {\n    \"labels\": {\n      \"nulla_d3\": \"<number>\"\n    },\n    \"latest_weight\": \"<number>\"\n  },\n  \"overrides\": [\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"ipsum5\": \"<number>\",\n          \"esse_e2\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"Lorem7\": \"<number>\",\n          \"do3\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ],\n  \"template_inputs_schema\": {\n    \"Lorem1f\": \"in dolor reprehenderit\",\n    \"labore_29\": -27874554,\n    \"aute_5\": false,\n    \"do_4f\": \"tempor\"\n  },\n  \"type_id\": \"<uuid>\",\n  \"aliases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"example\": \"<string>\",\n  \"external\": \"<boolean>\",\n  \"labels\": {\n    \"aliquip07\": {\n      \"target_type\": \"version\",\n      \"serialized_value\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    \"dolorfd1\": {\n      \"target_type\": \"version\",\n      \"serialized_value\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    \"Excepteur289\": {\n      \"target_type\": \"version\",\n      \"serialized_value\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/projects/:project_id/variables/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "projects",
+                            ":project_id",
+                            "variables",
+                            ""
+                          ],
+                          "variable": [
+                            {
+                              "id": "1dc34938-2bce-4534-b15f-6a33c50358de",
+                              "key": "project_id",
+                              "value": "<uuid>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        },
+                        "description": "Create a new variable definition, optionally with labels and versions.\n\nRequires: User token with project:write_variables scope."
+                      },
+                      "response": [
+                        {
+                          "id": "cc04a027-e424-4e87-86bd-a5c27d4d9a40",
+                          "name": "Successful Response",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"json_schema\": {\n    \"labore521\": 49270077.65374327\n  },\n  \"rollout\": {\n    \"labels\": {\n      \"nulla_d3\": \"<number>\"\n    },\n    \"latest_weight\": \"<number>\"\n  },\n  \"overrides\": [\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"ipsum5\": \"<number>\",\n          \"esse_e2\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"Lorem7\": \"<number>\",\n          \"do3\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ],\n  \"template_inputs_schema\": {\n    \"Lorem1f\": \"in dolor reprehenderit\",\n    \"labore_29\": -27874554,\n    \"aute_5\": false,\n    \"do_4f\": \"tempor\"\n  },\n  \"type_id\": \"<uuid>\",\n  \"aliases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"example\": \"<string>\",\n  \"external\": \"<boolean>\",\n  \"labels\": {\n    \"aliquip07\": {\n      \"target_type\": \"version\",\n      \"serialized_value\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    \"dolorfd1\": {\n      \"target_type\": \"version\",\n      \"serialized_value\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    \"Excepteur289\": {\n      \"target_type\": \"version\",\n      \"serialized_value\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/variables/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "variables",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Created",
+                          "code": 201,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<uuid>\",\n  \"project_id\": \"<uuid>\",\n  \"type_id\": \"<uuid>\",\n  \"type_name\": \"<string>\",\n  \"kind\": \"general\",\n  \"name\": \"<string>\",\n  \"display_name\": \"<string>\",\n  \"prompt_slug\": \"<string>\",\n  \"description\": \"<string>\",\n  \"json_schema\": {\n    \"occaecatc\": {\n      \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n    },\n    \"sed__2_\": {\n      \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n    },\n    \"adipisicing_04\": {\n      \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n    },\n    \"ut327\": {\n      \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n    }\n  },\n  \"template_inputs_schema\": {\n    \"qui_6f\": {\n      \"value\": \"<Circular reference to #/components/schemas/JSONBData detected>\"\n    }\n  },\n  \"labels\": {\n    \"velit96\": {\n      \"id\": \"<uuid>\",\n      \"variable_definition_id\": \"<uuid>\",\n      \"label\": \"<string>\",\n      \"target_type\": \"<string>\",\n      \"target_label\": \"<string>\",\n      \"version_id\": \"<uuid>\",\n      \"version_number\": \"<integer>\",\n      \"serialized_value\": \"<string>\",\n      \"updated_at\": \"<dateTime>\",\n      \"updated_by\": \"<uuid>\",\n      \"updated_by_name\": \"<string>\"\n    },\n    \"sint_31\": {\n      \"id\": \"<uuid>\",\n      \"variable_definition_id\": \"<uuid>\",\n      \"label\": \"<string>\",\n      \"target_type\": \"<string>\",\n      \"target_label\": \"<string>\",\n      \"version_id\": \"<uuid>\",\n      \"version_number\": \"<integer>\",\n      \"serialized_value\": \"<string>\",\n      \"updated_at\": \"<dateTime>\",\n      \"updated_by\": \"<uuid>\",\n      \"updated_by_name\": \"<string>\"\n    }\n  },\n  \"latest_version\": {\n    \"id\": \"<uuid>\",\n    \"variable_definition_id\": \"<uuid>\",\n    \"version\": \"<integer>\",\n    \"serialized_value\": \"<string>\",\n    \"description\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"created_by\": \"<uuid>\",\n    \"created_by_name\": \"<string>\"\n  },\n  \"rollout\": {\n    \"labels\": {\n      \"irure_08\": \"<number>\",\n      \"idc52\": \"<number>\",\n      \"aute0\": \"<number>\"\n    },\n    \"latest_weight\": \"<number>\"\n  },\n  \"overrides\": [\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"ut6\": \"<number>\",\n          \"eu3d\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"do_b\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ],\n  \"aliases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"example\": \"<string>\",\n  \"external\": \"<boolean>\",\n  \"created_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"created_by_name\": \"<string>\",\n  \"updated_by_name\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:41:56.000Z",
+                          "updatedAt": "2026-07-28T02:41:56.000Z",
+                          "uid": "35240-cc04a027-e424-4e87-86bd-a5c27d4d9a40"
+                        },
+                        {
+                          "id": "7f3edc42-aff3-4427-a59a-def398d2ba54",
+                          "name": "Validation Error",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"json_schema\": {\n    \"labore521\": 49270077.65374327\n  },\n  \"rollout\": {\n    \"labels\": {\n      \"nulla_d3\": \"<number>\"\n    },\n    \"latest_weight\": \"<number>\"\n  },\n  \"overrides\": [\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"ipsum5\": \"<number>\",\n          \"esse_e2\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"Lorem7\": \"<number>\",\n          \"do3\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ],\n  \"template_inputs_schema\": {\n    \"Lorem1f\": \"in dolor reprehenderit\",\n    \"labore_29\": -27874554,\n    \"aute_5\": false,\n    \"do_4f\": \"tempor\"\n  },\n  \"type_id\": \"<uuid>\",\n  \"aliases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"example\": \"<string>\",\n  \"external\": \"<boolean>\",\n  \"labels\": {\n    \"aliquip07\": {\n      \"target_type\": \"version\",\n      \"serialized_value\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    \"dolorfd1\": {\n      \"target_type\": \"version\",\n      \"serialized_value\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    \"Excepteur289\": {\n      \"target_type\": \"version\",\n      \"serialized_value\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/variables/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "variables",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\",\n      \"input\": {\n        \"title\": \"Input\"\n      },\n      \"ctx\": {}\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:41:56.000Z",
+                          "updatedAt": "2026-07-28T02:41:56.000Z",
+                          "uid": "35240-7f3edc42-aff3-4427-a59a-def398d2ba54"
+                        },
+                        {
+                          "id": "906e0c2c-77af-479d-8f87-f1f6cbb1f088",
+                          "name": "Rate limit exceeded",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"json_schema\": {\n    \"labore521\": 49270077.65374327\n  },\n  \"rollout\": {\n    \"labels\": {\n      \"nulla_d3\": \"<number>\"\n    },\n    \"latest_weight\": \"<number>\"\n  },\n  \"overrides\": [\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"ipsum5\": \"<number>\",\n          \"esse_e2\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"conditions\": [\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        },\n        {\n          \"kind\": \"<string>\",\n          \"attribute\": \"<string>\",\n          \"value\": {\n            \"title\": \"Value\"\n          },\n          \"pattern\": \"<string>\"\n        }\n      ],\n      \"rollout\": {\n        \"labels\": {\n          \"Lorem7\": \"<number>\",\n          \"do3\": \"<number>\"\n        },\n        \"latest_weight\": \"<number>\"\n      },\n      \"name\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ],\n  \"template_inputs_schema\": {\n    \"Lorem1f\": \"in dolor reprehenderit\",\n    \"labore_29\": -27874554,\n    \"aute_5\": false,\n    \"do_4f\": \"tempor\"\n  },\n  \"type_id\": \"<uuid>\",\n  \"aliases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"example\": \"<string>\",\n  \"external\": \"<boolean>\",\n  \"labels\": {\n    \"aliquip07\": {\n      \"target_type\": \"version\",\n      \"serialized_value\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    \"dolorfd1\": {\n      \"target_type\": \"version\",\n      \"serialized_value\": \"<string>\",\n      \"version\": \"<integer>\"\n    },\n    \"Excepteur289\": {\n      \"target_type\": \"version\",\n      \"serialized_value\": \"<string>\",\n      \"version\": \"<integer>\"\n    }\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/projects/:project_id/variables/",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "projects",
+                                ":project_id",
+                                "variables",
+                                ""
+                              ],
+                              "variable": [
+                                {
+                                  "key": "project_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Too Many Requests",
+                          "code": 429,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            },
+                            {
+                              "disabled": false,
+                              "description": {
+                                "content": "Seconds to wait before retrying.",
+                                "type": "text/plain"
+                              },
+                              "key": "Retry-After",
+                              "value": "<string>"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"detail\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:41:56.000Z",
+                          "updatedAt": "2026-07-28T02:41:56.000Z",
+                          "uid": "35240-906e0c2c-77af-479d-8f87-f1f6cbb1f088"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:41:56.000Z",
+                      "updatedAt": "2026-07-28T02:41:56.000Z",
+                      "uid": "35240-a6b21ffc-8456-47dd-adae-29350fcc71fa"
+                    }
+                  ],
+                  "id": "3e56e5f6-ebff-4593-a5ab-ed2d003b8a4f",
+                  "createdAt": "2026-07-28T02:41:56.000Z",
+                  "updatedAt": "2026-07-28T02:41:56.000Z",
+                  "uid": "35240-3e56e5f6-ebff-4593-a5ab-ed2d003b8a4f"
+                }
+              ],
+              "id": "2d4bdca0-70e4-4c3c-9deb-6565de3609bf",
+              "createdAt": "2026-07-28T02:41:56.000Z",
+              "updatedAt": "2026-07-28T02:41:56.000Z",
+              "uid": "35240-2d4bdca0-70e4-4c3c-9deb-6565de3609bf"
+            }
+          ],
+          "id": "d59f07b3-c67a-49af-9724-40869575d8e0",
+          "createdAt": "2026-07-28T02:41:56.000Z",
+          "updatedAt": "2026-07-28T02:41:56.000Z",
+          "uid": "35240-d59f07b3-c67a-49af-9724-40869575d8e0"
+        }
+      ],
+      "id": "739d0883-01ed-421e-94cd-2c758b029718",
+      "createdAt": "2026-07-28T02:41:56.000Z",
+      "updatedAt": "2026-07-28T02:41:56.000Z",
+      "uid": "35240-739d0883-01ed-421e-94cd-2c758b029718"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://pydantic.dev/api/v1"
+    }
+  ]
+}
