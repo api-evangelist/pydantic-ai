@@ -1,0 +1,283 @@
+{
+  "item": [
+    {
+      "id": "590a98b9-d969-48bc-bbbf-6e7d2ba70f7a",
+      "name": "discovery",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3b669a14-06d1-4e7e-9e11-92e2159e3386",
+          "name": "List available API specifications",
+          "request": {
+            "name": "List available API specifications",
+            "description": {
+              "content": "Returns a list of region-specific OpenAPI specifications for the Pydantic Logfire API. Use the `openapi_url` of each entry to fetch the full per-region specification.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "specs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ca2e3968-3c09-4778-9e14-eba72d26fce5",
+              "name": "Available region-specific API specifications.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "specs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"specs\": [\n    {\n      \"region\": \"string\",\n      \"name\": \"string\",\n      \"openapi_url\": \"http://eYcYbxk.soxE.utCbvPLuUSugU4LGMwx7Cw1LowhGPwpBzKoqmyGkiJ-DJklC\",\n      \"base_url\": \"http://AdpNWzSbPBhDWzpLFmihYBHye.qbmjkCKiIgS6ksMiwPgBgbWLooYRZf,R6ooPoN2om\",\n      \"documentation_url\": \"http://uXJgzAyQiu.hlKm2XuwGOXOxlxBUFU4+3XafeJqv2jbRaif3yc0XlUblZ,2WRQ\"\n    },\n    {\n      \"region\": \"string\",\n      \"name\": \"string\",\n      \"openapi_url\": \"http://TkmxaTFnQpdHPWvsMaHEadNMuQH.tenvIUzQ3lcxQBCPlAib1IwZWavAEKLNTaVir,OvqgfVIh2NpPIva,KxNxPwE0k3\",\n      \"base_url\": \"http://bTEYYkUjsvbxCZaksHinaftwwVw.hiDFX,SBTKicB8M6.sDGNeReNnffQ66XS5be0TZXkDqXiX,mmrFvEGjMATpJ2z+\",\n      \"documentation_url\": \"https://SjtlwFOAysTHoLjgq.fnaWV,LnW2VAgcW8hW7XLhy8afZNftt1qz382,R\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3855b08d-5227-4919-aa2e-c559f0293ee7",
+              "name": "Bad request — the request was malformed (for example, an invalid `Idempotency-Key` header).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "specs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"string\",\n  \"status\": 277,\n  \"detail\": \"string\",\n  \"instance\": \"https://ARePicNfmKHbioQnkgdgFW.mjnwlD?\",\n  \"code\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23e68ddf-548f-4992-a2b8-a0efbaa905cd",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "specs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"string\",\n  \"status\": 277,\n  \"detail\": \"string\",\n  \"instance\": \"https://ARePicNfmKHbioQnkgdgFW.mjnwlD?\",\n  \"code\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1eb26fb1-e601-4180-a5ad-69f1585d923d",
+              "name": "Method not allowed. This API is read-only; only `GET`, `HEAD`, and `OPTIONS` are accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "specs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "RFC 9110 §10.2.1 — methods accepted on the resource.",
+                  "key": "Allow",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"string\",\n  \"status\": 277,\n  \"detail\": \"string\",\n  \"instance\": \"https://ARePicNfmKHbioQnkgdgFW.mjnwlD?\",\n  \"code\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e43f16c-c807-4258-91e2-cb984e6e8538",
+              "name": "Too many requests — the advertised rate-limit budget has been exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "specs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"string\",\n  \"status\": 277,\n  \"detail\": \"string\",\n  \"instance\": \"https://ARePicNfmKHbioQnkgdgFW.mjnwlD?\",\n  \"code\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c10b067c-e731-414e-bcc0-0bcac0967f60",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "specs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"string\",\n  \"status\": 277,\n  \"detail\": \"string\",\n  \"instance\": \"https://ARePicNfmKHbioQnkgdgFW.mjnwlD?\",\n  \"code\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://pydantic.dev/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "bfc817b5-0259-48ea-8124-3e0188cad495",
+    "name": "Pydantic API Alerts discovery API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly — it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.\n\n- **US region**: https://logfire-us.pydantic.dev/api/openapi.json\n- **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json\n\n## Versioning\n\nThis discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).\n\nResponses include an `X-API-Version` header identifying the version that served the request.\n\nRelated discovery resources:\n\n- [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) — RFC 9727 Linkset of available API descriptions.\n- [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) — JSON list of per-region OpenAPI specs.\n- [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) — RFC 9728 OAuth protected resource metadata.\n\nContact Support:\n Name: Pydantic\n Email: hello@pydantic.dev",
+      "type": "text/plain"
+    }
+  }
+}

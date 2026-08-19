@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pydantic API Discovery Alerts Variables API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Variables",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Variables Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/variables/",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the full variables configuration for a project.\n\nReturns the complete configuration in a format compatible with the\nlogfire SDK's VariablesConfig, suitable for use with remote variable providers.\n\nRequires: User token with project:read_variables scope."
+        },
+        {
+          "info": {
+            "name": "Create Variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/variables/",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new variable definition, optionally with labels and versions.\n\nRequires: User token with project:write_variables scope."
+        },
+        {
+          "info": {
+            "name": "Get Variable By Name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/variables/:name/",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a variable definition by name with current labels and latest version.\n\nRequires: User token with project:read_variables scope."
+        },
+        {
+          "info": {
+            "name": "Update Variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/variables/:name/",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing variable definition, optionally with labels and versions.\n\nFields present and set to None will be cleared.\nFields not present will not be changed.\n\nRequires: User token with project:write_variables scope."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

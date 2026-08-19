@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pydantic API Discovery Alerts API Keys API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "API Keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Organization Api Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/api-keys/"
+          },
+          "docs": "List the organization's API keys, including project-scoped keys.\n\nA non-personal (service) caller sees only service keys (`user_id IS NULL`). A\npersonal caller additionally sees its own personal keys; another user's personal\nkeys are always hidden, matching the ownership guard on update/delete."
+        },
+        {
+          "info": {
+            "name": "Create Organization Api Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://pydantic.dev/api/v1/v1/api-keys/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an API key delegated from the calling credential.\n\nThe new key can never exceed the caller's own grant: its scopes, personal/service\nkind, and project scope are all constrained to the caller. Creation is audit-logged\nby the service layer."
+        },
+        {
+          "info": {
+            "name": "Update Organization Api Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://pydantic.dev/api/v1/v1/api-keys/:api_key_id/",
+            "params": [
+              {
+                "name": "api_key_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an API key's title, description, and/or per-scope `claims`.\n\nAn empty body is rejected with 422."
+        },
+        {
+          "info": {
+            "name": "Revoke Organization Api Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://pydantic.dev/api/v1/v1/api-keys/:api_key_id/",
+            "params": [
+              {
+                "name": "api_key_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Revoke (soft-delete) an API key. The key stops authenticating immediately."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

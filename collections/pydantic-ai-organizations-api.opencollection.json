@@ -1,0 +1,124 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pydantic API Discovery Alerts Organizations API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/organizations/"
+          },
+          "docs": "List all organizations (self-hosted admin only).\n\nThis endpoint is deprecated and has moved to `/api/v1/instance/organizations/`."
+        },
+        {
+          "info": {
+            "name": "Create Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://pydantic.dev/api/v1/v1/organizations/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an organization owned by the token's user (on-prem only).\n\nThis endpoint is deprecated and has moved to `/api/v1/instance/organizations/`."
+        },
+        {
+          "info": {
+            "name": "Get Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/organizations/:organization_id/",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Read an organization by id (self-hosted admin only)."
+        },
+        {
+          "info": {
+            "name": "Update Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://pydantic.dev/api/v1/v1/organizations/:organization_id/",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an organization (self-hosted admin only)."
+        },
+        {
+          "info": {
+            "name": "Delete Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://pydantic.dev/api/v1/v1/organizations/:organization_id/",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an organization (self-hosted admin only)."
+        },
+        {
+          "info": {
+            "name": "Create Self Hosted Organization Invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://pydantic.dev/api/v1/v1/organizations/:organization_id/invitations/",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a single-use organization invitation and return its join URL (self-hosted admin only).\n\nThis endpoint is deprecated. Use `/api/v1/invitations/` with an org-context token instead."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

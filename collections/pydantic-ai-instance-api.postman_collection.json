@@ -1,0 +1,777 @@
+{
+  "item": [
+    {
+      "id": "d25b29fd-d210-4678-85df-9493a95441a1",
+      "name": "Instance",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "39585bd6-cbc4-4db5-81e8-b47deef7d588",
+          "name": "List Instance Organizations",
+          "request": {
+            "name": "List Instance Organizations",
+            "description": {
+              "content": "List all organizations across the self-hosted instance.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "instance",
+                "organizations",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "0b4996b4-6e21-4a78-b8c5-4bcef43e2194",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "instance",
+                    "organizations",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"49c79d47-c964-9adf-3cd3-7577d57b773f\",\n    \"organization_name\": \"string\",\n    \"subscription_plan\": \"enterprise_cloud\",\n    \"has_admin_panel\": false,\n    \"created_at\": \"1952-11-13T02:37:29.158Z\",\n    \"updated_at\": \"1965-04-25T18:15:28.857Z\",\n    \"billing_email\": \"string\",\n    \"organization_display_name\": \"string\",\n    \"github_handle\": \"string\",\n    \"location\": \"string\",\n    \"avatar\": \"string\",\n    \"links\": [\n      {\n        \"url\": \"string\",\n        \"icon\": \"string\",\n        \"name\": \"string\"\n      },\n      {\n        \"url\": \"string\",\n        \"icon\": \"string\",\n        \"name\": \"string\"\n      }\n    ],\n    \"description\": \"string\",\n    \"spending_cap\": 9470,\n    \"spending_cap_reached_at\": \"2008-02-21T22:18:11.479Z\",\n    \"planless_grace_period_ends_at\": \"2026-06-20T23:21:02.563Z\",\n    \"gateway_enabled\": false,\n    \"ai_enabled\": true,\n    \"ai_training_enabled\": true\n  },\n  {\n    \"id\": \"48f12da8-aa85-cd34-b1b4-8e35ec314ffd\",\n    \"organization_name\": \"string\",\n    \"subscription_plan\": \"growth\",\n    \"has_admin_panel\": false,\n    \"created_at\": \"2002-09-30T23:15:09.702Z\",\n    \"updated_at\": \"1971-07-29T19:24:10.535Z\",\n    \"billing_email\": \"string\",\n    \"organization_display_name\": \"string\",\n    \"github_handle\": \"string\",\n    \"location\": \"string\",\n    \"avatar\": \"string\",\n    \"links\": [\n      {\n        \"url\": \"string\",\n        \"icon\": \"string\",\n        \"name\": \"string\"\n      },\n      {\n        \"url\": \"string\",\n        \"icon\": \"string\",\n        \"name\": \"string\"\n      }\n    ],\n    \"description\": \"string\",\n    \"spending_cap\": 7516,\n    \"spending_cap_reached_at\": \"2002-05-09T12:05:47.408Z\",\n    \"planless_grace_period_ends_at\": \"1960-12-31T20:33:44.667Z\",\n    \"gateway_enabled\": true,\n    \"ai_enabled\": true,\n    \"ai_training_enabled\": false\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2384bc33-c4c8-431f-94ed-6e1502797919",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "instance",
+                    "organizations",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "14755955-d91c-437c-adae-9085bfb3bb8f",
+          "name": "Create Instance Organization",
+          "request": {
+            "name": "Create Instance Organization",
+            "description": {
+              "content": "Create an organization owned by the token's user across the self-hosted instance.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "instance",
+                "organizations",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organization_name\": \"<string>\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2b60606d-18c9-4d41-8109-c0f9b19736df",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "instance",
+                    "organizations",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_name\": \"<string>\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"5dbd61a1-3772-b563-3d6f-4d666174dd12\",\n  \"organization_name\": \"string\",\n  \"subscription_plan\": \"growth\",\n  \"has_admin_panel\": false,\n  \"created_at\": \"2017-02-03T18:26:15.030Z\",\n  \"updated_at\": \"1992-08-14T19:55:14.341Z\",\n  \"billing_email\": \"string\",\n  \"organization_display_name\": \"string\",\n  \"github_handle\": \"string\",\n  \"location\": \"string\",\n  \"avatar\": \"string\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"string\",\n  \"spending_cap\": 9327,\n  \"spending_cap_reached_at\": \"1994-01-26T11:00:22.536Z\",\n  \"planless_grace_period_ends_at\": \"1959-10-12T22:28:24.797Z\",\n  \"gateway_enabled\": true,\n  \"ai_enabled\": false,\n  \"ai_training_enabled\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f797e131-b7e2-44a4-826c-2248420c89b5",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "instance",
+                    "organizations",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_name\": \"<string>\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e839cc06-e48b-476e-9fb2-52585299b8d5",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "instance",
+                    "organizations",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_name\": \"<string>\",\n  \"organization_display_name\": \"<string>\",\n  \"github_handle\": \"<string>\",\n  \"location\": \"<string>\",\n  \"avatar\": \"<string>\",\n  \"links\": [\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f32c52e7-1f2b-4744-b3c9-694ee57e8a08",
+          "name": "List Instance Usage Report",
+          "request": {
+            "name": "List Instance Usage Report",
+            "description": {
+              "content": "List completed monthly usage for all organizations in a self-hosted instance.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "instance",
+                "usage-report",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "2093f964-8aa3-4476-a3ff-43293b4ee272",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "instance",
+                    "usage-report",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"date\": \"2004-05-30\",\n    \"organization_id\": \"c7da65cd-a32b-2930-728b-8975f74cc9a7\",\n    \"organization_name\": \"string\",\n    \"project_id\": \"5b3d1205-de84-47cc-9d3d-010d9e33a5cf\",\n    \"records_count\": 4980,\n    \"metrics_count\": 9831,\n    \"total_observations\": 2772\n  },\n  {\n    \"date\": \"1981-10-28\",\n    \"organization_id\": \"13ba9465-7994-1bfa-913b-0a2ab3a0b81b\",\n    \"organization_name\": \"string\",\n    \"project_id\": \"8686ed1d-7f5a-467b-fe94-b8f60edbfab9\",\n    \"records_count\": 8845,\n    \"metrics_count\": 2639,\n    \"total_observations\": 8346\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d31442a-481f-495a-9dab-bece6d4eb230",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "instance",
+                    "usage-report",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ff3109d-dd49-4eec-be02-2ae272285627",
+          "name": "Get Group Mappings",
+          "request": {
+            "name": "Get Group Mappings",
+            "description": {
+              "content": "Return the group-organization mapping currently stored in `platform_config` (self-hosted admin only).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "instance",
+                "group-mappings",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "8723af0b-9ba1-499e-9849-2e03bffe1e5b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "instance",
+                    "group-mappings",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"string\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"string\",\n          \"role\": \"string\"\n        },\n        {\n          \"organization_name\": \"string\",\n          \"role\": \"string\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"string\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"string\",\n          \"role\": \"string\"\n        },\n        {\n          \"organization_name\": \"string\",\n          \"role\": \"string\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3b8eabe-0d7e-4d5f-bf3b-c8699d2c30ac",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "instance",
+                    "group-mappings",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b0ea6c9a-caf6-4a85-af8e-e5a495787b2b",
+          "name": "Update Group Mappings",
+          "request": {
+            "name": "Update Group Mappings",
+            "description": {
+              "content": "Replace the group-organization mapping stored in `platform_config` (self-hosted admin only).\n\nEvery `organization_name` and `project_name` in the payload must correspond to an existing\nrecord in the database; otherwise a 400 is returned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "instance",
+                "group-mappings",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "15b08766-44cb-4a35-b485-3a3283a34543",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "instance",
+                    "group-mappings",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"string\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"string\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf9b97c7-541a-4138-a6d1-17b6716243bf",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "instance",
+                    "group-mappings",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e5136dae-c76d-4c96-bbe3-7f85eeac30d9",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "instance",
+                    "group-mappings",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"group_organization_mapping\": [\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"group_id\": \"<string>\",\n      \"organization_roles\": [\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        },\n        {\n          \"organization_name\": \"<string>\",\n          \"role\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://pydantic.dev/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6675f93b-8232-4ccd-9971-3767d378e30f",
+    "name": "Pydantic API Discovery Alerts Instance API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly — it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.\n\n- **US region**: https://logfire-us.pydantic.dev/api/openapi.json\n- **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json\n\n## Versioning\n\nThis discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).\n\nResponses include an `X-API-Version` header identifying the version that served the request.\n\nRelated discovery resources:\n\n- [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) — RFC 9727 Linkset of available API descriptions.\n- [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) — JSON list of per-region OpenAPI specs.\n- [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) — RFC 9728 OAuth protected resource metadata.\n\nContact Support:\n Name: Pydantic\n Email: hello@pydantic.dev",
+      "type": "text/plain"
+    }
+  }
+}

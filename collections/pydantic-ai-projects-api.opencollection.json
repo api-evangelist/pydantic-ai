@@ -1,0 +1,636 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pydantic API Discovery Alerts Projects API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/projects/"
+          },
+          "docs": "List Projects"
+        },
+        {
+          "info": {
+            "name": "Create Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://pydantic.dev/api/v1/v1/projects/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Project"
+        },
+        {
+          "info": {
+            "name": "Get Project Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Project Info"
+        },
+        {
+          "info": {
+            "name": "Update Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Project"
+        },
+        {
+          "info": {
+            "name": "Delete Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Project"
+        },
+        {
+          "info": {
+            "name": "List Dashboards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/dashboards/",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List Dashboards"
+        },
+        {
+          "info": {
+            "name": "Create Dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/dashboards/",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Dashboard"
+        },
+        {
+          "info": {
+            "name": "Get Dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/dashboards/:dashboard_id/",
+            "params": [
+              {
+                "name": "dashboard_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Dashboard"
+        },
+        {
+          "info": {
+            "name": "Update Dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/dashboards/:dashboard_id/",
+            "params": [
+              {
+                "name": "dashboard_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Dashboard"
+        },
+        {
+          "info": {
+            "name": "Delete Dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/dashboards/:dashboard_id/",
+            "params": [
+              {
+                "name": "dashboard_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Dashboard"
+        },
+        {
+          "info": {
+            "name": "List Alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/alerts/",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List all alerts for a project."
+        },
+        {
+          "info": {
+            "name": "Create Alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/alerts/",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new alert."
+        },
+        {
+          "info": {
+            "name": "Get Alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/alerts/:alert_id/",
+            "params": [
+              {
+                "name": "alert_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an alert."
+        },
+        {
+          "info": {
+            "name": "Update Alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/alerts/:alert_id/",
+            "params": [
+              {
+                "name": "alert_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an alert."
+        },
+        {
+          "info": {
+            "name": "Delete Alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/alerts/:alert_id/",
+            "params": [
+              {
+                "name": "alert_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an alert."
+        },
+        {
+          "info": {
+            "name": "List Write Tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/write-tokens/",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List write tokens for a project."
+        },
+        {
+          "info": {
+            "name": "Create Write Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/write-tokens/",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a write token for a project.\n\nThe write token allows you to add data to your project."
+        },
+        {
+          "info": {
+            "name": "Rotate Write Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/write-tokens/:token_id/rotate/",
+            "params": [
+              {
+                "name": "token_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Rotate a write token: expire the existing token and create a new one.\n\nThe old token is immediately expired (expires_at set to now) and a new token is created\nin a single atomic operation. Returns the newly created token."
+        },
+        {
+          "info": {
+            "name": "Expire Write Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/write-tokens/:token_id/expire/",
+            "params": [
+              {
+                "name": "token_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Force-expire a write token immediately by setting its expiry to now."
+        },
+        {
+          "info": {
+            "name": "Revoke Write Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/write-tokens/:token_id/",
+            "params": [
+              {
+                "name": "token_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Revoke a write token."
+        },
+        {
+          "info": {
+            "name": "List Read Tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/read-tokens/",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List Read Tokens"
+        },
+        {
+          "info": {
+            "name": "Create Read Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/read-tokens/",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Read Token"
+        },
+        {
+          "info": {
+            "name": "Rotate Read Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/read-tokens/:token_id/rotate/",
+            "params": [
+              {
+                "name": "token_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Rotate a read token: expire the existing token and create a new one.\n\nThe old token is immediately expired (expires_at set to now) and a new token is created\nin a single atomic operation. Returns the newly created token."
+        },
+        {
+          "info": {
+            "name": "Expire Read Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/read-tokens/:token_id/expire/",
+            "params": [
+              {
+                "name": "token_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Force-expire a read token immediately by setting its expiry to now."
+        },
+        {
+          "info": {
+            "name": "Revoke Read Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/read-tokens/:token_id/",
+            "params": [
+              {
+                "name": "token_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Revoke Read Token"
+        },
+        {
+          "info": {
+            "name": "Get Variables Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/variables/",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the full variables configuration for a project.\n\nReturns the complete configuration in a format compatible with the\nlogfire SDK's VariablesConfig, suitable for use with remote variable providers.\n\nRequires: User token with project:read_variables scope."
+        },
+        {
+          "info": {
+            "name": "Create Variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/variables/",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new variable definition, optionally with labels and versions.\n\nRequires: User token with project:write_variables scope."
+        },
+        {
+          "info": {
+            "name": "Get Variable By Name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/variables/:name/",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a variable definition by name with current labels and latest version.\n\nRequires: User token with project:read_variables scope."
+        },
+        {
+          "info": {
+            "name": "Update Variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://pydantic.dev/api/v1/v1/projects/:project_id/variables/:name/",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing variable definition, optionally with labels and versions.\n\nFields present and set to None will be cleared.\nFields not present will not be changed.\n\nRequires: User token with project:write_variables scope."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

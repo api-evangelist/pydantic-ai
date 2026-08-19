@@ -1,0 +1,176 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pydantic API Discovery Alerts Usage API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Usage",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Organization Daily Usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/usage/daily/",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get organization-level daily usage (up to 3 months).\n\nReturns daily usage aggregated across all projects, read from `token_usage_rollup`."
+        },
+        {
+          "info": {
+            "name": "Get Organization Monthly Usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/usage/monthly/",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get organization-level monthly usage since account opening.\n\nReturns monthly usage aggregated across all projects, read from `token_usage_monthly`."
+        },
+        {
+          "info": {
+            "name": "Get All Projects Daily Usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/usage/projects/daily/",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get daily usage for all projects in the organization (up to 90 days).\n\nReturns daily usage broken down by project. Each row is one `(date, project)` pair.\nRead from `token_usage_rollup`. Supports pagination via `limit` and `offset`."
+        },
+        {
+          "info": {
+            "name": "Get All Projects Monthly Usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/usage/projects/monthly/",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get monthly usage for all projects in the organization.\n\nReturns monthly usage broken down by project. Each row is one `(month, project)` pair.\nRead from `token_usage_monthly`."
+        },
+        {
+          "info": {
+            "name": "Get Project Daily Usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/usage/projects/:project_id/daily/",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get daily usage for a single project (up to 3 months).\n\nReturns daily usage for the specified project, read from `token_usage_rollup`."
+        },
+        {
+          "info": {
+            "name": "Get Project Monthly Usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/usage/projects/:project_id/monthly/",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get monthly usage for a single project since account opening.\n\nReturns monthly usage for the specified project, read from `token_usage_monthly`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

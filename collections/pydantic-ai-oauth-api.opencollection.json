@@ -1,0 +1,194 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pydantic API Discovery Alerts OAuth API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OAuth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Oauth Authorize Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/oauth/authorize",
+            "params": [
+              {
+                "name": "response_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "redirect_uri",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "code_challenge",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "code_challenge_method",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "resource",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "OAuth 2.0 authorization endpoint (GET).\n\nThis endpoint validates the request and redirects to the consent page where the user\ncan select a project and authorize the client.\n\nImplements RFC 6749 Section 4.1.1 (Authorization Request) and 4.1.2.1 (Error Response).\n\n**SECURITY POLICY:** PKCE (RFC 7636) with S256 is REQUIRED for all clients.\nClients must provide code_challenge and code_challenge_method=S256 parameters.\n\nRFC 8707: The `resource` parameter identifies the target resource server\nfor whic"
+        },
+        {
+          "info": {
+            "name": "Oauth Authorize Post",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://pydantic.dev/api/v1/oauth/authorize",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "OAuth 2.0 authorization endpoint (POST).\n\nThis endpoint receives the user's consent (with selected organization and project)\nand generates an authorization code.\n\nRFC 8707: The `resource` parameter identifies the target resource server.\n\nWhen called with Accept: application/json, returns the redirect URL as JSON\ninstead of a 303 redirect. This avoids CSP form-action restrictions that block\ncross-origin redirects in the OAuth flow's redirect chain."
+        },
+        {
+          "info": {
+            "name": "Oauth Grantable Scopes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/oauth/grantable-scopes",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "scopes",
+                "value": "",
+                "type": "query",
+                "description": "Space-separated list of scopes to check"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Return the subset of `scopes` the authenticated user can actually grant.\n\nUsed by the consent UI to show which scopes the current user can grant for the\ncurrently-selected org/project, so the user isn't asked to approve scopes that\nwould be silently filtered server-side during the POST /authorize step.\n\nScopes not recognized by the platform (e.g. OIDC scopes like `openid`) are\npassed through — only platform resource scopes are filtered by permissions."
+        },
+        {
+          "info": {
+            "name": "Oauth Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://pydantic.dev/api/v1/oauth/token",
+            "headers": [
+              {
+                "name": "authorization",
+                "value": ""
+              },
+              {
+                "name": "user-agent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "OAuth 2.0 token endpoint.\n\nSupports `authorization_code`, `refresh_token`,\n`urn:ietf:params:oauth:grant-type:device_code` (RFC 8628), and\n`urn:ietf:params:oauth:grant-type:token-exchange` (RFC 8693) grant types.\n\n**SECURITY POLICY:** PKCE (RFC 7636) with S256 is REQUIRED for authorization_code grant.\nClients must provide code_verifier parameter when exchanging authorization codes.\n\nRFC 8707: The `resource` parameter identifies the target resource server for which\nthe token is being requested.\n\nP"
+        },
+        {
+          "info": {
+            "name": "Device Authorization Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://pydantic.dev/api/v1/oauth/device/code",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "RFC 8628 Section 3.1 - Device Authorization Request.\n\nThe client requests a device code from the authorization server.\nThe user will then visit the verification_uri and enter the user_code\nto authorize the device.\n\nReturns device_code, user_code, verification_uri, and polling interval."
+        },
+        {
+          "info": {
+            "name": "Dynamic Client Registration (RFC 7591)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://pydantic.dev/api/v1/oauth/register",
+            "headers": [
+              {
+                "name": "user-agent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "RFC 7591 — Dynamic Client Registration.\n\nAllows MCP clients and other OAuth clients to register themselves\nwithout prior manual setup.  Creates a **public** OAuth client\n(`token_endpoint_auth_method: \"none\"`) with no organization binding.\nThe organization is determined later when the user authorizes.\n\nThis endpoint is unauthenticated per the MCP/OAuth specification.\n\nSecurity considerations (RFC 7591 Section 5):\n- DCR clients are **public** (no secret) — security relies on PKCE (S256),\n  redirec"
+        },
+        {
+          "info": {
+            "name": "Delete Dynamic Client Registration (RFC 7592)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://pydantic.dev/api/v1/oauth/register/:client_id",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "RFC 7592 — Client Configuration Endpoint (DELETE).\n\nAllows a DCR-registered client to deregister itself using the\n`registration_access_token` issued during registration.\n\nOn success, the client and all associated tokens are invalidated."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

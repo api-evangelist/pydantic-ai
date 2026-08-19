@@ -1,0 +1,913 @@
+{
+  "item": [
+    {
+      "id": "570ded83-a2cb-43c0-934b-06517de08fb9",
+      "name": "API Keys",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e74dfe4c-a5cb-4eb0-844c-d5eb8533f74e",
+          "name": "List Organization Api Keys",
+          "request": {
+            "name": "List Organization Api Keys",
+            "description": {
+              "content": "List the organization's API keys, including project-scoped keys.\n\nA non-personal (service) caller sees only service keys (`user_id IS NULL`). A\npersonal caller additionally sees its own personal keys; another user's personal\nkeys are always hidden, matching the ownership guard on update/delete.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "api-keys",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "26cefb01-65b6-41fb-b465-34db8f474191",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"943f7c92-28b5-d11a-14cd-65d0346aeb9e\",\n    \"organization_id\": \"0821c9e4-51e5-deb3-dcbd-1fc4eedf4616\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"scopes\": [\n      \"organization:create_project\",\n      \"organization:auditlog\"\n    ],\n    \"project_id\": \"91a0dfd4-8063-037c-5268-5b725f937b89\",\n    \"project_name\": \"string\",\n    \"all_projects\": false,\n    \"created_by\": \"09c915a1-cad4-7875-5fe3-047e7adb39ba\",\n    \"created_by_name\": \"string\",\n    \"created_at\": \"1974-11-30T07:37:31.328Z\",\n    \"last_used_at\": \"1979-10-08T14:24:01.061Z\",\n    \"expires_at\": \"1994-09-04T05:03:03.432Z\",\n    \"user_id\": \"310a793b-a207-935d-c973-55dfbcc60f8a\",\n    \"active\": true,\n    \"updated_at\": \"1977-06-08T22:23:39.107Z\",\n    \"updated_by\": \"fdcc8a5f-fab8-ea4e-491b-a90b4d08d532\",\n    \"claims\": {\n      \"project:gateway_proxy\": {\n        \"spending_limit_daily\": 2831,\n        \"spending_limit_weekly\": 4341,\n        \"spending_limit_monthly\": 4626,\n        \"spending_limit_total\": 59,\n        \"cache_enabled\": false\n      }\n    }\n  },\n  {\n    \"id\": \"5f4c7f26-3d62-3d69-c416-d86a3c6f61e9\",\n    \"organization_id\": \"7679ad86-2704-bd9c-db6e-03173a722dee\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"scopes\": [\n      \"organization:write_invitation\",\n      \"project:write_otlp\"\n    ],\n    \"project_id\": \"c1851be5-d8da-6f32-47a7-19b62683130c\",\n    \"project_name\": \"string\",\n    \"all_projects\": false,\n    \"created_by\": \"5b5c7844-133f-db1a-eafa-8cae5af217c9\",\n    \"created_by_name\": \"string\",\n    \"created_at\": \"2011-07-02T12:07:10.296Z\",\n    \"last_used_at\": \"1960-11-14T12:42:01.138Z\",\n    \"expires_at\": \"2014-09-06T15:27:19.410Z\",\n    \"user_id\": \"b78c71ac-0386-bccb-62cf-362ea5b56b51\",\n    \"active\": false,\n    \"updated_at\": \"2025-05-11T04:11:43.035Z\",\n    \"updated_by\": \"6c453cf9-21f2-0239-49f0-396147798005\",\n    \"claims\": {\n      \"project:gateway_proxy\": {\n        \"spending_limit_daily\": 6817,\n        \"spending_limit_weekly\": 3930,\n        \"spending_limit_monthly\": 5633,\n        \"spending_limit_total\": 138,\n        \"cache_enabled\": true\n      }\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e5e38c3-c63d-4468-a0f0-1864e0f723ad",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a834b728-5d1b-4ccd-9df1-69619d069f0a",
+          "name": "Create Organization Api Key",
+          "request": {
+            "name": "Create Organization Api Key",
+            "description": {
+              "content": "Create an API key delegated from the calling credential.\n\nThe new key can never exceed the caller's own grant: its scopes, personal/service\nkind, and project scope are all constrained to the caller. Creation is audit-logged\nby the service layer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "api-keys",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"scopes\": [\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"claims\": {\n    \"project:gateway_proxy\": {\n      \"spending_limit_daily\": \"<integer>\",\n      \"spending_limit_weekly\": \"<integer>\",\n      \"spending_limit_monthly\": \"<integer>\",\n      \"spending_limit_total\": \"<integer>\",\n      \"cache_enabled\": \"<boolean>\"\n    }\n  },\n  \"project_id\": \"<uuid>\",\n  \"expires_at\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c287db75-3860-4933-ba01-550fa2b6a719",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"scopes\": [\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"claims\": {\n    \"project:gateway_proxy\": {\n      \"spending_limit_daily\": \"<integer>\",\n      \"spending_limit_weekly\": \"<integer>\",\n      \"spending_limit_monthly\": \"<integer>\",\n      \"spending_limit_total\": \"<integer>\",\n      \"cache_enabled\": \"<boolean>\"\n    }\n  },\n  \"project_id\": \"<uuid>\",\n  \"expires_at\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"api_key\": {\n    \"id\": \"b1f28b2e-fe34-e8c0-13c4-6c11a174a2fc\",\n    \"organization_id\": \"ccd2f8e4-d819-fd4c-f8e5-2e0508d114d3\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"scopes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"project_id\": \"4cb6cdf8-c30a-fe9c-2f95-d49fd0e2286e\",\n    \"project_name\": \"string\",\n    \"all_projects\": false,\n    \"created_by\": \"5fd5d5d3-1ea1-08ef-4e22-8cccfc80fe18\",\n    \"created_by_name\": \"string\",\n    \"created_at\": \"1960-12-14T04:52:21.848Z\",\n    \"last_used_at\": \"1993-08-11T17:01:57.019Z\",\n    \"expires_at\": \"1975-05-12T14:17:39.527Z\",\n    \"user_id\": \"fbec6bdc-d289-803e-f9bd-8a211afdb6fd\",\n    \"active\": false,\n    \"updated_at\": \"2007-02-19T22:04:42.870Z\",\n    \"updated_by\": \"dcac1e0d-12e4-dca0-16e9-80052d411196\",\n    \"claims\": {\n      \"project:gateway_proxy\": {\n        \"spending_limit_daily\": 4147,\n        \"spending_limit_weekly\": 7067,\n        \"spending_limit_monthly\": 1656,\n        \"spending_limit_total\": 1727,\n        \"cache_enabled\": true\n      }\n    }\n  },\n  \"token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07146990-68d2-4cfb-81d7-d5318ce7867b",
+              "name": "Requested scopes or project scoping exceed the caller's own grant",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"scopes\": [\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"claims\": {\n    \"project:gateway_proxy\": {\n      \"spending_limit_daily\": \"<integer>\",\n      \"spending_limit_weekly\": \"<integer>\",\n      \"spending_limit_monthly\": \"<integer>\",\n      \"spending_limit_total\": \"<integer>\",\n      \"cache_enabled\": \"<boolean>\"\n    }\n  },\n  \"project_id\": \"<uuid>\",\n  \"expires_at\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0520dbf0-37db-4c81-a7b4-f0b700a918f3",
+              "name": "Project not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"scopes\": [\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"claims\": {\n    \"project:gateway_proxy\": {\n      \"spending_limit_daily\": \"<integer>\",\n      \"spending_limit_weekly\": \"<integer>\",\n      \"spending_limit_monthly\": \"<integer>\",\n      \"spending_limit_total\": \"<integer>\",\n      \"cache_enabled\": \"<boolean>\"\n    }\n  },\n  \"project_id\": \"<uuid>\",\n  \"expires_at\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "23c9e0fc-df2b-49b5-82bb-960bfc91105e",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"scopes\": [\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"claims\": {\n    \"project:gateway_proxy\": {\n      \"spending_limit_daily\": \"<integer>\",\n      \"spending_limit_weekly\": \"<integer>\",\n      \"spending_limit_monthly\": \"<integer>\",\n      \"spending_limit_total\": \"<integer>\",\n      \"cache_enabled\": \"<boolean>\"\n    }\n  },\n  \"project_id\": \"<uuid>\",\n  \"expires_at\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc96e817-3561-4342-a77e-57d063f4180e",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"scopes\": [\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"claims\": {\n    \"project:gateway_proxy\": {\n      \"spending_limit_daily\": \"<integer>\",\n      \"spending_limit_weekly\": \"<integer>\",\n      \"spending_limit_monthly\": \"<integer>\",\n      \"spending_limit_total\": \"<integer>\",\n      \"cache_enabled\": \"<boolean>\"\n    }\n  },\n  \"project_id\": \"<uuid>\",\n  \"expires_at\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1a8fa99e-81e9-419e-972d-379e42d63689",
+          "name": "Update Organization Api Key",
+          "request": {
+            "name": "Update Organization Api Key",
+            "description": {
+              "content": "Update an API key's title, description, and/or per-scope `claims`.\n\nAn empty body is rejected with 422.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "api-keys",
+                ":api_key_id",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "api_key_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"claims\": {\n    \"project:gateway_proxy\": {\n      \"spending_limit_daily\": \"<integer>\",\n      \"spending_limit_weekly\": \"<integer>\",\n      \"spending_limit_monthly\": \"<integer>\",\n      \"spending_limit_total\": \"<integer>\",\n      \"cache_enabled\": \"<boolean>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fddf9dd6-eac9-4351-a1ad-adbe0e33a88e",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys",
+                    ":api_key_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "api_key_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"claims\": {\n    \"project:gateway_proxy\": {\n      \"spending_limit_daily\": \"<integer>\",\n      \"spending_limit_weekly\": \"<integer>\",\n      \"spending_limit_monthly\": \"<integer>\",\n      \"spending_limit_total\": \"<integer>\",\n      \"cache_enabled\": \"<boolean>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"b0f8edd2-ed24-fafd-da79-36d0ee680d37\",\n  \"organization_id\": \"377c0c8d-aa31-450c-07f3-24e8f7f11b9c\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"project_id\": \"5174dcad-14b0-52b1-9dc6-5d6e6bf8c102\",\n  \"project_name\": \"string\",\n  \"all_projects\": true,\n  \"created_by\": \"b3abb76d-2df9-87d8-3957-e80530a6d444\",\n  \"created_by_name\": \"string\",\n  \"created_at\": \"1977-12-26T15:18:01.491Z\",\n  \"last_used_at\": \"1978-11-26T11:56:01.602Z\",\n  \"expires_at\": \"1977-09-09T11:18:18.510Z\",\n  \"user_id\": \"40074e7d-780c-3c56-b401-6323644df78e\",\n  \"active\": false,\n  \"updated_at\": \"1951-01-06T17:30:06.528Z\",\n  \"updated_by\": \"b7d829aa-da1d-a3b2-484c-20da6a5b88f5\",\n  \"claims\": {\n    \"project:gateway_proxy\": {\n      \"spending_limit_daily\": 5910,\n      \"spending_limit_weekly\": 9066,\n      \"spending_limit_monthly\": 764,\n      \"spending_limit_total\": 3786,\n      \"cache_enabled\": false\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "85e6c60b-5752-4db9-ad35-9de80a3774ef",
+              "name": "API key not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys",
+                    ":api_key_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "api_key_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"claims\": {\n    \"project:gateway_proxy\": {\n      \"spending_limit_daily\": \"<integer>\",\n      \"spending_limit_weekly\": \"<integer>\",\n      \"spending_limit_monthly\": \"<integer>\",\n      \"spending_limit_total\": \"<integer>\",\n      \"cache_enabled\": \"<boolean>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b7227d07-c368-450a-8b41-2462a54f7adc",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys",
+                    ":api_key_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "api_key_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"claims\": {\n    \"project:gateway_proxy\": {\n      \"spending_limit_daily\": \"<integer>\",\n      \"spending_limit_weekly\": \"<integer>\",\n      \"spending_limit_monthly\": \"<integer>\",\n      \"spending_limit_total\": \"<integer>\",\n      \"cache_enabled\": \"<boolean>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e4d5a27-019c-437e-9674-013a5dc4c67d",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys",
+                    ":api_key_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "api_key_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"claims\": {\n    \"project:gateway_proxy\": {\n      \"spending_limit_daily\": \"<integer>\",\n      \"spending_limit_weekly\": \"<integer>\",\n      \"spending_limit_monthly\": \"<integer>\",\n      \"spending_limit_total\": \"<integer>\",\n      \"cache_enabled\": \"<boolean>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "14642787-9c9f-42b6-9c0e-2ae4bf0d8f04",
+          "name": "Revoke Organization Api Key",
+          "request": {
+            "name": "Revoke Organization Api Key",
+            "description": {
+              "content": "Revoke (soft-delete) an API key. The key stops authenticating immediately.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "api-keys",
+                ":api_key_id",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "api_key_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "e3ebf033-e04e-4cbc-a7d5-a10b05ee2834",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys",
+                    ":api_key_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "api_key_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "347e75e1-7be9-46dd-af8a-05f8321c6138",
+              "name": "API key not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys",
+                    ":api_key_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "api_key_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "92e48815-738a-4151-8a01-d8ecb5eb5375",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys",
+                    ":api_key_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "api_key_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\",\n      \"input\": {},\n      \"ctx\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1bb0c1d6-34b7-4fc3-a330-4253fb009103",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys",
+                    ":api_key_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "api_key_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://pydantic.dev/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f380e56b-72cb-4c7c-a8ae-2d653f5d46c2",
+    "name": "Pydantic API Discovery Alerts API Keys API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly — it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.\n\n- **US region**: https://logfire-us.pydantic.dev/api/openapi.json\n- **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json\n\n## Versioning\n\nThis discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).\n\nResponses include an `X-API-Version` header identifying the version that served the request.\n\nRelated discovery resources:\n\n- [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) — RFC 9727 Linkset of available API descriptions.\n- [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) — JSON list of per-region OpenAPI specs.\n- [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) — RFC 9728 OAuth protected resource metadata.\n\nContact Support:\n Name: Pydantic\n Email: hello@pydantic.dev",
+      "type": "text/plain"
+    }
+  }
+}

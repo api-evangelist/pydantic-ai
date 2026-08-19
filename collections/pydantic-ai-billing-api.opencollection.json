@@ -1,0 +1,36 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pydantic API Discovery Alerts Billing API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Billing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Billing Usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/billing/usage/",
+            "params": [
+              {
+                "name": "periodOffset",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get billing usage data for the current or a previous billing period.\n\nUse periodOffset=0 for the current period, -1 for the previous, -2 for two periods ago.\n\nReturns usage totals, per-project breakdown, and cost calculations\nfor enterprise cloud organizations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

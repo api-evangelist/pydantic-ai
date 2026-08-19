@@ -1,0 +1,231 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pydantic API Discovery Alerts SCIM API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SCIM",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Users On Prem",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/scim/Users",
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Users On Prem"
+        },
+        {
+          "info": {
+            "name": "Get User On Prem",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/scim/Users/:user_email",
+            "params": [
+              {
+                "name": "user_email",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get User On Prem"
+        },
+        {
+          "info": {
+            "name": "Get Groups On Prem",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/scim/Groups",
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Groups On Prem"
+        },
+        {
+          "info": {
+            "name": "Get Group On Prem",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/scim/Groups/:group_id",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Group On Prem"
+        },
+        {
+          "info": {
+            "name": "Update Group On Prem",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://pydantic.dev/api/v1/scim/Groups/:group_id",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Group On Prem"
+        },
+        {
+          "info": {
+            "name": "Get Users Cloud",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/scim/:provider_name/Users",
+            "params": [
+              {
+                "name": "provider_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Users Cloud"
+        },
+        {
+          "info": {
+            "name": "Get User Cloud",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/scim/:provider_name/Users/:user_email",
+            "params": [
+              {
+                "name": "user_email",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "provider_name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get User Cloud"
+        },
+        {
+          "info": {
+            "name": "Get Groups Cloud",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/scim/:provider_name/Groups",
+            "params": [
+              {
+                "name": "provider_name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Groups Cloud"
+        },
+        {
+          "info": {
+            "name": "Get Group Cloud",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/scim/:provider_name/Groups/:group_id",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "provider_name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Group Cloud"
+        },
+        {
+          "info": {
+            "name": "Update Group Cloud",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://pydantic.dev/api/v1/scim/:provider_name/Groups/:group_id",
+            "params": [
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "provider_name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update Group Cloud"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

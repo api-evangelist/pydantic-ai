@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pydantic API Alerts discovery API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "discovery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List available API specifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/specs"
+          },
+          "docs": "Returns a list of region-specific OpenAPI specifications for the Pydantic Logfire API. Use the `openapi_url` of each entry to fetch the full per-region specification."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

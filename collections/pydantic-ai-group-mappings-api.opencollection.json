@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pydantic API Discovery Alerts Group Mappings API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Group Mappings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Group Mappings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/group-mappings/"
+          },
+          "docs": "Return the group-organization mapping currently stored in `platform_config` (self-hosted admin only)."
+        },
+        {
+          "info": {
+            "name": "Update Group Mappings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://pydantic.dev/api/v1/v1/group-mappings/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace the group-organization mapping stored in `platform_config` (self-hosted admin only).\n\nEvery `organization_name` and `project_name` in the payload must correspond to an existing\nrecord in the database; otherwise a 400 is returned."
+        },
+        {
+          "info": {
+            "name": "Get Group Mappings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/instance/group-mappings/"
+          },
+          "docs": "Return the group-organization mapping currently stored in `platform_config` (self-hosted admin only)."
+        },
+        {
+          "info": {
+            "name": "Update Group Mappings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://pydantic.dev/api/v1/v1/instance/group-mappings/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace the group-organization mapping stored in `platform_config` (self-hosted admin only).\n\nEvery `organization_name` and `project_name` in the payload must correspond to an existing\nrecord in the database; otherwise a 400 is returned."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pydantic API Discovery Alerts Audit Logs API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Audit Logs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Audit Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/audit-logs/",
+            "params": [
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "Start time for audit logs"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "End time for audit logs"
+              },
+              {
+                "name": "action",
+                "value": "",
+                "type": "query",
+                "description": "Filter by action type"
+              }
+            ]
+          },
+          "docs": "List audit logs for an organization.\n\nRequires an API key with the `organization:auditlog` scope.\nOnly available for organizations with an enterprise_cloud subscription or self-hosted deployments.\n\nThe time range cannot exceed 90 days."
+        },
+        {
+          "info": {
+            "name": "Get Audit Log",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://pydantic.dev/api/v1/v1/audit-logs/:audit_log_id/",
+            "params": [
+              {
+                "name": "audit_log_id",
+                "value": "",
+                "type": "path",
+                "description": "Audit log ID"
+              }
+            ]
+          },
+          "docs": "Get details for a specific audit log.\n\nRequires an API key with the `organization:auditlog` scope.\nOnly available for organizations with an enterprise_cloud subscription or self-hosted deployments."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
