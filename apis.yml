@@ -16,6 +16,19 @@ description: >
 type: Index
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
+  - Artificial Intelligence
+  - Agents
+  - Python
+  - LLM
+  - Type Safety
+  - Structured Outputs
+  - Dependency Injection
+  - OpenAI
+  - Anthropic
+  - Gemini
+  - Observability
+  - Framework
+tags_raw:
   - AI
   - Agents
   - Python
@@ -74,6 +87,8 @@ apis:
   humanURL: https://pydantic.dev/docs/ai/overview/
   baseURL: https://pydantic.dev
   tags:
+  - APIKeys
+  tags_raw:
   - API Keys
   properties:
   - type: OpenAPI
@@ -249,6 +264,8 @@ apis:
   humanURL: https://pydantic.dev/docs/ai/overview/
   baseURL: https://pydantic.dev
   tags:
+  - Discovery
+  tags_raw:
   - discovery
   properties:
   - type: OpenAPI
@@ -424,6 +441,8 @@ apis:
   humanURL: https://pydantic.dev/docs/ai/overview/
   baseURL: https://pydantic.dev
   tags:
+  - Authentication
+  tags_raw:
   - OAuth
   properties:
   - type: OpenAPI
@@ -459,6 +478,8 @@ apis:
   humanURL: https://pydantic.dev/docs/ai/overview/
   baseURL: https://pydantic.dev
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -494,6 +515,8 @@ apis:
   humanURL: https://pydantic.dev/docs/ai/overview/
   baseURL: https://pydantic.dev
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
