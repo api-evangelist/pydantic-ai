@@ -11,14 +11,13 @@
       "feed_url": "https://github.com/pydantic/pydantic-ai",
       "title": "",
       "saved": 0,
-      "method": "none",
-      "error": "parse_failed"
+      "method": "none"
     },
     {
       "source": "https://pydantic.dev/feed.xml",
       "feed_url": "https://pydantic.dev/feed.xml",
       "title": "",
-      "saved": 6,
+      "saved": 0,
       "method": "feed"
     },
     {
@@ -29,7 +28,7 @@
       "method": "discovered"
     }
   ],
-  "post_count": 44,
-  "fetched": "2026-08-15T12:11:08Z",
+  "post_count": 46,
+  "fetched": "2026-08-22T20:20:02Z",
   "agent_pulled": "2026-07-04"
 }
