@@ -1,43 +1,21 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Pydantic API Discovery Alerts API
-  version: 1.0.0
-  summary: Discovery document for Pydantic's region-partitioned APIs.
-  description: 'Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly — it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.
+  title: Pydantic Logfire Alerts API
+  summary: Public API to access Logfire resources
+  description: 'To be able to use the Logfire API, you need to either create an
 
+    [OAuth App](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/oauth-apps) or a
 
-    - **US region**: https://logfire-us.pydantic.dev/api/openapi.json
+    [Personal Access Token](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/pat).
 
-    - **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json
-
-
-    ## Versioning
-
-
-    This discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).
-
-
-    Responses include an `X-API-Version` header identifying the version that served the request.
-
-
-    Related discovery resources:
-
-
-    - [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) — RFC 9727 Linkset of available API descriptions.
-
-    - [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) — JSON list of per-region OpenAPI specs.
-
-    - [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) — RFC 9728 OAuth protected resource metadata.'
-  contact:
-    name: Pydantic
-    url: https://pydantic.dev
-    email: hello@pydantic.dev
-  license:
-    name: Pydantic Terms of Service
-    url: https://pydantic.dev/legal/terms-of-service
+    '
+  termsOfService: https://pydantic.dev/legal/terms-of-service
+  version: 0.1.0
 servers:
-- url: https://pydantic.dev/api/v1
-  description: Host Discovery — version 1
+- url: https://logfire-us.pydantic.dev/api
+  description: Pydantic Logfire API (US)
+- url: https://logfire-eu.pydantic.dev/api
+  description: Pydantic Logfire API (EU)
 tags:
 - name: Alerts
 paths:
@@ -282,6 +260,13 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    WebhookFormat:
+      type: string
+      enum:
+      - auto
+      - slack-blockkit
+      - slack-legacy
+      - raw-data
     AlertCreate:
       properties:
         name:
@@ -346,66 +331,125 @@ components:
       - watermark
       - notify_when
       title: AlertCreate
-    HTTPExceptionError:
+    HTTPValidationError:
       properties:
         detail:
-          type: string
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
           title: Detail
       type: object
+      title: HTTPValidationError
+    AlertRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+        name:
+          type: string
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        query:
+          type: string
+          title: Query
+        time_window:
+          type: string
+          format: duration
+          title: Time Window
+        frequency:
+          type: string
+          format: duration
+          title: Frequency
+        watermark:
+          type: string
+          format: duration
+          title: Watermark
+        channels:
+          items:
+            $ref: '#/components/schemas/AlertChannelRead'
+          type: array
+          title: Channels
+        notify_when:
+          type: string
+          enum:
+          - has_matches
+          - has_matches_changed
+          - matches_changed
+          - starts_having_matches
+          title: Notify When
+        active:
+          type: boolean
+          title: Active
+      type: object
       required:
-      - detail
-      title: HTTPExceptionError
-    Opsgenie:
+      - id
+      - organization_id
+      - project_id
+      - created_at
+      - updated_at
+      - created_by_name
+      - updated_by_name
+      - name
+      - description
+      - query
+      - time_window
+      - frequency
+      - watermark
+      - channels
+      - notify_when
+      - active
+      title: AlertRead
+    Webhook:
       properties:
         type:
           type: string
           enum:
-          - opsgenie
+          - webhook
           title: Type
-        auth_key:
+        format:
+          $ref: '#/components/schemas/WebhookFormat'
+        url:
           type: string
-          title: Auth Key
-        base_url:
-          type: string
-          title: Base Url
+          title: Url
       type: object
       required:
       - type
-      - auth_key
-      title: Opsgenie
-    WebhookFormat:
-      type: string
-      enum:
-      - auto
-      - slack-blockkit
-      - slack-legacy
-      - raw-data
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - format
+      - url
+      title: Webhook
     AlertWithLastRun:
       properties:
         id:
@@ -526,24 +570,102 @@ components:
       - result
       - result_length
       title: AlertWithLastRun
-    Webhook:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AlertUpdate:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        time_window:
+          type: string
+          format: duration
+          title: Time Window
+        frequency:
+          type: string
+          format: duration
+          title: Frequency
+        watermark:
+          type: string
+          format: duration
+          title: Watermark
+        active:
+          type: boolean
+          title: Active
+        query:
+          type: string
+          title: Query
+        channel_ids:
+          anyOf:
+          - items:
+              type: string
+              format: uuid
+            type: array
+          - type: 'null'
+          title: Channel Ids
+          description: Legacy shorthand for assigning channels without schedules.
+        channel_assignments:
+          items:
+            $ref: '#/components/schemas/AlertChannelAssignment'
+          type: array
+          title: Channel Assignments
+          description: Schedule-aware channel configuration. When both `channel_assignments` and `channel_ids` are provided, `channel_assignments` is used.
+        notify_when:
+          type: string
+          enum:
+          - has_matches
+          - has_matches_changed
+          - matches_changed
+          - starts_having_matches
+          title: Notify When
+      type: object
+      title: AlertUpdate
+      description: The fields that can be updated on an alert.
+    Opsgenie:
       properties:
         type:
           type: string
           enum:
-          - webhook
+          - opsgenie
           title: Type
-        format:
-          $ref: '#/components/schemas/WebhookFormat'
-        url:
+        auth_key:
           type: string
-          title: Url
+          title: Auth Key
+        base_url:
+          type: string
+          title: Base Url
       type: object
       required:
       - type
-      - format
-      - url
-      title: Webhook
+      - auth_key
+      title: Opsgenie
     AlertChannelRead:
       properties:
         id:
@@ -645,159 +767,6 @@ components:
       - type
       - recipients
       title: Notification
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    AlertUpdate:
-      properties:
-        name:
-          type: string
-          title: Name
-        description:
-          type: string
-          title: Description
-        time_window:
-          type: string
-          format: duration
-          title: Time Window
-        frequency:
-          type: string
-          format: duration
-          title: Frequency
-        watermark:
-          type: string
-          format: duration
-          title: Watermark
-        active:
-          type: boolean
-          title: Active
-        query:
-          type: string
-          title: Query
-        channel_ids:
-          anyOf:
-          - items:
-              type: string
-              format: uuid
-            type: array
-          - type: 'null'
-          title: Channel Ids
-          description: Legacy shorthand for assigning channels without schedules.
-        channel_assignments:
-          items:
-            $ref: '#/components/schemas/AlertChannelAssignment'
-          type: array
-          title: Channel Assignments
-          description: Schedule-aware channel configuration. When both `channel_assignments` and `channel_ids` are provided, `channel_assignments` is used.
-        notify_when:
-          type: string
-          enum:
-          - has_matches
-          - has_matches_changed
-          - matches_changed
-          - starts_having_matches
-          title: Notify When
-      type: object
-      title: AlertUpdate
-      description: The fields that can be updated on an alert.
-    AlertRead:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        created_by_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created By Name
-        updated_by_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated By Name
-        name:
-          type: string
-          title: Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        query:
-          type: string
-          title: Query
-        time_window:
-          type: string
-          format: duration
-          title: Time Window
-        frequency:
-          type: string
-          format: duration
-          title: Frequency
-        watermark:
-          type: string
-          format: duration
-          title: Watermark
-        channels:
-          items:
-            $ref: '#/components/schemas/AlertChannelRead'
-          type: array
-          title: Channels
-        notify_when:
-          type: string
-          enum:
-          - has_matches
-          - has_matches_changed
-          - matches_changed
-          - starts_having_matches
-          title: Notify When
-        active:
-          type: boolean
-          title: Active
-      type: object
-      required:
-      - id
-      - organization_id
-      - project_id
-      - created_at
-      - updated_at
-      - created_by_name
-      - updated_by_name
-      - name
-      - description
-      - query
-      - time_window
-      - frequency
-      - watermark
-      - channels
-      - notify_when
-      - active
-      title: AlertRead
     JSONBData:
       anyOf:
       - additionalProperties:
@@ -811,3 +780,59 @@ components:
       - type: boolean
       - type: number
       - type: 'null'
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+  securitySchemes:
+    OAuth2AuthorizationCodeBearer:
+      type: oauth2
+      flows:
+        authorizationCode:
+          refreshUrl: /api/oauth/token
+          scopes:
+            instance:admin: Platform admin access to manage the whole self-hosted instance
+            instance:billing: Read billing and usage data across the whole self-hosted instance
+            organization:admin: Platform admin access to manage organizations across the instance (self-hosted only)
+            organization:read: Read access to organizations
+            organization:write: Write access to organizations
+            organization:create_project: Ability to create projects within the organization
+            organization:read_member: Read organization members and roles
+            organization:write_member: Modify organization member roles and membership
+            organization:read_channel: Read notification channels across the organization
+            organization:write_channel: Create or modify notification channels across the organization
+            organization:create_api_key: Create new API keys for the organization
+            organization:read_api_key: Read API keys across the organization
+            organization:write_api_key: Edit or revoke existing API keys across the organization
+            organization:read_invitation: Read organization invitations
+            organization:write_invitation: Create organization invitations
+            project:read: Read access to projects
+            project:write: Write access to projects
+            project:write_token: Create write tokens
+            project:read_token: Create read tokens
+            project:read_dashboard: Read dashboards within a project
+            project:write_dashboard: Create or modify dashboards within a project
+            project:read_alert: Read alerts within a project
+            project:write_alert: Create or modify alerts within a project
+            project:read_datasets: Read datasets within a project
+            project:write_datasets: Create or modify datasets within a project
+            project:read_variables: Read managed variables and prompts within a project
+            project:write_variables: Create or modify managed variables and prompts within a project
+            project:read_external_variables: Read external managed variables within a project via OFREP
+            project:gateway_proxy: Proxy AI model requests through the project AI Gateway
+            project:read_otlp: Query trace data submitted to the project via OTLP
+            project:write_otlp: Send OTLP traces, logs, and metrics to the project
+            project:read_api_key: Read API keys within a project
+            project:write_api_key: Create, edit, or revoke API keys within a project
+            organization:scim: SCIM access to organizations
+            organization:auditlog: Read audit logs for the organization
+            organization:payment: Read billing usage data for the organization
+            organization:read_trust_policy: Read OIDC trust policies and their token exchange history
+            organization:write_trust_policy: Create, modify, or delete OIDC trust policies and revoke issued workload tokens
+          authorizationUrl: api/oauth/authorize
+          tokenUrl: /api/oauth/token

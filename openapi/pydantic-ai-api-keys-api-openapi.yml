@@ -1,43 +1,21 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Pydantic API Discovery Alerts API Keys API
-  version: 1.0.0
-  summary: Discovery document for Pydantic's region-partitioned APIs.
-  description: 'Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly — it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.
+  title: Pydantic Logfire API Keys API
+  summary: Public API to access Logfire resources
+  description: 'To be able to use the Logfire API, you need to either create an
 
+    [OAuth App](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/oauth-apps) or a
 
-    - **US region**: https://logfire-us.pydantic.dev/api/openapi.json
+    [Personal Access Token](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/pat).
 
-    - **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json
-
-
-    ## Versioning
-
-
-    This discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).
-
-
-    Responses include an `X-API-Version` header identifying the version that served the request.
-
-
-    Related discovery resources:
-
-
-    - [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) — RFC 9727 Linkset of available API descriptions.
-
-    - [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) — JSON list of per-region OpenAPI specs.
-
-    - [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) — RFC 9728 OAuth protected resource metadata.'
-  contact:
-    name: Pydantic
-    url: https://pydantic.dev
-    email: hello@pydantic.dev
-  license:
-    name: Pydantic Terms of Service
-    url: https://pydantic.dev/legal/terms-of-service
+    '
+  termsOfService: https://pydantic.dev/legal/terms-of-service
+  version: 0.1.0
 servers:
-- url: https://pydantic.dev/api/v1
-  description: Host Discovery — version 1
+- url: https://logfire-us.pydantic.dev/api
+  description: Pydantic Logfire API (US)
+- url: https://logfire-eu.pydantic.dev/api
+  description: Pydantic Logfire API (EU)
 tags:
 - name: API Keys
 paths:
@@ -223,19 +201,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    APIKeyCreateOutput:
-      properties:
-        api_key:
-          $ref: '#/components/schemas/APIKeyRead'
-        token:
-          type: string
-          title: Token
-      type: object
-      required:
-      - api_key
-      - token
-      title: APIKeyCreateOutput
-      description: The created key plus its plaintext token (returned only once, at creation).
     APIKeyRead:
       properties:
         id:
@@ -343,50 +308,41 @@ components:
       - updated_at
       - updated_by
       title: APIKeyRead
-    GatewayProxyClaims:
-      properties:
-        spending_limit_daily:
-          anyOf:
-          - type: integer
-            minimum: 0.0
-          - type: 'null'
-          title: Spending Limit Daily
-        spending_limit_weekly:
-          anyOf:
-          - type: integer
-            minimum: 0.0
-          - type: 'null'
-          title: Spending Limit Weekly
-        spending_limit_monthly:
-          anyOf:
-          - type: integer
-            minimum: 0.0
-          - type: 'null'
-          title: Spending Limit Monthly
-        spending_limit_total:
-          anyOf:
-          - type: integer
-            minimum: 0.0
-          - type: 'null'
-          title: Spending Limit Total
-        cache_enabled:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Cache Enabled
-      additionalProperties: false
-      type: object
-      title: GatewayProxyClaims
-      description: Settings carried by the `project:gateway_proxy` scope.
-    HTTPExceptionError:
+    HTTPValidationError:
       properties:
         detail:
-          type: string
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
           title: Detail
       type: object
+      title: HTTPValidationError
+    ScopeClaims:
+      properties:
+        project:gateway_proxy:
+          $ref: '#/components/schemas/GatewayProxyClaims'
+      additionalProperties: false
+      type: object
+      title: ScopeClaims
+    APIKeyCreateOutput:
+      properties:
+        api_key:
+          $ref: '#/components/schemas/APIKeyRead'
+        token:
+          type: string
+          title: Token
+      type: object
       required:
-      - detail
-      title: HTTPExceptionError
+      - api_key
+      - token
+      title: APIKeyCreateOutput
+      description: The created key plus its plaintext token (returned only once, at creation).
+    APIKeyClaims:
+      properties:
+        project:gateway_proxy:
+          $ref: '#/components/schemas/GatewayKeySettings'
+      type: object
+      title: APIKeyClaims
     ValidationError:
       properties:
         loc:
@@ -413,19 +369,67 @@ components:
       - msg
       - type
       title: ValidationError
-    APIKeyClaims:
+    HTTPExceptionError:
       properties:
-        project:gateway_proxy:
-          $ref: '#/components/schemas/GatewayKeySettings'
+        detail:
+          type: string
+          title: Detail
       type: object
-      title: APIKeyClaims
-    ScopeClaims:
+      required:
+      - detail
+      title: HTTPExceptionError
+    APIKeyUpdate:
       properties:
-        project:gateway_proxy:
-          $ref: '#/components/schemas/GatewayProxyClaims'
-      additionalProperties: false
+        name:
+          type: string
+          minLength: 1
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        claims:
+          $ref: '#/components/schemas/ScopeClaims'
       type: object
-      title: ScopeClaims
+      minProperties: 1
+      title: APIKeyUpdate
+      description: 'Partial update of an API key: display metadata and/or per-scope `claims`.'
+    GatewayKeySettings:
+      properties:
+        spending_limit_daily:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Spending Limit Daily
+        spending_limit_weekly:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Spending Limit Weekly
+        spending_limit_monthly:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Spending Limit Monthly
+        spending_limit_total:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Spending Limit Total
+        cache_enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Cache Enabled
+      type: object
+      title: GatewayKeySettings
+      description: 'AI Gateway spend caps and response caching for a `project:gateway_proxy` key.
+
+
+        All fields are optional: an omitted or `null` spending limit means no limit
+
+        for that window, and `cache_enabled=null` inherits the project default.'
     APIKeyCreate:
       properties:
         name:
@@ -515,52 +519,30 @@ components:
       - project:write_otlp
       - project:read_api_key
       - project:write_api_key
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    APIKeyUpdate:
-      properties:
-        name:
-          type: string
-          minLength: 1
-          title: Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        claims:
-          $ref: '#/components/schemas/ScopeClaims'
-      type: object
-      minProperties: 1
-      title: APIKeyUpdate
-      description: 'Partial update of an API key: display metadata and/or per-scope `claims`.'
-    GatewayKeySettings:
+    GatewayProxyClaims:
       properties:
         spending_limit_daily:
           anyOf:
           - type: integer
+            minimum: 0.0
           - type: 'null'
           title: Spending Limit Daily
         spending_limit_weekly:
           anyOf:
           - type: integer
+            minimum: 0.0
           - type: 'null'
           title: Spending Limit Weekly
         spending_limit_monthly:
           anyOf:
           - type: integer
+            minimum: 0.0
           - type: 'null'
           title: Spending Limit Monthly
         spending_limit_total:
           anyOf:
           - type: integer
+            minimum: 0.0
           - type: 'null'
           title: Spending Limit Total
         cache_enabled:
@@ -568,11 +550,54 @@ components:
           - type: boolean
           - type: 'null'
           title: Cache Enabled
+      additionalProperties: false
       type: object
-      title: GatewayKeySettings
-      description: 'AI Gateway spend caps and response caching for a `project:gateway_proxy` key.
-
-
-        All fields are optional: an omitted or `null` spending limit means no limit
-
-        for that window, and `cache_enabled=null` inherits the project default.'
+      title: GatewayProxyClaims
+      description: Settings carried by the `project:gateway_proxy` scope.
+  securitySchemes:
+    OAuth2AuthorizationCodeBearer:
+      type: oauth2
+      flows:
+        authorizationCode:
+          refreshUrl: /api/oauth/token
+          scopes:
+            instance:admin: Platform admin access to manage the whole self-hosted instance
+            instance:billing: Read billing and usage data across the whole self-hosted instance
+            organization:admin: Platform admin access to manage organizations across the instance (self-hosted only)
+            organization:read: Read access to organizations
+            organization:write: Write access to organizations
+            organization:create_project: Ability to create projects within the organization
+            organization:read_member: Read organization members and roles
+            organization:write_member: Modify organization member roles and membership
+            organization:read_channel: Read notification channels across the organization
+            organization:write_channel: Create or modify notification channels across the organization
+            organization:create_api_key: Create new API keys for the organization
+            organization:read_api_key: Read API keys across the organization
+            organization:write_api_key: Edit or revoke existing API keys across the organization
+            organization:read_invitation: Read organization invitations
+            organization:write_invitation: Create organization invitations
+            project:read: Read access to projects
+            project:write: Write access to projects
+            project:write_token: Create write tokens
+            project:read_token: Create read tokens
+            project:read_dashboard: Read dashboards within a project
+            project:write_dashboard: Create or modify dashboards within a project
+            project:read_alert: Read alerts within a project
+            project:write_alert: Create or modify alerts within a project
+            project:read_datasets: Read datasets within a project
+            project:write_datasets: Create or modify datasets within a project
+            project:read_variables: Read managed variables and prompts within a project
+            project:write_variables: Create or modify managed variables and prompts within a project
+            project:read_external_variables: Read external managed variables within a project via OFREP
+            project:gateway_proxy: Proxy AI model requests through the project AI Gateway
+            project:read_otlp: Query trace data submitted to the project via OTLP
+            project:write_otlp: Send OTLP traces, logs, and metrics to the project
+            project:read_api_key: Read API keys within a project
+            project:write_api_key: Create, edit, or revoke API keys within a project
+            organization:scim: SCIM access to organizations
+            organization:auditlog: Read audit logs for the organization
+            organization:payment: Read billing usage data for the organization
+            organization:read_trust_policy: Read OIDC trust policies and their token exchange history
+            organization:write_trust_policy: Create, modify, or delete OIDC trust policies and revoke issued workload tokens
+          authorizationUrl: api/oauth/authorize
+          tokenUrl: /api/oauth/token

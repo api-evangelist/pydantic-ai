@@ -1,43 +1,21 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Pydantic API Discovery Alerts OAuth API
-  version: 1.0.0
-  summary: Discovery document for Pydantic's region-partitioned APIs.
-  description: 'Pydantic Logfire is region-partitioned. This document does not describe the Logfire API directly — it advertises a single discovery endpoint that lists the per-region OpenAPI specifications.
+  title: Pydantic Logfire O Auth API
+  summary: Public API to access Logfire resources
+  description: 'To be able to use the Logfire API, you need to either create an
 
+    [OAuth App](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/oauth-apps) or a
 
-    - **US region**: https://logfire-us.pydantic.dev/api/openapi.json
+    [Personal Access Token](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/pat).
 
-    - **EU region**: https://logfire-eu.pydantic.dev/api/openapi.json
-
-
-    ## Versioning
-
-
-    This discovery API uses URL path versioning. The current major version is `v1` and is served from `https://pydantic.dev/api/v1/`. Unversioned requests to `https://pydantic.dev/api` and `https://pydantic.dev/api/` are permanently redirected (HTTP 308) to the current major version. Breaking changes will be released under a new major version (e.g. `/api/v2/`) and the previous version will be supported for at least 12 months after the new version ships, with the deprecation date advertised in the `Deprecation` and `Sunset` response headers (RFC 8594, RFC 9745).
-
-
-    Responses include an `X-API-Version` header identifying the version that served the request.
-
-
-    Related discovery resources:
-
-
-    - [`/.well-known/api-catalog`](https://pydantic.dev/.well-known/api-catalog) — RFC 9727 Linkset of available API descriptions.
-
-    - [`/.well-known/openapi-specs`](https://pydantic.dev/.well-known/openapi-specs) — JSON list of per-region OpenAPI specs.
-
-    - [`/.well-known/oauth-protected-resource`](https://pydantic.dev/.well-known/oauth-protected-resource) — RFC 9728 OAuth protected resource metadata.'
-  contact:
-    name: Pydantic
-    url: https://pydantic.dev
-    email: hello@pydantic.dev
-  license:
-    name: Pydantic Terms of Service
-    url: https://pydantic.dev/legal/terms-of-service
+    '
+  termsOfService: https://pydantic.dev/legal/terms-of-service
+  version: 0.1.0
 servers:
-- url: https://pydantic.dev/api/v1
-  description: Host Discovery — version 1
+- url: https://logfire-us.pydantic.dev/api
+  description: Pydantic Logfire API (US)
+- url: https://logfire-eu.pydantic.dev/api
+  description: Pydantic Logfire API (EU)
 tags:
 - name: OAuth
 paths:
@@ -488,6 +466,104 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    TokenResponse:
+      properties:
+        access_token:
+          type: string
+          title: Access Token
+        token_type:
+          type: string
+          enum:
+          - Bearer
+          title: Token Type
+        expires_in:
+          type: integer
+          title: Expires In
+        refresh_token:
+          type: string
+          title: Refresh Token
+        scope:
+          type: string
+          title: Scope
+      type: object
+      required:
+      - access_token
+      - token_type
+      - expires_in
+      - refresh_token
+      - scope
+      title: TokenResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ErrorResponse:
+      properties:
+        error:
+          type: string
+          enum:
+          - invalid_request
+          - unauthorized_client
+          - access_denied
+          - unsupported_response_type
+          - invalid_scope
+          - server_error
+          - temporarily_unavailable
+          - invalid_client
+          - invalid_grant
+          - unsupported_grant_type
+          - invalid_target
+          - authorization_pending
+          - slow_down
+          - expired_token
+          - unsupported_token_type
+          title: Error
+        error_description:
+          type: string
+          title: Error Description
+      type: object
+      required:
+      - error
+      - error_description
+      title: ErrorResponse
+    TokenExchangeResponse:
+      properties:
+        access_token:
+          type: string
+          title: Access Token
+        issued_token_type:
+          type: string
+          title: Issued Token Type
+        token_type:
+          type: string
+          title: Token Type
+        expires_in:
+          type: integer
+          title: Expires In
+        scope:
+          type: string
+          title: Scope
+      type: object
+      required:
+      - access_token
+      - issued_token_type
+      - token_type
+      - expires_in
+      - scope
+      title: TokenExchangeResponse
+      description: 'RFC 8693 §2.2 successful token-exchange response.
+
+
+        Distinct from the OAuth 2.0 token endpoint''s `TokenResponse` (RFC 6749 §5.1):
+
+        `issued_token_type` is mandatory per §2.2.1, and there''s no `refresh_token`
+
+        (workload tokens are short-lived and not re-issuable through this flow).'
     DCRResponse:
       properties:
         client_id:
@@ -554,77 +630,6 @@ components:
       - registration_access_token
       title: DCRResponse
       description: RFC 7591/7592 Client Information Response.
-    DCRErrorResponse:
-      properties:
-        error:
-          type: string
-          enum:
-          - invalid_client_metadata
-          - invalid_redirect_uri
-          title: Error
-        error_description:
-          type: string
-          title: Error Description
-      type: object
-      required:
-      - error
-      - error_description
-      title: DCRErrorResponse
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    Body_device_authorization_oauth_device_code_post:
-      properties:
-        client_id:
-          type: string
-          title: Client Id
-        scope:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Scope
-        code_challenge:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code Challenge
-        code_challenge_method:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code Challenge Method
-        resource:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Resource
-      type: object
-      required:
-      - client_id
-      title: Body_device_authorization_oauth_device_code_post
     Body_oauth_authorize_post_oauth_authorize_post:
       properties:
         client_id:
@@ -683,74 +688,6 @@ components:
       - scope
       - organization_id
       title: Body_oauth_authorize_post_oauth_authorize_post
-    ErrorResponse:
-      properties:
-        error:
-          type: string
-          enum:
-          - invalid_request
-          - unauthorized_client
-          - access_denied
-          - unsupported_response_type
-          - invalid_scope
-          - server_error
-          - temporarily_unavailable
-          - invalid_client
-          - invalid_grant
-          - unsupported_grant_type
-          - invalid_target
-          - authorization_pending
-          - slow_down
-          - expired_token
-          - unsupported_token_type
-          title: Error
-        error_description:
-          type: string
-          title: Error Description
-      type: object
-      required:
-      - error
-      - error_description
-      title: ErrorResponse
-    DeviceAuthorizationResponse:
-      properties:
-        device_code:
-          type: string
-          title: Device Code
-        user_code:
-          type: string
-          title: User Code
-        verification_uri:
-          type: string
-          title: Verification Uri
-        verification_uri_complete:
-          type: string
-          title: Verification Uri Complete
-        expires_in:
-          type: integer
-          title: Expires In
-        interval:
-          type: integer
-          title: Interval
-      type: object
-      required:
-      - device_code
-      - user_code
-      - verification_uri
-      - verification_uri_complete
-      - expires_in
-      - interval
-      title: DeviceAuthorizationResponse
-      description: RFC 8628 Section 3.2 - Device Authorization Response.
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     GrantableScopesResponse:
       properties:
         grantable_scopes:
@@ -763,6 +700,77 @@ components:
       - grantable_scopes
       title: GrantableScopesResponse
       description: Subset of `scopes` the authenticated user can grant in the given org/project.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    DCRErrorResponse:
+      properties:
+        error:
+          type: string
+          enum:
+          - invalid_client_metadata
+          - invalid_redirect_uri
+          title: Error
+        error_description:
+          type: string
+          title: Error Description
+      type: object
+      required:
+      - error
+      - error_description
+      title: DCRErrorResponse
+    Body_device_authorization_oauth_device_code_post:
+      properties:
+        client_id:
+          type: string
+          title: Client Id
+        scope:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scope
+        code_challenge:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code Challenge
+        code_challenge_method:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code Challenge Method
+        resource:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Resource
+      type: object
+      required:
+      - client_id
+      title: Body_device_authorization_oauth_device_code_post
     Body_oauth_token_oauth_token_post:
       properties:
         grant_type:
@@ -827,33 +835,6 @@ components:
       required:
       - grant_type
       title: Body_oauth_token_oauth_token_post
-    TokenResponse:
-      properties:
-        access_token:
-          type: string
-          title: Access Token
-        token_type:
-          type: string
-          enum:
-          - Bearer
-          title: Token Type
-        expires_in:
-          type: integer
-          title: Expires In
-        refresh_token:
-          type: string
-          title: Refresh Token
-        scope:
-          type: string
-          title: Scope
-      type: object
-      required:
-      - access_token
-      - token_type
-      - expires_in
-      - refresh_token
-      - scope
-      title: TokenResponse
     DCRRequest:
       properties:
         client_name:
@@ -896,36 +877,80 @@ components:
       type: object
       title: DCRRequest
       description: RFC 7591 Client Metadata for Dynamic Client Registration.
-    TokenExchangeResponse:
+    DeviceAuthorizationResponse:
       properties:
-        access_token:
+        device_code:
           type: string
-          title: Access Token
-        issued_token_type:
+          title: Device Code
+        user_code:
           type: string
-          title: Issued Token Type
-        token_type:
+          title: User Code
+        verification_uri:
           type: string
-          title: Token Type
+          title: Verification Uri
+        verification_uri_complete:
+          type: string
+          title: Verification Uri Complete
         expires_in:
           type: integer
           title: Expires In
-        scope:
-          type: string
-          title: Scope
+        interval:
+          type: integer
+          title: Interval
       type: object
       required:
-      - access_token
-      - issued_token_type
-      - token_type
+      - device_code
+      - user_code
+      - verification_uri
+      - verification_uri_complete
       - expires_in
-      - scope
-      title: TokenExchangeResponse
-      description: 'RFC 8693 §2.2 successful token-exchange response.
-
-
-        Distinct from the OAuth 2.0 token endpoint''s `TokenResponse` (RFC 6749 §5.1):
-
-        `issued_token_type` is mandatory per §2.2.1, and there''s no `refresh_token`
-
-        (workload tokens are short-lived and not re-issuable through this flow).'
+      - interval
+      title: DeviceAuthorizationResponse
+      description: RFC 8628 Section 3.2 - Device Authorization Response.
+  securitySchemes:
+    OAuth2AuthorizationCodeBearer:
+      type: oauth2
+      flows:
+        authorizationCode:
+          refreshUrl: /api/oauth/token
+          scopes:
+            instance:admin: Platform admin access to manage the whole self-hosted instance
+            instance:billing: Read billing and usage data across the whole self-hosted instance
+            organization:admin: Platform admin access to manage organizations across the instance (self-hosted only)
+            organization:read: Read access to organizations
+            organization:write: Write access to organizations
+            organization:create_project: Ability to create projects within the organization
+            organization:read_member: Read organization members and roles
+            organization:write_member: Modify organization member roles and membership
+            organization:read_channel: Read notification channels across the organization
+            organization:write_channel: Create or modify notification channels across the organization
+            organization:create_api_key: Create new API keys for the organization
+            organization:read_api_key: Read API keys across the organization
+            organization:write_api_key: Edit or revoke existing API keys across the organization
+            organization:read_invitation: Read organization invitations
+            organization:write_invitation: Create organization invitations
+            project:read: Read access to projects
+            project:write: Write access to projects
+            project:write_token: Create write tokens
+            project:read_token: Create read tokens
+            project:read_dashboard: Read dashboards within a project
+            project:write_dashboard: Create or modify dashboards within a project
+            project:read_alert: Read alerts within a project
+            project:write_alert: Create or modify alerts within a project
+            project:read_datasets: Read datasets within a project
+            project:write_datasets: Create or modify datasets within a project
+            project:read_variables: Read managed variables and prompts within a project
+            project:write_variables: Create or modify managed variables and prompts within a project
+            project:read_external_variables: Read external managed variables within a project via OFREP
+            project:gateway_proxy: Proxy AI model requests through the project AI Gateway
+            project:read_otlp: Query trace data submitted to the project via OTLP
+            project:write_otlp: Send OTLP traces, logs, and metrics to the project
+            project:read_api_key: Read API keys within a project
+            project:write_api_key: Create, edit, or revoke API keys within a project
+            organization:scim: SCIM access to organizations
+            organization:auditlog: Read audit logs for the organization
+            organization:payment: Read billing usage data for the organization
+            organization:read_trust_policy: Read OIDC trust policies and their token exchange history
+            organization:write_trust_policy: Create, modify, or delete OIDC trust policies and revoke issued workload tokens
+          authorizationUrl: api/oauth/authorize
+          tokenUrl: /api/oauth/token
