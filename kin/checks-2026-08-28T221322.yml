@@ -2,16 +2,16 @@
 kin_checks:
   slug: pydantic-ai
   schema_version: 0.15.1
-  scored_at: '2026-08-27'
-  run_ts: 2026-08-27T140727
+  scored_at: '2026-08-28'
+  run_ts: 2026-08-28T221322
   note: Actionable checks only (missed + partial). earned/na are every other check
     in rubric/scoring-0.15.1.yml; counts below let you verify that.
   counts:
     total: 130
-    earned: 52
-    partial: 10
+    earned: 53
+    partial: 13
     missed: 44
-    na: 24
+    na: 20
   checks:
   - id: well_known_published
     status: missed
@@ -23,9 +23,6 @@ kin_checks:
     status: missed
     detail: 0 of 17 openapi documents pass
   - id: openapi_3_1
-    status: missed
-    detail: 0 of 17 openapi documents pass
-  - id: security_schemes_defined
     status: missed
     detail: 0 of 17 openapi documents pass
   - id: webhooks_or_callbacks
@@ -81,6 +78,10 @@ kin_checks:
     status: missed
   - id: reg_privacy_policy
     status: missed
+  - id: os_security_policy
+    status: missed
+  - id: os_code_of_conduct
+    status: missed
   - id: reversibility_documented
     status: missed
   - id: mcp_server
@@ -97,14 +98,16 @@ kin_checks:
     status: missed
   - id: dry_run_mode
     status: missed
-  - id: delegated_identity
-    status: missed
   - id: protected_resource_metadata
     status: missed
   - id: dynamic_client_registration
     status: missed
   - id: agentic_commerce
     status: missed
+  - id: info_complete
+    status: partial
+    earned: 0.24
+    detail: 1 of 17 openapi documents pass
   - id: operations_description_coverage
     status: partial
     earned: 4.94
@@ -115,6 +118,10 @@ kin_checks:
   - id: components_reuse
     status: partial
     earned: 2.82
+    detail: 16 of 17 openapi documents pass
+  - id: security_schemes_defined
+    status: partial
+    earned: 3.77
     detail: 16 of 17 openapi documents pass
   - id: security_applied
     status: partial
@@ -136,9 +143,13 @@ kin_checks:
     detail: 'authorship: derived'
   - id: auth_clarity
     status: partial
-    earned: 3.5
-    detail: 'grade: bearer'
+    earned: 7.5
+    detail: 'grade: negotiable'
   - id: openapi_examples
     status: partial
     earned: 3.5
     detail: 'grade: partial'
+  - id: delegated_identity
+    status: partial
+    earned: 3.0
+    detail: 'grade: documented'
