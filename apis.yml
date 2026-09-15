@@ -737,6 +737,8 @@ common:
     url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/rate-limits/pydantic-ai-rate-limits.yml
   - type: FinOps
     url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/finops/pydantic-ai-finops.yml
+  - type: Support
+    url: mailto:hello@pydantic.dev
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
