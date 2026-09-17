@@ -463,43 +463,6 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
-- aid: pydantic-ai:pydantic-ai-oauth-api
-  name: PydanticAI OAuth API
-  description: The OAuth API from PydanticAI — 6 operation(s) for oauth.
-  humanURL: https://pydantic.dev/docs/ai/overview/
-  baseURL: https://pydantic.dev
-  tags:
-  - Authentication
-  tags_raw:
-  - OAuth
-  properties:
-  - type: OpenAPI
-    url: openapi/pydantic-ai-oauth-api-openapi.yml
-  - type: Documentation
-    url: https://pydantic.dev/docs/ai/overview/
-  - type: APIReference
-    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
-  - type: GettingStarted
-    url: https://pydantic.dev/docs/ai/overview/install/
-  - type: ModelProviders
-    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
-  - type: JSONLDContext
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
-  - type: Vocabulary
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
-  - type: Documentation
-    url: https://pydantic.dev/docs/logfire/
-  - type: Pricing
-    url: https://pydantic.dev/pricing
-  - type: StatusPage
-    url: https://logfirestatus.pydantic.dev/
-  - type: OpenAPISource
-    url: https://logfire-us.pydantic.dev/api/openapi.json
-  - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
 - aid: pydantic-ai:pydantic-ai-organizations-api
   name: PydanticAI Organizations API
   description: The Organizations API from PydanticAI — 3 operation(s) for organizations.
@@ -654,6 +617,41 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/pydantic-ai-variables-api-openapi.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/ai/overview/
+  - type: APIReference
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/agent/
+  - type: GettingStarted
+    url: https://pydantic.dev/docs/ai/overview/install/
+  - type: ModelProviders
+    url: https://pydantic.dev/docs/ai/api/pydantic-ai/providers/
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-ld/pydantic-ai-context.jsonld
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/vocabulary/pydantic-ai-vocabulary.yml
+  - type: Documentation
+    url: https://pydantic.dev/docs/logfire/
+  - type: Pricing
+    url: https://pydantic.dev/pricing
+  - type: StatusPage
+    url: https://logfirestatus.pydantic.dev/
+  - type: OpenAPISource
+    url: https://logfire-us.pydantic.dev/api/openapi.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
+- aid: pydantic-ai:pydantic-ai-oauth-api
+  name: PydanticAI O Auth API
+  description: The OAuth API from PydanticAI — 6 operation(s) for oauth.
+  humanURL: https://pydantic.dev/docs/ai/overview/
+  baseURL: https://pydantic.dev
+  tags:
+  - OAuth
+  properties:
+  - type: OpenAPI
+    url: openapi/pydantic-ai-oauth-api-openapi.yml
   - type: Documentation
     url: https://pydantic.dev/docs/ai/overview/
   - type: APIReference
