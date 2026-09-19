@@ -648,6 +648,8 @@ apis:
   humanURL: https://pydantic.dev/docs/ai/overview/
   baseURL: https://pydantic.dev
   tags:
+  - Authentication
+  tags_raw:
   - OAuth
   properties:
   - type: OpenAPI
