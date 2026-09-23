@@ -4,11 +4,9 @@ info:
   summary: Public API to access Logfire resources
   description: 'To be able to use the Logfire API, you need to either create an
 
-    [OAuth App](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/oauth-apps) or a
+    OAuth App or a
 
-    [Personal Access Token](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/pat).
-
-    '
+    Personal Access Token.'
   termsOfService: https://pydantic.dev/legal/terms-of-service
   version: 0.1.0
 servers:
@@ -194,19 +192,6 @@ paths:
         - instance:admin
 components:
   schemas:
-    ProjectRoleDefinition:
-      properties:
-        project_name:
-          type: string
-          title: Project Name
-        role:
-          type: string
-          title: Role
-      type: object
-      required:
-      - project_name
-      - role
-      title: ProjectRoleDefinition
     OrganizationLink:
       properties:
         url:
@@ -224,15 +209,6 @@ components:
       - icon
       - name
       title: OrganizationLink
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     GroupOrganizationMapping-Input:
       properties:
         group_id:
@@ -248,69 +224,32 @@ components:
       - group_id
       - organization_roles
       title: GroupOrganizationMapping
-    OrganizationRoleDefinition:
+    ValidationError:
       properties:
-        organization_name:
-          type: string
-          title: Organization Name
-        role:
-          type: string
-          title: Role
-        project_roles:
+        loc:
           items:
-            $ref: '#/components/schemas/ProjectRoleDefinition'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Project Roles
-          default: []
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
       required:
-      - organization_name
-      - role
-      title: OrganizationRoleDefinition
-    InstanceUsageReportRowV1:
-      properties:
-        date:
-          type: string
-          format: date
-          title: Date
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-        organization_name:
-          type: string
-          title: Organization Name
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-        records_count:
-          type: integer
-          title: Records Count
-        metrics_count:
-          type: integer
-          title: Metrics Count
-        total_observations:
-          type: integer
-          title: Total Observations
-      type: object
-      required:
-      - date
-      - organization_id
-      - organization_name
-      - project_id
-      - records_count
-      - metrics_count
-      - total_observations
-      title: InstanceUsageReportRowV1
-    SubscriptionPlanId:
-      type: string
-      enum:
-      - personal
-      - team
-      - growth
-      - enterprise_cloud
-      - non_stripe
+      - loc
+      - msg
+      - type
+      title: ValidationError
     OrganizationCreate:
       properties:
         organization_name:
@@ -343,54 +282,19 @@ components:
       required:
       - organization_name
       title: OrganizationCreate
-    GroupOrganizationMappingRead:
+    ProjectRoleDefinition:
       properties:
-        group_organization_mapping:
-          items:
-            $ref: '#/components/schemas/GroupOrganizationMapping-Output'
-          type: array
-          title: Group Organization Mapping
-      type: object
-      required:
-      - group_organization_mapping
-      title: GroupOrganizationMappingRead
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        project_name:
           type: string
-          title: Message
-        type:
+          title: Project Name
+        role:
           type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+          title: Role
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    GroupOrganizationMappingUpdate:
-      properties:
-        group_organization_mapping:
-          items:
-            $ref: '#/components/schemas/GroupOrganizationMapping-Input'
-          type: array
-          title: Group Organization Mapping
-      type: object
-      required:
-      - group_organization_mapping
-      title: GroupOrganizationMappingUpdate
+      - project_name
+      - role
+      title: ProjectRoleDefinition
     GroupOrganizationMapping-Output:
       properties:
         group_id:
@@ -406,6 +310,73 @@ components:
       - group_id
       - organization_roles
       title: GroupOrganizationMapping
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    SubscriptionPlanId:
+      type: string
+      enum:
+      - personal
+      - team
+      - growth
+      - enterprise_cloud
+      - non_stripe
+    OrganizationRoleDefinition:
+      properties:
+        organization_name:
+          type: string
+          title: Organization Name
+        role:
+          type: string
+          title: Role
+        project_roles:
+          items:
+            $ref: '#/components/schemas/ProjectRoleDefinition'
+          type: array
+          title: Project Roles
+          default: []
+      type: object
+      required:
+      - organization_name
+      - role
+      title: OrganizationRoleDefinition
+    GroupOrganizationMappingRead:
+      properties:
+        group_organization_mapping:
+          items:
+            $ref: '#/components/schemas/GroupOrganizationMapping-Output'
+          type: array
+          title: Group Organization Mapping
+      type: object
+      required:
+      - group_organization_mapping
+      title: GroupOrganizationMappingRead
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    GroupOrganizationMappingUpdate:
+      properties:
+        group_organization_mapping:
+          items:
+            $ref: '#/components/schemas/GroupOrganizationMapping-Input'
+          type: array
+          title: Group Organization Mapping
+      type: object
+      required:
+      - group_organization_mapping
+      title: GroupOrganizationMappingUpdate
     OrganizationReadV1:
       properties:
         id:
@@ -515,15 +486,42 @@ components:
       - ai_enabled
       - ai_training_enabled
       title: OrganizationReadV1
-    HTTPExceptionError:
+    InstanceUsageReportRowV1:
       properties:
-        detail:
+        date:
           type: string
-          title: Detail
+          format: date
+          title: Date
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        organization_name:
+          type: string
+          title: Organization Name
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        records_count:
+          type: integer
+          title: Records Count
+        metrics_count:
+          type: integer
+          title: Metrics Count
+        total_observations:
+          type: integer
+          title: Total Observations
       type: object
       required:
-      - detail
-      title: HTTPExceptionError
+      - date
+      - organization_id
+      - organization_name
+      - project_id
+      - records_count
+      - metrics_count
+      - total_observations
+      title: InstanceUsageReportRowV1
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

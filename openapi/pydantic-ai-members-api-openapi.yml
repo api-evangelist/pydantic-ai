@@ -4,11 +4,9 @@ info:
   summary: Public API to access Logfire resources
   description: 'To be able to use the Logfire API, you need to either create an
 
-    [OAuth App](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/oauth-apps) or a
+    OAuth App or a
 
-    [Personal Access Token](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/pat).
-
-    '
+    Personal Access Token.'
   termsOfService: https://pydantic.dev/legal/terms-of-service
   version: 0.1.0
 servers:
@@ -133,29 +131,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    OrganizationMemberUpdateV1:
-      properties:
-        role:
-          type: string
-          enum:
-          - admin
-          - member
-          - guest
-          - billing
-          title: Role
-      type: object
-      required:
-      - role
-      title: OrganizationMemberUpdateV1
     ValidationError:
       properties:
         loc:
@@ -182,6 +157,24 @@ components:
       - msg
       - type
       title: ValidationError
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     OrganizationMemberReadV1:
       properties:
         id:
@@ -226,15 +219,20 @@ components:
       - avatar
       - role
       title: OrganizationMemberReadV1
-    HTTPExceptionError:
+    OrganizationMemberUpdateV1:
       properties:
-        detail:
+        role:
           type: string
-          title: Detail
+          enum:
+          - admin
+          - member
+          - guest
+          - billing
+          title: Role
       type: object
       required:
-      - detail
-      title: HTTPExceptionError
+      - role
+      title: OrganizationMemberUpdateV1
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

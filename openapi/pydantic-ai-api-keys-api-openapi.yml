@@ -4,11 +4,9 @@ info:
   summary: Public API to access Logfire resources
   description: 'To be able to use the Logfire API, you need to either create an
 
-    [OAuth App](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/oauth-apps) or a
+    OAuth App or a
 
-    [Personal Access Token](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/pat).
-
-    '
+    Personal Access Token.'
   termsOfService: https://pydantic.dev/legal/terms-of-service
   version: 0.1.0
 servers:
@@ -201,148 +199,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    APIKeyRead:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-        name:
-          type: string
-          title: Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        scopes:
-          items:
-            $ref: '#/components/schemas/OAuthScopeId'
-          type: array
-          title: Scopes
-        project_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Project Id
-        project_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Project Name
-        all_projects:
-          type: boolean
-          title: All Projects
-        created_by:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Created By
-        created_by_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created By Name
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        last_used_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Last Used At
-        expires_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Expires At
-        user_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: User Id
-        active:
-          type: boolean
-          title: Active
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        updated_by:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Updated By
-        claims:
-          $ref: '#/components/schemas/APIKeyClaims'
-      type: object
-      required:
-      - id
-      - organization_id
-      - name
-      - description
-      - scopes
-      - project_id
-      - project_name
-      - all_projects
-      - created_by
-      - created_by_name
-      - created_at
-      - last_used_at
-      - expires_at
-      - user_id
-      - active
-      - updated_at
-      - updated_by
-      title: APIKeyRead
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ScopeClaims:
-      properties:
-        project:gateway_proxy:
-          $ref: '#/components/schemas/GatewayProxyClaims'
-      additionalProperties: false
-      type: object
-      title: ScopeClaims
-    APIKeyCreateOutput:
-      properties:
-        api_key:
-          $ref: '#/components/schemas/APIKeyRead'
-        token:
-          type: string
-          title: Token
-      type: object
-      required:
-      - api_key
-      - token
-      title: APIKeyCreateOutput
-      description: The created key plus its plaintext token (returned only once, at creation).
-    APIKeyClaims:
-      properties:
-        project:gateway_proxy:
-          $ref: '#/components/schemas/GatewayKeySettings'
-      type: object
-      title: APIKeyClaims
     ValidationError:
       properties:
         loc:
@@ -369,15 +225,12 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPExceptionError:
+    APIKeyClaims:
       properties:
-        detail:
-          type: string
-          title: Detail
+        project:gateway_proxy:
+          $ref: '#/components/schemas/GatewayKeySettings'
       type: object
-      required:
-      - detail
-      title: HTTPExceptionError
+      title: APIKeyClaims
     APIKeyUpdate:
       properties:
         name:
@@ -395,6 +248,28 @@ components:
       minProperties: 1
       title: APIKeyUpdate
       description: 'Partial update of an API key: display metadata and/or per-scope `claims`.'
+    APIKeyCreateOutput:
+      properties:
+        api_key:
+          $ref: '#/components/schemas/APIKeyRead'
+        token:
+          type: string
+          title: Token
+      type: object
+      required:
+      - api_key
+      - token
+      title: APIKeyCreateOutput
+      description: The created key plus its plaintext token (returned only once, at creation).
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
     GatewayKeySettings:
       properties:
         spending_limit_daily:
@@ -430,6 +305,15 @@ components:
         All fields are optional: an omitted or `null` spending limit means no limit
 
         for that window, and `cache_enabled=null` inherits the project default.'
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     APIKeyCreate:
       properties:
         name:
@@ -554,6 +438,120 @@ components:
       type: object
       title: GatewayProxyClaims
       description: Settings carried by the `project:gateway_proxy` scope.
+    ScopeClaims:
+      properties:
+        project:gateway_proxy:
+          $ref: '#/components/schemas/GatewayProxyClaims'
+      additionalProperties: false
+      type: object
+      title: ScopeClaims
+    APIKeyRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        name:
+          type: string
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        scopes:
+          items:
+            $ref: '#/components/schemas/OAuthScopeId'
+          type: array
+          title: Scopes
+        project_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Project Id
+        project_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Project Name
+        all_projects:
+          type: boolean
+          title: All Projects
+        created_by:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Created By
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        last_used_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Last Used At
+        expires_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Expires At
+        user_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: User Id
+        active:
+          type: boolean
+          title: Active
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        updated_by:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Updated By
+        claims:
+          $ref: '#/components/schemas/APIKeyClaims'
+      type: object
+      required:
+      - id
+      - organization_id
+      - name
+      - description
+      - scopes
+      - project_id
+      - project_name
+      - all_projects
+      - created_by
+      - created_by_name
+      - created_at
+      - last_used_at
+      - expires_at
+      - user_id
+      - active
+      - updated_at
+      - updated_by
+      title: APIKeyRead
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

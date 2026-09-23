@@ -4,11 +4,9 @@ info:
   summary: Public API to access Logfire resources
   description: 'To be able to use the Logfire API, you need to either create an
 
-    [OAuth App](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/oauth-apps) or a
+    OAuth App or a
 
-    [Personal Access Token](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/pat).
-
-    '
+    Personal Access Token.'
   termsOfService: https://pydantic.dev/legal/terms-of-service
   version: 0.1.0
 servers:
@@ -165,73 +163,6 @@ paths:
         - instance:admin
 components:
   schemas:
-    ProjectRoleDefinition:
-      properties:
-        project_name:
-          type: string
-          title: Project Name
-        role:
-          type: string
-          title: Role
-      type: object
-      required:
-      - project_name
-      - role
-      title: ProjectRoleDefinition
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    OrganizationRoleDefinition:
-      properties:
-        organization_name:
-          type: string
-          title: Organization Name
-        role:
-          type: string
-          title: Role
-        project_roles:
-          items:
-            $ref: '#/components/schemas/ProjectRoleDefinition'
-          type: array
-          title: Project Roles
-          default: []
-      type: object
-      required:
-      - organization_name
-      - role
-      title: OrganizationRoleDefinition
-    GroupOrganizationMapping-Input:
-      properties:
-        group_id:
-          type: string
-          title: Group Id
-        organization_roles:
-          items:
-            $ref: '#/components/schemas/OrganizationRoleDefinition'
-          type: array
-          title: Organization Roles
-      type: object
-      required:
-      - group_id
-      - organization_roles
-      title: GroupOrganizationMapping
-    GroupOrganizationMappingRead:
-      properties:
-        group_organization_mapping:
-          items:
-            $ref: '#/components/schemas/GroupOrganizationMapping-Output'
-          type: array
-          title: Group Organization Mapping
-      type: object
-      required:
-      - group_organization_mapping
-      title: GroupOrganizationMappingRead
     ValidationError:
       properties:
         loc:
@@ -258,17 +189,34 @@ components:
       - msg
       - type
       title: ValidationError
-    GroupOrganizationMappingUpdate:
+    GroupOrganizationMapping-Input:
       properties:
-        group_organization_mapping:
+        group_id:
+          type: string
+          title: Group Id
+        organization_roles:
           items:
-            $ref: '#/components/schemas/GroupOrganizationMapping-Input'
+            $ref: '#/components/schemas/OrganizationRoleDefinition'
           type: array
-          title: Group Organization Mapping
+          title: Organization Roles
       type: object
       required:
-      - group_organization_mapping
-      title: GroupOrganizationMappingUpdate
+      - group_id
+      - organization_roles
+      title: GroupOrganizationMapping
+    ProjectRoleDefinition:
+      properties:
+        project_name:
+          type: string
+          title: Project Name
+        role:
+          type: string
+          title: Role
+      type: object
+      required:
+      - project_name
+      - role
+      title: ProjectRoleDefinition
     GroupOrganizationMapping-Output:
       properties:
         group_id:
@@ -293,6 +241,56 @@ components:
       required:
       - detail
       title: HTTPExceptionError
+    OrganizationRoleDefinition:
+      properties:
+        organization_name:
+          type: string
+          title: Organization Name
+        role:
+          type: string
+          title: Role
+        project_roles:
+          items:
+            $ref: '#/components/schemas/ProjectRoleDefinition'
+          type: array
+          title: Project Roles
+          default: []
+      type: object
+      required:
+      - organization_name
+      - role
+      title: OrganizationRoleDefinition
+    GroupOrganizationMappingRead:
+      properties:
+        group_organization_mapping:
+          items:
+            $ref: '#/components/schemas/GroupOrganizationMapping-Output'
+          type: array
+          title: Group Organization Mapping
+      type: object
+      required:
+      - group_organization_mapping
+      title: GroupOrganizationMappingRead
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    GroupOrganizationMappingUpdate:
+      properties:
+        group_organization_mapping:
+          items:
+            $ref: '#/components/schemas/GroupOrganizationMapping-Input'
+          type: array
+          title: Group Organization Mapping
+      type: object
+      required:
+      - group_organization_mapping
+      title: GroupOrganizationMappingUpdate
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

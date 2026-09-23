@@ -4,11 +4,9 @@ info:
   summary: Public API to access Logfire resources
   description: 'To be able to use the Logfire API, you need to either create an
 
-    [OAuth App](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/oauth-apps) or a
+    OAuth App or a
 
-    [Personal Access Token](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/pat).
-
-    '
+    Personal Access Token.'
   termsOfService: https://pydantic.dev/legal/terms-of-service
   version: 0.1.0
 servers:
@@ -351,15 +349,94 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    HTTPValidationError:
+    ValidationError:
       properties:
-        detail:
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Detail
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
-      title: HTTPValidationError
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    GroupUpdateOperationValue:
+      properties:
+        value:
+          type: string
+          title: Value
+        display:
+          type: string
+          title: Display
+      type: object
+      required:
+      - value
+      title: GroupUpdateOperationValue
+    ListResponse:
+      properties:
+        schemas:
+          items:
+            type: string
+          type: array
+          title: Schemas
+        totalResults:
+          type: integer
+          title: Totalresults
+        Resources:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/UserResourceRead'
+            type: array
+          - items:
+              $ref: '#/components/schemas/GroupResourceRead'
+            type: array
+          title: Resources
+        startIndex:
+          type: integer
+          title: Startindex
+        itemsPerPage:
+          type: integer
+          title: Itemsperpage
+      type: object
+      required:
+      - schemas
+      - totalResults
+      - Resources
+      - startIndex
+      - itemsPerPage
+      title: ListResponse
+    GroupUpdate:
+      properties:
+        schemas:
+          items:
+            type: string
+          type: array
+          title: Schemas
+        Operations:
+          items:
+            $ref: '#/components/schemas/GroupUpdateOperation'
+          type: array
+          title: Operations
+      type: object
+      required:
+      - schemas
+      - Operations
+      title: GroupUpdate
     UserResourceRead:
       properties:
         schemas:
@@ -395,51 +472,15 @@ components:
       - active
       - emails
       title: UserResourceRead
-    ListResponse:
+    HTTPValidationError:
       properties:
-        schemas:
+        detail:
           items:
-            type: string
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Schemas
-        totalResults:
-          type: integer
-          title: Totalresults
-        Resources:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/UserResourceRead'
-            type: array
-          - items:
-              $ref: '#/components/schemas/GroupResourceRead'
-            type: array
-          title: Resources
-        startIndex:
-          type: integer
-          title: Startindex
-        itemsPerPage:
-          type: integer
-          title: Itemsperpage
+          title: Detail
       type: object
-      required:
-      - schemas
-      - totalResults
-      - Resources
-      - startIndex
-      - itemsPerPage
-      title: ListResponse
-    GroupUpdateOperationValue:
-      properties:
-        value:
-          type: string
-          title: Value
-        display:
-          type: string
-          title: Display
-      type: object
-      required:
-      - value
-      title: GroupUpdateOperationValue
+      title: HTTPValidationError
     GroupUpdateOperation:
       properties:
         op:
@@ -461,6 +502,32 @@ components:
       - path
       - value
       title: GroupUpdateOperation
+    UserReasourceNameRead:
+      properties:
+        givenName:
+          type: string
+          title: Givenname
+      type: object
+      required:
+      - givenName
+      title: UserReasourceNameRead
+    UserResourceEmailRead:
+      properties:
+        value:
+          type: string
+          title: Value
+        type:
+          type: string
+          title: Type
+        primary:
+          type: boolean
+          title: Primary
+      type: object
+      required:
+      - value
+      - type
+      - primary
+      title: UserResourceEmailRead
     ResourceMetaRead:
       properties:
         resourceType:
@@ -492,75 +559,6 @@ components:
       - meta
       - displayName
       title: GroupResourceRead
-    UserResourceEmailRead:
-      properties:
-        value:
-          type: string
-          title: Value
-        type:
-          type: string
-          title: Type
-        primary:
-          type: boolean
-          title: Primary
-      type: object
-      required:
-      - value
-      - type
-      - primary
-      title: UserResourceEmailRead
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    UserReasourceNameRead:
-      properties:
-        givenName:
-          type: string
-          title: Givenname
-      type: object
-      required:
-      - givenName
-      title: UserReasourceNameRead
-    GroupUpdate:
-      properties:
-        schemas:
-          items:
-            type: string
-          type: array
-          title: Schemas
-        Operations:
-          items:
-            $ref: '#/components/schemas/GroupUpdateOperation'
-          type: array
-          title: Operations
-      type: object
-      required:
-      - schemas
-      - Operations
-      title: GroupUpdate
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

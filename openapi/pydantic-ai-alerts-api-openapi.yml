@@ -4,11 +4,9 @@ info:
   summary: Public API to access Logfire resources
   description: 'To be able to use the Logfire API, you need to either create an
 
-    [OAuth App](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/oauth-apps) or a
+    OAuth App or a
 
-    [Personal Access Token](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/pat).
-
-    '
+    Personal Access Token.'
   termsOfService: https://pydantic.dev/legal/terms-of-service
   version: 0.1.0
 servers:
@@ -260,6 +258,79 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    Opsgenie:
+      properties:
+        type:
+          type: string
+          enum:
+          - opsgenie
+          title: Type
+        auth_key:
+          type: string
+          title: Auth Key
+        base_url:
+          type: string
+          title: Base Url
+      type: object
+      required:
+      - type
+      - auth_key
+      title: Opsgenie
+    AlertChannelAssignment:
+      properties:
+        channel_id:
+          type: string
+          format: uuid
+          title: Channel Id
+        schedule_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Schedule Id
+      type: object
+      required:
+      - channel_id
+      title: AlertChannelAssignment
+    JSONBData:
+      anyOf:
+      - additionalProperties:
+          $ref: '#/components/schemas/JSONBData'
+        type: object
+      - items:
+          $ref: '#/components/schemas/JSONBData'
+        type: array
+      - type: string
+      - type: integer
+      - type: boolean
+      - type: number
+      - type: 'null'
     WebhookFormat:
       type: string
       enum:
@@ -267,79 +338,6 @@ components:
       - slack-blockkit
       - slack-legacy
       - raw-data
-    AlertCreate:
-      properties:
-        name:
-          type: string
-          title: Name
-        description:
-          type: string
-          title: Description
-        query:
-          title: Query
-          examples:
-          - SELECT 1
-        time_window:
-          type: string
-          format: duration
-          title: Time Window
-        frequency:
-          type: string
-          format: duration
-          title: Frequency
-        watermark:
-          type: string
-          format: duration
-          title: Watermark
-        active:
-          type: boolean
-          title: Active
-          description: Whether the alert starts enabled.
-          default: true
-        channel_ids:
-          anyOf:
-          - items:
-              type: string
-              format: uuid
-            type: array
-          - type: 'null'
-          title: Channel Ids
-          description: Legacy shorthand for assigning channels without schedules.
-        channel_assignments:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/AlertChannelAssignment'
-            type: array
-          - type: 'null'
-          title: Channel Assignments
-          description: Schedule-aware channel configuration. When both `channel_assignments` and `channel_ids` are provided, `channel_assignments` is used.
-        notify_when:
-          type: string
-          enum:
-          - has_matches
-          - has_matches_changed
-          - matches_changed
-          - starts_having_matches
-          title: Notify When
-      type: object
-      required:
-      - name
-      - description
-      - query
-      - time_window
-      - frequency
-      - watermark
-      - notify_when
-      title: AlertCreate
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     AlertRead:
       properties:
         id:
@@ -432,24 +430,24 @@ components:
       - notify_when
       - active
       title: AlertRead
-    Webhook:
+    HTTPExceptionError:
       properties:
-        type:
+        detail:
           type: string
-          enum:
-          - webhook
-          title: Type
-        format:
-          $ref: '#/components/schemas/WebhookFormat'
-        url:
-          type: string
-          title: Url
+          title: Detail
       type: object
       required:
-      - type
-      - format
-      - url
-      title: Webhook
+      - detail
+      title: HTTPExceptionError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     AlertWithLastRun:
       properties:
         id:
@@ -570,33 +568,7 @@ components:
       - result
       - result_length
       title: AlertWithLastRun
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    AlertUpdate:
+    AlertCreate:
       properties:
         name:
           type: string
@@ -604,6 +576,10 @@ components:
         description:
           type: string
           title: Description
+        query:
+          title: Query
+          examples:
+          - SELECT 1
         time_window:
           type: string
           format: duration
@@ -619,9 +595,8 @@ components:
         active:
           type: boolean
           title: Active
-        query:
-          type: string
-          title: Query
+          description: Whether the alert starts enabled.
+          default: true
         channel_ids:
           anyOf:
           - items:
@@ -632,9 +607,11 @@ components:
           title: Channel Ids
           description: Legacy shorthand for assigning channels without schedules.
         channel_assignments:
-          items:
-            $ref: '#/components/schemas/AlertChannelAssignment'
-          type: array
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/AlertChannelAssignment'
+            type: array
+          - type: 'null'
           title: Channel Assignments
           description: Schedule-aware channel configuration. When both `channel_assignments` and `channel_ids` are provided, `channel_assignments` is used.
         notify_when:
@@ -646,26 +623,15 @@ components:
           - starts_having_matches
           title: Notify When
       type: object
-      title: AlertUpdate
-      description: The fields that can be updated on an alert.
-    Opsgenie:
-      properties:
-        type:
-          type: string
-          enum:
-          - opsgenie
-          title: Type
-        auth_key:
-          type: string
-          title: Auth Key
-        base_url:
-          type: string
-          title: Base Url
-      type: object
       required:
-      - type
-      - auth_key
-      title: Opsgenie
+      - name
+      - description
+      - query
+      - time_window
+      - frequency
+      - watermark
+      - notify_when
+      title: AlertCreate
     AlertChannelRead:
       properties:
         id:
@@ -733,22 +699,58 @@ components:
       - config
       - schedule_id
       title: AlertChannelRead
-    AlertChannelAssignment:
+    AlertUpdate:
       properties:
-        channel_id:
+        name:
           type: string
-          format: uuid
-          title: Channel Id
-        schedule_id:
+          title: Name
+        description:
+          type: string
+          title: Description
+        time_window:
+          type: string
+          format: duration
+          title: Time Window
+        frequency:
+          type: string
+          format: duration
+          title: Frequency
+        watermark:
+          type: string
+          format: duration
+          title: Watermark
+        active:
+          type: boolean
+          title: Active
+        query:
+          type: string
+          title: Query
+        channel_ids:
           anyOf:
-          - type: string
-            format: uuid
+          - items:
+              type: string
+              format: uuid
+            type: array
           - type: 'null'
-          title: Schedule Id
+          title: Channel Ids
+          description: Legacy shorthand for assigning channels without schedules.
+        channel_assignments:
+          items:
+            $ref: '#/components/schemas/AlertChannelAssignment'
+          type: array
+          title: Channel Assignments
+          description: Schedule-aware channel configuration. When both `channel_assignments` and `channel_ids` are provided, `channel_assignments` is used.
+        notify_when:
+          type: string
+          enum:
+          - has_matches
+          - has_matches_changed
+          - matches_changed
+          - starts_having_matches
+          title: Notify When
       type: object
-      required:
-      - channel_id
-      title: AlertChannelAssignment
+      title: AlertUpdate
+      description: The fields that can be updated on an alert.
     Notification:
       properties:
         type:
@@ -767,28 +769,24 @@ components:
       - type
       - recipients
       title: Notification
-    JSONBData:
-      anyOf:
-      - additionalProperties:
-          $ref: '#/components/schemas/JSONBData'
-        type: object
-      - items:
-          $ref: '#/components/schemas/JSONBData'
-        type: array
-      - type: string
-      - type: integer
-      - type: boolean
-      - type: number
-      - type: 'null'
-    HTTPExceptionError:
+    Webhook:
       properties:
-        detail:
+        type:
           type: string
-          title: Detail
+          enum:
+          - webhook
+          title: Type
+        format:
+          $ref: '#/components/schemas/WebhookFormat'
+        url:
+          type: string
+          title: Url
       type: object
       required:
-      - detail
-      title: HTTPExceptionError
+      - type
+      - format
+      - url
+      title: Webhook
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

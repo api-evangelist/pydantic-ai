@@ -4,11 +4,9 @@ info:
   summary: Public API to access Logfire resources
   description: 'To be able to use the Logfire API, you need to either create an
 
-    [OAuth App](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/oauth-apps) or a
+    OAuth App or a
 
-    [Personal Access Token](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/pat).
-
-    '
+    Personal Access Token.'
   termsOfService: https://pydantic.dev/legal/terms-of-service
   version: 0.1.0
 servers:
@@ -294,65 +292,32 @@ components:
       - icon
       - name
       title: OrganizationLink
-    OrganizationInvitationCreateResponseV1:
+    ValidationError:
       properties:
-        invite_url:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          title: Invite Url
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
       required:
-      - invite_url
-      title: OrganizationInvitationCreateResponseV1
-    OrganizationUpdate:
-      properties:
-        organization_name:
-          type: string
-          maxLength: 50
-          minLength: 2
-          pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
-          title: Organization Name
-        billing_email:
-          type: string
-          title: Billing Email
-        organization_display_name:
-          type: string
-          title: Organization Display Name
-        github_handle:
-          type: string
-          title: Github Handle
-        location:
-          type: string
-          title: Location
-        avatar:
-          type: string
-          title: Avatar
-        links:
-          items:
-            $ref: '#/components/schemas/OrganizationLink'
-          type: array
-          title: Links
-        description:
-          type: string
-          title: Description
-      type: object
-      title: OrganizationUpdate
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    SubscriptionPlanId:
-      type: string
-      enum:
-      - personal
-      - team
-      - growth
-      - enterprise_cloud
-      - non_stripe
+      - loc
+      - msg
+      - type
+      title: ValidationError
     OrganizationCreate:
       properties:
         organization_name:
@@ -385,32 +350,32 @@ components:
       required:
       - organization_name
       title: OrganizationCreate
-    ValidationError:
+    OrganizationInvitationCreateResponseV1:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        invite_url:
           type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+          title: Invite Url
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - invite_url
+      title: OrganizationInvitationCreateResponseV1
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    SubscriptionPlanId:
+      type: string
+      enum:
+      - personal
+      - team
+      - growth
+      - enterprise_cloud
+      - non_stripe
     OrganizationInvitationCreateV1:
       properties:
         role:
@@ -429,6 +394,15 @@ components:
       required:
       - role
       title: OrganizationInvitationCreateV1
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     OrganizationReadV1:
       properties:
         id:
@@ -538,15 +512,39 @@ components:
       - ai_enabled
       - ai_training_enabled
       title: OrganizationReadV1
-    HTTPExceptionError:
+    OrganizationUpdate:
       properties:
-        detail:
+        organization_name:
           type: string
-          title: Detail
+          maxLength: 50
+          minLength: 2
+          pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
+          title: Organization Name
+        billing_email:
+          type: string
+          title: Billing Email
+        organization_display_name:
+          type: string
+          title: Organization Display Name
+        github_handle:
+          type: string
+          title: Github Handle
+        location:
+          type: string
+          title: Location
+        avatar:
+          type: string
+          title: Avatar
+        links:
+          items:
+            $ref: '#/components/schemas/OrganizationLink'
+          type: array
+          title: Links
+        description:
+          type: string
+          title: Description
       type: object
-      required:
-      - detail
-      title: HTTPExceptionError
+      title: OrganizationUpdate
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

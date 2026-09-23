@@ -4,11 +4,9 @@ info:
   summary: Public API to access Logfire resources
   description: 'To be able to use the Logfire API, you need to either create an
 
-    [OAuth App](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/oauth-apps) or a
+    OAuth App or a
 
-    [Personal Access Token](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/pat).
-
-    '
+    Personal Access Token.'
   termsOfService: https://pydantic.dev/legal/terms-of-service
   version: 0.1.0
 servers:
@@ -217,100 +215,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    WebhookFormat:
-      type: string
-      enum:
-      - auto
-      - slack-blockkit
-      - slack-legacy
-      - raw-data
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ChannelRead:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-        label:
-          type: string
-          title: Label
-        active:
-          type: boolean
-          title: Active
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        created_by_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created By Name
-        updated_by_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated By Name
-        config:
-          oneOf:
-          - $ref: '#/components/schemas/Webhook'
-          - $ref: '#/components/schemas/Opsgenie'
-          - $ref: '#/components/schemas/Notification'
-          title: Config
-          discriminator:
-            propertyName: type
-            mapping:
-              notification: '#/components/schemas/Notification'
-              opsgenie: '#/components/schemas/Opsgenie'
-              webhook: '#/components/schemas/Webhook'
-      type: object
-      required:
-      - id
-      - organization_id
-      - label
-      - active
-      - created_at
-      - updated_at
-      - created_by_name
-      - updated_by_name
-      - config
-      title: ChannelRead
-    Webhook:
-      properties:
-        type:
-          type: string
-          enum:
-          - webhook
-          title: Type
-        format:
-          $ref: '#/components/schemas/WebhookFormat'
-        url:
-          type: string
-          title: Url
-      type: object
-      required:
-      - type
-      - format
-      - url
-      title: Webhook
     ValidationError:
       properties:
         loc:
@@ -377,24 +281,6 @@ components:
       - type
       - auth_key
       title: Opsgenie
-    Notification:
-      properties:
-        type:
-          type: string
-          enum:
-          - notification
-          title: Type
-        recipients:
-          items:
-            type: string
-            format: uuid
-          type: array
-          title: Recipients
-      type: object
-      required:
-      - type
-      - recipients
-      title: Notification
     ChannelUpdate:
       properties:
         label:
@@ -432,6 +318,22 @@ components:
       required:
       - detail
       title: HTTPExceptionError
+    WebhookFormat:
+      type: string
+      enum:
+      - auto
+      - slack-blockkit
+      - slack-legacy
+      - raw-data
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     WebhookUpdate:
       properties:
         type:
@@ -451,6 +353,102 @@ components:
       - url
       title: WebhookUpdate
       description: Webhook config variant for updates that allows empty URL (signals "keep existing credential").
+    ChannelRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        label:
+          type: string
+          title: Label
+        active:
+          type: boolean
+          title: Active
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+        config:
+          oneOf:
+          - $ref: '#/components/schemas/Webhook'
+          - $ref: '#/components/schemas/Opsgenie'
+          - $ref: '#/components/schemas/Notification'
+          title: Config
+          discriminator:
+            propertyName: type
+            mapping:
+              notification: '#/components/schemas/Notification'
+              opsgenie: '#/components/schemas/Opsgenie'
+              webhook: '#/components/schemas/Webhook'
+      type: object
+      required:
+      - id
+      - organization_id
+      - label
+      - active
+      - created_at
+      - updated_at
+      - created_by_name
+      - updated_by_name
+      - config
+      title: ChannelRead
+    Notification:
+      properties:
+        type:
+          type: string
+          enum:
+          - notification
+          title: Type
+        recipients:
+          items:
+            type: string
+            format: uuid
+          type: array
+          title: Recipients
+      type: object
+      required:
+      - type
+      - recipients
+      title: Notification
+    Webhook:
+      properties:
+        type:
+          type: string
+          enum:
+          - webhook
+          title: Type
+        format:
+          $ref: '#/components/schemas/WebhookFormat'
+        url:
+          type: string
+          title: Url
+      type: object
+      required:
+      - type
+      - format
+      - url
+      title: Webhook
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

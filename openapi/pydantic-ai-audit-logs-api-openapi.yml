@@ -4,11 +4,9 @@ info:
   summary: Public API to access Logfire resources
   description: 'To be able to use the Logfire API, you need to either create an
 
-    [OAuth App](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/oauth-apps) or a
+    OAuth App or a
 
-    [Personal Access Token](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/pat).
-
-    '
+    Personal Access Token.'
   termsOfService: https://pydantic.dev/legal/terms-of-service
   version: 0.1.0
 servers:
@@ -157,6 +155,54 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    JSONBData:
+      anyOf:
+      - additionalProperties:
+          $ref: '#/components/schemas/JSONBData'
+        type: object
+      - items:
+          $ref: '#/components/schemas/JSONBData'
+        type: array
+      - type: string
+      - type: integer
+      - type: boolean
+      - type: number
+      - type: 'null'
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
     HTTPValidationError:
       properties:
         detail:
@@ -166,6 +212,76 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    AuditLogInfoRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        organization_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Name
+        project_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Project Name
+        user_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Name
+        action:
+          type: string
+          enum:
+          - INSERT
+          - UPDATE
+          - DELETE
+          - VIEW
+          - LOGIN
+          - FAILED_LOGIN
+          - LOGOUT
+          - CLAIM_INVITATION
+          - REVOKE_INVITATION
+          - VERIFY
+          title: Action
+        resource_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Resource Type
+        record_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Record Id
+        ip_address:
+          anyOf:
+          - type: string
+            format: ipv4
+          - type: string
+            format: ipv6
+          - type: 'null'
+          title: Ip Address
+      type: object
+      required:
+      - id
+      - created_at
+      - organization_name
+      - project_name
+      - user_name
+      - action
+      - resource_type
+      - record_id
+      - ip_address
+      title: AuditLogInfoRead
     AuditLogDetailRead:
       properties:
         id:
@@ -244,124 +360,6 @@ components:
       - ip_address
       - metadata
       title: AuditLogDetailRead
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    AuditLogInfoRead:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        organization_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Organization Name
-        project_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Project Name
-        user_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Name
-        action:
-          type: string
-          enum:
-          - INSERT
-          - UPDATE
-          - DELETE
-          - VIEW
-          - LOGIN
-          - FAILED_LOGIN
-          - LOGOUT
-          - CLAIM_INVITATION
-          - REVOKE_INVITATION
-          - VERIFY
-          title: Action
-        resource_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Resource Type
-        record_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Record Id
-        ip_address:
-          anyOf:
-          - type: string
-            format: ipv4
-          - type: string
-            format: ipv6
-          - type: 'null'
-          title: Ip Address
-      type: object
-      required:
-      - id
-      - created_at
-      - organization_name
-      - project_name
-      - user_name
-      - action
-      - resource_type
-      - record_id
-      - ip_address
-      title: AuditLogInfoRead
-    JSONBData:
-      anyOf:
-      - additionalProperties:
-          $ref: '#/components/schemas/JSONBData'
-        type: object
-      - items:
-          $ref: '#/components/schemas/JSONBData'
-        type: array
-      - type: string
-      - type: integer
-      - type: boolean
-      - type: number
-      - type: 'null'
-    HTTPExceptionError:
-      properties:
-        detail:
-          type: string
-          title: Detail
-      type: object
-      required:
-      - detail
-      title: HTTPExceptionError
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

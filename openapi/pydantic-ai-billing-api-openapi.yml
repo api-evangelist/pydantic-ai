@@ -4,11 +4,9 @@ info:
   summary: Public API to access Logfire resources
   description: 'To be able to use the Logfire API, you need to either create an
 
-    [OAuth App](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/oauth-apps) or a
+    OAuth App or a
 
-    [Personal Access Token](https://logfire.pydantic.dev/-/redirect/default-org/settings/developer/pat).
-
-    '
+    Personal Access Token.'
   termsOfService: https://pydantic.dev/legal/terms-of-service
   version: 0.1.0
 servers:
@@ -73,55 +71,32 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    BillingUsageResponse:
+    ValidationError:
       properties:
-        organization:
-          type: string
-          title: Organization
-        billing_period:
-          $ref: '#/components/schemas/BillingPeriod'
-        plan:
-          type: string
-          title: Plan
-        usage:
-          $ref: '#/components/schemas/UsageSummary'
-        cost:
-          $ref: '#/components/schemas/CostSummary'
-      type: object
-      required:
-      - organization
-      - billing_period
-      - plan
-      - usage
-      - cost
-      title: BillingUsageResponse
-    HTTPValidationError:
-      properties:
-        detail:
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ProjectUsage:
-      properties:
-        project_name:
+          title: Location
+        msg:
           type: string
-          title: Project Name
-        project_id:
+          title: Message
+        type:
           type: string
-          format: uuid
-          title: Project Id
-        observations:
-          type: integer
-          title: Observations
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
       required:
-      - project_name
-      - project_id
-      - observations
-      title: ProjectUsage
+      - loc
+      - msg
+      - type
+      title: ValidationError
     CostSummary:
       properties:
         currency:
@@ -151,6 +126,24 @@ components:
       - discount
       - total_cost
       title: CostSummary
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     BillingPeriod:
       properties:
         start:
@@ -170,45 +163,46 @@ components:
       - end
       - anchor_day
       title: BillingPeriod
-    UsageBreakdown:
+    ProjectUsage:
       properties:
-        spans:
+        project_name:
+          type: string
+          title: Project Name
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        observations:
           type: integer
-          title: Spans
-        metrics:
-          type: integer
-          title: Metrics
+          title: Observations
       type: object
       required:
-      - spans
-      - metrics
-      title: UsageBreakdown
-    ValidationError:
+      - project_name
+      - project_id
+      - observations
+      title: ProjectUsage
+    BillingUsageResponse:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        organization:
           type: string
-          title: Message
-        type:
+          title: Organization
+        billing_period:
+          $ref: '#/components/schemas/BillingPeriod'
+        plan:
           type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+          title: Plan
+        usage:
+          $ref: '#/components/schemas/UsageSummary'
+        cost:
+          $ref: '#/components/schemas/CostSummary'
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - organization
+      - billing_period
+      - plan
+      - usage
+      - cost
+      title: BillingUsageResponse
     UsageSummary:
       properties:
         total_observations:
@@ -235,15 +229,19 @@ components:
       - billable_observations
       - project_breakdown
       title: UsageSummary
-    HTTPExceptionError:
+    UsageBreakdown:
       properties:
-        detail:
-          type: string
-          title: Detail
+        spans:
+          type: integer
+          title: Spans
+        metrics:
+          type: integer
+          title: Metrics
       type: object
       required:
-      - detail
-      title: HTTPExceptionError
+      - spans
+      - metrics
+      title: UsageBreakdown
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2
