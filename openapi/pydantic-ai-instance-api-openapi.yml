@@ -192,38 +192,17 @@ paths:
         - instance:admin
 components:
   schemas:
-    OrganizationLink:
+    GroupOrganizationMappingUpdate:
       properties:
-        url:
-          type: string
-          title: Url
-        icon:
-          type: string
-          title: Icon
-        name:
-          type: string
-          title: Name
-      type: object
-      required:
-      - url
-      - icon
-      - name
-      title: OrganizationLink
-    GroupOrganizationMapping-Input:
-      properties:
-        group_id:
-          type: string
-          title: Group Id
-        organization_roles:
+        group_organization_mapping:
           items:
-            $ref: '#/components/schemas/OrganizationRoleDefinition'
+            $ref: '#/components/schemas/GroupOrganizationMapping-Input'
           type: array
-          title: Organization Roles
+          title: Group Organization Mapping
       type: object
       required:
-      - group_id
-      - organization_roles
-      title: GroupOrganizationMapping
+      - group_organization_mapping
+      title: GroupOrganizationMappingUpdate
     ValidationError:
       properties:
         loc:
@@ -250,6 +229,17 @@ components:
       - msg
       - type
       title: ValidationError
+    GroupOrganizationMappingRead:
+      properties:
+        group_organization_mapping:
+          items:
+            $ref: '#/components/schemas/GroupOrganizationMapping-Output'
+          type: array
+          title: Group Organization Mapping
+      type: object
+      required:
+      - group_organization_mapping
+      title: GroupOrganizationMappingRead
     OrganizationCreate:
       properties:
         organization_name:
@@ -282,20 +272,7 @@ components:
       required:
       - organization_name
       title: OrganizationCreate
-    ProjectRoleDefinition:
-      properties:
-        project_name:
-          type: string
-          title: Project Name
-        role:
-          type: string
-          title: Role
-      type: object
-      required:
-      - project_name
-      - role
-      title: ProjectRoleDefinition
-    GroupOrganizationMapping-Output:
+    GroupOrganizationMapping-Input:
       properties:
         group_id:
           type: string
@@ -310,23 +287,19 @@ components:
       - group_id
       - organization_roles
       title: GroupOrganizationMapping
-    HTTPExceptionError:
+    ProjectRoleDefinition:
       properties:
-        detail:
+        project_name:
           type: string
-          title: Detail
+          title: Project Name
+        role:
+          type: string
+          title: Role
       type: object
       required:
-      - detail
-      title: HTTPExceptionError
-    SubscriptionPlanId:
-      type: string
-      enum:
-      - personal
-      - team
-      - growth
-      - enterprise_cloud
-      - non_stripe
+      - project_name
+      - role
+      title: ProjectRoleDefinition
     OrganizationRoleDefinition:
       properties:
         organization_name:
@@ -346,37 +319,6 @@ components:
       - organization_name
       - role
       title: OrganizationRoleDefinition
-    GroupOrganizationMappingRead:
-      properties:
-        group_organization_mapping:
-          items:
-            $ref: '#/components/schemas/GroupOrganizationMapping-Output'
-          type: array
-          title: Group Organization Mapping
-      type: object
-      required:
-      - group_organization_mapping
-      title: GroupOrganizationMappingRead
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    GroupOrganizationMappingUpdate:
-      properties:
-        group_organization_mapping:
-          items:
-            $ref: '#/components/schemas/GroupOrganizationMapping-Input'
-          type: array
-          title: Group Organization Mapping
-      type: object
-      required:
-      - group_organization_mapping
-      title: GroupOrganizationMappingUpdate
     OrganizationReadV1:
       properties:
         id:
@@ -522,6 +464,64 @@ components:
       - metrics_count
       - total_observations
       title: InstanceUsageReportRowV1
+    OrganizationLink:
+      properties:
+        url:
+          type: string
+          title: Url
+        icon:
+          type: string
+          title: Icon
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - url
+      - icon
+      - name
+      title: OrganizationLink
+    GroupOrganizationMapping-Output:
+      properties:
+        group_id:
+          type: string
+          title: Group Id
+        organization_roles:
+          items:
+            $ref: '#/components/schemas/OrganizationRoleDefinition'
+          type: array
+          title: Organization Roles
+      type: object
+      required:
+      - group_id
+      - organization_roles
+      title: GroupOrganizationMapping
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    SubscriptionPlanId:
+      type: string
+      enum:
+      - personal
+      - team
+      - growth
+      - enterprise_cloud
+      - non_stripe
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

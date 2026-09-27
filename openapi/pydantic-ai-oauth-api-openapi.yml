@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Pydantic Logfire O Auth API
+  title: Pydantic Logfire OAuth API
   summary: Public API to access Logfire resources
   description: 'To be able to use the Logfire API, you need to either create an
 
@@ -515,6 +515,67 @@ components:
       - msg
       - type
       title: ValidationError
+    TokenExchangeResponse:
+      properties:
+        access_token:
+          type: string
+          title: Access Token
+        issued_token_type:
+          type: string
+          title: Issued Token Type
+        token_type:
+          type: string
+          title: Token Type
+        expires_in:
+          type: integer
+          title: Expires In
+        scope:
+          type: string
+          title: Scope
+      type: object
+      required:
+      - access_token
+      - issued_token_type
+      - token_type
+      - expires_in
+      - scope
+      title: TokenExchangeResponse
+      description: 'RFC 8693 §2.2 successful token-exchange response.
+
+
+        Distinct from the OAuth 2.0 token endpoint''s `TokenResponse` (RFC 6749 §5.1):
+
+        `issued_token_type` is mandatory per §2.2.1, and there''s no `refresh_token`
+
+        (workload tokens are short-lived and not re-issuable through this flow).'
+    GrantableScopesResponse:
+      properties:
+        grantable_scopes:
+          items:
+            type: string
+          type: array
+          title: Grantable Scopes
+      type: object
+      required:
+      - grantable_scopes
+      title: GrantableScopesResponse
+      description: Subset of `scopes` the authenticated user can grant in the given org/project.
+    DCRErrorResponse:
+      properties:
+        error:
+          type: string
+          enum:
+          - invalid_client_metadata
+          - invalid_redirect_uri
+          title: Error
+        error_description:
+          type: string
+          title: Error Description
+      type: object
+      required:
+      - error
+      - error_description
+      title: DCRErrorResponse
     DCRResponse:
       properties:
         client_id:
@@ -581,77 +642,33 @@ components:
       - registration_access_token
       title: DCRResponse
       description: RFC 7591/7592 Client Information Response.
-    DCRRequest:
+    TokenResponse:
       properties:
-        client_name:
+        access_token:
           type: string
-          title: Client Name
-        client_uri:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Client Uri
-        logo_uri:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Logo Uri
-        redirect_uris:
-          items:
-            type: string
-          type: array
-          title: Redirect Uris
-        grant_types:
-          items:
-            type: string
-          type: array
-          title: Grant Types
-        response_types:
-          items:
-            type: string
-          type: array
-          title: Response Types
-        token_endpoint_auth_method:
+          title: Access Token
+        token_type:
           type: string
-          title: Token Endpoint Auth Method
+          enum:
+          - Bearer
+          title: Token Type
+        expires_in:
+          type: integer
+          title: Expires In
+        refresh_token:
+          type: string
+          title: Refresh Token
         scope:
           type: string
           title: Scope
-        application_type:
-          type: string
-          title: Application Type
-      type: object
-      title: DCRRequest
-      description: RFC 7591 Client Metadata for Dynamic Client Registration.
-    Body_device_authorization_oauth_device_code_post:
-      properties:
-        client_id:
-          type: string
-          title: Client Id
-        scope:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Scope
-        code_challenge:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code Challenge
-        code_challenge_method:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code Challenge Method
-        resource:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Resource
       type: object
       required:
-      - client_id
-      title: Body_device_authorization_oauth_device_code_post
+      - access_token
+      - token_type
+      - expires_in
+      - refresh_token
+      - scope
+      title: TokenResponse
     ErrorResponse:
       properties:
         error:
@@ -681,131 +698,6 @@ components:
       - error
       - error_description
       title: ErrorResponse
-    Body_oauth_authorize_post_oauth_authorize_post:
-      properties:
-        client_id:
-          type: string
-          title: Client Id
-        redirect_uri:
-          type: string
-          title: Redirect Uri
-        scope:
-          type: string
-          title: Scope
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-        project_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Project Id
-        state:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: State
-        code_challenge:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code Challenge
-        code_challenge_method:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code Challenge Method
-        resource:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Resource
-        csrf_token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Csrf Token
-        limits:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Limits
-      type: object
-      required:
-      - client_id
-      - redirect_uri
-      - scope
-      - organization_id
-      title: Body_oauth_authorize_post_oauth_authorize_post
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    DeviceAuthorizationResponse:
-      properties:
-        device_code:
-          type: string
-          title: Device Code
-        user_code:
-          type: string
-          title: User Code
-        verification_uri:
-          type: string
-          title: Verification Uri
-        verification_uri_complete:
-          type: string
-          title: Verification Uri Complete
-        expires_in:
-          type: integer
-          title: Expires In
-        interval:
-          type: integer
-          title: Interval
-      type: object
-      required:
-      - device_code
-      - user_code
-      - verification_uri
-      - verification_uri_complete
-      - expires_in
-      - interval
-      title: DeviceAuthorizationResponse
-      description: RFC 8628 Section 3.2 - Device Authorization Response.
-    DCRErrorResponse:
-      properties:
-        error:
-          type: string
-          enum:
-          - invalid_client_metadata
-          - invalid_redirect_uri
-          title: Error
-        error_description:
-          type: string
-          title: Error Description
-      type: object
-      required:
-      - error
-      - error_description
-      title: DCRErrorResponse
-    GrantableScopesResponse:
-      properties:
-        grantable_scopes:
-          items:
-            type: string
-          type: array
-          title: Grantable Scopes
-      type: object
-      required:
-      - grantable_scopes
-      title: GrantableScopesResponse
-      description: Subset of `scopes` the authenticated user can grant in the given org/project.
     Body_oauth_token_oauth_token_post:
       properties:
         grant_type:
@@ -870,66 +762,174 @@ components:
       required:
       - grant_type
       title: Body_oauth_token_oauth_token_post
-    TokenExchangeResponse:
+    Body_oauth_authorize_post_oauth_authorize_post:
       properties:
-        access_token:
+        client_id:
           type: string
-          title: Access Token
-        issued_token_type:
+          title: Client Id
+        redirect_uri:
           type: string
-          title: Issued Token Type
-        token_type:
-          type: string
-          title: Token Type
-        expires_in:
-          type: integer
-          title: Expires In
+          title: Redirect Uri
         scope:
           type: string
           title: Scope
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        project_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Project Id
+        state:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: State
+        code_challenge:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code Challenge
+        code_challenge_method:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code Challenge Method
+        resource:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Resource
+        csrf_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Csrf Token
+        limits:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Limits
       type: object
       required:
-      - access_token
-      - issued_token_type
-      - token_type
-      - expires_in
+      - client_id
+      - redirect_uri
       - scope
-      title: TokenExchangeResponse
-      description: 'RFC 8693 §2.2 successful token-exchange response.
-
-
-        Distinct from the OAuth 2.0 token endpoint''s `TokenResponse` (RFC 6749 §5.1):
-
-        `issued_token_type` is mandatory per §2.2.1, and there''s no `refresh_token`
-
-        (workload tokens are short-lived and not re-issuable through this flow).'
-    TokenResponse:
+      - organization_id
+      title: Body_oauth_authorize_post_oauth_authorize_post
+    DCRRequest:
       properties:
-        access_token:
+        client_name:
           type: string
-          title: Access Token
-        token_type:
+          title: Client Name
+        client_uri:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Uri
+        logo_uri:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Logo Uri
+        redirect_uris:
+          items:
+            type: string
+          type: array
+          title: Redirect Uris
+        grant_types:
+          items:
+            type: string
+          type: array
+          title: Grant Types
+        response_types:
+          items:
+            type: string
+          type: array
+          title: Response Types
+        token_endpoint_auth_method:
           type: string
-          enum:
-          - Bearer
-          title: Token Type
-        expires_in:
-          type: integer
-          title: Expires In
-        refresh_token:
-          type: string
-          title: Refresh Token
+          title: Token Endpoint Auth Method
         scope:
           type: string
           title: Scope
+        application_type:
+          type: string
+          title: Application Type
+      type: object
+      title: DCRRequest
+      description: RFC 7591 Client Metadata for Dynamic Client Registration.
+    DeviceAuthorizationResponse:
+      properties:
+        device_code:
+          type: string
+          title: Device Code
+        user_code:
+          type: string
+          title: User Code
+        verification_uri:
+          type: string
+          title: Verification Uri
+        verification_uri_complete:
+          type: string
+          title: Verification Uri Complete
+        expires_in:
+          type: integer
+          title: Expires In
+        interval:
+          type: integer
+          title: Interval
       type: object
       required:
-      - access_token
-      - token_type
+      - device_code
+      - user_code
+      - verification_uri
+      - verification_uri_complete
       - expires_in
-      - refresh_token
-      - scope
-      title: TokenResponse
+      - interval
+      title: DeviceAuthorizationResponse
+      description: RFC 8628 Section 3.2 - Device Authorization Response.
+    Body_device_authorization_oauth_device_code_post:
+      properties:
+        client_id:
+          type: string
+          title: Client Id
+        scope:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scope
+        code_challenge:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code Challenge
+        code_challenge_method:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code Challenge Method
+        resource:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Resource
+      type: object
+      required:
+      - client_id
+      title: Body_device_authorization_oauth_device_code_post
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

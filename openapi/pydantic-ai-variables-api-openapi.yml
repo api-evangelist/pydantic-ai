@@ -231,88 +231,114 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    RolloutOverride:
+    ValidationError:
       properties:
-        conditions:
+        loc:
           items:
-            oneOf:
-            - $ref: '#/components/schemas/ValueEquals'
-            - $ref: '#/components/schemas/ValueDoesNotEqual'
-            - $ref: '#/components/schemas/ValueIsIn'
-            - $ref: '#/components/schemas/ValueIsNotIn'
-            - $ref: '#/components/schemas/ValueMatchesRegex'
-            - $ref: '#/components/schemas/ValueDoesNotMatchRegex'
-            - $ref: '#/components/schemas/KeyIsPresent'
-            - $ref: '#/components/schemas/KeyIsNotPresent'
-            discriminator:
-              propertyName: kind
-              mapping:
-                key-is-not-present: '#/components/schemas/KeyIsNotPresent'
-                key-is-present: '#/components/schemas/KeyIsPresent'
-                value-does-not-equal: '#/components/schemas/ValueDoesNotEqual'
-                value-does-not-match-regex: '#/components/schemas/ValueDoesNotMatchRegex'
-                value-equals: '#/components/schemas/ValueEquals'
-                value-is-in: '#/components/schemas/ValueIsIn'
-                value-is-not-in: '#/components/schemas/ValueIsNotIn'
-                value-matches-regex: '#/components/schemas/ValueMatchesRegex'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Conditions
-        rollout:
-          $ref: '#/components/schemas/Rollout'
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
       required:
-      - conditions
-      - rollout
-      title: RolloutOverride
-      description: An override of the default rollout when specific conditions are met.
-    VersionRead:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ValueEquals:
       properties:
-        id:
+        attribute:
           type: string
-          format: uuid
-          title: Id
-        variable_definition_id:
+          title: Attribute
+        value:
+          title: Value
+        kind:
           type: string
-          format: uuid
-          title: Variable Definition Id
-        version:
-          type: integer
-          title: Version
-        serialized_value:
-          type: string
-          title: Serialized Value
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        created_by:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Created By
-        created_by_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created By Name
+          enum:
+          - value-equals
+          title: Kind
+          default: value-equals
       type: object
       required:
-      - id
-      - variable_definition_id
-      - version
-      - serialized_value
-      - description
-      - created_at
-      - created_by
-      - created_by_name
-      title: VersionRead
-      description: A version as read from the database.
+      - attribute
+      - value
+      title: ValueEquals
+      description: Condition that matches when an attribute equals a specific value.
+    ValueDoesNotEqual:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        value:
+          title: Value
+        kind:
+          type: string
+          enum:
+          - value-does-not-equal
+          title: Kind
+          default: value-does-not-equal
+      type: object
+      required:
+      - attribute
+      - value
+      title: ValueDoesNotEqual
+      description: Condition that matches when an attribute does not equal a specific value.
+    ValueDoesNotMatchRegex:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        pattern:
+          anyOf:
+          - type: string
+          - type: string
+            format: regex
+          title: Pattern
+        kind:
+          type: string
+          enum:
+          - value-does-not-match-regex
+          title: Kind
+          default: value-does-not-match-regex
+      type: object
+      required:
+      - attribute
+      - pattern
+      title: ValueDoesNotMatchRegex
+      description: Condition that matches when an attribute value does not match a regex pattern.
+    ValueIsIn:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        values:
+          items: {}
+          type: array
+          title: Values
+        kind:
+          type: string
+          enum:
+          - value-is-in
+          title: Kind
+          default: value-is-in
+      type: object
+      required:
+      - attribute
+      - values
+      title: ValueIsIn
+      description: Condition that matches when an attribute value is in a set of values.
     LabelRead:
       properties:
         id:
@@ -380,27 +406,82 @@ components:
       - updated_by_name
       title: LabelRead
       description: A label as read from the database.
-    ValueIsIn:
+    VariablesConfig:
       properties:
+        variables:
+          additionalProperties:
+            $ref: '#/components/schemas/VariableConfig'
+          type: object
+          title: Variables
+      type: object
+      required:
+      - variables
+      title: VariablesConfig
+      description: Container for all managed variable configurations.
+    ConditionData:
+      properties:
+        kind:
+          type: string
+          title: Kind
         attribute:
           type: string
           title: Attribute
+        value:
+          title: Value
         values:
           items: {}
           type: array
           title: Values
+        pattern:
+          type: string
+          title: Pattern
+      type: object
+      title: ConditionData
+      description: 'Condition for targeting, stored as JSONB.
+
+
+        Different condition types have different fields, so all are optional.
+
+        The ''kind'' field determines which other fields are relevant.'
+    KeyIsPresent:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
         kind:
           type: string
           enum:
-          - value-is-in
+          - key-is-present
           title: Kind
-          default: value-is-in
+          default: key-is-present
       type: object
       required:
       - attribute
-      - values
-      title: ValueIsIn
-      description: Condition that matches when an attribute value is in a set of values.
+      title: KeyIsPresent
+      description: Condition that matches when an attribute key is present.
+    ValueMatchesRegex:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        pattern:
+          anyOf:
+          - type: string
+          - type: string
+            format: regex
+          title: Pattern
+        kind:
+          type: string
+          enum:
+          - value-matches-regex
+          title: Kind
+          default: value-matches-regex
+      type: object
+      required:
+      - attribute
+      - pattern
+      title: ValueMatchesRegex
+      description: Condition that matches when an attribute value matches a regex pattern.
     LabeledValue:
       properties:
         version:
@@ -415,106 +496,34 @@ components:
       - serialized_value
       title: LabeledValue
       description: A label pointing to a version with an inline serialized value.
-    HTTPValidationError:
+    CodeDefaultLabelData:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    OverrideData:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        conditions:
-          items:
-            $ref: '#/components/schemas/ConditionData'
-          type: array
-          title: Conditions
-        rollout:
-          $ref: '#/components/schemas/RolloutData'
+        target_type:
+          type: string
+          enum:
+          - code_default
+          title: Target Type
       type: object
       required:
-      - conditions
-      - rollout
-      title: OverrideData
-      description: Override configuration stored as JSONB.
-    VariableDefinitionUpdateRequest:
+      - target_type
+      title: CodeDefaultLabelData
+      description: Label data indicating to use the code default value.
+    LabelRefLabelData:
       properties:
-        name:
+        target_type:
           type: string
-          title: Name
-        description:
-          anyOf:
-          - type: string
-            maxLength: 500
-          - type: 'null'
-          title: Description
-        json_schema:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Json Schema
-        template_inputs_schema:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Template Inputs Schema
-        type_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Type Id
-        rollout:
-          $ref: '#/components/schemas/RolloutData'
-        overrides:
-          items:
-            $ref: '#/components/schemas/OverrideData'
-          type: array
-          title: Overrides
-        aliases:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Aliases
-        example:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Example
-        external:
-          type: boolean
-          title: External
-        labels:
-          additionalProperties:
-            anyOf:
-            - $ref: '#/components/schemas/VersionLabelData'
-            - $ref: '#/components/schemas/LatestLabelData'
-            - $ref: '#/components/schemas/CodeDefaultLabelData'
-            - $ref: '#/components/schemas/LabelRefLabelData'
-          type: object
-          title: Labels
+          enum:
+          - label
+          title: Target Type
+        target_label:
+          type: string
+          title: Target Label
       type: object
-      title: VariableDefinitionUpdateRequest
-      description: 'Request model for updating a variable definition.
-
-
-        Should be the same as `VariableDefinitionCreateRequest`, just with `total=False`.'
+      required:
+      - target_type
+      - target_label
+      title: LabelRefLabelData
+      description: Label data pointing to another label.
     KeyIsNotPresent:
       properties:
         attribute:
@@ -546,100 +555,40 @@ components:
       - ref
       title: LabelRef
       description: A label pointing via reference to another label, 'latest', or 'code_default'.
-    KeyIsPresent:
+    RolloutOverride:
       properties:
-        attribute:
-          type: string
-          title: Attribute
-        kind:
-          type: string
-          enum:
-          - key-is-present
-          title: Kind
-          default: key-is-present
-      type: object
-      required:
-      - attribute
-      title: KeyIsPresent
-      description: Condition that matches when an attribute key is present.
-    VariablesConfig:
-      properties:
-        variables:
-          additionalProperties:
-            $ref: '#/components/schemas/VariableConfig'
-          type: object
-          title: Variables
-      type: object
-      required:
-      - variables
-      title: VariablesConfig
-      description: Container for all managed variable configurations.
-    JSONBData:
-      anyOf:
-      - additionalProperties:
-          $ref: '#/components/schemas/JSONBData'
-        type: object
-      - items:
-          $ref: '#/components/schemas/JSONBData'
-        type: array
-      - type: string
-      - type: integer
-      - type: boolean
-      - type: number
-      - type: 'null'
-    HTTPExceptionError:
-      properties:
-        detail:
-          type: string
-          title: Detail
-      type: object
-      required:
-      - detail
-      title: HTTPExceptionError
-    ValueDoesNotEqual:
-      properties:
-        attribute:
-          type: string
-          title: Attribute
-        value:
-          title: Value
-        kind:
-          type: string
-          enum:
-          - value-does-not-equal
-          title: Kind
-          default: value-does-not-equal
-      type: object
-      required:
-      - attribute
-      - value
-      title: ValueDoesNotEqual
-      description: Condition that matches when an attribute does not equal a specific value.
-    ConditionData:
-      properties:
-        kind:
-          type: string
-          title: Kind
-        attribute:
-          type: string
-          title: Attribute
-        value:
-          title: Value
-        values:
-          items: {}
+        conditions:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ValueEquals'
+            - $ref: '#/components/schemas/ValueDoesNotEqual'
+            - $ref: '#/components/schemas/ValueIsIn'
+            - $ref: '#/components/schemas/ValueIsNotIn'
+            - $ref: '#/components/schemas/ValueMatchesRegex'
+            - $ref: '#/components/schemas/ValueDoesNotMatchRegex'
+            - $ref: '#/components/schemas/KeyIsPresent'
+            - $ref: '#/components/schemas/KeyIsNotPresent'
+            discriminator:
+              propertyName: kind
+              mapping:
+                key-is-not-present: '#/components/schemas/KeyIsNotPresent'
+                key-is-present: '#/components/schemas/KeyIsPresent'
+                value-does-not-equal: '#/components/schemas/ValueDoesNotEqual'
+                value-does-not-match-regex: '#/components/schemas/ValueDoesNotMatchRegex'
+                value-equals: '#/components/schemas/ValueEquals'
+                value-is-in: '#/components/schemas/ValueIsIn'
+                value-is-not-in: '#/components/schemas/ValueIsNotIn'
+                value-matches-regex: '#/components/schemas/ValueMatchesRegex'
           type: array
-          title: Values
-        pattern:
-          type: string
-          title: Pattern
+          title: Conditions
+        rollout:
+          $ref: '#/components/schemas/Rollout'
       type: object
-      title: ConditionData
-      description: 'Condition for targeting, stored as JSONB.
-
-
-        Different condition types have different fields, so all are optional.
-
-        The ''kind'' field determines which other fields are relevant.'
+      required:
+      - conditions
+      - rollout
+      title: RolloutOverride
+      description: An override of the default rollout when specific conditions are met.
     VariableConfig:
       properties:
         name:
@@ -725,37 +674,72 @@ components:
       - overrides
       title: VariableConfig
       description: Configuration for a single managed variable including labels and rollout rules.
-    CodeDefaultLabelData:
+    VariableDefinitionUpdateRequest:
       properties:
-        target_type:
+        name:
           type: string
-          enum:
-          - code_default
-          title: Target Type
+          title: Name
+        description:
+          anyOf:
+          - type: string
+            maxLength: 500
+          - type: 'null'
+          title: Description
+        json_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Json Schema
+        template_inputs_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Template Inputs Schema
+        type_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Type Id
+        rollout:
+          $ref: '#/components/schemas/RolloutData'
+        overrides:
+          items:
+            $ref: '#/components/schemas/OverrideData'
+          type: array
+          title: Overrides
+        aliases:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Aliases
+        example:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Example
+        external:
+          type: boolean
+          title: External
+        labels:
+          additionalProperties:
+            anyOf:
+            - $ref: '#/components/schemas/VersionLabelData'
+            - $ref: '#/components/schemas/LatestLabelData'
+            - $ref: '#/components/schemas/CodeDefaultLabelData'
+            - $ref: '#/components/schemas/LabelRefLabelData'
+          type: object
+          title: Labels
       type: object
-      required:
-      - target_type
-      title: CodeDefaultLabelData
-      description: Label data indicating to use the code default value.
-    VersionLabelData:
-      properties:
-        target_type:
-          type: string
-          enum:
-          - version
-          title: Target Type
-        serialized_value:
-          type: string
-          title: Serialized Value
-        version:
-          type: integer
-          title: Version
-      type: object
-      required:
-      - target_type
-      - serialized_value
-      title: VersionLabelData
-      description: Label data pointing to a version by serialized value.
+      title: VariableDefinitionUpdateRequest
+      description: 'Request model for updating a variable definition.
+
+
+        Should be the same as `VariableDefinitionCreateRequest`, just with `total=False`.'
     RolloutData:
       properties:
         labels:
@@ -771,124 +755,6 @@ components:
       - labels
       title: RolloutData
       description: Rollout configuration stored as JSONB.
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ValueMatchesRegex:
-      properties:
-        attribute:
-          type: string
-          title: Attribute
-        pattern:
-          anyOf:
-          - type: string
-          - type: string
-            format: regex
-          title: Pattern
-        kind:
-          type: string
-          enum:
-          - value-matches-regex
-          title: Kind
-          default: value-matches-regex
-      type: object
-      required:
-      - attribute
-      - pattern
-      title: ValueMatchesRegex
-      description: Condition that matches when an attribute value matches a regex pattern.
-    Rollout:
-      properties:
-        labels:
-          additionalProperties:
-            type: number
-          propertyNames:
-            maxLength: 200
-            minLength: 1
-          type: object
-          title: Labels
-      type: object
-      required:
-      - labels
-      title: Rollout
-      description: Configuration for label selection with weighted probabilities.
-    ValueEquals:
-      properties:
-        attribute:
-          type: string
-          title: Attribute
-        value:
-          title: Value
-        kind:
-          type: string
-          enum:
-          - value-equals
-          title: Kind
-          default: value-equals
-      type: object
-      required:
-      - attribute
-      - value
-      title: ValueEquals
-      description: Condition that matches when an attribute equals a specific value.
-    LatestLabelData:
-      properties:
-        target_type:
-          type: string
-          enum:
-          - latest
-          title: Target Type
-      type: object
-      required:
-      - target_type
-      title: LatestLabelData
-      description: Label data pointing to the latest version.
-    ValueDoesNotMatchRegex:
-      properties:
-        attribute:
-          type: string
-          title: Attribute
-        pattern:
-          anyOf:
-          - type: string
-          - type: string
-            format: regex
-          title: Pattern
-        kind:
-          type: string
-          enum:
-          - value-does-not-match-regex
-          title: Kind
-          default: value-does-not-match-regex
-      type: object
-      required:
-      - attribute
-      - pattern
-      title: ValueDoesNotMatchRegex
-      description: Condition that matches when an attribute value does not match a regex pattern.
     VariableDefinitionCreateRequest:
       properties:
         name:
@@ -956,6 +822,151 @@ components:
       - overrides
       title: VariableDefinitionCreateRequest
       description: Request model for creating a variable definition.
+    JSONBData:
+      anyOf:
+      - additionalProperties:
+          $ref: '#/components/schemas/JSONBData'
+        type: object
+      - items:
+          $ref: '#/components/schemas/JSONBData'
+        type: array
+      - type: string
+      - type: integer
+      - type: boolean
+      - type: number
+      - type: 'null'
+    OverrideData:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        conditions:
+          items:
+            $ref: '#/components/schemas/ConditionData'
+          type: array
+          title: Conditions
+        rollout:
+          $ref: '#/components/schemas/RolloutData'
+      type: object
+      required:
+      - conditions
+      - rollout
+      title: OverrideData
+      description: Override configuration stored as JSONB.
+    LatestVersion:
+      properties:
+        version:
+          type: integer
+          title: Version
+        serialized_value:
+          type: string
+          title: Serialized Value
+      type: object
+      required:
+      - version
+      - serialized_value
+      title: LatestVersion
+      description: The latest version of a variable, always carrying its serialized value.
+    Rollout:
+      properties:
+        labels:
+          additionalProperties:
+            type: number
+          propertyNames:
+            maxLength: 200
+            minLength: 1
+          type: object
+          title: Labels
+      type: object
+      required:
+      - labels
+      title: Rollout
+      description: Configuration for label selection with weighted probabilities.
+    VersionRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        variable_definition_id:
+          type: string
+          format: uuid
+          title: Variable Definition Id
+        version:
+          type: integer
+          title: Version
+        serialized_value:
+          type: string
+          title: Serialized Value
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        created_by:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Created By
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+      type: object
+      required:
+      - id
+      - variable_definition_id
+      - version
+      - serialized_value
+      - description
+      - created_at
+      - created_by
+      - created_by_name
+      title: VersionRead
+      description: A version as read from the database.
+    LatestLabelData:
+      properties:
+        target_type:
+          type: string
+          enum:
+          - latest
+          title: Target Type
+      type: object
+      required:
+      - target_type
+      title: LatestLabelData
+      description: Label data pointing to the latest version.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
     ValueIsNotIn:
       properties:
         attribute:
@@ -977,20 +988,6 @@ components:
       - values
       title: ValueIsNotIn
       description: Condition that matches when an attribute value is not in a set of values.
-    LatestVersion:
-      properties:
-        version:
-          type: integer
-          title: Version
-        serialized_value:
-          type: string
-          title: Serialized Value
-      type: object
-      required:
-      - version
-      - serialized_value
-      title: LatestVersion
-      description: The latest version of a variable, always carrying its serialized value.
     VariableDefinitionRead:
       properties:
         id:
@@ -1119,22 +1116,25 @@ components:
       - updated_by_name
       title: VariableDefinitionRead
       description: Variable definition with current labels and latest version assembled.
-    LabelRefLabelData:
+    VersionLabelData:
       properties:
         target_type:
           type: string
           enum:
-          - label
+          - version
           title: Target Type
-        target_label:
+        serialized_value:
           type: string
-          title: Target Label
+          title: Serialized Value
+        version:
+          type: integer
+          title: Version
       type: object
       required:
       - target_type
-      - target_label
-      title: LabelRefLabelData
-      description: Label data pointing to another label.
+      - serialized_value
+      title: VersionLabelData
+      description: Label data pointing to a version by serialized value.
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

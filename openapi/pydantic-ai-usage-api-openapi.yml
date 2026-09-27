@@ -366,31 +366,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    PaginatedProjectsUsageResponseV1:
-      properties:
-        start_date:
-          type: string
-          format: date
-          title: Start Date
-        end_date:
-          type: string
-          format: date
-          title: End Date
-        total:
-          type: integer
-          title: Total
-        usage:
-          items:
-            $ref: '#/components/schemas/ProjectUsageRowV1'
-          type: array
-          title: Usage
-      type: object
-      required:
-      - start_date
-      - end_date
-      - total
-      - usage
-      title: PaginatedProjectsUsageResponseV1
     ValidationError:
       properties:
         loc:
@@ -417,46 +392,6 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPExceptionError:
-      properties:
-        detail:
-          type: string
-          title: Detail
-      type: object
-      required:
-      - detail
-      title: HTTPExceptionError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    UsageRowV1:
-      properties:
-        date:
-          type: string
-          format: date
-          title: Date
-        records_count:
-          type: integer
-          title: Records Count
-        metrics_count:
-          type: integer
-          title: Metrics Count
-        total_observations:
-          type: integer
-          title: Total Observations
-      type: object
-      required:
-      - date
-      - records_count
-      - metrics_count
-      - total_observations
-      title: UsageRowV1
     ProjectsUsageResponseV1:
       properties:
         start_date:
@@ -554,6 +489,71 @@ components:
       - metrics_count
       - total_observations
       title: ProjectUsageRowV1
+    UsageRowV1:
+      properties:
+        date:
+          type: string
+          format: date
+          title: Date
+        records_count:
+          type: integer
+          title: Records Count
+        metrics_count:
+          type: integer
+          title: Metrics Count
+        total_observations:
+          type: integer
+          title: Total Observations
+      type: object
+      required:
+      - date
+      - records_count
+      - metrics_count
+      - total_observations
+      title: UsageRowV1
+    PaginatedProjectsUsageResponseV1:
+      properties:
+        start_date:
+          type: string
+          format: date
+          title: Start Date
+        end_date:
+          type: string
+          format: date
+          title: End Date
+        total:
+          type: integer
+          title: Total
+        usage:
+          items:
+            $ref: '#/components/schemas/ProjectUsageRowV1'
+          type: array
+          title: Usage
+      type: object
+      required:
+      - start_date
+      - end_date
+      - total
+      - usage
+      title: PaginatedProjectsUsageResponseV1
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

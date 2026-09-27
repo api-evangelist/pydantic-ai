@@ -115,15 +115,6 @@ components:
       - msg
       - type
       title: ValidationError
-    OrganizationInvitationCreateResponseV1:
-      properties:
-        invite_url:
-          type: string
-          title: Invite Url
-      type: object
-      required:
-      - invite_url
-      title: OrganizationInvitationCreateResponseV1
     OrganizationInvitationReadV1:
       properties:
         id:
@@ -175,15 +166,6 @@ components:
       - created_at
       - last_used_at
       title: OrganizationInvitationReadV1
-    HTTPExceptionError:
-      properties:
-        detail:
-          type: string
-          title: Detail
-      type: object
-      required:
-      - detail
-      title: HTTPExceptionError
     OrganizationInvitationCreateV1:
       properties:
         role:
@@ -211,6 +193,24 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    OrganizationInvitationCreateResponseV1:
+      properties:
+        invite_url:
+          type: string
+          title: Invite Url
+      type: object
+      required:
+      - invite_url
+      title: OrganizationInvitationCreateResponseV1
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

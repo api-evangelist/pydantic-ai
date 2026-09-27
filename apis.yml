@@ -56,6 +56,7 @@ tags:
   - Gemini
   - Observability
   - Framework
+  - A2A
 tags_raw:
   - AI
   - Agents
@@ -69,6 +70,7 @@ tags_raw:
   - Gemini
   - Observability
   - Framework
+  - A2A
 url: https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/apis.yml
 created: '2026-06-12'
 modified: '2026-06-12'
@@ -78,7 +80,7 @@ apis:
   name: PydanticAI Alerts API
   description: The Alerts API from PydanticAI — 2 operation(s) for alerts.
   humanURL: https://pydantic.dev/docs/ai/overview/
-  baseURL: https://pydantic.dev
+  baseURL: https://logfire-us.pydantic.dev/api
   tags:
   - Alerts
   properties:
@@ -113,7 +115,7 @@ apis:
   name: PydanticAI API Keys API
   description: The API Keys API from PydanticAI — 2 operation(s) for api keys.
   humanURL: https://pydantic.dev/docs/ai/overview/
-  baseURL: https://pydantic.dev
+  baseURL: https://logfire-us.pydantic.dev/api
   tags:
   - APIKeys
   tags_raw:
@@ -150,7 +152,7 @@ apis:
   name: PydanticAI Audit Logs API
   description: The Audit Logs API from PydanticAI — 2 operation(s) for audit logs.
   humanURL: https://pydantic.dev/docs/ai/overview/
-  baseURL: https://pydantic.dev
+  baseURL: https://logfire-us.pydantic.dev/api
   tags:
   - Audit Logs
   properties:
@@ -185,7 +187,7 @@ apis:
   name: PydanticAI Billing API
   description: The Billing API from PydanticAI — 1 operation(s) for billing.
   humanURL: https://pydantic.dev/docs/ai/overview/
-  baseURL: https://pydantic.dev
+  baseURL: https://logfire-us.pydantic.dev/api
   tags:
   - Billing
   properties:
@@ -220,7 +222,7 @@ apis:
   name: PydanticAI Channels API
   description: The Channels API from PydanticAI — 2 operation(s) for channels.
   humanURL: https://pydantic.dev/docs/ai/overview/
-  baseURL: https://pydantic.dev
+  baseURL: https://logfire-us.pydantic.dev/api
   tags:
   - Channels
   properties:
@@ -255,7 +257,7 @@ apis:
   name: PydanticAI Dashboards API
   description: The Dashboards API from PydanticAI — 2 operation(s) for dashboards.
   humanURL: https://pydantic.dev/docs/ai/overview/
-  baseURL: https://pydantic.dev
+  baseURL: https://logfire-us.pydantic.dev/api
   tags:
   - Dashboards
   properties:
@@ -287,10 +289,9 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
 - aid: pydantic-ai:pydantic-ai-discovery-api
-  name: PydanticAI discovery API
+  name: PydanticAI Discovery API
   description: The discovery API from PydanticAI — 1 operation(s) for discovery.
   humanURL: https://pydantic.dev/docs/ai/overview/
-  baseURL: https://pydantic.dev
   tags:
   - Discovery
   tags_raw:
@@ -327,7 +328,7 @@ apis:
   name: PydanticAI Group Mappings API
   description: The Group Mappings API from PydanticAI — 2 operation(s) for group mappings.
   humanURL: https://pydantic.dev/docs/ai/overview/
-  baseURL: https://pydantic.dev
+  baseURL: https://logfire-us.pydantic.dev/api
   tags:
   - Group Mappings
   properties:
@@ -362,7 +363,7 @@ apis:
   name: PydanticAI Instance API
   description: The Instance API from PydanticAI — 3 operation(s) for instance.
   humanURL: https://pydantic.dev/docs/ai/overview/
-  baseURL: https://pydantic.dev
+  baseURL: https://logfire-us.pydantic.dev/api
   tags:
   - Instance
   properties:
@@ -397,7 +398,7 @@ apis:
   name: PydanticAI Invitations API
   description: The Invitations API from PydanticAI — 1 operation(s) for invitations.
   humanURL: https://pydantic.dev/docs/ai/overview/
-  baseURL: https://pydantic.dev
+  baseURL: https://logfire-us.pydantic.dev/api
   tags:
   - Invitations
   properties:
@@ -432,7 +433,7 @@ apis:
   name: PydanticAI Members API
   description: The Members API from PydanticAI — 2 operation(s) for members.
   humanURL: https://pydantic.dev/docs/ai/overview/
-  baseURL: https://pydantic.dev
+  baseURL: https://logfire-us.pydantic.dev/api
   tags:
   - Members
   properties:
@@ -467,7 +468,7 @@ apis:
   name: PydanticAI Organizations API
   description: The Organizations API from PydanticAI — 3 operation(s) for organizations.
   humanURL: https://pydantic.dev/docs/ai/overview/
-  baseURL: https://pydantic.dev
+  baseURL: https://logfire-us.pydantic.dev/api
   tags:
   - Organization
   tags_raw:
@@ -504,7 +505,7 @@ apis:
   name: PydanticAI Projects API
   description: The Projects API from PydanticAI — 16 operation(s) for projects.
   humanURL: https://pydantic.dev/docs/ai/overview/
-  baseURL: https://pydantic.dev
+  baseURL: https://logfire-us.pydantic.dev/api
   tags:
   - Project
   tags_raw:
@@ -541,7 +542,7 @@ apis:
   name: PydanticAI SCIM API
   description: The SCIM API from PydanticAI — 8 operation(s) for scim.
   humanURL: https://pydantic.dev/docs/ai/overview/
-  baseURL: https://pydantic.dev
+  baseURL: https://logfire-us.pydantic.dev/api
   tags:
   - SCIM
   properties:
@@ -576,7 +577,7 @@ apis:
   name: PydanticAI Usage API
   description: The Usage API from PydanticAI — 6 operation(s) for usage.
   humanURL: https://pydantic.dev/docs/ai/overview/
-  baseURL: https://pydantic.dev
+  baseURL: https://logfire-us.pydantic.dev/api
   tags:
   - Usage
   properties:
@@ -611,7 +612,7 @@ apis:
   name: PydanticAI Variables API
   description: The Variables API from PydanticAI — 2 operation(s) for variables.
   humanURL: https://pydantic.dev/docs/ai/overview/
-  baseURL: https://pydantic.dev
+  baseURL: https://logfire-us.pydantic.dev/api
   tags:
   - Variables
   properties:
@@ -646,7 +647,7 @@ apis:
   name: PydanticAI O Auth API
   description: The OAuth API from PydanticAI — 6 operation(s) for oauth.
   humanURL: https://pydantic.dev/docs/ai/overview/
-  baseURL: https://pydantic.dev
+  baseURL: https://logfire-us.pydantic.dev/api
   tags:
   - Authentication
   tags_raw:
@@ -742,3 +743,10 @@ common:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://pydantic.dev/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3.0"
+  control: 404

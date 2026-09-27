@@ -163,6 +163,17 @@ paths:
         - instance:admin
 components:
   schemas:
+    GroupOrganizationMappingUpdate:
+      properties:
+        group_organization_mapping:
+          items:
+            $ref: '#/components/schemas/GroupOrganizationMapping-Input'
+          type: array
+          title: Group Organization Mapping
+      type: object
+      required:
+      - group_organization_mapping
+      title: GroupOrganizationMappingUpdate
     ValidationError:
       properties:
         loc:
@@ -189,6 +200,17 @@ components:
       - msg
       - type
       title: ValidationError
+    GroupOrganizationMappingRead:
+      properties:
+        group_organization_mapping:
+          items:
+            $ref: '#/components/schemas/GroupOrganizationMapping-Output'
+          type: array
+          title: Group Organization Mapping
+      type: object
+      required:
+      - group_organization_mapping
+      title: GroupOrganizationMappingRead
     GroupOrganizationMapping-Input:
       properties:
         group_id:
@@ -217,30 +239,6 @@ components:
       - project_name
       - role
       title: ProjectRoleDefinition
-    GroupOrganizationMapping-Output:
-      properties:
-        group_id:
-          type: string
-          title: Group Id
-        organization_roles:
-          items:
-            $ref: '#/components/schemas/OrganizationRoleDefinition'
-          type: array
-          title: Organization Roles
-      type: object
-      required:
-      - group_id
-      - organization_roles
-      title: GroupOrganizationMapping
-    HTTPExceptionError:
-      properties:
-        detail:
-          type: string
-          title: Detail
-      type: object
-      required:
-      - detail
-      title: HTTPExceptionError
     OrganizationRoleDefinition:
       properties:
         organization_name:
@@ -260,17 +258,21 @@ components:
       - organization_name
       - role
       title: OrganizationRoleDefinition
-    GroupOrganizationMappingRead:
+    GroupOrganizationMapping-Output:
       properties:
-        group_organization_mapping:
+        group_id:
+          type: string
+          title: Group Id
+        organization_roles:
           items:
-            $ref: '#/components/schemas/GroupOrganizationMapping-Output'
+            $ref: '#/components/schemas/OrganizationRoleDefinition'
           type: array
-          title: Group Organization Mapping
+          title: Organization Roles
       type: object
       required:
-      - group_organization_mapping
-      title: GroupOrganizationMappingRead
+      - group_id
+      - organization_roles
+      title: GroupOrganizationMapping
     HTTPValidationError:
       properties:
         detail:
@@ -280,17 +282,15 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    GroupOrganizationMappingUpdate:
+    HTTPExceptionError:
       properties:
-        group_organization_mapping:
-          items:
-            $ref: '#/components/schemas/GroupOrganizationMapping-Input'
-          type: array
-          title: Group Organization Mapping
+        detail:
+          type: string
+          title: Detail
       type: object
       required:
-      - group_organization_mapping
-      title: GroupOrganizationMappingUpdate
+      - detail
+      title: HTTPExceptionError
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

@@ -70,6 +70,41 @@ paths:
                 $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    SpecRef:
+      type: object
+      required:
+      - region
+      - name
+      - openapi_url
+      - base_url
+      properties:
+        region:
+          type: string
+          description: Short region identifier.
+          examples:
+          - us
+          - eu
+        name:
+          type: string
+          description: Human-readable name for this API.
+          examples:
+          - Pydantic Logfire (US)
+        openapi_url:
+          type: string
+          format: uri
+          description: URL of the OpenAPI specification for this API.
+          examples:
+          - https://logfire-us.pydantic.dev/api/openapi.json
+        base_url:
+          type: string
+          format: uri
+          description: Base URL at which this API is served.
+          examples:
+          - https://logfire-us.pydantic.dev/api
+        documentation_url:
+          type: string
+          format: uri
+          description: URL of human-readable documentation for this API.
     Problem:
       type: object
       description: Typed error response following RFC 9457 Problem Details for HTTP APIs.
@@ -125,38 +160,3 @@ components:
           description: Available API specifications, one per region.
           items:
             $ref: '#/components/schemas/SpecRef'
-    SpecRef:
-      type: object
-      required:
-      - region
-      - name
-      - openapi_url
-      - base_url
-      properties:
-        region:
-          type: string
-          description: Short region identifier.
-          examples:
-          - us
-          - eu
-        name:
-          type: string
-          description: Human-readable name for this API.
-          examples:
-          - Pydantic Logfire (US)
-        openapi_url:
-          type: string
-          format: uri
-          description: URL of the OpenAPI specification for this API.
-          examples:
-          - https://logfire-us.pydantic.dev/api/openapi.json
-        base_url:
-          type: string
-          format: uri
-          description: Base URL at which this API is served.
-          examples:
-          - https://logfire-us.pydantic.dev/api
-        documentation_url:
-          type: string
-          format: uri
-          description: URL of human-readable documentation for this API.

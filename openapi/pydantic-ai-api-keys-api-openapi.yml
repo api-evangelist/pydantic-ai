@@ -225,29 +225,6 @@ components:
       - msg
       - type
       title: ValidationError
-    APIKeyClaims:
-      properties:
-        project:gateway_proxy:
-          $ref: '#/components/schemas/GatewayKeySettings'
-      type: object
-      title: APIKeyClaims
-    APIKeyUpdate:
-      properties:
-        name:
-          type: string
-          minLength: 1
-          title: Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        claims:
-          $ref: '#/components/schemas/ScopeClaims'
-      type: object
-      minProperties: 1
-      title: APIKeyUpdate
-      description: 'Partial update of an API key: display metadata and/or per-scope `claims`.'
     APIKeyCreateOutput:
       properties:
         api_key:
@@ -261,190 +238,6 @@ components:
       - token
       title: APIKeyCreateOutput
       description: The created key plus its plaintext token (returned only once, at creation).
-    HTTPExceptionError:
-      properties:
-        detail:
-          type: string
-          title: Detail
-      type: object
-      required:
-      - detail
-      title: HTTPExceptionError
-    GatewayKeySettings:
-      properties:
-        spending_limit_daily:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Spending Limit Daily
-        spending_limit_weekly:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Spending Limit Weekly
-        spending_limit_monthly:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Spending Limit Monthly
-        spending_limit_total:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Spending Limit Total
-        cache_enabled:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Cache Enabled
-      type: object
-      title: GatewayKeySettings
-      description: 'AI Gateway spend caps and response caching for a `project:gateway_proxy` key.
-
-
-        All fields are optional: an omitted or `null` spending limit means no limit
-
-        for that window, and `cache_enabled=null` inherits the project default.'
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    APIKeyCreate:
-      properties:
-        name:
-          type: string
-          minLength: 1
-          title: Name
-        scopes:
-          items:
-            $ref: '#/components/schemas/OAuthScopeId'
-          type: array
-          minItems: 1
-          title: Scopes
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        claims:
-          $ref: '#/components/schemas/ScopeClaims'
-        project_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Project Id
-        expires_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Expires At
-      type: object
-      required:
-      - name
-      - scopes
-      title: APIKeyCreate
-      description: 'Request body for creating an API key via the public API.
-
-
-        `scopes` must be a subset of the caller''s own scopes. Omitting `project_id` (or
-
-        passing `null`) mints an org-wide key; giving a `project_id` scopes the key to that
-
-        project. `claims` carries optional per-scope settings (today only
-
-        `project:gateway_proxy`). Whether the new key is personal or a service key is
-
-        derived from the caller, not chosen here.'
-    OAuthScopeId:
-      type: string
-      enum:
-      - instance:admin
-      - instance:billing
-      - organization:admin
-      - organization:read
-      - organization:create_project
-      - organization:write
-      - organization:scim
-      - organization:read_invitation
-      - organization:write_invitation
-      - organization:read_member
-      - organization:write_member
-      - organization:read_channel
-      - organization:write_channel
-      - organization:create_api_key
-      - organization:read_api_key
-      - organization:write_api_key
-      - organization:auditlog
-      - organization:payment
-      - organization:read_trust_policy
-      - organization:write_trust_policy
-      - project:read
-      - project:write
-      - project:write_token
-      - project:read_token
-      - project:read_dashboard
-      - project:write_dashboard
-      - project:read_alert
-      - project:write_alert
-      - project:read_datasets
-      - project:write_datasets
-      - project:read_variables
-      - project:write_variables
-      - project:read_external_variables
-      - project:gateway_proxy
-      - project:read_otlp
-      - project:write_otlp
-      - project:read_api_key
-      - project:write_api_key
-    GatewayProxyClaims:
-      properties:
-        spending_limit_daily:
-          anyOf:
-          - type: integer
-            minimum: 0.0
-          - type: 'null'
-          title: Spending Limit Daily
-        spending_limit_weekly:
-          anyOf:
-          - type: integer
-            minimum: 0.0
-          - type: 'null'
-          title: Spending Limit Weekly
-        spending_limit_monthly:
-          anyOf:
-          - type: integer
-            minimum: 0.0
-          - type: 'null'
-          title: Spending Limit Monthly
-        spending_limit_total:
-          anyOf:
-          - type: integer
-            minimum: 0.0
-          - type: 'null'
-          title: Spending Limit Total
-        cache_enabled:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Cache Enabled
-      additionalProperties: false
-      type: object
-      title: GatewayProxyClaims
-      description: Settings carried by the `project:gateway_proxy` scope.
-    ScopeClaims:
-      properties:
-        project:gateway_proxy:
-          $ref: '#/components/schemas/GatewayProxyClaims'
-      additionalProperties: false
-      type: object
-      title: ScopeClaims
     APIKeyRead:
       properties:
         id:
@@ -552,6 +345,213 @@ components:
       - updated_at
       - updated_by
       title: APIKeyRead
+    ScopeClaims:
+      properties:
+        project:gateway_proxy:
+          $ref: '#/components/schemas/GatewayProxyClaims'
+      additionalProperties: false
+      type: object
+      title: ScopeClaims
+    OAuthScopeId:
+      type: string
+      enum:
+      - instance:admin
+      - instance:billing
+      - organization:admin
+      - organization:read
+      - organization:create_project
+      - organization:write
+      - organization:scim
+      - organization:read_invitation
+      - organization:write_invitation
+      - organization:read_member
+      - organization:write_member
+      - organization:read_channel
+      - organization:write_channel
+      - organization:create_api_key
+      - organization:read_api_key
+      - organization:write_api_key
+      - organization:auditlog
+      - organization:payment
+      - organization:read_trust_policy
+      - organization:write_trust_policy
+      - project:read
+      - project:write
+      - project:write_token
+      - project:read_token
+      - project:read_dashboard
+      - project:write_dashboard
+      - project:read_alert
+      - project:write_alert
+      - project:read_datasets
+      - project:write_datasets
+      - project:read_variables
+      - project:write_variables
+      - project:read_external_variables
+      - project:gateway_proxy
+      - project:read_otlp
+      - project:write_otlp
+      - project:read_api_key
+      - project:write_api_key
+    APIKeyClaims:
+      properties:
+        project:gateway_proxy:
+          $ref: '#/components/schemas/GatewayKeySettings'
+      type: object
+      title: APIKeyClaims
+    APIKeyCreate:
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Name
+        scopes:
+          items:
+            $ref: '#/components/schemas/OAuthScopeId'
+          type: array
+          minItems: 1
+          title: Scopes
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        claims:
+          $ref: '#/components/schemas/ScopeClaims'
+        project_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Project Id
+        expires_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Expires At
+      type: object
+      required:
+      - name
+      - scopes
+      title: APIKeyCreate
+      description: 'Request body for creating an API key via the public API.
+
+
+        `scopes` must be a subset of the caller''s own scopes. Omitting `project_id` (or
+
+        passing `null`) mints an org-wide key; giving a `project_id` scopes the key to that
+
+        project. `claims` carries optional per-scope settings (today only
+
+        `project:gateway_proxy`). Whether the new key is personal or a service key is
+
+        derived from the caller, not chosen here.'
+    GatewayKeySettings:
+      properties:
+        spending_limit_daily:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Spending Limit Daily
+        spending_limit_weekly:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Spending Limit Weekly
+        spending_limit_monthly:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Spending Limit Monthly
+        spending_limit_total:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Spending Limit Total
+        cache_enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Cache Enabled
+      type: object
+      title: GatewayKeySettings
+      description: 'AI Gateway spend caps and response caching for a `project:gateway_proxy` key.
+
+
+        All fields are optional: an omitted or `null` spending limit means no limit
+
+        for that window, and `cache_enabled=null` inherits the project default.'
+    APIKeyUpdate:
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        claims:
+          $ref: '#/components/schemas/ScopeClaims'
+      type: object
+      minProperties: 1
+      title: APIKeyUpdate
+      description: 'Partial update of an API key: display metadata and/or per-scope `claims`.'
+    GatewayProxyClaims:
+      properties:
+        spending_limit_daily:
+          anyOf:
+          - type: integer
+            minimum: 0.0
+          - type: 'null'
+          title: Spending Limit Daily
+        spending_limit_weekly:
+          anyOf:
+          - type: integer
+            minimum: 0.0
+          - type: 'null'
+          title: Spending Limit Weekly
+        spending_limit_monthly:
+          anyOf:
+          - type: integer
+            minimum: 0.0
+          - type: 'null'
+          title: Spending Limit Monthly
+        spending_limit_total:
+          anyOf:
+          - type: integer
+            minimum: 0.0
+          - type: 'null'
+          title: Spending Limit Total
+        cache_enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Cache Enabled
+      additionalProperties: false
+      type: object
+      title: GatewayProxyClaims
+      description: Settings carried by the `project:gateway_proxy` scope.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

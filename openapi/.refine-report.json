@@ -23,9 +23,7 @@
     "pydantic-ai-usage-api-openapi.yml",
     "pydantic-ai-variables-api-openapi.yml"
   ],
-  "archived": [
-    "deleted 1 superseded output(s) from the previous generation"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -49,8 +47,7 @@
     "pydantic-ai-logfire-openapi.yml: declared missing tag: SCIM",
     "pydantic-ai-logfire-openapi.yml: declared missing tag: Usage",
     "pydantic-ai-logfire-openapi.yml: declared missing tag: Variables",
-    "superseded outputs removed: pydantic-ai-o-auth-api-openapi.yml",
-    "apis.yml register: written (+1 apis, 17 total)"
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "pydantic-ai-alerts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -64,7 +61,7 @@
     "pydantic-ai-instance-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "pydantic-ai-invitations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "pydantic-ai-members-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "pydantic-ai-o-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pydantic-ai-oauth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "pydantic-ai-organizations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "pydantic-ai-projects-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "pydantic-ai-scim-api-openapi.yml: previously refined output, superseded by openapi/_original/",

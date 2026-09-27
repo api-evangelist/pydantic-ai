@@ -194,24 +194,6 @@ components:
       - type: boolean
       - type: number
       - type: 'null'
-    HTTPExceptionError:
-      properties:
-        detail:
-          type: string
-          title: Detail
-      type: object
-      required:
-      - detail
-      title: HTTPExceptionError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     AuditLogInfoRead:
       properties:
         id:
@@ -360,6 +342,24 @@ components:
       - ip_address
       - metadata
       title: AuditLogDetailRead
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2
