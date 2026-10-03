@@ -366,65 +366,46 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ValidationError:
+    ProjectUsageRowV1:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ProjectsUsageResponseV1:
-      properties:
-        start_date:
+        date:
           type: string
           format: date
-          title: Start Date
-        end_date:
+          title: Date
+        project_id:
           type: string
-          format: date
-          title: End Date
-        total_records_count:
+          format: uuid
+          title: Project Id
+        project_name:
+          type: string
+          title: Project Name
+        records_count:
           type: integer
-          title: Total Records Count
-        total_metrics_count:
+          title: Records Count
+        metrics_count:
           type: integer
-          title: Total Metrics Count
+          title: Metrics Count
         total_observations:
           type: integer
           title: Total Observations
-        usage:
-          items:
-            $ref: '#/components/schemas/ProjectUsageRowV1'
-          type: array
-          title: Usage
       type: object
       required:
-      - start_date
-      - end_date
-      - total_records_count
-      - total_metrics_count
+      - date
+      - project_id
+      - project_name
+      - records_count
+      - metrics_count
       - total_observations
-      - usage
-      title: ProjectsUsageResponseV1
+      title: ProjectUsageRowV1
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
     UsageResponseV1:
       properties:
         start_date:
@@ -458,37 +439,41 @@ components:
       - total_observations
       - usage
       title: UsageResponseV1
-    ProjectUsageRowV1:
+    HTTPValidationError:
       properties:
-        date:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          format: date
-          title: Date
-        project_id:
+          title: Message
+        type:
           type: string
-          format: uuid
-          title: Project Id
-        project_name:
-          type: string
-          title: Project Name
-        records_count:
-          type: integer
-          title: Records Count
-        metrics_count:
-          type: integer
-          title: Metrics Count
-        total_observations:
-          type: integer
-          title: Total Observations
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
       required:
-      - date
-      - project_id
-      - project_name
-      - records_count
-      - metrics_count
-      - total_observations
-      title: ProjectUsageRowV1
+      - loc
+      - msg
+      - type
+      title: ValidationError
     UsageRowV1:
       properties:
         date:
@@ -536,24 +521,39 @@ components:
       - total
       - usage
       title: PaginatedProjectsUsageResponseV1
-    HTTPValidationError:
+    ProjectsUsageResponseV1:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    HTTPExceptionError:
-      properties:
-        detail:
+        start_date:
           type: string
-          title: Detail
+          format: date
+          title: Start Date
+        end_date:
+          type: string
+          format: date
+          title: End Date
+        total_records_count:
+          type: integer
+          title: Total Records Count
+        total_metrics_count:
+          type: integer
+          title: Total Metrics Count
+        total_observations:
+          type: integer
+          title: Total Observations
+        usage:
+          items:
+            $ref: '#/components/schemas/ProjectUsageRowV1'
+          type: array
+          title: Usage
       type: object
       required:
-      - detail
-      title: HTTPExceptionError
+      - start_date
+      - end_date
+      - total_records_count
+      - total_metrics_count
+      - total_observations
+      - usage
+      title: ProjectsUsageResponseV1
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

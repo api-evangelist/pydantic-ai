@@ -105,6 +105,16 @@ components:
           type: string
           format: uri
           description: URL of human-readable documentation for this API.
+    SpecList:
+      type: object
+      required:
+      - specs
+      properties:
+        specs:
+          type: array
+          description: Available API specifications, one per region.
+          items:
+            $ref: '#/components/schemas/SpecRef'
     Problem:
       type: object
       description: Typed error response following RFC 9457 Problem Details for HTTP APIs.
@@ -150,13 +160,3 @@ components:
         request_id:
           type: string
           description: Server-assigned request identifier, useful when reporting issues.
-    SpecList:
-      type: object
-      required:
-      - specs
-      properties:
-        specs:
-          type: array
-          description: Available API specifications, one per region.
-          items:
-            $ref: '#/components/schemas/SpecRef'

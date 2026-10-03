@@ -163,17 +163,52 @@ paths:
         - instance:admin
 components:
   schemas:
-    GroupOrganizationMappingUpdate:
+    ProjectRoleDefinition:
       properties:
-        group_organization_mapping:
-          items:
-            $ref: '#/components/schemas/GroupOrganizationMapping-Input'
-          type: array
-          title: Group Organization Mapping
+        project_name:
+          type: string
+          title: Project Name
+        role:
+          type: string
+          title: Role
       type: object
       required:
-      - group_organization_mapping
-      title: GroupOrganizationMappingUpdate
+      - project_name
+      - role
+      title: ProjectRoleDefinition
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    GroupOrganizationMapping-Input:
+      properties:
+        group_id:
+          type: string
+          title: Group Id
+        organization_roles:
+          items:
+            $ref: '#/components/schemas/OrganizationRoleDefinition'
+          type: array
+          title: Organization Roles
+      type: object
+      required:
+      - group_id
+      - organization_roles
+      title: GroupOrganizationMapping
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -200,18 +235,18 @@ components:
       - msg
       - type
       title: ValidationError
-    GroupOrganizationMappingRead:
+    GroupOrganizationMappingUpdate:
       properties:
         group_organization_mapping:
           items:
-            $ref: '#/components/schemas/GroupOrganizationMapping-Output'
+            $ref: '#/components/schemas/GroupOrganizationMapping-Input'
           type: array
           title: Group Organization Mapping
       type: object
       required:
       - group_organization_mapping
-      title: GroupOrganizationMappingRead
-    GroupOrganizationMapping-Input:
+      title: GroupOrganizationMappingUpdate
+    GroupOrganizationMapping-Output:
       properties:
         group_id:
           type: string
@@ -226,19 +261,6 @@ components:
       - group_id
       - organization_roles
       title: GroupOrganizationMapping
-    ProjectRoleDefinition:
-      properties:
-        project_name:
-          type: string
-          title: Project Name
-        role:
-          type: string
-          title: Role
-      type: object
-      required:
-      - project_name
-      - role
-      title: ProjectRoleDefinition
     OrganizationRoleDefinition:
       properties:
         organization_name:
@@ -258,39 +280,17 @@ components:
       - organization_name
       - role
       title: OrganizationRoleDefinition
-    GroupOrganizationMapping-Output:
+    GroupOrganizationMappingRead:
       properties:
-        group_id:
-          type: string
-          title: Group Id
-        organization_roles:
+        group_organization_mapping:
           items:
-            $ref: '#/components/schemas/OrganizationRoleDefinition'
+            $ref: '#/components/schemas/GroupOrganizationMapping-Output'
           type: array
-          title: Organization Roles
+          title: Group Organization Mapping
       type: object
       required:
-      - group_id
-      - organization_roles
-      title: GroupOrganizationMapping
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    HTTPExceptionError:
-      properties:
-        detail:
-          type: string
-          title: Detail
-      type: object
-      required:
-      - detail
-      title: HTTPExceptionError
+      - group_organization_mapping
+      title: GroupOrganizationMappingRead
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

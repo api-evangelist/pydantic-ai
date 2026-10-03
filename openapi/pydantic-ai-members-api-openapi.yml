@@ -131,6 +131,38 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    OrganizationMemberUpdateV1:
+      properties:
+        role:
+          type: string
+          enum:
+          - admin
+          - member
+          - guest
+          - billing
+          title: Role
+      type: object
+      required:
+      - role
+      title: OrganizationMemberUpdateV1
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -157,38 +189,6 @@ components:
       - msg
       - type
       title: ValidationError
-    OrganizationMemberUpdateV1:
-      properties:
-        role:
-          type: string
-          enum:
-          - admin
-          - member
-          - guest
-          - billing
-          title: Role
-      type: object
-      required:
-      - role
-      title: OrganizationMemberUpdateV1
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    HTTPExceptionError:
-      properties:
-        detail:
-          type: string
-          title: Detail
-      type: object
-      required:
-      - detail
-      title: HTTPExceptionError
     OrganizationMemberReadV1:
       properties:
         id:
