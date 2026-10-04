@@ -681,6 +681,9 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/json-schema/logfire-project.json
 common:
+  - type: CapabilityMap
+    url: capabilities/pydantic-ai-capability-edges.yml
+    name: PydanticAI Business Capability Map
   - type: IssueTracker
     url: https://github.com/pydantic/pydantic-ai/issues
   - type: Releases
