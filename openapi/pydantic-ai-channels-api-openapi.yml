@@ -215,24 +215,59 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    Notification:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    Opsgenie:
       properties:
         type:
           type: string
           enum:
-          - notification
+          - opsgenie
           title: Type
-        recipients:
-          items:
-            type: string
-            format: uuid
-          type: array
-          title: Recipients
+        auth_key:
+          type: string
+          title: Auth Key
+        base_url:
+          type: string
+          title: Base Url
       type: object
       required:
       - type
-      - recipients
-      title: Notification
+      - auth_key
+      title: Opsgenie
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     ChannelCreate:
       properties:
         label:
@@ -255,6 +290,96 @@ components:
       - label
       - config
       title: ChannelCreate
+    ChannelUpdate:
+      properties:
+        label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Label
+        config:
+          anyOf:
+          - oneOf:
+            - $ref: '#/components/schemas/WebhookUpdate'
+            - $ref: '#/components/schemas/Opsgenie'
+            - $ref: '#/components/schemas/Notification'
+            discriminator:
+              propertyName: type
+              mapping:
+                notification: '#/components/schemas/Notification'
+                opsgenie: '#/components/schemas/Opsgenie'
+                webhook: '#/components/schemas/WebhookUpdate'
+          - type: 'null'
+          title: Config
+        active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Active
+      type: object
+      title: ChannelUpdate
+    WebhookFormat:
+      type: string
+      enum:
+      - auto
+      - slack-blockkit
+      - slack-legacy
+      - raw-data
+    Webhook:
+      properties:
+        type:
+          type: string
+          enum:
+          - webhook
+          title: Type
+        format:
+          $ref: '#/components/schemas/WebhookFormat'
+        url:
+          type: string
+          title: Url
+      type: object
+      required:
+      - type
+      - format
+      - url
+      title: Webhook
+    WebhookUpdate:
+      properties:
+        type:
+          type: string
+          enum:
+          - webhook
+          title: Type
+        format:
+          $ref: '#/components/schemas/WebhookFormat'
+        url:
+          type: string
+          title: Url
+      type: object
+      required:
+      - type
+      - format
+      - url
+      title: WebhookUpdate
+      description: Webhook config variant for updates that allows empty URL (signals "keep existing credential").
+    Notification:
+      properties:
+        type:
+          type: string
+          enum:
+          - notification
+          title: Type
+        recipients:
+          items:
+            type: string
+            format: uuid
+          type: array
+          title: Recipients
+      type: object
+      required:
+      - type
+      - recipients
+      title: Notification
     ChannelRead:
       properties:
         id:
@@ -315,13 +440,6 @@ components:
       - updated_by_name
       - config
       title: ChannelRead
-    WebhookFormat:
-      type: string
-      enum:
-      - auto
-      - slack-blockkit
-      - slack-legacy
-      - raw-data
     HTTPExceptionError:
       properties:
         detail:
@@ -331,124 +449,6 @@ components:
       required:
       - detail
       title: HTTPExceptionError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    Opsgenie:
-      properties:
-        type:
-          type: string
-          enum:
-          - opsgenie
-          title: Type
-        auth_key:
-          type: string
-          title: Auth Key
-        base_url:
-          type: string
-          title: Base Url
-      type: object
-      required:
-      - type
-      - auth_key
-      title: Opsgenie
-    ChannelUpdate:
-      properties:
-        label:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Label
-        config:
-          anyOf:
-          - oneOf:
-            - $ref: '#/components/schemas/WebhookUpdate'
-            - $ref: '#/components/schemas/Opsgenie'
-            - $ref: '#/components/schemas/Notification'
-            discriminator:
-              propertyName: type
-              mapping:
-                notification: '#/components/schemas/Notification'
-                opsgenie: '#/components/schemas/Opsgenie'
-                webhook: '#/components/schemas/WebhookUpdate'
-          - type: 'null'
-          title: Config
-        active:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Active
-      type: object
-      title: ChannelUpdate
-    Webhook:
-      properties:
-        type:
-          type: string
-          enum:
-          - webhook
-          title: Type
-        format:
-          $ref: '#/components/schemas/WebhookFormat'
-        url:
-          type: string
-          title: Url
-      type: object
-      required:
-      - type
-      - format
-      - url
-      title: Webhook
-    WebhookUpdate:
-      properties:
-        type:
-          type: string
-          enum:
-          - webhook
-          title: Type
-        format:
-          $ref: '#/components/schemas/WebhookFormat'
-        url:
-          type: string
-          title: Url
-      type: object
-      required:
-      - type
-      - format
-      - url
-      title: WebhookUpdate
-      description: Webhook config variant for updates that allows empty URL (signals "keep existing credential").
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

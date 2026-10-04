@@ -257,155 +257,15 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    DashboardGridSpec-Input:
-      properties:
-        display:
-          $ref: '#/components/schemas/DashboardGridDisplay'
-        items:
-          items:
-            $ref: '#/components/schemas/DashboardGridItem'
-          type: array
-          title: Items
-      type: object
-      required:
-      - items
-      title: DashboardGridSpec
-    DashboardSpec:
-      properties:
-        display:
-          anyOf:
-          - $ref: '#/components/schemas/DashboardDisplay'
-          - type: 'null'
-        datasources:
-          additionalProperties:
-            $ref: '#/components/schemas/DashboardDatasourceSpec'
-          type: object
-          title: Datasources
-        variables:
-          items:
-            $ref: '#/components/schemas/DashboardVariable-Output'
-          type: array
-          title: Variables
-        panels:
-          anyOf:
-          - additionalProperties:
-              $ref: '#/components/schemas/DashboardPanel-Output'
-            type: object
-          - type: 'null'
-          title: Panels
-        layouts:
-          items:
-            $ref: '#/components/schemas/DashboardLayout-Output'
-          type: array
-          title: Layouts
-        duration:
-          anyOf:
-          - type: string
-            pattern: ^((([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?|0)$
-          - type: 'null'
-          title: Duration
-          default: 1h
-        refreshInterval:
-          type: string
-          pattern: ^((([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?|0)$
-          title: Refreshinterval
-          default: 0s
-      type: object
-      required:
-      - display
-      - variables
-      - panels
-      - layouts
-      title: DashboardSpec
-    DashboardPanel-Output:
-      properties:
-        kind:
-          type: string
-          enum:
-          - Panel
-          title: Kind
-        spec:
-          $ref: '#/components/schemas/DashboardPanelSpec-Output'
-      type: object
-      required:
-      - kind
-      - spec
-      title: DashboardPanel
-    DashboardListVariable-Output:
-      properties:
-        kind:
-          type: string
-          enum:
-          - ListVariable
-          title: Kind
-        spec:
-          $ref: '#/components/schemas/DashboardListVariableSpec'
-      type: object
-      required:
-      - kind
-      - spec
-      title: DashboardListVariable
-    DashboardDatasourceSpec:
-      properties:
-        display:
-          anyOf:
-          - $ref: '#/components/schemas/DashboardDisplay'
-          - type: 'null'
-        default:
-          type: boolean
-          title: Default
-          default: false
-        plugin:
-          $ref: '#/components/schemas/DashboardPlugin'
-      type: object
-      required:
-      - display
-      - plugin
-      title: DashboardDatasourceSpec
-    HTTPExceptionError:
-      properties:
-        detail:
-          type: string
-          title: Detail
-      type: object
-      required:
-      - detail
-      title: HTTPExceptionError
-    DashboardVariableDisplay:
-      properties:
-        name:
-          type: string
-          title: Name
-        description:
-          type: string
-          title: Description
-        hidden:
-          type: boolean
-          title: Hidden
-      type: object
-      title: DashboardVariableDisplay
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    DashboardGridSpec-Output:
-      properties:
-        display:
-          $ref: '#/components/schemas/DashboardGridDisplay'
-        items:
-          items:
-            $ref: '#/components/schemas/DashboardGridItem'
-          type: array
-          title: Items
-      type: object
-      required:
-      - items
-      title: DashboardGridSpec
+    DashboardVariable-Output:
+      oneOf:
+      - $ref: '#/components/schemas/DashboardTextVariable-Output'
+      - $ref: '#/components/schemas/DashboardListVariable-Output'
+      discriminator:
+        propertyName: kind
+        mapping:
+          ListVariable: '#/components/schemas/DashboardListVariable-Output'
+          TextVariable: '#/components/schemas/DashboardTextVariable-Output'
     DashboardCreateRequest:
       properties:
         name:
@@ -422,53 +282,46 @@ components:
       - slug
       - definition
       title: DashboardCreateRequest
-    DashboardListVariableSpec:
+    DashboardPanel-Output:
       properties:
-        name:
+        kind:
           type: string
-          title: Name
+          enum:
+          - Panel
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardPanelSpec-Output'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardPanel
+    DashboardPanelSpec-Output:
+      properties:
         display:
-          $ref: '#/components/schemas/DashboardVariableDisplay'
-        defaultValue:
-          anyOf:
-          - type: string
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Defaultvalue
-        allowMultiple:
-          type: boolean
-          title: Allowmultiple
-        allowAllValue:
-          type: boolean
-          title: Allowallvalue
-        customAllValue:
-          type: string
-          title: Customallvalue
-        capturingRegexp:
-          type: string
-          title: Capturingregexp
-        sort:
-          type: string
-          title: Sort
+          $ref: '#/components/schemas/DashboardPanelDisplay'
         plugin:
           $ref: '#/components/schemas/DashboardPlugin'
+        queries:
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+          type: array
+          title: Queries
+        links:
+          items:
+            $ref: '#/components/schemas/DashboardPanelLink'
+          type: array
+          title: Links
+        variables:
+          items:
+            $ref: '#/components/schemas/DashboardVariable-Output'
+          type: array
+          title: Variables
       type: object
       required:
-      - name
-      - allowMultiple
-      - allowAllValue
+      - display
       - plugin
-      title: DashboardListVariableSpec
-    GetDashboardResponse:
-      properties:
-        dashboard:
-          $ref: '#/components/schemas/DashboardDefinitionRead'
-      type: object
-      required:
-      - dashboard
-      title: GetDashboardResponse
+      title: DashboardPanelSpec
     DashboardCreateSpec:
       properties:
         display:
@@ -515,20 +368,117 @@ components:
       - panels
       - layouts
       title: DashboardCreateSpec
-    DashboardPanel-Input:
+    DashboardUpdateRequest:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        definition:
+          anyOf:
+          - $ref: '#/components/schemas/DashboardCreate'
+          - type: 'null'
+        version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Version
+      type: object
+      title: DashboardUpdateRequest
+    DashboardTextVariable-Output:
       properties:
         kind:
           type: string
           enum:
-          - Panel
+          - TextVariable
           title: Kind
         spec:
-          $ref: '#/components/schemas/DashboardPanelSpec-Input'
+          $ref: '#/components/schemas/DashboardTextVariableSpec'
       type: object
       required:
       - kind
       - spec
-      title: DashboardPanel
+      title: DashboardTextVariable
+    DashboardVariableDisplay:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        hidden:
+          type: boolean
+          title: Hidden
+      type: object
+      title: DashboardVariableDisplay
+    PanelRef:
+      properties:
+        $ref:
+          type: string
+      type: object
+      required:
+      - $ref
+      title: PanelRef
+    DashboardListVariableSpec:
+      properties:
+        name:
+          type: string
+          title: Name
+        display:
+          $ref: '#/components/schemas/DashboardVariableDisplay'
+        defaultValue:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Defaultvalue
+        allowMultiple:
+          type: boolean
+          title: Allowmultiple
+        allowAllValue:
+          type: boolean
+          title: Allowallvalue
+        customAllValue:
+          type: string
+          title: Customallvalue
+        capturingRegexp:
+          type: string
+          title: Capturingregexp
+        sort:
+          type: string
+          title: Sort
+        plugin:
+          $ref: '#/components/schemas/DashboardPlugin'
+      type: object
+      required:
+      - name
+      - allowMultiple
+      - allowAllValue
+      - plugin
+      title: DashboardListVariableSpec
+    DashboardPanelLink:
+      properties:
+        name:
+          type: string
+          title: Name
+        url:
+          type: string
+          title: Url
+        tooltip:
+          type: string
+          title: Tooltip
+        renderVariables:
+          type: boolean
+          title: Rendervariables
+        targetBlank:
+          type: boolean
+          title: Targetblank
+      type: object
+      title: DashboardPanelLink
     ValidationError:
       properties:
         loc:
@@ -569,45 +519,6 @@ components:
       - kind
       - spec
       title: DashboardTextVariable
-    DashboardMetadataCreate:
-      properties:
-        name:
-          type: string
-          title: Name
-        project:
-          type: string
-          title: Project
-      type: object
-      required:
-      - name
-      - project
-      title: DashboardMetadataCreate
-    DashboardQuery:
-      properties:
-        kind:
-          type: string
-          title: Kind
-        spec:
-          title: Spec
-      type: object
-      required:
-      - kind
-      - spec
-      title: DashboardQuery
-    DashboardListVariable-Input:
-      properties:
-        kind:
-          type: string
-          enum:
-          - ListVariable
-          title: Kind
-        spec:
-          $ref: '#/components/schemas/DashboardListVariableSpec'
-      type: object
-      required:
-      - kind
-      - spec
-      title: DashboardListVariable
     DashboardProjectMetadataRead:
       properties:
         name:
@@ -632,67 +543,104 @@ components:
       - name
       - project
       title: DashboardProjectMetadataRead
-    DashboardLayout-Input:
+    DashboardSummary:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+        dashboard_name:
+          type: string
+          title: Dashboard Name
+        dashboard_slug:
+          type: string
+          title: Dashboard Slug
+        version:
+          type: integer
+          title: Version
+      type: object
+      required:
+      - id
+      - project_id
+      - created_at
+      - updated_at
+      - created_by_name
+      - updated_by_name
+      - dashboard_name
+      - dashboard_slug
+      - version
+      title: DashboardSummary
+    DashboardMetadataCreate:
+      properties:
+        name:
+          type: string
+          title: Name
+        project:
+          type: string
+          title: Project
+      type: object
+      required:
+      - name
+      - project
+      title: DashboardMetadataCreate
+    DashboardDatasourceSpec:
+      properties:
+        display:
+          anyOf:
+          - $ref: '#/components/schemas/DashboardDisplay'
+          - type: 'null'
+        default:
+          type: boolean
+          title: Default
+          default: false
+        plugin:
+          $ref: '#/components/schemas/DashboardPlugin'
+      type: object
+      required:
+      - display
+      - plugin
+      title: DashboardDatasourceSpec
+    DashboardDefinitionRead:
       properties:
         kind:
           type: string
           enum:
-          - Grid
+          - Dashboard
           title: Kind
+        metadata:
+          $ref: '#/components/schemas/DashboardProjectMetadataRead'
         spec:
-          $ref: '#/components/schemas/DashboardGridSpec-Input'
+          $ref: '#/components/schemas/DashboardSpec'
       type: object
       required:
       - kind
+      - metadata
       - spec
-      title: DashboardLayout
-    DashboardGridItem:
-      properties:
-        x:
-          type: integer
-          title: X
-        y:
-          type: integer
-          title: Y
-        width:
-          type: integer
-          title: Width
-        height:
-          type: integer
-          title: Height
-        content:
-          $ref: '#/components/schemas/PanelRef'
-      type: object
-      required:
-      - x
-      - y
-      - width
-      - height
-      - content
-      title: DashboardGridItem
-    DashboardTextVariable-Output:
-      properties:
-        kind:
-          type: string
-          enum:
-          - TextVariable
-          title: Kind
-        spec:
-          $ref: '#/components/schemas/DashboardTextVariableSpec'
-      type: object
-      required:
-      - kind
-      - spec
-      title: DashboardTextVariable
-    DashboardGridDisplay:
-      properties:
-        title:
-          type: string
-          title: Title
-        collapse:
-          $ref: '#/components/schemas/DashboardCollapse'
-      type: object
-      title: DashboardGridDisplay
+      title: DashboardDefinitionRead
     Dashboard:
       properties:
         id:
@@ -747,6 +695,53 @@ components:
       - version
       - definition
       title: Dashboard
+    DashboardSpec:
+      properties:
+        display:
+          anyOf:
+          - $ref: '#/components/schemas/DashboardDisplay'
+          - type: 'null'
+        datasources:
+          additionalProperties:
+            $ref: '#/components/schemas/DashboardDatasourceSpec'
+          type: object
+          title: Datasources
+        variables:
+          items:
+            $ref: '#/components/schemas/DashboardVariable-Output'
+          type: array
+          title: Variables
+        panels:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/DashboardPanel-Output'
+            type: object
+          - type: 'null'
+          title: Panels
+        layouts:
+          items:
+            $ref: '#/components/schemas/DashboardLayout-Output'
+          type: array
+          title: Layouts
+        duration:
+          anyOf:
+          - type: string
+            pattern: ^((([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?|0)$
+          - type: 'null'
+          title: Duration
+          default: 1h
+        refreshInterval:
+          type: string
+          pattern: ^((([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?|0)$
+          title: Refreshinterval
+          default: 0s
+      type: object
+      required:
+      - display
+      - variables
+      - panels
+      - layouts
+      title: DashboardSpec
     DashboardLayout-Output:
       properties:
         kind:
@@ -761,32 +756,167 @@ components:
       - kind
       - spec
       title: DashboardLayout
-    DashboardPanelSpec-Output:
+    DashboardTextVariableSpec:
       properties:
+        name:
+          type: string
+          title: Name
         display:
-          $ref: '#/components/schemas/DashboardPanelDisplay'
-        plugin:
-          $ref: '#/components/schemas/DashboardPlugin'
-        queries:
-          items:
-            $ref: '#/components/schemas/DashboardQuery'
-          type: array
-          title: Queries
-        links:
-          items:
-            $ref: '#/components/schemas/DashboardPanelLink'
-          type: array
-          title: Links
-        variables:
-          items:
-            $ref: '#/components/schemas/DashboardVariable-Output'
-          type: array
-          title: Variables
+          $ref: '#/components/schemas/DashboardVariableDisplay'
+        value:
+          type: string
+          title: Value
+        constant:
+          type: boolean
+          title: Constant
       type: object
       required:
-      - display
-      - plugin
-      title: DashboardPanelSpec
+      - name
+      - value
+      title: DashboardTextVariableSpec
+    DashboardListVariable-Output:
+      properties:
+        kind:
+          type: string
+          enum:
+          - ListVariable
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardListVariableSpec'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardListVariable
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    DashboardGridSpec-Input:
+      properties:
+        display:
+          $ref: '#/components/schemas/DashboardGridDisplay'
+        items:
+          items:
+            $ref: '#/components/schemas/DashboardGridItem'
+          type: array
+          title: Items
+      type: object
+      required:
+      - items
+      title: DashboardGridSpec
+    DashboardListVariable-Input:
+      properties:
+        kind:
+          type: string
+          enum:
+          - ListVariable
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardListVariableSpec'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardListVariable
+    GetDashboardResponse:
+      properties:
+        dashboard:
+          $ref: '#/components/schemas/DashboardDefinitionRead'
+      type: object
+      required:
+      - dashboard
+      title: GetDashboardResponse
+    DashboardPanelDisplay:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+      type: object
+      required:
+      - name
+      title: DashboardPanelDisplay
+    DashboardQuery:
+      properties:
+        kind:
+          type: string
+          title: Kind
+        spec:
+          title: Spec
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardQuery
+    DashboardLayout-Input:
+      properties:
+        kind:
+          type: string
+          enum:
+          - Grid
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardGridSpec-Input'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardLayout
+    DashboardGridDisplay:
+      properties:
+        title:
+          type: string
+          title: Title
+        collapse:
+          $ref: '#/components/schemas/DashboardCollapse'
+      type: object
+      title: DashboardGridDisplay
+    DashboardPlugin:
+      properties:
+        kind:
+          type: string
+          minLength: 1
+          title: Kind
+        spec:
+          title: Spec
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardPlugin
+    DashboardDisplay:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+      type: object
+      required:
+      - name
+      title: DashboardDisplay
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     DashboardPanelSpec-Input:
       properties:
         display:
@@ -813,166 +943,52 @@ components:
       - display
       - plugin
       title: DashboardPanelSpec
-    DashboardPanelLink:
+    DashboardCollapse:
       properties:
-        name:
-          type: string
-          title: Name
-        url:
-          type: string
-          title: Url
-        tooltip:
-          type: string
-          title: Tooltip
-        renderVariables:
+        open:
           type: boolean
-          title: Rendervariables
-        targetBlank:
-          type: boolean
-          title: Targetblank
-      type: object
-      title: DashboardPanelLink
-    DashboardVariable-Input:
-      oneOf:
-      - $ref: '#/components/schemas/DashboardTextVariable-Input'
-      - $ref: '#/components/schemas/DashboardListVariable-Input'
-      discriminator:
-        propertyName: kind
-        mapping:
-          ListVariable: '#/components/schemas/DashboardListVariable-Input'
-          TextVariable: '#/components/schemas/DashboardTextVariable-Input'
-    DashboardDefinitionRead:
-      properties:
-        kind:
-          type: string
-          enum:
-          - Dashboard
-          title: Kind
-        metadata:
-          $ref: '#/components/schemas/DashboardProjectMetadataRead'
-        spec:
-          $ref: '#/components/schemas/DashboardSpec'
+          title: Open
       type: object
       required:
-      - kind
-      - metadata
-      - spec
-      title: DashboardDefinitionRead
-    PanelRef:
+      - open
+      title: DashboardCollapse
+    DashboardGridSpec-Output:
       properties:
-        $ref:
-          type: string
+        display:
+          $ref: '#/components/schemas/DashboardGridDisplay'
+        items:
+          items:
+            $ref: '#/components/schemas/DashboardGridItem'
+          type: array
+          title: Items
       type: object
       required:
-      - $ref
-      title: PanelRef
-    DashboardPlugin:
+      - items
+      title: DashboardGridSpec
+    DashboardGridItem:
       properties:
-        kind:
-          type: string
-          minLength: 1
-          title: Kind
-        spec:
-          title: Spec
-      type: object
-      required:
-      - kind
-      - spec
-      title: DashboardPlugin
-    DashboardVariable-Output:
-      oneOf:
-      - $ref: '#/components/schemas/DashboardTextVariable-Output'
-      - $ref: '#/components/schemas/DashboardListVariable-Output'
-      discriminator:
-        propertyName: kind
-        mapping:
-          ListVariable: '#/components/schemas/DashboardListVariable-Output'
-          TextVariable: '#/components/schemas/DashboardTextVariable-Output'
-    DashboardSummary:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        created_by_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created By Name
-        updated_by_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated By Name
-        dashboard_name:
-          type: string
-          title: Dashboard Name
-        dashboard_slug:
-          type: string
-          title: Dashboard Slug
-        version:
+        x:
           type: integer
-          title: Version
+          title: X
+        y:
+          type: integer
+          title: Y
+        width:
+          type: integer
+          title: Width
+        height:
+          type: integer
+          title: Height
+        content:
+          $ref: '#/components/schemas/PanelRef'
       type: object
       required:
-      - id
-      - project_id
-      - created_at
-      - updated_at
-      - created_by_name
-      - updated_by_name
-      - dashboard_name
-      - dashboard_slug
-      - version
-      title: DashboardSummary
-    DashboardUpdateRequest:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        definition:
-          anyOf:
-          - $ref: '#/components/schemas/DashboardCreate'
-          - type: 'null'
-        version:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Version
-      type: object
-      title: DashboardUpdateRequest
-    DashboardDisplay:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-      type: object
-      required:
-      - name
-      title: DashboardDisplay
+      - x
+      - y
+      - width
+      - height
+      - content
+      title: DashboardGridItem
     DashboardCreate:
       properties:
         kind:
@@ -990,45 +1006,29 @@ components:
       - metadata
       - spec
       title: DashboardCreate
-    DashboardCollapse:
+    DashboardVariable-Input:
+      oneOf:
+      - $ref: '#/components/schemas/DashboardTextVariable-Input'
+      - $ref: '#/components/schemas/DashboardListVariable-Input'
+      discriminator:
+        propertyName: kind
+        mapping:
+          ListVariable: '#/components/schemas/DashboardListVariable-Input'
+          TextVariable: '#/components/schemas/DashboardTextVariable-Input'
+    DashboardPanel-Input:
       properties:
-        open:
-          type: boolean
-          title: Open
+        kind:
+          type: string
+          enum:
+          - Panel
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardPanelSpec-Input'
       type: object
       required:
-      - open
-      title: DashboardCollapse
-    DashboardTextVariableSpec:
-      properties:
-        name:
-          type: string
-          title: Name
-        display:
-          $ref: '#/components/schemas/DashboardVariableDisplay'
-        value:
-          type: string
-          title: Value
-        constant:
-          type: boolean
-          title: Constant
-      type: object
-      required:
-      - name
-      - value
-      title: DashboardTextVariableSpec
-    DashboardPanelDisplay:
-      properties:
-        name:
-          type: string
-          title: Name
-        description:
-          type: string
-          title: Description
-      type: object
-      required:
-      - name
-      title: DashboardPanelDisplay
+      - kind
+      - spec
+      title: DashboardPanel
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

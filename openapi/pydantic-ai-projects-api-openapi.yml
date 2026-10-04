@@ -1383,78 +1383,84 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    WebhookFormat:
-      type: string
-      enum:
-      - auto
-      - slack-blockkit
-      - slack-legacy
-      - raw-data
-    Rollout:
+    DashboardVariable-Output:
+      oneOf:
+      - $ref: '#/components/schemas/DashboardTextVariable-Output'
+      - $ref: '#/components/schemas/DashboardListVariable-Output'
+      discriminator:
+        propertyName: kind
+        mapping:
+          ListVariable: '#/components/schemas/DashboardListVariable-Output'
+          TextVariable: '#/components/schemas/DashboardTextVariable-Output'
+    DashboardPanelSpec-Output:
       properties:
-        labels:
-          additionalProperties:
-            type: number
-          propertyNames:
-            maxLength: 200
-            minLength: 1
-          type: object
-          title: Labels
+        display:
+          $ref: '#/components/schemas/DashboardPanelDisplay'
+        plugin:
+          $ref: '#/components/schemas/DashboardPlugin'
+        queries:
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+          type: array
+          title: Queries
+        links:
+          items:
+            $ref: '#/components/schemas/DashboardPanelLink'
+          type: array
+          title: Links
+        variables:
+          items:
+            $ref: '#/components/schemas/DashboardVariable-Output'
+          type: array
+          title: Variables
       type: object
       required:
-      - labels
-      title: Rollout
-      description: Configuration for label selection with weighted probabilities.
-    DashboardListVariable-Output:
+      - display
+      - plugin
+      title: DashboardPanelSpec
+    DashboardUpdateRequest:
       properties:
-        kind:
-          type: string
-          enum:
-          - ListVariable
-          title: Kind
-        spec:
-          $ref: '#/components/schemas/DashboardListVariableSpec'
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        definition:
+          anyOf:
+          - $ref: '#/components/schemas/DashboardCreate'
+          - type: 'null'
+        version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Version
       type: object
-      required:
-      - kind
-      - spec
-      title: DashboardListVariable
-    ProjectRead:
+      title: DashboardUpdateRequest
+    OverrideData:
       properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        project_name:
-          type: string
-          title: Project Name
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
         description:
           anyOf:
           - type: string
           - type: 'null'
           title: Description
-        organization_name:
-          type: string
-          title: Organization Name
-        visibility:
-          type: string
-          enum:
-          - private
-          - public
-          title: Visibility
+        conditions:
+          items:
+            $ref: '#/components/schemas/ConditionData'
+          type: array
+          title: Conditions
+        rollout:
+          $ref: '#/components/schemas/RolloutData'
       type: object
       required:
-      - id
-      - project_name
-      - created_at
-      - description
-      - organization_name
-      - visibility
-      title: ProjectRead
+      - conditions
+      - rollout
+      title: OverrideData
+      description: Override configuration stored as JSONB.
     ReadTokenRead:
       properties:
         id:
@@ -1506,52 +1512,207 @@ components:
       - token_prefix
       - active
       title: ReadTokenRead
-    DashboardCreateSpec:
+    PanelRef:
       properties:
-        display:
-          anyOf:
-          - $ref: '#/components/schemas/DashboardDisplay'
-          - type: 'null'
-        datasources:
-          additionalProperties:
-            $ref: '#/components/schemas/DashboardDatasourceSpec'
-          type: object
-          title: Datasources
-        variables:
-          items:
-            $ref: '#/components/schemas/DashboardVariable-Input'
-          type: array
-          title: Variables
-        panels:
-          anyOf:
-          - additionalProperties:
-              $ref: '#/components/schemas/DashboardPanel-Input'
-            type: object
-          - type: 'null'
-          title: Panels
-        layouts:
-          items:
-            $ref: '#/components/schemas/DashboardLayout-Input'
-          type: array
-          title: Layouts
-        duration:
-          anyOf:
-          - type: string
-            pattern: ^((([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?|0)$
-          - type: 'null'
-          title: Duration
-          default: 1h
-        refreshInterval:
+        $ref:
           type: string
-          pattern: ^((([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?|0)$
-          title: Refreshinterval
-          default: 0s
       type: object
       required:
-      - display
-      - panels
-      - layouts
-      title: DashboardCreateSpec
+      - $ref
+      title: PanelRef
+    VariablesConfig:
+      properties:
+        variables:
+          additionalProperties:
+            $ref: '#/components/schemas/VariableConfig'
+          type: object
+          title: Variables
+      type: object
+      required:
+      - variables
+      title: VariablesConfig
+      description: Container for all managed variable configurations.
+    DashboardSummary:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+        dashboard_name:
+          type: string
+          title: Dashboard Name
+        dashboard_slug:
+          type: string
+          title: Dashboard Slug
+        version:
+          type: integer
+          title: Version
+      type: object
+      required:
+      - id
+      - project_id
+      - created_at
+      - updated_at
+      - created_by_name
+      - updated_by_name
+      - dashboard_name
+      - dashboard_slug
+      - version
+      title: DashboardSummary
+    DashboardTextVariableSpec:
+      properties:
+        name:
+          type: string
+          title: Name
+        display:
+          $ref: '#/components/schemas/DashboardVariableDisplay'
+        value:
+          type: string
+          title: Value
+        constant:
+          type: boolean
+          title: Constant
+      type: object
+      required:
+      - name
+      - value
+      title: DashboardTextVariableSpec
+    DashboardListVariable-Output:
+      properties:
+        kind:
+          type: string
+          enum:
+          - ListVariable
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardListVariableSpec'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardListVariable
+    VariableConfig:
+      properties:
+        name:
+          type: string
+          title: Name
+        kind:
+          type: string
+          enum:
+          - general
+          - prompt
+          title: Kind
+          default: general
+        labels:
+          additionalProperties:
+            anyOf:
+            - $ref: '#/components/schemas/LabeledValue'
+            - $ref: '#/components/schemas/LabelRef'
+          propertyNames:
+            maxLength: 200
+            minLength: 1
+          type: object
+          title: Labels
+        latest_version:
+          anyOf:
+          - $ref: '#/components/schemas/LatestVersion'
+          - type: 'null'
+        rollout:
+          $ref: '#/components/schemas/Rollout'
+        overrides:
+          items:
+            $ref: '#/components/schemas/RolloutOverride'
+          type: array
+          title: Overrides
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        json_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Json Schema
+        template_inputs_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Template Inputs Schema
+        type_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Type Name
+        aliases:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Aliases
+        example:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Example
+        display_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display Name
+        prompt_slug:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prompt Slug
+      type: object
+      required:
+      - name
+      - labels
+      - rollout
+      - overrides
+      title: VariableConfig
+      description: Configuration for a single managed variable including labels and rollout rules.
+    DashboardGridSpec-Input:
+      properties:
+        display:
+          $ref: '#/components/schemas/DashboardGridDisplay'
+        items:
+          items:
+            $ref: '#/components/schemas/DashboardGridItem'
+          type: array
+          title: Items
+      type: object
+      required:
+      - items
+      title: DashboardGridSpec
     WriteTokenRead:
       properties:
         id:
@@ -1603,28 +1764,405 @@ components:
       - token_prefix
       - active
       title: WriteTokenRead
-    ValueIsNotIn:
+    LabelRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        variable_definition_id:
+          type: string
+          format: uuid
+          title: Variable Definition Id
+        label:
+          type: string
+          title: Label
+        target_type:
+          type: string
+          title: Target Type
+        target_label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Target Label
+        version_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Version Id
+        version_number:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Version Number
+        serialized_value:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Serialized Value
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        updated_by:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Updated By
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+      type: object
+      required:
+      - id
+      - variable_definition_id
+      - label
+      - target_type
+      - target_label
+      - version_id
+      - version_number
+      - serialized_value
+      - updated_at
+      - updated_by
+      - updated_by_name
+      title: LabelRead
+      description: A label as read from the database.
+    Notification:
+      properties:
+        type:
+          type: string
+          enum:
+          - notification
+          title: Type
+        recipients:
+          items:
+            type: string
+            format: uuid
+          type: array
+          title: Recipients
+      type: object
+      required:
+      - type
+      - recipients
+      title: Notification
+    Rollout:
+      properties:
+        labels:
+          additionalProperties:
+            type: number
+          propertyNames:
+            maxLength: 200
+            minLength: 1
+          type: object
+          title: Labels
+      type: object
+      required:
+      - labels
+      title: Rollout
+      description: Configuration for label selection with weighted probabilities.
+    DashboardPlugin:
+      properties:
+        kind:
+          type: string
+          minLength: 1
+          title: Kind
+        spec:
+          title: Spec
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardPlugin
+    Opsgenie:
+      properties:
+        type:
+          type: string
+          enum:
+          - opsgenie
+          title: Type
+        auth_key:
+          type: string
+          title: Auth Key
+        base_url:
+          type: string
+          title: Base Url
+      type: object
+      required:
+      - type
+      - auth_key
+      title: Opsgenie
+    DashboardCreate:
+      properties:
+        kind:
+          type: string
+          enum:
+          - Dashboard
+          title: Kind
+        metadata:
+          $ref: '#/components/schemas/DashboardMetadataCreate'
+        spec:
+          $ref: '#/components/schemas/DashboardCreateSpec'
+      type: object
+      required:
+      - kind
+      - metadata
+      - spec
+      title: DashboardCreate
+    DashboardGridItem:
+      properties:
+        x:
+          type: integer
+          title: X
+        y:
+          type: integer
+          title: Y
+        width:
+          type: integer
+          title: Width
+        height:
+          type: integer
+          title: Height
+        content:
+          $ref: '#/components/schemas/PanelRef'
+      type: object
+      required:
+      - x
+      - y
+      - width
+      - height
+      - content
+      title: DashboardGridItem
+    Webhook:
+      properties:
+        type:
+          type: string
+          enum:
+          - webhook
+          title: Type
+        format:
+          $ref: '#/components/schemas/WebhookFormat'
+        url:
+          type: string
+          title: Url
+      type: object
+      required:
+      - type
+      - format
+      - url
+      title: Webhook
+    DashboardCreateRequest:
+      properties:
+        name:
+          type: string
+          title: Name
+        slug:
+          type: string
+          title: Slug
+        definition:
+          $ref: '#/components/schemas/DashboardCreate'
+      type: object
+      required:
+      - name
+      - slug
+      - definition
+      title: DashboardCreateRequest
+    RolloutOverride:
+      properties:
+        conditions:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ValueEquals'
+            - $ref: '#/components/schemas/ValueDoesNotEqual'
+            - $ref: '#/components/schemas/ValueIsIn'
+            - $ref: '#/components/schemas/ValueIsNotIn'
+            - $ref: '#/components/schemas/ValueMatchesRegex'
+            - $ref: '#/components/schemas/ValueDoesNotMatchRegex'
+            - $ref: '#/components/schemas/KeyIsPresent'
+            - $ref: '#/components/schemas/KeyIsNotPresent'
+            discriminator:
+              propertyName: kind
+              mapping:
+                key-is-not-present: '#/components/schemas/KeyIsNotPresent'
+                key-is-present: '#/components/schemas/KeyIsPresent'
+                value-does-not-equal: '#/components/schemas/ValueDoesNotEqual'
+                value-does-not-match-regex: '#/components/schemas/ValueDoesNotMatchRegex'
+                value-equals: '#/components/schemas/ValueEquals'
+                value-is-in: '#/components/schemas/ValueIsIn'
+                value-is-not-in: '#/components/schemas/ValueIsNotIn'
+                value-matches-regex: '#/components/schemas/ValueMatchesRegex'
+          type: array
+          title: Conditions
+        rollout:
+          $ref: '#/components/schemas/Rollout'
+      type: object
+      required:
+      - conditions
+      - rollout
+      title: RolloutOverride
+      description: An override of the default rollout when specific conditions are met.
+    DashboardTextVariable-Output:
+      properties:
+        kind:
+          type: string
+          enum:
+          - TextVariable
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardTextVariableSpec'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardTextVariable
+    ValueDoesNotMatchRegex:
       properties:
         attribute:
           type: string
           title: Attribute
+        pattern:
+          anyOf:
+          - type: string
+          - type: string
+            format: regex
+          title: Pattern
+        kind:
+          type: string
+          enum:
+          - value-does-not-match-regex
+          title: Kind
+          default: value-does-not-match-regex
+      type: object
+      required:
+      - attribute
+      - pattern
+      title: ValueDoesNotMatchRegex
+      description: Condition that matches when an attribute value does not match a regex pattern.
+    DashboardListVariableSpec:
+      properties:
+        name:
+          type: string
+          title: Name
+        display:
+          $ref: '#/components/schemas/DashboardVariableDisplay'
+        defaultValue:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Defaultvalue
+        allowMultiple:
+          type: boolean
+          title: Allowmultiple
+        allowAllValue:
+          type: boolean
+          title: Allowallvalue
+        customAllValue:
+          type: string
+          title: Customallvalue
+        capturingRegexp:
+          type: string
+          title: Capturingregexp
+        sort:
+          type: string
+          title: Sort
+        plugin:
+          $ref: '#/components/schemas/DashboardPlugin'
+      type: object
+      required:
+      - name
+      - allowMultiple
+      - allowAllValue
+      - plugin
+      title: DashboardListVariableSpec
+    DashboardPanelLink:
+      properties:
+        name:
+          type: string
+          title: Name
+        url:
+          type: string
+          title: Url
+        tooltip:
+          type: string
+          title: Tooltip
+        renderVariables:
+          type: boolean
+          title: Rendervariables
+        targetBlank:
+          type: boolean
+          title: Targetblank
+      type: object
+      title: DashboardPanelLink
+    ConditionData:
+      properties:
+        kind:
+          type: string
+          title: Kind
+        attribute:
+          type: string
+          title: Attribute
+        value:
+          title: Value
         values:
           items: {}
           type: array
           title: Values
+        pattern:
+          type: string
+          title: Pattern
+      type: object
+      title: ConditionData
+      description: 'Condition for targeting, stored as JSONB.
+
+
+        Different condition types have different fields, so all are optional.
+
+        The ''kind'' field determines which other fields are relevant.'
+    DashboardTextVariable-Input:
+      properties:
         kind:
           type: string
           enum:
-          - value-is-not-in
+          - TextVariable
           title: Kind
-          default: value-is-not-in
+        spec:
+          $ref: '#/components/schemas/DashboardTextVariableSpec'
       type: object
       required:
-      - attribute
-      - values
-      title: ValueIsNotIn
-      description: Condition that matches when an attribute value is not in a set of values.
-    ReadTokenPublicAPIRead:
+      - kind
+      - spec
+      title: DashboardTextVariable
+    DashboardProjectMetadataRead:
+      properties:
+        name:
+          type: string
+          title: Name
+        createdAt:
+          type: string
+          format: date-time
+          title: Createdat
+        updatedAt:
+          type: string
+          format: date-time
+          title: Updatedat
+        version:
+          type: integer
+          title: Version
+        project:
+          type: string
+          title: Project
+      type: object
+      required:
+      - name
+      - project
+      title: DashboardProjectMetadataRead
+    CreateWriteTokenOutput:
       properties:
         id:
           type: string
@@ -1660,88 +2198,323 @@ components:
       - description
       - expires_at
       - token
-      title: ReadTokenPublicAPIRead
-    DashboardMetadataCreate:
+      title: CreateWriteTokenOutput
+    AlertChannelAssignment:
+      properties:
+        channel_id:
+          type: string
+          format: uuid
+          title: Channel Id
+        schedule_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Schedule Id
+      type: object
+      required:
+      - channel_id
+      title: AlertChannelAssignment
+    DashboardDatasourceSpec:
+      properties:
+        display:
+          anyOf:
+          - $ref: '#/components/schemas/DashboardDisplay'
+          - type: 'null'
+        default:
+          type: boolean
+          title: Default
+          default: false
+        plugin:
+          $ref: '#/components/schemas/DashboardPlugin'
+      type: object
+      required:
+      - display
+      - plugin
+      title: DashboardDatasourceSpec
+    DashboardSpec:
+      properties:
+        display:
+          anyOf:
+          - $ref: '#/components/schemas/DashboardDisplay'
+          - type: 'null'
+        datasources:
+          additionalProperties:
+            $ref: '#/components/schemas/DashboardDatasourceSpec'
+          type: object
+          title: Datasources
+        variables:
+          items:
+            $ref: '#/components/schemas/DashboardVariable-Output'
+          type: array
+          title: Variables
+        panels:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/DashboardPanel-Output'
+            type: object
+          - type: 'null'
+          title: Panels
+        layouts:
+          items:
+            $ref: '#/components/schemas/DashboardLayout-Output'
+          type: array
+          title: Layouts
+        duration:
+          anyOf:
+          - type: string
+            pattern: ^((([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?|0)$
+          - type: 'null'
+          title: Duration
+          default: 1h
+        refreshInterval:
+          type: string
+          pattern: ^((([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?|0)$
+          title: Refreshinterval
+          default: 0s
+      type: object
+      required:
+      - display
+      - variables
+      - panels
+      - layouts
+      title: DashboardSpec
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
+    ValueIsNotIn:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        values:
+          items: {}
+          type: array
+          title: Values
+        kind:
+          type: string
+          enum:
+          - value-is-not-in
+          title: Kind
+          default: value-is-not-in
+      type: object
+      required:
+      - attribute
+      - values
+      title: ValueIsNotIn
+      description: Condition that matches when an attribute value is not in a set of values.
+    DashboardLayout-Input:
+      properties:
+        kind:
+          type: string
+          enum:
+          - Grid
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardGridSpec-Input'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardLayout
+    DashboardDisplay:
       properties:
         name:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Name
-        project:
-          type: string
-          title: Project
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
       type: object
       required:
       - name
-      - project
-      title: DashboardMetadataCreate
-    DashboardProjectMetadataRead:
+      title: DashboardDisplay
+    HTTPValidationError:
       properties:
-        name:
-          type: string
-          title: Name
-        createdAt:
-          type: string
-          format: date-time
-          title: Createdat
-        updatedAt:
-          type: string
-          format: date-time
-          title: Updatedat
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    LabeledValue:
+      properties:
         version:
           type: integer
           title: Version
-        project:
+        serialized_value:
           type: string
-          title: Project
+          title: Serialized Value
       type: object
       required:
-      - name
-      - project
-      title: DashboardProjectMetadataRead
-    DashboardGridItem:
+      - version
+      - serialized_value
+      title: LabeledValue
+      description: A label pointing to a version with an inline serialized value.
+    DashboardPanelSpec-Input:
       properties:
-        x:
-          type: integer
-          title: X
-        y:
-          type: integer
-          title: Y
-        width:
-          type: integer
-          title: Width
-        height:
-          type: integer
-          title: Height
-        content:
-          $ref: '#/components/schemas/PanelRef'
+        display:
+          $ref: '#/components/schemas/DashboardPanelDisplay'
+        plugin:
+          $ref: '#/components/schemas/DashboardPlugin'
+        queries:
+          items:
+            $ref: '#/components/schemas/DashboardQuery'
+          type: array
+          title: Queries
+        links:
+          items:
+            $ref: '#/components/schemas/DashboardPanelLink'
+          type: array
+          title: Links
+        variables:
+          items:
+            $ref: '#/components/schemas/DashboardVariable-Input'
+          type: array
+          title: Variables
       type: object
       required:
-      - x
-      - y
-      - width
-      - height
-      - content
-      title: DashboardGridItem
-    CreateWriteTokenInput:
+      - display
+      - plugin
+      title: DashboardPanelSpec
+    DashboardCollapse:
       properties:
-        expires_at:
+        open:
+          type: boolean
+          title: Open
+      type: object
+      required:
+      - open
+      title: DashboardCollapse
+    KeyIsPresent:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        kind:
+          type: string
+          enum:
+          - key-is-present
+          title: Kind
+          default: key-is-present
+      type: object
+      required:
+      - attribute
+      title: KeyIsPresent
+      description: Condition that matches when an attribute key is present.
+    DashboardVariable-Input:
+      oneOf:
+      - $ref: '#/components/schemas/DashboardTextVariable-Input'
+      - $ref: '#/components/schemas/DashboardListVariable-Input'
+      discriminator:
+        propertyName: kind
+        mapping:
+          ListVariable: '#/components/schemas/DashboardListVariable-Input'
+          TextVariable: '#/components/schemas/DashboardTextVariable-Input'
+    DashboardPanel-Input:
+      properties:
+        kind:
+          type: string
+          enum:
+          - Panel
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardPanelSpec-Input'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardPanel
+    DashboardPanel-Output:
+      properties:
+        kind:
+          type: string
+          enum:
+          - Panel
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardPanelSpec-Output'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardPanel
+    ProjectUpdate:
+      properties:
+        project_name:
           anyOf:
           - type: string
-            format: date-time
+            maxLength: 50
+            minLength: 2
+            pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
           - type: 'null'
-          title: Expires At
+          title: Project Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        visibility:
+          anyOf:
+          - type: string
+            enum:
+            - private
+            - public
+          - type: 'null'
+          title: Visibility
       type: object
-      title: CreateWriteTokenInput
-    DashboardGridDisplay:
+      title: ProjectUpdate
+    LatestVersion:
       properties:
-        title:
+        version:
+          type: integer
+          title: Version
+        serialized_value:
           type: string
-          title: Title
-        collapse:
-          $ref: '#/components/schemas/DashboardCollapse'
+          title: Serialized Value
       type: object
-      title: DashboardGridDisplay
-    AlertRead:
+      required:
+      - version
+      - serialized_value
+      title: LatestVersion
+      description: The latest version of a variable, always carrying its serialized value.
+    ProjectCreate:
+      properties:
+        project_name:
+          type: string
+          maxLength: 50
+          minLength: 2
+          pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
+          title: Project Name
+        description:
+          anyOf:
+          - type: string
+            maxLength: 500
+          - type: 'null'
+          title: Description
+        visibility:
+          type: string
+          enum:
+          - private
+          - public
+          title: Visibility
+          default: public
+      type: object
+      required:
+      - project_name
+      title: ProjectCreate
+    AlertWithLastRun:
       properties:
         id:
           type: string
@@ -1814,6 +2587,29 @@ components:
         active:
           type: boolean
           title: Active
+        last_run:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Last Run
+        has_matches:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Has Matches
+        has_errors:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Has Errors
+        result:
+          $ref: '#/components/schemas/JSONBData'
+        result_length:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Result Length
       type: object
       required:
       - id
@@ -1832,70 +2628,33 @@ components:
       - channels
       - notify_when
       - active
-      title: AlertRead
-    RolloutOverride:
+      - last_run
+      - has_matches
+      - has_errors
+      - result
+      - result_length
+      title: AlertWithLastRun
+    CodeDefaultLabelData:
       properties:
-        conditions:
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/ValueEquals'
-            - $ref: '#/components/schemas/ValueDoesNotEqual'
-            - $ref: '#/components/schemas/ValueIsIn'
-            - $ref: '#/components/schemas/ValueIsNotIn'
-            - $ref: '#/components/schemas/ValueMatchesRegex'
-            - $ref: '#/components/schemas/ValueDoesNotMatchRegex'
-            - $ref: '#/components/schemas/KeyIsPresent'
-            - $ref: '#/components/schemas/KeyIsNotPresent'
-            discriminator:
-              propertyName: kind
-              mapping:
-                key-is-not-present: '#/components/schemas/KeyIsNotPresent'
-                key-is-present: '#/components/schemas/KeyIsPresent'
-                value-does-not-equal: '#/components/schemas/ValueDoesNotEqual'
-                value-does-not-match-regex: '#/components/schemas/ValueDoesNotMatchRegex'
-                value-equals: '#/components/schemas/ValueEquals'
-                value-is-in: '#/components/schemas/ValueIsIn'
-                value-is-not-in: '#/components/schemas/ValueIsNotIn'
-                value-matches-regex: '#/components/schemas/ValueMatchesRegex'
-          type: array
-          title: Conditions
-        rollout:
-          $ref: '#/components/schemas/Rollout'
+        target_type:
+          type: string
+          enum:
+          - code_default
+          title: Target Type
       type: object
       required:
-      - conditions
-      - rollout
-      title: RolloutOverride
-      description: An override of the default rollout when specific conditions are met.
-    DashboardPanelLink:
-      properties:
-        name:
-          type: string
-          title: Name
-        url:
-          type: string
-          title: Url
-        tooltip:
-          type: string
-          title: Tooltip
-        renderVariables:
-          type: boolean
-          title: Rendervariables
-        targetBlank:
-          type: boolean
-          title: Targetblank
-      type: object
-      title: DashboardPanelLink
-    CreateWriteTokenOutput:
+      - target_type
+      title: CodeDefaultLabelData
+      description: Label data indicating to use the code default value.
+    ProjectRead:
       properties:
         id:
           type: string
           format: uuid
           title: Id
-        project_id:
+        project_name:
           type: string
-          format: uuid
-          title: Project Id
+          title: Project Name
         created_at:
           type: string
           format: date-time
@@ -1905,220 +2664,50 @@ components:
           - type: string
           - type: 'null'
           title: Description
-        expires_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Expires At
-        token:
+        organization_name:
           type: string
-          title: Token
+          title: Organization Name
+        visibility:
+          type: string
+          enum:
+          - private
+          - public
+          title: Visibility
       type: object
       required:
       - id
-      - project_id
+      - project_name
       - created_at
       - description
-      - expires_at
-      - token
-      title: CreateWriteTokenOutput
-    DashboardVariable-Input:
-      oneOf:
-      - $ref: '#/components/schemas/DashboardTextVariable-Input'
-      - $ref: '#/components/schemas/DashboardListVariable-Input'
-      discriminator:
-        propertyName: kind
-        mapping:
-          ListVariable: '#/components/schemas/DashboardListVariable-Input'
-          TextVariable: '#/components/schemas/DashboardTextVariable-Input'
-    PanelRef:
+      - organization_name
+      - visibility
+      title: ProjectRead
+    ValidationError:
       properties:
-        $ref:
-          type: string
-      type: object
-      required:
-      - $ref
-      title: PanelRef
-    DashboardCollapse:
-      properties:
-        open:
-          type: boolean
-          title: Open
-      type: object
-      required:
-      - open
-      title: DashboardCollapse
-    HTTPExceptionError:
-      properties:
-        detail:
-          type: string
-          title: Detail
-      type: object
-      required:
-      - detail
-      title: HTTPExceptionError
-    AlertUpdate:
-      properties:
-        name:
-          type: string
-          title: Name
-        description:
-          type: string
-          title: Description
-        time_window:
-          type: string
-          format: duration
-          title: Time Window
-        frequency:
-          type: string
-          format: duration
-          title: Frequency
-        watermark:
-          type: string
-          format: duration
-          title: Watermark
-        active:
-          type: boolean
-          title: Active
-        query:
-          type: string
-          title: Query
-        channel_ids:
-          anyOf:
-          - items:
-              type: string
-              format: uuid
-            type: array
-          - type: 'null'
-          title: Channel Ids
-          description: Legacy shorthand for assigning channels without schedules.
-        channel_assignments:
+        loc:
           items:
-            $ref: '#/components/schemas/AlertChannelAssignment'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Channel Assignments
-          description: Schedule-aware channel configuration. When both `channel_assignments` and `channel_ids` are provided, `channel_assignments` is used.
-        notify_when:
+          title: Location
+        msg:
           type: string
-          enum:
-          - has_matches
-          - has_matches_changed
-          - matches_changed
-          - starts_having_matches
-          title: Notify When
-      type: object
-      title: AlertUpdate
-      description: The fields that can be updated on an alert.
-    DashboardListVariableSpec:
-      properties:
-        name:
+          title: Message
+        type:
           type: string
-          title: Name
-        display:
-          $ref: '#/components/schemas/DashboardVariableDisplay'
-        defaultValue:
-          anyOf:
-          - type: string
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Defaultvalue
-        allowMultiple:
-          type: boolean
-          title: Allowmultiple
-        allowAllValue:
-          type: boolean
-          title: Allowallvalue
-        customAllValue:
-          type: string
-          title: Customallvalue
-        capturingRegexp:
-          type: string
-          title: Capturingregexp
-        sort:
-          type: string
-          title: Sort
-        plugin:
-          $ref: '#/components/schemas/DashboardPlugin'
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
       required:
-      - name
-      - allowMultiple
-      - allowAllValue
-      - plugin
-      title: DashboardListVariableSpec
-    GetDashboardResponse:
-      properties:
-        dashboard:
-          $ref: '#/components/schemas/DashboardDefinitionRead'
-      type: object
-      required:
-      - dashboard
-      title: GetDashboardResponse
-    DashboardPanel-Input:
-      properties:
-        kind:
-          type: string
-          enum:
-          - Panel
-          title: Kind
-        spec:
-          $ref: '#/components/schemas/DashboardPanelSpec-Input'
-      type: object
-      required:
-      - kind
-      - spec
-      title: DashboardPanel
-    ValueDoesNotEqual:
-      properties:
-        attribute:
-          type: string
-          title: Attribute
-        value:
-          title: Value
-        kind:
-          type: string
-          enum:
-          - value-does-not-equal
-          title: Kind
-          default: value-does-not-equal
-      type: object
-      required:
-      - attribute
-      - value
-      title: ValueDoesNotEqual
-      description: Condition that matches when an attribute does not equal a specific value.
-    AlertChannelAssignment:
-      properties:
-        channel_id:
-          type: string
-          format: uuid
-          title: Channel Id
-        schedule_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Schedule Id
-      type: object
-      required:
-      - channel_id
-      title: AlertChannelAssignment
-    JSONBData:
-      anyOf:
-      - additionalProperties:
-          $ref: '#/components/schemas/JSONBData'
-        type: object
-      - items:
-          $ref: '#/components/schemas/JSONBData'
-        type: array
-      - type: string
-      - type: integer
-      - type: boolean
-      - type: number
-      - type: 'null'
+      - loc
+      - msg
+      - type
+      title: ValidationError
     VariableDefinitionRead:
       properties:
         id:
@@ -2247,48 +2836,297 @@ components:
       - updated_by_name
       title: VariableDefinitionRead
       description: Variable definition with current labels and latest version assembled.
-    ConditionData:
+    DashboardDefinitionRead:
       properties:
-        kind:
-          type: string
-          title: Kind
-        attribute:
-          type: string
-          title: Attribute
-        value:
-          title: Value
-        values:
-          items: {}
-          type: array
-          title: Values
-        pattern:
-          type: string
-          title: Pattern
-      type: object
-      title: ConditionData
-      description: 'Condition for targeting, stored as JSONB.
-
-
-        Different condition types have different fields, so all are optional.
-
-        The ''kind'' field determines which other fields are relevant.'
-    KeyIsPresent:
-      properties:
-        attribute:
-          type: string
-          title: Attribute
         kind:
           type: string
           enum:
-          - key-is-present
+          - Dashboard
           title: Kind
-          default: key-is-present
+        metadata:
+          $ref: '#/components/schemas/DashboardProjectMetadataRead'
+        spec:
+          $ref: '#/components/schemas/DashboardSpec'
+      type: object
+      required:
+      - kind
+      - metadata
+      - spec
+      title: DashboardDefinitionRead
+    DashboardListVariable-Input:
+      properties:
+        kind:
+          type: string
+          enum:
+          - ListVariable
+          title: Kind
+        spec:
+          $ref: '#/components/schemas/DashboardListVariableSpec'
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardListVariable
+    LabelRefLabelData:
+      properties:
+        target_type:
+          type: string
+          enum:
+          - label
+          title: Target Type
+        target_label:
+          type: string
+          title: Target Label
+      type: object
+      required:
+      - target_type
+      - target_label
+      title: LabelRefLabelData
+      description: Label data pointing to another label.
+    WebhookFormat:
+      type: string
+      enum:
+      - auto
+      - slack-blockkit
+      - slack-legacy
+      - raw-data
+    ValueMatchesRegex:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        pattern:
+          anyOf:
+          - type: string
+          - type: string
+            format: regex
+          title: Pattern
+        kind:
+          type: string
+          enum:
+          - value-matches-regex
+          title: Kind
+          default: value-matches-regex
       type: object
       required:
       - attribute
-      title: KeyIsPresent
-      description: Condition that matches when an attribute key is present.
-    AlertWithLastRun:
+      - pattern
+      title: ValueMatchesRegex
+      description: Condition that matches when an attribute value matches a regex pattern.
+    DashboardQuery:
+      properties:
+        kind:
+          type: string
+          title: Kind
+        spec:
+          title: Spec
+      type: object
+      required:
+      - kind
+      - spec
+      title: DashboardQuery
+    LabelRef:
+      properties:
+        version:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Version
+        ref:
+          type: string
+          title: Ref
+      type: object
+      required:
+      - ref
+      title: LabelRef
+      description: A label pointing via reference to another label, 'latest', or 'code_default'.
+    DashboardGridDisplay:
+      properties:
+        title:
+          type: string
+          title: Title
+        collapse:
+          $ref: '#/components/schemas/DashboardCollapse'
+      type: object
+      title: DashboardGridDisplay
+    VersionLabelData:
+      properties:
+        target_type:
+          type: string
+          enum:
+          - version
+          title: Target Type
+        serialized_value:
+          type: string
+          title: Serialized Value
+        version:
+          type: integer
+          title: Version
+      type: object
+      required:
+      - target_type
+      - serialized_value
+      title: VersionLabelData
+      description: Label data pointing to a version by serialized value.
+    ProjectListRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        project_name:
+          type: string
+          title: Project Name
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        organization_name:
+          type: string
+          title: Organization Name
+        visibility:
+          type: string
+          enum:
+          - private
+          - public
+          title: Visibility
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - project_name
+      - created_at
+      - description
+      - organization_name
+      - visibility
+      - updated_at
+      title: ProjectListRead
+    ReadTokenPublicAPIRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        expires_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Expires At
+        token:
+          type: string
+          title: Token
+      type: object
+      required:
+      - id
+      - project_id
+      - created_at
+      - description
+      - expires_at
+      - token
+      title: ReadTokenPublicAPIRead
+    DashboardGridSpec-Output:
+      properties:
+        display:
+          $ref: '#/components/schemas/DashboardGridDisplay'
+        items:
+          items:
+            $ref: '#/components/schemas/DashboardGridItem'
+          type: array
+          title: Items
+      type: object
+      required:
+      - items
+      title: DashboardGridSpec
+    VariableDefinitionCreateRequest:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          anyOf:
+          - type: string
+            maxLength: 500
+          - type: 'null'
+          title: Description
+        json_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Json Schema
+        template_inputs_schema:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Template Inputs Schema
+        type_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Type Id
+        rollout:
+          $ref: '#/components/schemas/RolloutData'
+        overrides:
+          items:
+            $ref: '#/components/schemas/OverrideData'
+          type: array
+          title: Overrides
+        aliases:
+          items:
+            type: string
+          type: array
+          title: Aliases
+        example:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Example
+        external:
+          type: boolean
+          title: External
+        labels:
+          additionalProperties:
+            anyOf:
+            - $ref: '#/components/schemas/VersionLabelData'
+            - $ref: '#/components/schemas/LatestLabelData'
+            - $ref: '#/components/schemas/CodeDefaultLabelData'
+            - $ref: '#/components/schemas/LabelRefLabelData'
+          type: object
+          title: Labels
+      type: object
+      required:
+      - name
+      - description
+      - json_schema
+      - rollout
+      - overrides
+      title: VariableDefinitionCreateRequest
+      description: Request model for creating a variable definition.
+    AlertRead:
       properties:
         id:
           type: string
@@ -2361,29 +3199,6 @@ components:
         active:
           type: boolean
           title: Active
-        last_run:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Last Run
-        has_matches:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Has Matches
-        has_errors:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Has Errors
-        result:
-          $ref: '#/components/schemas/JSONBData'
-        result_length:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Result Length
       type: object
       required:
       - id
@@ -2402,390 +3217,28 @@ components:
       - channels
       - notify_when
       - active
-      - last_run
-      - has_matches
-      - has_errors
-      - result
-      - result_length
-      title: AlertWithLastRun
-    Dashboard:
+      title: AlertRead
+    ValueIsIn:
       properties:
-        id:
+        attribute:
           type: string
-          format: uuid
-          title: Id
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        created_by_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created By Name
-        updated_by_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated By Name
-        dashboard_name:
-          type: string
-          title: Dashboard Name
-        dashboard_slug:
-          type: string
-          title: Dashboard Slug
-        version:
-          type: integer
-          title: Version
-        definition:
-          $ref: '#/components/schemas/DashboardDefinitionRead'
-      type: object
-      required:
-      - id
-      - project_id
-      - created_at
-      - updated_at
-      - created_by_name
-      - updated_by_name
-      - dashboard_name
-      - dashboard_slug
-      - version
-      - definition
-      title: Dashboard
-    DashboardPanelSpec-Input:
-      properties:
-        display:
-          $ref: '#/components/schemas/DashboardPanelDisplay'
-        plugin:
-          $ref: '#/components/schemas/DashboardPlugin'
-        queries:
-          items:
-            $ref: '#/components/schemas/DashboardQuery'
+          title: Attribute
+        values:
+          items: {}
           type: array
-          title: Queries
-        links:
-          items:
-            $ref: '#/components/schemas/DashboardPanelLink'
-          type: array
-          title: Links
-        variables:
-          items:
-            $ref: '#/components/schemas/DashboardVariable-Input'
-          type: array
-          title: Variables
-      type: object
-      required:
-      - display
-      - plugin
-      title: DashboardPanelSpec
-    DashboardPlugin:
-      properties:
-        kind:
-          type: string
-          minLength: 1
-          title: Kind
-        spec:
-          title: Spec
-      type: object
-      required:
-      - kind
-      - spec
-      title: DashboardPlugin
-    CreateReadTokenInput:
-      properties:
-        expires_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Expires At
-      type: object
-      title: CreateReadTokenInput
-    VariablesConfig:
-      properties:
-        variables:
-          additionalProperties:
-            $ref: '#/components/schemas/VariableConfig'
-          type: object
-          title: Variables
-      type: object
-      required:
-      - variables
-      title: VariablesConfig
-      description: Container for all managed variable configurations.
-    DashboardUpdateRequest:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        definition:
-          anyOf:
-          - $ref: '#/components/schemas/DashboardCreate'
-          - type: 'null'
-        version:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Version
-      type: object
-      title: DashboardUpdateRequest
-    DashboardDisplay:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-      type: object
-      required:
-      - name
-      title: DashboardDisplay
-    VariableDefinitionCreateRequest:
-      properties:
-        name:
-          type: string
-          title: Name
-        description:
-          anyOf:
-          - type: string
-            maxLength: 500
-          - type: 'null'
-          title: Description
-        json_schema:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Json Schema
-        template_inputs_schema:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Template Inputs Schema
-        type_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Type Id
-        rollout:
-          $ref: '#/components/schemas/RolloutData'
-        overrides:
-          items:
-            $ref: '#/components/schemas/OverrideData'
-          type: array
-          title: Overrides
-        aliases:
-          items:
-            type: string
-          type: array
-          title: Aliases
-        example:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Example
-        external:
-          type: boolean
-          title: External
-        labels:
-          additionalProperties:
-            anyOf:
-            - $ref: '#/components/schemas/VersionLabelData'
-            - $ref: '#/components/schemas/LatestLabelData'
-            - $ref: '#/components/schemas/CodeDefaultLabelData'
-            - $ref: '#/components/schemas/LabelRefLabelData'
-          type: object
-          title: Labels
-      type: object
-      required:
-      - name
-      - description
-      - json_schema
-      - rollout
-      - overrides
-      title: VariableDefinitionCreateRequest
-      description: Request model for creating a variable definition.
-    DashboardTextVariableSpec:
-      properties:
-        name:
-          type: string
-          title: Name
-        display:
-          $ref: '#/components/schemas/DashboardVariableDisplay'
-        value:
-          type: string
-          title: Value
-        constant:
-          type: boolean
-          title: Constant
-      type: object
-      required:
-      - name
-      - value
-      title: DashboardTextVariableSpec
-    DashboardPanelDisplay:
-      properties:
-        name:
-          type: string
-          title: Name
-        description:
-          type: string
-          title: Description
-      type: object
-      required:
-      - name
-      title: DashboardPanelDisplay
-    DashboardGridSpec-Input:
-      properties:
-        display:
-          $ref: '#/components/schemas/DashboardGridDisplay'
-        items:
-          items:
-            $ref: '#/components/schemas/DashboardGridItem'
-          type: array
-          title: Items
-      type: object
-      required:
-      - items
-      title: DashboardGridSpec
-    VersionLabelData:
-      properties:
-        target_type:
-          type: string
-          enum:
-          - version
-          title: Target Type
-        serialized_value:
-          type: string
-          title: Serialized Value
-        version:
-          type: integer
-          title: Version
-      type: object
-      required:
-      - target_type
-      - serialized_value
-      title: VersionLabelData
-      description: Label data pointing to a version by serialized value.
-    DashboardDatasourceSpec:
-      properties:
-        display:
-          anyOf:
-          - $ref: '#/components/schemas/DashboardDisplay'
-          - type: 'null'
-        default:
-          type: boolean
-          title: Default
-          default: false
-        plugin:
-          $ref: '#/components/schemas/DashboardPlugin'
-      type: object
-      required:
-      - display
-      - plugin
-      title: DashboardDatasourceSpec
-    DashboardVariableDisplay:
-      properties:
-        name:
-          type: string
-          title: Name
-        description:
-          type: string
-          title: Description
-        hidden:
-          type: boolean
-          title: Hidden
-      type: object
-      title: DashboardVariableDisplay
-    DashboardCreateRequest:
-      properties:
-        name:
-          type: string
-          title: Name
-        slug:
-          type: string
-          title: Slug
-        definition:
-          $ref: '#/components/schemas/DashboardCreate'
-      type: object
-      required:
-      - name
-      - slug
-      - definition
-      title: DashboardCreateRequest
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    LatestVersion:
-      properties:
-        version:
-          type: integer
-          title: Version
-        serialized_value:
-          type: string
-          title: Serialized Value
-      type: object
-      required:
-      - version
-      - serialized_value
-      title: LatestVersion
-      description: The latest version of a variable, always carrying its serialized value.
-    DashboardTextVariable-Output:
-      properties:
+          title: Values
         kind:
           type: string
           enum:
-          - TextVariable
+          - value-is-in
           title: Kind
-        spec:
-          $ref: '#/components/schemas/DashboardTextVariableSpec'
+          default: value-is-in
       type: object
       required:
-      - kind
-      - spec
-      title: DashboardTextVariable
+      - attribute
+      - values
+      title: ValueIsIn
+      description: Condition that matches when an attribute value is in a set of values.
     KeyIsNotPresent:
       properties:
         attribute:
@@ -2802,187 +3255,74 @@ components:
       - attribute
       title: KeyIsNotPresent
       description: Condition that matches when an attribute key is not present.
-    DashboardLayout-Output:
-      properties:
-        kind:
-          type: string
-          enum:
-          - Grid
-          title: Kind
-        spec:
-          $ref: '#/components/schemas/DashboardGridSpec-Output'
-      type: object
-      required:
-      - kind
-      - spec
-      title: DashboardLayout
-    DashboardDefinitionRead:
-      properties:
-        kind:
-          type: string
-          enum:
-          - Dashboard
-          title: Kind
-        metadata:
-          $ref: '#/components/schemas/DashboardProjectMetadataRead'
-        spec:
-          $ref: '#/components/schemas/DashboardSpec'
-      type: object
-      required:
-      - kind
-      - metadata
-      - spec
-      title: DashboardDefinitionRead
-    DashboardVariable-Output:
-      oneOf:
-      - $ref: '#/components/schemas/DashboardTextVariable-Output'
-      - $ref: '#/components/schemas/DashboardListVariable-Output'
-      discriminator:
-        propertyName: kind
-        mapping:
-          ListVariable: '#/components/schemas/DashboardListVariable-Output'
-          TextVariable: '#/components/schemas/DashboardTextVariable-Output'
-    DashboardSummary:
+    VersionRead:
       properties:
         id:
           type: string
           format: uuid
           title: Id
-        project_id:
+        variable_definition_id:
           type: string
           format: uuid
-          title: Project Id
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        created_by_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created By Name
-        updated_by_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated By Name
-        dashboard_name:
-          type: string
-          title: Dashboard Name
-        dashboard_slug:
-          type: string
-          title: Dashboard Slug
+          title: Variable Definition Id
         version:
           type: integer
           title: Version
-      type: object
-      required:
-      - id
-      - project_id
-      - created_at
-      - updated_at
-      - created_by_name
-      - updated_by_name
-      - dashboard_name
-      - dashboard_slug
-      - version
-      title: DashboardSummary
-    Webhook:
-      properties:
-        type:
+        serialized_value:
           type: string
-          enum:
-          - webhook
-          title: Type
-        format:
-          $ref: '#/components/schemas/WebhookFormat'
-        url:
-          type: string
-          title: Url
-      type: object
-      required:
-      - type
-      - format
-      - url
-      title: Webhook
-    LatestLabelData:
-      properties:
-        target_type:
-          type: string
-          enum:
-          - latest
-          title: Target Type
-      type: object
-      required:
-      - target_type
-      title: LatestLabelData
-      description: Label data pointing to the latest version.
-    Notification:
-      properties:
-        type:
-          type: string
-          enum:
-          - notification
-          title: Type
-        recipients:
-          items:
-            type: string
-            format: uuid
-          type: array
-          title: Recipients
-      type: object
-      required:
-      - type
-      - recipients
-      title: Notification
-    ProjectListRead:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        project_name:
-          type: string
-          title: Project Name
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
+          title: Serialized Value
         description:
           anyOf:
           - type: string
           - type: 'null'
           title: Description
-        organization_name:
-          type: string
-          title: Organization Name
-        visibility:
-          type: string
-          enum:
-          - private
-          - public
-          title: Visibility
-        updated_at:
+        created_at:
           type: string
           format: date-time
-          title: Updated At
+          title: Created At
+        created_by:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Created By
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
       type: object
       required:
       - id
-      - project_name
-      - created_at
+      - variable_definition_id
+      - version
+      - serialized_value
       - description
-      - organization_name
-      - visibility
-      - updated_at
-      title: ProjectListRead
-    DashboardSpec:
+      - created_at
+      - created_by
+      - created_by_name
+      title: VersionRead
+      description: A version as read from the database.
+    ValueDoesNotEqual:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        value:
+          title: Value
+        kind:
+          type: string
+          enum:
+          - value-does-not-equal
+          title: Kind
+          default: value-does-not-equal
+      type: object
+      required:
+      - attribute
+      - value
+      title: ValueDoesNotEqual
+      description: Condition that matches when an attribute does not equal a specific value.
+    DashboardCreateSpec:
       properties:
         display:
           anyOf:
@@ -2995,19 +3335,19 @@ components:
           title: Datasources
         variables:
           items:
-            $ref: '#/components/schemas/DashboardVariable-Output'
+            $ref: '#/components/schemas/DashboardVariable-Input'
           type: array
           title: Variables
         panels:
           anyOf:
           - additionalProperties:
-              $ref: '#/components/schemas/DashboardPanel-Output'
+              $ref: '#/components/schemas/DashboardPanel-Input'
             type: object
           - type: 'null'
           title: Panels
         layouts:
           items:
-            $ref: '#/components/schemas/DashboardLayout-Output'
+            $ref: '#/components/schemas/DashboardLayout-Input'
           type: array
           title: Layouts
         duration:
@@ -3025,49 +3365,105 @@ components:
       type: object
       required:
       - display
-      - variables
       - panels
       - layouts
-      title: DashboardSpec
-    DashboardPanel-Output:
+      title: DashboardCreateSpec
+    AlertCreate:
       properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        query:
+          title: Query
+          examples:
+          - SELECT 1
+        time_window:
+          type: string
+          format: duration
+          title: Time Window
+        frequency:
+          type: string
+          format: duration
+          title: Frequency
+        watermark:
+          type: string
+          format: duration
+          title: Watermark
+        active:
+          type: boolean
+          title: Active
+          description: Whether the alert starts enabled.
+          default: true
+        channel_ids:
+          anyOf:
+          - items:
+              type: string
+              format: uuid
+            type: array
+          - type: 'null'
+          title: Channel Ids
+          description: Legacy shorthand for assigning channels without schedules.
+        channel_assignments:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/AlertChannelAssignment'
+            type: array
+          - type: 'null'
+          title: Channel Assignments
+          description: Schedule-aware channel configuration. When both `channel_assignments` and `channel_ids` are provided, `channel_assignments` is used.
+        notify_when:
+          type: string
+          enum:
+          - has_matches
+          - has_matches_changed
+          - matches_changed
+          - starts_having_matches
+          title: Notify When
+      type: object
+      required:
+      - name
+      - description
+      - query
+      - time_window
+      - frequency
+      - watermark
+      - notify_when
+      title: AlertCreate
+    DashboardVariableDisplay:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        hidden:
+          type: boolean
+          title: Hidden
+      type: object
+      title: DashboardVariableDisplay
+    ValueEquals:
+      properties:
+        attribute:
+          type: string
+          title: Attribute
+        value:
+          title: Value
         kind:
           type: string
           enum:
-          - Panel
+          - value-equals
           title: Kind
-        spec:
-          $ref: '#/components/schemas/DashboardPanelSpec-Output'
+          default: value-equals
       type: object
       required:
-      - kind
-      - spec
-      title: DashboardPanel
-    ProjectUpdate:
-      properties:
-        project_name:
-          anyOf:
-          - type: string
-            maxLength: 50
-            minLength: 2
-            pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
-          - type: 'null'
-          title: Project Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        visibility:
-          anyOf:
-          - type: string
-            enum:
-            - private
-            - public
-          - type: 'null'
-          title: Visibility
-      type: object
-      title: ProjectUpdate
+      - attribute
+      - value
+      title: ValueEquals
+      description: Condition that matches when an attribute equals a specific value.
     VariableDefinitionUpdateRequest:
       properties:
         name:
@@ -3134,86 +3530,130 @@ components:
 
 
         Should be the same as `VariableDefinitionCreateRequest`, just with `total=False`.'
-    ValueEquals:
+    DashboardMetadataCreate:
       properties:
-        attribute:
+        name:
           type: string
-          title: Attribute
-        value:
-          title: Value
-        kind:
+          title: Name
+        project:
           type: string
-          enum:
-          - value-equals
-          title: Kind
-          default: value-equals
+          title: Project
       type: object
       required:
-      - attribute
-      - value
-      title: ValueEquals
-      description: Condition that matches when an attribute equals a specific value.
-    HTTPValidationError:
+      - name
+      - project
+      title: DashboardMetadataCreate
+    Dashboard:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ValueDoesNotMatchRegex:
-      properties:
-        attribute:
+        id:
           type: string
-          title: Attribute
-        pattern:
+          format: uuid
+          title: Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
           anyOf:
           - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        created_by_name:
+          anyOf:
           - type: string
-            format: regex
-          title: Pattern
+          - type: 'null'
+          title: Created By Name
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+        dashboard_name:
+          type: string
+          title: Dashboard Name
+        dashboard_slug:
+          type: string
+          title: Dashboard Slug
+        version:
+          type: integer
+          title: Version
+        definition:
+          $ref: '#/components/schemas/DashboardDefinitionRead'
+      type: object
+      required:
+      - id
+      - project_id
+      - created_at
+      - updated_at
+      - created_by_name
+      - updated_by_name
+      - dashboard_name
+      - dashboard_slug
+      - version
+      - definition
+      title: Dashboard
+    CreateWriteTokenInput:
+      properties:
+        expires_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Expires At
+      type: object
+      title: CreateWriteTokenInput
+    DashboardLayout-Output:
+      properties:
         kind:
           type: string
           enum:
-          - value-does-not-match-regex
+          - Grid
           title: Kind
-          default: value-does-not-match-regex
+        spec:
+          $ref: '#/components/schemas/DashboardGridSpec-Output'
       type: object
       required:
-      - attribute
-      - pattern
-      title: ValueDoesNotMatchRegex
-      description: Condition that matches when an attribute value does not match a regex pattern.
-    DashboardGridSpec-Output:
+      - kind
+      - spec
+      title: DashboardLayout
+    JSONBData:
+      anyOf:
+      - additionalProperties:
+          $ref: '#/components/schemas/JSONBData'
+        type: object
+      - items:
+          $ref: '#/components/schemas/JSONBData'
+        type: array
+      - type: string
+      - type: integer
+      - type: boolean
+      - type: number
+      - type: 'null'
+    GetDashboardResponse:
       properties:
-        display:
-          $ref: '#/components/schemas/DashboardGridDisplay'
-        items:
-          items:
-            $ref: '#/components/schemas/DashboardGridItem'
-          type: array
-          title: Items
+        dashboard:
+          $ref: '#/components/schemas/DashboardDefinitionRead'
       type: object
       required:
-      - items
-      title: DashboardGridSpec
-    LabelRefLabelData:
+      - dashboard
+      title: GetDashboardResponse
+    DashboardPanelDisplay:
       properties:
-        target_type:
+        name:
           type: string
-          enum:
-          - label
-          title: Target Type
-        target_label:
+          title: Name
+        description:
           type: string
-          title: Target Label
+          title: Description
       type: object
       required:
-      - target_type
-      - target_label
-      title: LabelRefLabelData
-      description: Label data pointing to another label.
+      - name
+      title: DashboardPanelDisplay
     RolloutData:
       properties:
         labels:
@@ -3229,88 +3669,58 @@ components:
       - labels
       title: RolloutData
       description: Rollout configuration stored as JSONB.
-    LabelRead:
+    AlertUpdate:
       properties:
-        id:
+        name:
           type: string
-          format: uuid
-          title: Id
-        variable_definition_id:
+          title: Name
+        description:
           type: string
-          format: uuid
-          title: Variable Definition Id
-        label:
+          title: Description
+        time_window:
           type: string
-          title: Label
-        target_type:
+          format: duration
+          title: Time Window
+        frequency:
           type: string
-          title: Target Type
-        target_label:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Target Label
-        version_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Version Id
-        version_number:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Version Number
-        serialized_value:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Serialized Value
-        updated_at:
+          format: duration
+          title: Frequency
+        watermark:
           type: string
-          format: date-time
-          title: Updated At
-        updated_by:
+          format: duration
+          title: Watermark
+        active:
+          type: boolean
+          title: Active
+        query:
+          type: string
+          title: Query
+        channel_ids:
           anyOf:
-          - type: string
-            format: uuid
+          - items:
+              type: string
+              format: uuid
+            type: array
           - type: 'null'
-          title: Updated By
-        updated_by_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated By Name
+          title: Channel Ids
+          description: Legacy shorthand for assigning channels without schedules.
+        channel_assignments:
+          items:
+            $ref: '#/components/schemas/AlertChannelAssignment'
+          type: array
+          title: Channel Assignments
+          description: Schedule-aware channel configuration. When both `channel_assignments` and `channel_ids` are provided, `channel_assignments` is used.
+        notify_when:
+          type: string
+          enum:
+          - has_matches
+          - has_matches_changed
+          - matches_changed
+          - starts_having_matches
+          title: Notify When
       type: object
-      required:
-      - id
-      - variable_definition_id
-      - label
-      - target_type
-      - target_label
-      - version_id
-      - version_number
-      - serialized_value
-      - updated_at
-      - updated_by
-      - updated_by_name
-      title: LabelRead
-      description: A label as read from the database.
-    LabelRef:
-      properties:
-        version:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Version
-        ref:
-          type: string
-          title: Ref
-      type: object
-      required:
-      - ref
-      title: LabelRef
-      description: A label pointing via reference to another label, 'latest', or 'code_default'.
+      title: AlertUpdate
+      description: The fields that can be updated on an alert.
     AlertChannelRead:
       properties:
         id:
@@ -3378,438 +3788,28 @@ components:
       - config
       - schedule_id
       title: AlertChannelRead
-    ProjectCreate:
-      properties:
-        project_name:
-          type: string
-          maxLength: 50
-          minLength: 2
-          pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
-          title: Project Name
-        description:
-          anyOf:
-          - type: string
-            maxLength: 500
-          - type: 'null'
-          title: Description
-        visibility:
-          type: string
-          enum:
-          - private
-          - public
-          title: Visibility
-          default: public
-      type: object
-      required:
-      - project_name
-      title: ProjectCreate
-    Opsgenie:
-      properties:
-        type:
-          type: string
-          enum:
-          - opsgenie
-          title: Type
-        auth_key:
-          type: string
-          title: Auth Key
-        base_url:
-          type: string
-          title: Base Url
-      type: object
-      required:
-      - type
-      - auth_key
-      title: Opsgenie
-    DashboardTextVariable-Input:
-      properties:
-        kind:
-          type: string
-          enum:
-          - TextVariable
-          title: Kind
-        spec:
-          $ref: '#/components/schemas/DashboardTextVariableSpec'
-      type: object
-      required:
-      - kind
-      - spec
-      title: DashboardTextVariable
-    DashboardQuery:
-      properties:
-        kind:
-          type: string
-          title: Kind
-        spec:
-          title: Spec
-      type: object
-      required:
-      - kind
-      - spec
-      title: DashboardQuery
-    DashboardListVariable-Input:
-      properties:
-        kind:
-          type: string
-          enum:
-          - ListVariable
-          title: Kind
-        spec:
-          $ref: '#/components/schemas/DashboardListVariableSpec'
-      type: object
-      required:
-      - kind
-      - spec
-      title: DashboardListVariable
-    OverrideData:
-      properties:
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        conditions:
-          items:
-            $ref: '#/components/schemas/ConditionData'
-          type: array
-          title: Conditions
-        rollout:
-          $ref: '#/components/schemas/RolloutData'
-      type: object
-      required:
-      - conditions
-      - rollout
-      title: OverrideData
-      description: Override configuration stored as JSONB.
-    DashboardLayout-Input:
-      properties:
-        kind:
-          type: string
-          enum:
-          - Grid
-          title: Kind
-        spec:
-          $ref: '#/components/schemas/DashboardGridSpec-Input'
-      type: object
-      required:
-      - kind
-      - spec
-      title: DashboardLayout
-    ValueMatchesRegex:
-      properties:
-        attribute:
-          type: string
-          title: Attribute
-        pattern:
-          anyOf:
-          - type: string
-          - type: string
-            format: regex
-          title: Pattern
-        kind:
-          type: string
-          enum:
-          - value-matches-regex
-          title: Kind
-          default: value-matches-regex
-      type: object
-      required:
-      - attribute
-      - pattern
-      title: ValueMatchesRegex
-      description: Condition that matches when an attribute value matches a regex pattern.
-    DashboardPanelSpec-Output:
-      properties:
-        display:
-          $ref: '#/components/schemas/DashboardPanelDisplay'
-        plugin:
-          $ref: '#/components/schemas/DashboardPlugin'
-        queries:
-          items:
-            $ref: '#/components/schemas/DashboardQuery'
-          type: array
-          title: Queries
-        links:
-          items:
-            $ref: '#/components/schemas/DashboardPanelLink'
-          type: array
-          title: Links
-        variables:
-          items:
-            $ref: '#/components/schemas/DashboardVariable-Output'
-          type: array
-          title: Variables
-      type: object
-      required:
-      - display
-      - plugin
-      title: DashboardPanelSpec
-    ValueIsIn:
-      properties:
-        attribute:
-          type: string
-          title: Attribute
-        values:
-          items: {}
-          type: array
-          title: Values
-        kind:
-          type: string
-          enum:
-          - value-is-in
-          title: Kind
-          default: value-is-in
-      type: object
-      required:
-      - attribute
-      - values
-      title: ValueIsIn
-      description: Condition that matches when an attribute value is in a set of values.
-    AlertCreate:
-      properties:
-        name:
-          type: string
-          title: Name
-        description:
-          type: string
-          title: Description
-        query:
-          title: Query
-          examples:
-          - SELECT 1
-        time_window:
-          type: string
-          format: duration
-          title: Time Window
-        frequency:
-          type: string
-          format: duration
-          title: Frequency
-        watermark:
-          type: string
-          format: duration
-          title: Watermark
-        active:
-          type: boolean
-          title: Active
-          description: Whether the alert starts enabled.
-          default: true
-        channel_ids:
-          anyOf:
-          - items:
-              type: string
-              format: uuid
-            type: array
-          - type: 'null'
-          title: Channel Ids
-          description: Legacy shorthand for assigning channels without schedules.
-        channel_assignments:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/AlertChannelAssignment'
-            type: array
-          - type: 'null'
-          title: Channel Assignments
-          description: Schedule-aware channel configuration. When both `channel_assignments` and `channel_ids` are provided, `channel_assignments` is used.
-        notify_when:
-          type: string
-          enum:
-          - has_matches
-          - has_matches_changed
-          - matches_changed
-          - starts_having_matches
-          title: Notify When
-      type: object
-      required:
-      - name
-      - description
-      - query
-      - time_window
-      - frequency
-      - watermark
-      - notify_when
-      title: AlertCreate
-    VariableConfig:
-      properties:
-        name:
-          type: string
-          title: Name
-        kind:
-          type: string
-          enum:
-          - general
-          - prompt
-          title: Kind
-          default: general
-        labels:
-          additionalProperties:
-            anyOf:
-            - $ref: '#/components/schemas/LabeledValue'
-            - $ref: '#/components/schemas/LabelRef'
-          propertyNames:
-            maxLength: 200
-            minLength: 1
-          type: object
-          title: Labels
-        latest_version:
-          anyOf:
-          - $ref: '#/components/schemas/LatestVersion'
-          - type: 'null'
-        rollout:
-          $ref: '#/components/schemas/Rollout'
-        overrides:
-          items:
-            $ref: '#/components/schemas/RolloutOverride'
-          type: array
-          title: Overrides
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        json_schema:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Json Schema
-        template_inputs_schema:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Template Inputs Schema
-        type_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Type Name
-        aliases:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Aliases
-        example:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Example
-        display_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Display Name
-        prompt_slug:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Prompt Slug
-      type: object
-      required:
-      - name
-      - labels
-      - rollout
-      - overrides
-      title: VariableConfig
-      description: Configuration for a single managed variable including labels and rollout rules.
-    LabeledValue:
-      properties:
-        version:
-          type: integer
-          title: Version
-        serialized_value:
-          type: string
-          title: Serialized Value
-      type: object
-      required:
-      - version
-      - serialized_value
-      title: LabeledValue
-      description: A label pointing to a version with an inline serialized value.
-    VersionRead:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        variable_definition_id:
-          type: string
-          format: uuid
-          title: Variable Definition Id
-        version:
-          type: integer
-          title: Version
-        serialized_value:
-          type: string
-          title: Serialized Value
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        created_by:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Created By
-        created_by_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created By Name
-      type: object
-      required:
-      - id
-      - variable_definition_id
-      - version
-      - serialized_value
-      - description
-      - created_at
-      - created_by
-      - created_by_name
-      title: VersionRead
-      description: A version as read from the database.
-    DashboardCreate:
-      properties:
-        kind:
-          type: string
-          enum:
-          - Dashboard
-          title: Kind
-        metadata:
-          $ref: '#/components/schemas/DashboardMetadataCreate'
-        spec:
-          $ref: '#/components/schemas/DashboardCreateSpec'
-      type: object
-      required:
-      - kind
-      - metadata
-      - spec
-      title: DashboardCreate
-    CodeDefaultLabelData:
+    LatestLabelData:
       properties:
         target_type:
           type: string
           enum:
-          - code_default
+          - latest
           title: Target Type
       type: object
       required:
       - target_type
-      title: CodeDefaultLabelData
-      description: Label data indicating to use the code default value.
+      title: LatestLabelData
+      description: Label data pointing to the latest version.
+    CreateReadTokenInput:
+      properties:
+        expires_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Expires At
+      type: object
+      title: CreateReadTokenInput
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

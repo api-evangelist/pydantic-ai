@@ -131,29 +131,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    OrganizationMemberUpdateV1:
-      properties:
-        role:
-          type: string
-          enum:
-          - admin
-          - member
-          - guest
-          - billing
-          title: Role
-      type: object
-      required:
-      - role
-      title: OrganizationMemberUpdateV1
-    HTTPExceptionError:
-      properties:
-        detail:
-          type: string
-          title: Detail
-      type: object
-      required:
-      - detail
-      title: HTTPExceptionError
     HTTPValidationError:
       properties:
         detail:
@@ -233,6 +210,29 @@ components:
       - avatar
       - role
       title: OrganizationMemberReadV1
+    OrganizationMemberUpdateV1:
+      properties:
+        role:
+          type: string
+          enum:
+          - admin
+          - member
+          - guest
+          - billing
+          title: Role
+      type: object
+      required:
+      - role
+      title: OrganizationMemberUpdateV1
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

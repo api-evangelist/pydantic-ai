@@ -71,96 +71,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    BillingUsageResponse:
-      properties:
-        organization:
-          type: string
-          title: Organization
-        billing_period:
-          $ref: '#/components/schemas/BillingPeriod'
-        plan:
-          type: string
-          title: Plan
-        usage:
-          $ref: '#/components/schemas/UsageSummary'
-        cost:
-          $ref: '#/components/schemas/CostSummary'
-      type: object
-      required:
-      - organization
-      - billing_period
-      - plan
-      - usage
-      - cost
-      title: BillingUsageResponse
-    HTTPExceptionError:
-      properties:
-        detail:
-          type: string
-          title: Detail
-      type: object
-      required:
-      - detail
-      title: HTTPExceptionError
-    BillingPeriod:
-      properties:
-        start:
-          type: string
-          format: date
-          title: Start
-        end:
-          type: string
-          format: date
-          title: End
-        anchor_day:
-          type: integer
-          title: Anchor Day
-      type: object
-      required:
-      - start
-      - end
-      - anchor_day
-      title: BillingPeriod
-    ProjectUsage:
-      properties:
-        project_name:
-          type: string
-          title: Project Name
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-        observations:
-          type: integer
-          title: Observations
-      type: object
-      required:
-      - project_name
-      - project_id
-      - observations
-      title: ProjectUsage
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    UsageBreakdown:
-      properties:
-        spans:
-          type: integer
-          title: Spans
-        metrics:
-          type: integer
-          title: Metrics
-      type: object
-      required:
-      - spans
-      - metrics
-      title: UsageBreakdown
     CostSummary:
       properties:
         currency:
@@ -190,32 +100,6 @@ components:
       - discount
       - total_cost
       title: CostSummary
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     UsageSummary:
       properties:
         total_observations:
@@ -242,6 +126,122 @@ components:
       - billable_observations
       - project_breakdown
       title: UsageSummary
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    BillingUsageResponse:
+      properties:
+        organization:
+          type: string
+          title: Organization
+        billing_period:
+          $ref: '#/components/schemas/BillingPeriod'
+        plan:
+          type: string
+          title: Plan
+        usage:
+          $ref: '#/components/schemas/UsageSummary'
+        cost:
+          $ref: '#/components/schemas/CostSummary'
+      type: object
+      required:
+      - organization
+      - billing_period
+      - plan
+      - usage
+      - cost
+      title: BillingUsageResponse
+    BillingPeriod:
+      properties:
+        start:
+          type: string
+          format: date
+          title: Start
+        end:
+          type: string
+          format: date
+          title: End
+        anchor_day:
+          type: integer
+          title: Anchor Day
+      type: object
+      required:
+      - start
+      - end
+      - anchor_day
+      title: BillingPeriod
+    UsageBreakdown:
+      properties:
+        spans:
+          type: integer
+          title: Spans
+        metrics:
+          type: integer
+          title: Metrics
+      type: object
+      required:
+      - spans
+      - metrics
+      title: UsageBreakdown
+    ProjectUsage:
+      properties:
+        project_name:
+          type: string
+          title: Project Name
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        observations:
+          type: integer
+          title: Observations
+      type: object
+      required:
+      - project_name
+      - project_id
+      - observations
+      title: ProjectUsage
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

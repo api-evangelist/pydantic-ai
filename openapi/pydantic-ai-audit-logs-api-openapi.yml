@@ -155,93 +155,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    HTTPExceptionError:
-      properties:
-        detail:
-          type: string
-          title: Detail
-      type: object
-      required:
-      - detail
-      title: HTTPExceptionError
-    AuditLogDetailRead:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        organization_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Organization Name
-        project_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Project Name
-        user_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Name
-        action:
-          type: string
-          enum:
-          - INSERT
-          - UPDATE
-          - DELETE
-          - VIEW
-          - LOGIN
-          - FAILED_LOGIN
-          - LOGOUT
-          - CLAIM_INVITATION
-          - REVOKE_INVITATION
-          - VERIFY
-          title: Action
-        resource_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Resource Type
-        record_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Record Id
-        ip_address:
-          anyOf:
-          - type: string
-            format: ipv4
-          - type: string
-            format: ipv6
-          - type: 'null'
-          title: Ip Address
-        metadata:
-          anyOf:
-          - additionalProperties:
-              $ref: '#/components/schemas/JSONBData'
-            type: object
-          - type: 'null'
-          title: Metadata
-      type: object
-      required:
-      - id
-      - created_at
-      - organization_name
-      - project_name
-      - user_name
-      - action
-      - resource_type
-      - record_id
-      - ip_address
-      - metadata
-      title: AuditLogDetailRead
     AuditLogInfoRead:
       properties:
         id:
@@ -360,6 +273,93 @@ components:
       - type: boolean
       - type: number
       - type: 'null'
+    AuditLogDetailRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        organization_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Name
+        project_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Project Name
+        user_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Name
+        action:
+          type: string
+          enum:
+          - INSERT
+          - UPDATE
+          - DELETE
+          - VIEW
+          - LOGIN
+          - FAILED_LOGIN
+          - LOGOUT
+          - CLAIM_INVITATION
+          - REVOKE_INVITATION
+          - VERIFY
+          title: Action
+        resource_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Resource Type
+        record_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Record Id
+        ip_address:
+          anyOf:
+          - type: string
+            format: ipv4
+          - type: string
+            format: ipv6
+          - type: 'null'
+          title: Ip Address
+        metadata:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/JSONBData'
+            type: object
+          - type: 'null'
+          title: Metadata
+      type: object
+      required:
+      - id
+      - created_at
+      - organization_name
+      - project_name
+      - user_name
+      - action
+      - resource_type
+      - record_id
+      - ip_address
+      - metadata
+      title: AuditLogDetailRead
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

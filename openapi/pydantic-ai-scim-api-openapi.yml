@@ -349,6 +349,139 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    GroupUpdate:
+      properties:
+        schemas:
+          items:
+            type: string
+          type: array
+          title: Schemas
+        Operations:
+          items:
+            $ref: '#/components/schemas/GroupUpdateOperation'
+          type: array
+          title: Operations
+      type: object
+      required:
+      - schemas
+      - Operations
+      title: GroupUpdate
+    GroupResourceRead:
+      properties:
+        schemas:
+          items:
+            type: string
+          type: array
+          title: Schemas
+        id:
+          type: string
+          title: Id
+        meta:
+          $ref: '#/components/schemas/ResourceMetaRead'
+        displayName:
+          type: string
+          title: Displayname
+      type: object
+      required:
+      - schemas
+      - id
+      - meta
+      - displayName
+      title: GroupResourceRead
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ListResponse:
+      properties:
+        schemas:
+          items:
+            type: string
+          type: array
+          title: Schemas
+        totalResults:
+          type: integer
+          title: Totalresults
+        Resources:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/UserResourceRead'
+            type: array
+          - items:
+              $ref: '#/components/schemas/GroupResourceRead'
+            type: array
+          title: Resources
+        startIndex:
+          type: integer
+          title: Startindex
+        itemsPerPage:
+          type: integer
+          title: Itemsperpage
+      type: object
+      required:
+      - schemas
+      - totalResults
+      - Resources
+      - startIndex
+      - itemsPerPage
+      title: ListResponse
+    UserReasourceNameRead:
+      properties:
+        givenName:
+          type: string
+          title: Givenname
+      type: object
+      required:
+      - givenName
+      title: UserReasourceNameRead
+    UserResourceEmailRead:
+      properties:
+        value:
+          type: string
+          title: Value
+        type:
+          type: string
+          title: Type
+        primary:
+          type: boolean
+          title: Primary
+      type: object
+      required:
+      - value
+      - type
+      - primary
+      title: UserResourceEmailRead
     GroupUpdateOperation:
       properties:
         op:
@@ -370,18 +503,15 @@ components:
       - path
       - value
       title: GroupUpdateOperation
-    GroupUpdateOperationValue:
+    ResourceMetaRead:
       properties:
-        value:
+        resourceType:
           type: string
-          title: Value
-        display:
-          type: string
-          title: Display
+          title: Resourcetype
       type: object
       required:
-      - value
-      title: GroupUpdateOperationValue
+      - resourceType
+      title: ResourceMetaRead
     UserResourceRead:
       properties:
         schemas:
@@ -417,148 +547,18 @@ components:
       - active
       - emails
       title: UserResourceRead
-    GroupResourceRead:
-      properties:
-        schemas:
-          items:
-            type: string
-          type: array
-          title: Schemas
-        id:
-          type: string
-          title: Id
-        meta:
-          $ref: '#/components/schemas/ResourceMetaRead'
-        displayName:
-          type: string
-          title: Displayname
-      type: object
-      required:
-      - schemas
-      - id
-      - meta
-      - displayName
-      title: GroupResourceRead
-    ResourceMetaRead:
-      properties:
-        resourceType:
-          type: string
-          title: Resourcetype
-      type: object
-      required:
-      - resourceType
-      title: ResourceMetaRead
-    UserResourceEmailRead:
+    GroupUpdateOperationValue:
       properties:
         value:
           type: string
           title: Value
-        type:
+        display:
           type: string
-          title: Type
-        primary:
-          type: boolean
-          title: Primary
+          title: Display
       type: object
       required:
       - value
-      - type
-      - primary
-      title: UserResourceEmailRead
-    UserReasourceNameRead:
-      properties:
-        givenName:
-          type: string
-          title: Givenname
-      type: object
-      required:
-      - givenName
-      title: UserReasourceNameRead
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    GroupUpdate:
-      properties:
-        schemas:
-          items:
-            type: string
-          type: array
-          title: Schemas
-        Operations:
-          items:
-            $ref: '#/components/schemas/GroupUpdateOperation'
-          type: array
-          title: Operations
-      type: object
-      required:
-      - schemas
-      - Operations
-      title: GroupUpdate
-    ListResponse:
-      properties:
-        schemas:
-          items:
-            type: string
-          type: array
-          title: Schemas
-        totalResults:
-          type: integer
-          title: Totalresults
-        Resources:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/UserResourceRead'
-            type: array
-          - items:
-              $ref: '#/components/schemas/GroupResourceRead'
-            type: array
-          title: Resources
-        startIndex:
-          type: integer
-          title: Startindex
-        itemsPerPage:
-          type: integer
-          title: Itemsperpage
-      type: object
-      required:
-      - schemas
-      - totalResults
-      - Resources
-      - startIndex
-      - itemsPerPage
-      title: ListResponse
+      title: GroupUpdateOperationValue
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

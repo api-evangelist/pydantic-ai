@@ -192,6 +192,60 @@ paths:
         - instance:admin
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    OrganizationRoleDefinition:
+      properties:
+        organization_name:
+          type: string
+          title: Organization Name
+        role:
+          type: string
+          title: Role
+        project_roles:
+          items:
+            $ref: '#/components/schemas/ProjectRoleDefinition'
+          type: array
+          title: Project Roles
+          default: []
+      type: object
+      required:
+      - organization_name
+      - role
+      title: OrganizationRoleDefinition
     SubscriptionPlanId:
       type: string
       enum:
@@ -200,65 +254,18 @@ components:
       - growth
       - enterprise_cloud
       - non_stripe
-    ProjectRoleDefinition:
+    GroupOrganizationMappingRead:
       properties:
-        project_name:
-          type: string
-          title: Project Name
-        role:
-          type: string
-          title: Role
+        group_organization_mapping:
+          items:
+            $ref: '#/components/schemas/GroupOrganizationMapping-Output'
+          type: array
+          title: Group Organization Mapping
       type: object
       required:
-      - project_name
-      - role
-      title: ProjectRoleDefinition
-    HTTPExceptionError:
-      properties:
-        detail:
-          type: string
-          title: Detail
-      type: object
-      required:
-      - detail
-      title: HTTPExceptionError
-    InstanceUsageReportRowV1:
-      properties:
-        date:
-          type: string
-          format: date
-          title: Date
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-        organization_name:
-          type: string
-          title: Organization Name
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-        records_count:
-          type: integer
-          title: Records Count
-        metrics_count:
-          type: integer
-          title: Metrics Count
-        total_observations:
-          type: integer
-          title: Total Observations
-      type: object
-      required:
-      - date
-      - organization_id
-      - organization_name
-      - project_id
-      - records_count
-      - metrics_count
-      - total_observations
-      title: InstanceUsageReportRowV1
-    GroupOrganizationMapping-Input:
+      - group_organization_mapping
+      title: GroupOrganizationMappingRead
+    GroupOrganizationMapping-Output:
       properties:
         group_id:
           type: string
@@ -382,15 +389,42 @@ components:
       - ai_enabled
       - ai_training_enabled
       title: OrganizationReadV1
-    HTTPValidationError:
+    InstanceUsageReportRowV1:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        date:
+          type: string
+          format: date
+          title: Date
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        organization_name:
+          type: string
+          title: Organization Name
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        records_count:
+          type: integer
+          title: Records Count
+        metrics_count:
+          type: integer
+          title: Metrics Count
+        total_observations:
+          type: integer
+          title: Total Observations
       type: object
-      title: HTTPValidationError
+      required:
+      - date
+      - organization_id
+      - organization_name
+      - project_id
+      - records_count
+      - metrics_count
+      - total_observations
+      title: InstanceUsageReportRowV1
     OrganizationCreate:
       properties:
         organization_name:
@@ -423,32 +457,19 @@ components:
       required:
       - organization_name
       title: OrganizationCreate
-    ValidationError:
+    ProjectRoleDefinition:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        project_name:
           type: string
-          title: Message
-        type:
+          title: Project Name
+        role:
           type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+          title: Role
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - project_name
+      - role
+      title: ProjectRoleDefinition
     GroupOrganizationMappingUpdate:
       properties:
         group_organization_mapping:
@@ -460,7 +481,7 @@ components:
       required:
       - group_organization_mapping
       title: GroupOrganizationMappingUpdate
-    GroupOrganizationMapping-Output:
+    GroupOrganizationMapping-Input:
       properties:
         group_id:
           type: string
@@ -492,36 +513,15 @@ components:
       - icon
       - name
       title: OrganizationLink
-    OrganizationRoleDefinition:
+    HTTPExceptionError:
       properties:
-        organization_name:
+        detail:
           type: string
-          title: Organization Name
-        role:
-          type: string
-          title: Role
-        project_roles:
-          items:
-            $ref: '#/components/schemas/ProjectRoleDefinition'
-          type: array
-          title: Project Roles
-          default: []
+          title: Detail
       type: object
       required:
-      - organization_name
-      - role
-      title: OrganizationRoleDefinition
-    GroupOrganizationMappingRead:
-      properties:
-        group_organization_mapping:
-          items:
-            $ref: '#/components/schemas/GroupOrganizationMapping-Output'
-          type: array
-          title: Group Organization Mapping
-      type: object
-      required:
-      - group_organization_mapping
-      title: GroupOrganizationMappingRead
+      - detail
+      title: HTTPExceptionError
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

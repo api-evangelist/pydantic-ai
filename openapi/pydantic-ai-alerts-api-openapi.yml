@@ -258,281 +258,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    Notification:
-      properties:
-        type:
-          type: string
-          enum:
-          - notification
-          title: Type
-        recipients:
-          items:
-            type: string
-            format: uuid
-          type: array
-          title: Recipients
-      type: object
-      required:
-      - type
-      - recipients
-      title: Notification
-    AlertCreate:
-      properties:
-        name:
-          type: string
-          title: Name
-        description:
-          type: string
-          title: Description
-        query:
-          title: Query
-          examples:
-          - SELECT 1
-        time_window:
-          type: string
-          format: duration
-          title: Time Window
-        frequency:
-          type: string
-          format: duration
-          title: Frequency
-        watermark:
-          type: string
-          format: duration
-          title: Watermark
-        active:
-          type: boolean
-          title: Active
-          description: Whether the alert starts enabled.
-          default: true
-        channel_ids:
-          anyOf:
-          - items:
-              type: string
-              format: uuid
-            type: array
-          - type: 'null'
-          title: Channel Ids
-          description: Legacy shorthand for assigning channels without schedules.
-        channel_assignments:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/AlertChannelAssignment'
-            type: array
-          - type: 'null'
-          title: Channel Assignments
-          description: Schedule-aware channel configuration. When both `channel_assignments` and `channel_ids` are provided, `channel_assignments` is used.
-        notify_when:
-          type: string
-          enum:
-          - has_matches
-          - has_matches_changed
-          - matches_changed
-          - starts_having_matches
-          title: Notify When
-      type: object
-      required:
-      - name
-      - description
-      - query
-      - time_window
-      - frequency
-      - watermark
-      - notify_when
-      title: AlertCreate
-    WebhookFormat:
-      type: string
-      enum:
-      - auto
-      - slack-blockkit
-      - slack-legacy
-      - raw-data
-    HTTPExceptionError:
-      properties:
-        detail:
-          type: string
-          title: Detail
-      type: object
-      required:
-      - detail
-      title: HTTPExceptionError
-    AlertChannelRead:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-        label:
-          type: string
-          title: Label
-        active:
-          type: boolean
-          title: Active
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        created_by_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created By Name
-        updated_by_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated By Name
-        config:
-          oneOf:
-          - $ref: '#/components/schemas/Webhook'
-          - $ref: '#/components/schemas/Opsgenie'
-          - $ref: '#/components/schemas/Notification'
-          title: Config
-          discriminator:
-            propertyName: type
-            mapping:
-              notification: '#/components/schemas/Notification'
-              opsgenie: '#/components/schemas/Opsgenie'
-              webhook: '#/components/schemas/Webhook'
-        schedule_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Schedule Id
-      type: object
-      required:
-      - id
-      - organization_id
-      - label
-      - active
-      - created_at
-      - updated_at
-      - created_by_name
-      - updated_by_name
-      - config
-      - schedule_id
-      title: AlertChannelRead
-    Webhook:
-      properties:
-        type:
-          type: string
-          enum:
-          - webhook
-          title: Type
-        format:
-          $ref: '#/components/schemas/WebhookFormat'
-        url:
-          type: string
-          title: Url
-      type: object
-      required:
-      - type
-      - format
-      - url
-      title: Webhook
-    AlertRead:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        created_by_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created By Name
-        updated_by_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated By Name
-        name:
-          type: string
-          title: Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        query:
-          type: string
-          title: Query
-        time_window:
-          type: string
-          format: duration
-          title: Time Window
-        frequency:
-          type: string
-          format: duration
-          title: Frequency
-        watermark:
-          type: string
-          format: duration
-          title: Watermark
-        channels:
-          items:
-            $ref: '#/components/schemas/AlertChannelRead'
-          type: array
-          title: Channels
-        notify_when:
-          type: string
-          enum:
-          - has_matches
-          - has_matches_changed
-          - matches_changed
-          - starts_having_matches
-          title: Notify When
-        active:
-          type: boolean
-          title: Active
-      type: object
-      required:
-      - id
-      - organization_id
-      - project_id
-      - created_at
-      - updated_at
-      - created_by_name
-      - updated_by_name
-      - name
-      - description
-      - query
-      - time_window
-      - frequency
-      - watermark
-      - channels
-      - notify_when
-      - active
-      title: AlertRead
     HTTPValidationError:
       properties:
         detail:
@@ -542,32 +267,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     Opsgenie:
       properties:
         type:
@@ -586,22 +285,6 @@ components:
       - type
       - auth_key
       title: Opsgenie
-    AlertChannelAssignment:
-      properties:
-        channel_id:
-          type: string
-          format: uuid
-          title: Channel Id
-        schedule_id:
-          anyOf:
-          - type: string
-            format: uuid
-          - type: 'null'
-          title: Schedule Id
-      type: object
-      required:
-      - channel_id
-      title: AlertChannelAssignment
     AlertWithLastRun:
       properties:
         id:
@@ -722,6 +405,222 @@ components:
       - result
       - result_length
       title: AlertWithLastRun
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AlertChannelAssignment:
+      properties:
+        channel_id:
+          type: string
+          format: uuid
+          title: Channel Id
+        schedule_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Schedule Id
+      type: object
+      required:
+      - channel_id
+      title: AlertChannelAssignment
+    AlertCreate:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        query:
+          title: Query
+          examples:
+          - SELECT 1
+        time_window:
+          type: string
+          format: duration
+          title: Time Window
+        frequency:
+          type: string
+          format: duration
+          title: Frequency
+        watermark:
+          type: string
+          format: duration
+          title: Watermark
+        active:
+          type: boolean
+          title: Active
+          description: Whether the alert starts enabled.
+          default: true
+        channel_ids:
+          anyOf:
+          - items:
+              type: string
+              format: uuid
+            type: array
+          - type: 'null'
+          title: Channel Ids
+          description: Legacy shorthand for assigning channels without schedules.
+        channel_assignments:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/AlertChannelAssignment'
+            type: array
+          - type: 'null'
+          title: Channel Assignments
+          description: Schedule-aware channel configuration. When both `channel_assignments` and `channel_ids` are provided, `channel_assignments` is used.
+        notify_when:
+          type: string
+          enum:
+          - has_matches
+          - has_matches_changed
+          - matches_changed
+          - starts_having_matches
+          title: Notify When
+      type: object
+      required:
+      - name
+      - description
+      - query
+      - time_window
+      - frequency
+      - watermark
+      - notify_when
+      title: AlertCreate
+    WebhookFormat:
+      type: string
+      enum:
+      - auto
+      - slack-blockkit
+      - slack-legacy
+      - raw-data
+    Webhook:
+      properties:
+        type:
+          type: string
+          enum:
+          - webhook
+          title: Type
+        format:
+          $ref: '#/components/schemas/WebhookFormat'
+        url:
+          type: string
+          title: Url
+      type: object
+      required:
+      - type
+      - format
+      - url
+      title: Webhook
+    Notification:
+      properties:
+        type:
+          type: string
+          enum:
+          - notification
+          title: Type
+        recipients:
+          items:
+            type: string
+            format: uuid
+          type: array
+          title: Recipients
+      type: object
+      required:
+      - type
+      - recipients
+      title: Notification
+    AlertChannelRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        label:
+          type: string
+          title: Label
+        active:
+          type: boolean
+          title: Active
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+        config:
+          oneOf:
+          - $ref: '#/components/schemas/Webhook'
+          - $ref: '#/components/schemas/Opsgenie'
+          - $ref: '#/components/schemas/Notification'
+          title: Config
+          discriminator:
+            propertyName: type
+            mapping:
+              notification: '#/components/schemas/Notification'
+              opsgenie: '#/components/schemas/Opsgenie'
+              webhook: '#/components/schemas/Webhook'
+        schedule_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Schedule Id
+      type: object
+      required:
+      - id
+      - organization_id
+      - label
+      - active
+      - created_at
+      - updated_at
+      - created_by_name
+      - updated_by_name
+      - config
+      - schedule_id
+      title: AlertChannelRead
     AlertUpdate:
       properties:
         name:
@@ -774,6 +673,98 @@ components:
       type: object
       title: AlertUpdate
       description: The fields that can be updated on an alert.
+    AlertRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        created_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By Name
+        updated_by_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By Name
+        name:
+          type: string
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        query:
+          type: string
+          title: Query
+        time_window:
+          type: string
+          format: duration
+          title: Time Window
+        frequency:
+          type: string
+          format: duration
+          title: Frequency
+        watermark:
+          type: string
+          format: duration
+          title: Watermark
+        channels:
+          items:
+            $ref: '#/components/schemas/AlertChannelRead'
+          type: array
+          title: Channels
+        notify_when:
+          type: string
+          enum:
+          - has_matches
+          - has_matches_changed
+          - matches_changed
+          - starts_having_matches
+          title: Notify When
+        active:
+          type: boolean
+          title: Active
+      type: object
+      required:
+      - id
+      - organization_id
+      - project_id
+      - created_at
+      - updated_at
+      - created_by_name
+      - updated_by_name
+      - name
+      - description
+      - query
+      - time_window
+      - frequency
+      - watermark
+      - channels
+      - notify_when
+      - active
+      title: AlertRead
     JSONBData:
       anyOf:
       - additionalProperties:
@@ -787,6 +778,15 @@ components:
       - type: boolean
       - type: number
       - type: 'null'
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2
