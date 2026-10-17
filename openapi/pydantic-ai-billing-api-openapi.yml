@@ -71,6 +71,32 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    UsageSummary:
+      properties:
+        total_observations:
+          type: integer
+          title: Total Observations
+        breakdown:
+          $ref: '#/components/schemas/UsageBreakdown'
+        included_observations:
+          type: integer
+          title: Included Observations
+        billable_observations:
+          type: integer
+          title: Billable Observations
+        project_breakdown:
+          items:
+            $ref: '#/components/schemas/ProjectUsage'
+          type: array
+          title: Project Breakdown
+      type: object
+      required:
+      - total_observations
+      - breakdown
+      - included_observations
+      - billable_observations
+      - project_breakdown
+      title: UsageSummary
     CostSummary:
       properties:
         currency:
@@ -100,32 +126,34 @@ components:
       - discount
       - total_cost
       title: CostSummary
-    UsageSummary:
+    HTTPExceptionError:
       properties:
-        total_observations:
-          type: integer
-          title: Total Observations
-        breakdown:
-          $ref: '#/components/schemas/UsageBreakdown'
-        included_observations:
-          type: integer
-          title: Included Observations
-        billable_observations:
-          type: integer
-          title: Billable Observations
-        project_breakdown:
-          items:
-            $ref: '#/components/schemas/ProjectUsage'
-          type: array
-          title: Project Breakdown
+        detail:
+          type: string
+          title: Detail
       type: object
       required:
-      - total_observations
-      - breakdown
-      - included_observations
-      - billable_observations
-      - project_breakdown
-      title: UsageSummary
+      - detail
+      title: HTTPExceptionError
+    BillingPeriod:
+      properties:
+        start:
+          type: string
+          format: date
+          title: Start
+        end:
+          type: string
+          format: date
+          title: End
+        anchor_day:
+          type: integer
+          title: Anchor Day
+      type: object
+      required:
+      - start
+      - end
+      - anchor_day
+      title: BillingPeriod
     HTTPValidationError:
       properties:
         detail:
@@ -135,32 +163,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     BillingUsageResponse:
       properties:
         organization:
@@ -183,25 +185,6 @@ components:
       - usage
       - cost
       title: BillingUsageResponse
-    BillingPeriod:
-      properties:
-        start:
-          type: string
-          format: date
-          title: Start
-        end:
-          type: string
-          format: date
-          title: End
-        anchor_day:
-          type: integer
-          title: Anchor Day
-      type: object
-      required:
-      - start
-      - end
-      - anchor_day
-      title: BillingPeriod
     UsageBreakdown:
       properties:
         spans:
@@ -233,15 +216,32 @@ components:
       - project_id
       - observations
       title: ProjectUsage
-    HTTPExceptionError:
+    ValidationError:
       properties:
-        detail:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          title: Detail
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
       required:
-      - detail
-      title: HTTPExceptionError
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

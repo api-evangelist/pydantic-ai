@@ -275,59 +275,64 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    OrganizationInvitationCreateV1:
+    OrganizationCreate:
       properties:
-        role:
+        organization_name:
           type: string
-          enum:
-          - admin
-          - member
-          - guest
-          - billing
-          title: Role
-        expiration:
+          maxLength: 50
+          minLength: 2
+          pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
+          title: Organization Name
+        organization_display_name:
           type: string
-          format: date-time
-          title: Expiration
+          title: Organization Display Name
+        github_handle:
+          type: string
+          title: Github Handle
+        location:
+          type: string
+          title: Location
+        avatar:
+          type: string
+          title: Avatar
+        links:
+          items:
+            $ref: '#/components/schemas/OrganizationLink'
+          type: array
+          title: Links
+        description:
+          type: string
+          title: Description
       type: object
       required:
-      - role
-      title: OrganizationInvitationCreateV1
-    HTTPValidationError:
+      - organization_name
+      title: OrganizationCreate
+    OrganizationLink:
+      properties:
+        url:
+          type: string
+          title: Url
+        icon:
+          type: string
+          title: Icon
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - url
+      - icon
+      - name
+      title: OrganizationLink
+    HTTPExceptionError:
       properties:
         detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
+          type: string
           title: Detail
       type: object
-      title: HTTPValidationError
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - detail
+      title: HTTPExceptionError
     SubscriptionPlanId:
       type: string
       enum:
@@ -369,6 +374,15 @@ components:
           title: Description
       type: object
       title: OrganizationUpdate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     OrganizationReadV1:
       properties:
         id:
@@ -487,64 +501,50 @@ components:
       required:
       - invite_url
       title: OrganizationInvitationCreateResponseV1
-    OrganizationCreate:
+    OrganizationInvitationCreateV1:
       properties:
-        organization_name:
+        role:
           type: string
-          maxLength: 50
-          minLength: 2
-          pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
-          title: Organization Name
-        organization_display_name:
+          enum:
+          - admin
+          - member
+          - guest
+          - billing
+          title: Role
+        expiration:
           type: string
-          title: Organization Display Name
-        github_handle:
-          type: string
-          title: Github Handle
-        location:
-          type: string
-          title: Location
-        avatar:
-          type: string
-          title: Avatar
-        links:
+          format: date-time
+          title: Expiration
+      type: object
+      required:
+      - role
+      title: OrganizationInvitationCreateV1
+    ValidationError:
+      properties:
+        loc:
           items:
-            $ref: '#/components/schemas/OrganizationLink'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Links
-        description:
+          title: Location
+        msg:
           type: string
-          title: Description
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
       required:
-      - organization_name
-      title: OrganizationCreate
-    OrganizationLink:
-      properties:
-        url:
-          type: string
-          title: Url
-        icon:
-          type: string
-          title: Icon
-        name:
-          type: string
-          title: Name
-      type: object
-      required:
-      - url
-      - icon
-      - name
-      title: OrganizationLink
-    HTTPExceptionError:
-      properties:
-        detail:
-          type: string
-          title: Detail
-      type: object
-      required:
-      - detail
-      title: HTTPExceptionError
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

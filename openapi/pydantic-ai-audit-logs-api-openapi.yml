@@ -225,6 +225,15 @@ components:
       - record_id
       - ip_address
       title: AuditLogInfoRead
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
     HTTPValidationError:
       properties:
         detail:
@@ -234,45 +243,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    JSONBData:
-      anyOf:
-      - additionalProperties:
-          $ref: '#/components/schemas/JSONBData'
-        type: object
-      - items:
-          $ref: '#/components/schemas/JSONBData'
-        type: array
-      - type: string
-      - type: integer
-      - type: boolean
-      - type: number
-      - type: 'null'
     AuditLogDetailRead:
       properties:
         id:
@@ -351,15 +321,45 @@ components:
       - ip_address
       - metadata
       title: AuditLogDetailRead
-    HTTPExceptionError:
+    JSONBData:
+      anyOf:
+      - additionalProperties:
+          $ref: '#/components/schemas/JSONBData'
+        type: object
+      - items:
+          $ref: '#/components/schemas/JSONBData'
+        type: array
+      - type: string
+      - type: integer
+      - type: boolean
+      - type: number
+      - type: 'null'
+    ValidationError:
       properties:
-        detail:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          title: Detail
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
       required:
-      - detail
-      title: HTTPExceptionError
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

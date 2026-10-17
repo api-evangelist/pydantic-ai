@@ -489,100 +489,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ErrorResponse:
-      properties:
-        error:
-          type: string
-          enum:
-          - invalid_request
-          - unauthorized_client
-          - access_denied
-          - unsupported_response_type
-          - invalid_scope
-          - server_error
-          - temporarily_unavailable
-          - invalid_client
-          - invalid_grant
-          - unsupported_grant_type
-          - invalid_target
-          - authorization_pending
-          - slow_down
-          - expired_token
-          - unsupported_token_type
-          title: Error
-        error_description:
-          type: string
-          title: Error Description
-      type: object
-      required:
-      - error
-      - error_description
-      title: ErrorResponse
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    Body_device_authorization_oauth_device_code_post:
-      properties:
-        client_id:
-          type: string
-          title: Client Id
-        scope:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Scope
-        code_challenge:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code Challenge
-        code_challenge_method:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code Challenge Method
-        resource:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Resource
-      type: object
-      required:
-      - client_id
-      title: Body_device_authorization_oauth_device_code_post
-    TokenResponse:
-      properties:
-        access_token:
-          type: string
-          title: Access Token
-        token_type:
-          type: string
-          enum:
-          - Bearer
-          title: Token Type
-        expires_in:
-          type: integer
-          title: Expires In
-        refresh_token:
-          type: string
-          title: Refresh Token
-        scope:
-          type: string
-          title: Scope
-      type: object
-      required:
-      - access_token
-      - token_type
-      - expires_in
-      - refresh_token
-      - scope
-      title: TokenResponse
     TokenExchangeResponse:
       properties:
         access_token:
@@ -616,166 +522,6 @@ components:
         `issued_token_type` is mandatory per §2.2.1, and there''s no `refresh_token`
 
         (workload tokens are short-lived and not re-issuable through this flow).'
-    GrantableScopesResponse:
-      properties:
-        grantable_scopes:
-          items:
-            type: string
-          type: array
-          title: Grantable Scopes
-      type: object
-      required:
-      - grantable_scopes
-      title: GrantableScopesResponse
-      description: Subset of `scopes` the authenticated user can grant in the given org/project.
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    Body_oauth_token_oauth_token_post:
-      properties:
-        grant_type:
-          type: string
-          title: Grant Type
-        code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code
-        redirect_uri:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Redirect Uri
-        client_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Client Id
-        client_secret:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Client Secret
-        refresh_token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Refresh Token
-        scope:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Scope
-        code_verifier:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Code Verifier
-        resource:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Resource
-        device_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Device Code
-        client_assertion_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Client Assertion Type
-        client_assertion:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Client Assertion
-      type: object
-      required:
-      - grant_type
-      title: Body_oauth_token_oauth_token_post
-    DCRRequest:
-      properties:
-        client_name:
-          type: string
-          title: Client Name
-        client_uri:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Client Uri
-        logo_uri:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Logo Uri
-        redirect_uris:
-          items:
-            type: string
-          type: array
-          title: Redirect Uris
-        grant_types:
-          items:
-            type: string
-          type: array
-          title: Grant Types
-        response_types:
-          items:
-            type: string
-          type: array
-          title: Response Types
-        token_endpoint_auth_method:
-          type: string
-          title: Token Endpoint Auth Method
-        scope:
-          type: string
-          title: Scope
-        application_type:
-          type: string
-          title: Application Type
-      type: object
-      title: DCRRequest
-      description: RFC 7591 Client Metadata for Dynamic Client Registration.
-    DCRErrorResponse:
-      properties:
-        error:
-          type: string
-          enum:
-          - invalid_client_metadata
-          - invalid_redirect_uri
-          title: Error
-        error_description:
-          type: string
-          title: Error Description
-      type: object
-      required:
-      - error
-      - error_description
-      title: DCRErrorResponse
     Body_oauth_authorize_post_oauth_authorize_post:
       properties:
         client_id:
@@ -834,6 +580,22 @@ components:
       - scope
       - organization_id
       title: Body_oauth_authorize_post_oauth_authorize_post
+    DCRErrorResponse:
+      properties:
+        error:
+          type: string
+          enum:
+          - invalid_client_metadata
+          - invalid_redirect_uri
+          title: Error
+        error_description:
+          type: string
+          title: Error Description
+      type: object
+      required:
+      - error
+      - error_description
+      title: DCRErrorResponse
     DeviceAuthorizationResponse:
       properties:
         device_code:
@@ -864,6 +626,48 @@ components:
       - interval
       title: DeviceAuthorizationResponse
       description: RFC 8628 Section 3.2 - Device Authorization Response.
+    DCRRequest:
+      properties:
+        client_name:
+          type: string
+          title: Client Name
+        client_uri:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Uri
+        logo_uri:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Logo Uri
+        redirect_uris:
+          items:
+            type: string
+          type: array
+          title: Redirect Uris
+        grant_types:
+          items:
+            type: string
+          type: array
+          title: Grant Types
+        response_types:
+          items:
+            type: string
+          type: array
+          title: Response Types
+        token_endpoint_auth_method:
+          type: string
+          title: Token Endpoint Auth Method
+        scope:
+          type: string
+          title: Scope
+        application_type:
+          type: string
+          title: Application Type
+      type: object
+      title: DCRRequest
+      description: RFC 7591 Client Metadata for Dynamic Client Registration.
     DCRResponse:
       properties:
         client_id:
@@ -930,6 +734,202 @@ components:
       - registration_access_token
       title: DCRResponse
       description: RFC 7591/7592 Client Information Response.
+    TokenResponse:
+      properties:
+        access_token:
+          type: string
+          title: Access Token
+        token_type:
+          type: string
+          enum:
+          - Bearer
+          title: Token Type
+        expires_in:
+          type: integer
+          title: Expires In
+        refresh_token:
+          type: string
+          title: Refresh Token
+        scope:
+          type: string
+          title: Scope
+      type: object
+      required:
+      - access_token
+      - token_type
+      - expires_in
+      - refresh_token
+      - scope
+      title: TokenResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ErrorResponse:
+      properties:
+        error:
+          type: string
+          enum:
+          - invalid_request
+          - unauthorized_client
+          - access_denied
+          - unsupported_response_type
+          - invalid_scope
+          - server_error
+          - temporarily_unavailable
+          - invalid_client
+          - invalid_grant
+          - unsupported_grant_type
+          - invalid_target
+          - authorization_pending
+          - slow_down
+          - expired_token
+          - unsupported_token_type
+          title: Error
+        error_description:
+          type: string
+          title: Error Description
+      type: object
+      required:
+      - error
+      - error_description
+      title: ErrorResponse
+    Body_oauth_token_oauth_token_post:
+      properties:
+        grant_type:
+          type: string
+          title: Grant Type
+        code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code
+        redirect_uri:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Redirect Uri
+        client_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Id
+        client_secret:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Secret
+        refresh_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Refresh Token
+        scope:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scope
+        code_verifier:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code Verifier
+        resource:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Resource
+        device_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Device Code
+        client_assertion_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Assertion Type
+        client_assertion:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Assertion
+      type: object
+      required:
+      - grant_type
+      title: Body_oauth_token_oauth_token_post
+    Body_device_authorization_oauth_device_code_post:
+      properties:
+        client_id:
+          type: string
+          title: Client Id
+        scope:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scope
+        code_challenge:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code Challenge
+        code_challenge_method:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Code Challenge Method
+        resource:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Resource
+      type: object
+      required:
+      - client_id
+      title: Body_device_authorization_oauth_device_code_post
+    GrantableScopesResponse:
+      properties:
+        grantable_scopes:
+          items:
+            type: string
+          type: array
+          title: Grantable Scopes
+      type: object
+      required:
+      - grantable_scopes
+      title: GrantableScopesResponse
+      description: Subset of `scopes` the authenticated user can grant in the given org/project.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2

@@ -163,41 +163,26 @@ paths:
         - instance:admin
 components:
   schemas:
-    HTTPValidationError:
+    GroupOrganizationMappingUpdate:
       properties:
-        detail:
+        group_organization_mapping:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: '#/components/schemas/GroupOrganizationMapping-Input'
           type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+          title: Group Organization Mapping
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - group_organization_mapping
+      title: GroupOrganizationMappingUpdate
+    HTTPExceptionError:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: HTTPExceptionError
     OrganizationRoleDefinition:
       properties:
         organization_name:
@@ -217,6 +202,43 @@ components:
       - organization_name
       - role
       title: OrganizationRoleDefinition
+    ProjectRoleDefinition:
+      properties:
+        project_name:
+          type: string
+          title: Project Name
+        role:
+          type: string
+          title: Role
+      type: object
+      required:
+      - project_name
+      - role
+      title: ProjectRoleDefinition
+    GroupOrganizationMapping-Input:
+      properties:
+        group_id:
+          type: string
+          title: Group Id
+        organization_roles:
+          items:
+            $ref: '#/components/schemas/OrganizationRoleDefinition'
+          type: array
+          title: Organization Roles
+      type: object
+      required:
+      - group_id
+      - organization_roles
+      title: GroupOrganizationMapping
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     GroupOrganizationMappingRead:
       properties:
         group_organization_mapping:
@@ -243,54 +265,32 @@ components:
       - group_id
       - organization_roles
       title: GroupOrganizationMapping
-    ProjectRoleDefinition:
+    ValidationError:
       properties:
-        project_name:
-          type: string
-          title: Project Name
-        role:
-          type: string
-          title: Role
-      type: object
-      required:
-      - project_name
-      - role
-      title: ProjectRoleDefinition
-    GroupOrganizationMappingUpdate:
-      properties:
-        group_organization_mapping:
+        loc:
           items:
-            $ref: '#/components/schemas/GroupOrganizationMapping-Input'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Group Organization Mapping
-      type: object
-      required:
-      - group_organization_mapping
-      title: GroupOrganizationMappingUpdate
-    GroupOrganizationMapping-Input:
-      properties:
-        group_id:
+          title: Location
+        msg:
           type: string
-          title: Group Id
-        organization_roles:
-          items:
-            $ref: '#/components/schemas/OrganizationRoleDefinition'
-          type: array
-          title: Organization Roles
-      type: object
-      required:
-      - group_id
-      - organization_roles
-      title: GroupOrganizationMapping
-    HTTPExceptionError:
-      properties:
-        detail:
+          title: Message
+        type:
           type: string
-          title: Detail
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
       required:
-      - detail
-      title: HTTPExceptionError
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     OAuth2AuthorizationCodeBearer:
       type: oauth2
