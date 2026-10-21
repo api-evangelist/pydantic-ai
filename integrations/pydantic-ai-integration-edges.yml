@@ -21,6 +21,7 @@ checked:
 - https://www.indexventures.com/companies/
 - https://www.sequoiacap.com/our-companies/
 - https://www.sequoiacap.com/sitemap.xml
+- github/integrations/github-integration-edges.yml
 marketplace_apps: []
 edges:
 - partner_name: Microsoft Azure Marketplace
@@ -206,6 +207,32 @@ edges:
     detected: '2026-10-20'
   detected_by: sweep-agent-skills.py
   first_seen: '2026-10-20'
+- partner_name: Sequoia Capital
+  partner: sequoia-capital
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://sequoiacap.com/companies/pydantic
+  category: vc portfolio participation
+  contract_reference:
+    register: Sequoia Capital companies (sequoiacap.com/companies/<slug>, from the site's sitemap.xml)
+    standard: null
+    spec_file: null
+    role: vc-portfolio-company
+    registered_name: Pydantic
+    register_id: https://sequoiacap.com/companies/pydantic
+    register_country: null
+    register_website: https://pydantic.dev/
+    matched_domain: pydantic.dev
+    matched_by: domain
+    signal_note: 'participation only: the venture firm''s own published portfolio lists the company (investment);
+      an ownership and participation record, not conformance or certification'
+    detected_by: sweep-vc-portfolios.py
+    detected: '2026-10-21'
+  detected_by: sweep-vc-portfolios.py
+  first_seen: '2026-10-21'
 - partner_name: Stripe (own)
   partner: stripe
   partner_match: mirror
@@ -242,31 +269,25 @@ edges:
   category: infrastructure-as-code provider registry listing
   badges:
   - Verified publisher (GitHub domain-verified organization)
-- partner_name: Sequoia Capital
-  partner: sequoia-capital
-  partner_match: register
-  type: register
-  channel: standard-directory
-  relationship: standard-participant
-  direction: partner-built
-  evidence: https://sequoiacap.com/companies/pydantic
-  category: vc portfolio participation
-  contract_reference:
-    register: Sequoia Capital companies (sequoiacap.com/companies/<slug>, from the site's sitemap.xml)
-    standard: null
-    spec_file: null
-    role: vc-portfolio-company
-    registered_name: Pydantic
-    register_id: https://sequoiacap.com/companies/pydantic
-    register_country: null
-    register_website: https://pydantic.dev/
-    matched_domain: pydantic.dev
-    matched_by: domain
-    signal_note: 'participation only: the venture firm''s own published portfolio lists the company (investment);
-      an ownership and participation record, not conformance or certification'
-    detected_by: sweep-vc-portfolios.py
-    detected: '2026-10-21'
-  detected_by: sweep-vc-portfolios.py
-  first_seen: '2026-10-21'
+- partner_name: GitHub (own)
+  partner: github
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://github.com/marketplace/pydantic-hooky
+  mirror_of: github/integrations/github-integration-edges.yml
+  apps:
+  - Pydantic Hooky
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  badges:
+  - Verified domain
+  publisher_verified:
+  - Verified domain
 source:
 - https://github.com/marketplace?type=apps
