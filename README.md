@@ -1,4 +1,4 @@
-# PydanticAI (pydantic-ai)
+# PydanticAI
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,54 +64,201 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-PydanticAI is an open-source, model-agnostic Python agent framework built by the Pydantic team, designed to bring the ergonomic, type-safe design philosophy of FastAPI to production-grade generative AI application development. It provides structured outputs, dependency injection, and first-class support for leading model providers including OpenAI, Anthropic, Google Gemini, xAI, AWS Bedrock, Cohere, Mistral, Groq, and many more. The framework integrates seamlessly with Pydantic Logfire for OpenTelemetry-based observability, and includes pydantic-graph for complex agentic workflows, pydantic-evals for systematic agent evaluation, and clai for a CLI chat interface.
+PydanticAI is an open-source, model-agnostic Python agent framework built by the Pydantic team, designed to bring the ergonomic, type-safe design philosophy of FastAPI to production-grade generative AI application development. It provides structured outputs, dependency injection, and first-class support for leading model providers including OpenAI, Anthropic, Google Gemini, xAI, AWS Bedrock, Cohere, Mistral, Groq, and many more. The framework integrates seamlessly with Pydantic Logfire for OpenTelemetry-based observability, and includes pydantic-graph for complex agentic workflows, pydantic-evals for systematic agent evaluation, and clai for a CLI chat interface. PydanticAI is maintained by Pydantic, a London-based developer tooling company backed by Sequoia Capital, and forms a core part of their end-to-end AI engineering stack.
 
-APIs.json: [https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/pydantic-ai/refs/heads/main/apis.yml)
+**Areas:** Artificial Intelligence · Agents · Python · LLM · Type Safety · Structured Outputs · Dependency Injection · OpenAI · Anthropic · Gemini · Observability · Framework
 
-Naftiko: [https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=pydantic-ai-api-evangelist&utm_content=repo](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=pydantic-ai-api-evangelist&utm_content=repo)
+## PydanticAI on APIs.io
 
-## Tags
+Everything profiled for PydanticAI is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/pydantic-ai/](https://apis.io/providers/pydantic-ai/)** — or go straight to one of the APIs or properties below.
 
-AI, Agents, Python, LLM, Type Safety, Structured Outputs, Dependency Injection, OpenAI, Anthropic, Gemini, Observability, Framework
+### APIs (17)
 
-## APIs
+- [PydanticAI Alerts API](https://apis.io/apis/pydantic-ai/pydantic-ai-alerts-api/) — The Alerts API from PydanticAI — 2 operation(s) for alerts.
+- [PydanticAI API Keys API](https://apis.io/apis/pydantic-ai/pydantic-ai-api-keys-api/) — The API Keys API from PydanticAI — 2 operation(s) for api keys.
+- [PydanticAI Audit Logs API](https://apis.io/apis/pydantic-ai/pydantic-ai-audit-logs-api/) — The Audit Logs API from PydanticAI — 2 operation(s) for audit logs.
+- [PydanticAI Billing API](https://apis.io/apis/pydantic-ai/pydantic-ai-billing-api/) — The Billing API from PydanticAI — 1 operation(s) for billing.
+- [PydanticAI Channels API](https://apis.io/apis/pydantic-ai/pydantic-ai-channels-api/) — The Channels API from PydanticAI — 2 operation(s) for channels.
+- [PydanticAI Dashboards API](https://apis.io/apis/pydantic-ai/pydantic-ai-dashboards-api/) — The Dashboards API from PydanticAI — 2 operation(s) for dashboards.
+- [PydanticAI Discovery API](https://apis.io/apis/pydantic-ai/pydantic-ai-discovery-api/) — The discovery API from PydanticAI — 1 operation(s) for discovery.
+- [PydanticAI Group Mappings API](https://apis.io/apis/pydantic-ai/pydantic-ai-group-mappings-api/) — The Group Mappings API from PydanticAI — 2 operation(s) for group mappings.
+- [PydanticAI Instance API](https://apis.io/apis/pydantic-ai/pydantic-ai-instance-api/) — The Instance API from PydanticAI — 3 operation(s) for instance.
+- [PydanticAI Invitations API](https://apis.io/apis/pydantic-ai/pydantic-ai-invitations-api/) — The Invitations API from PydanticAI — 1 operation(s) for invitations.
+- [PydanticAI Members API](https://apis.io/apis/pydantic-ai/pydantic-ai-members-api/) — The Members API from PydanticAI — 2 operation(s) for members.
+- [PydanticAI Organizations API](https://apis.io/apis/pydantic-ai/pydantic-ai-organizations-api/) — The Organizations API from PydanticAI — 3 operation(s) for organizations.
+- [PydanticAI Projects API](https://apis.io/apis/pydantic-ai/pydantic-ai-projects-api/) — The Projects API from PydanticAI — 16 operation(s) for projects.
+- [PydanticAI SCIM API](https://apis.io/apis/pydantic-ai/pydantic-ai-scim-api/) — The SCIM API from PydanticAI — 8 operation(s) for scim.
+- [PydanticAI Usage API](https://apis.io/apis/pydantic-ai/pydantic-ai-usage-api/) — The Usage API from PydanticAI — 6 operation(s) for usage.
+- [PydanticAI Variables API](https://apis.io/apis/pydantic-ai/pydantic-ai-variables-api/) — The Variables API from PydanticAI — 2 operation(s) for variables.
+- [PydanticAI O Auth API](https://apis.io/apis/pydantic-ai/pydantic-ai-oauth-api/) — The OAuth API from PydanticAI — 6 operation(s) for oauth.
 
-| Name | Description |
-|------|-------------|
-| PydanticAI Agent Framework | Core Python agent framework with the Agent class, model provider integrations, tool registration, structured output validation, and dependency injection |
-| Pydantic Logfire | OpenTelemetry-based observability platform with LLM-specific features, AI Gateway for model routing, and FinOps cost tracking |
+### Published properties
 
-## Plans / Rate Limits / FinOps
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-| Resource | URL |
-|----------|-----|
-| Plans & Pricing | [plans/pydantic-ai-plans-pricing.yml](plans/pydantic-ai-plans-pricing.yml) |
-| Rate Limits | [rate-limits/pydantic-ai-rate-limits.yml](rate-limits/pydantic-ai-rate-limits.yml) |
-| FinOps | [finops/pydantic-ai-finops.yml](finops/pydantic-ai-finops.yml) |
+#### Agentic access (1)
 
-Pydantic Logfire pricing: Personal (free, 10M records/month), Team ($49/month), Growth ($249/month), Enterprise (custom). PydanticAI the framework is free and open source (available on PyPI).
+Which operations an agent can call, which act, and which need a human in the loop.
 
-## Timestamps
+- [Pydantic Ai Agentic Access](https://apis.io/agentic-access/pydantic-ai/pydantic-ai-agentic-access/)
 
-- Created: 2026-06-12
-- Modified: 2026-06-12
+#### JSON Schema (7)
 
-## Common Properties
+The data models the API reads and writes.
 
-| Type | URL |
-|------|-----|
-| Website | https://pydantic.dev/ |
-| Documentation | https://pydantic.dev/docs/ai/overview/ |
-| GitHub Organization | https://github.com/pydantic |
-| GitHub Repository | https://github.com/pydantic/pydantic-ai |
-| Blog | https://pydantic.dev/articles |
-| Changelog | https://pydantic.dev/docs/ai/changelog/ |
-| Pricing | https://pydantic.dev/pricing |
-| Status Page | https://logfirestatus.pydantic.dev/ |
-| LinkedIn | https://www.linkedin.com/company/pydantic |
-| X (Twitter) | https://x.com/pydantic |
-| PyPI | https://pypi.org/project/pydantic-ai/ |
+- [AlertRead](https://apis.io/schemas/pydantic-ai/logfire-alert/)
+- [APIKeyRead](https://apis.io/schemas/pydantic-ai/logfire-api-key/)
+- [AuditLogInfoRead](https://apis.io/schemas/pydantic-ai/logfire-audit-log/)
+- [DashboardDefinitionRead](https://apis.io/schemas/pydantic-ai/logfire-dashboard/)
+- [OrganizationMemberReadV1](https://apis.io/schemas/pydantic-ai/logfire-member/)
+- [OrganizationReadV1](https://apis.io/schemas/pydantic-ai/logfire-organization/)
+- [ProjectRead](https://apis.io/schemas/pydantic-ai/logfire-project/)
 
-## Maintainers
+#### JSON-LD (1)
 
-- Kin Lane / kin@apievangelist.com
+Linked-data contexts for the provider's vocabulary.
+
+- [Pydantic Ai Context](https://apis.io/jsonld/pydantic-ai/pydantic-ai-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Pydantic Ai Vocabulary](https://apis.io/vocabularies/pydantic-ai/pydantic-ai-vocabulary/)
+
+#### Collections (34)
+
+Postman and Open Collection request collections.
+
+- [Pydantic API Discovery Alerts API](https://apis.io/collections/pydantic-ai/open-pydantic-ai-alerts-api/)
+- [Pydantic API Discovery Alerts API Keys API](https://apis.io/collections/pydantic-ai/open-pydantic-ai-api-keys-api/)
+- [Pydantic API Discovery Alerts Audit Logs API](https://apis.io/collections/pydantic-ai/open-pydantic-ai-audit-logs-api/)
+- [Pydantic API Discovery Alerts Billing API](https://apis.io/collections/pydantic-ai/open-pydantic-ai-billing-api/)
+- [Pydantic API Discovery Alerts Channels API](https://apis.io/collections/pydantic-ai/open-pydantic-ai-channels-api/)
+- [Pydantic API Discovery Alerts Dashboards API](https://apis.io/collections/pydantic-ai/open-pydantic-ai-dashboards-api/)
+- [Pydantic API Alerts discovery API](https://apis.io/collections/pydantic-ai/open-pydantic-ai-discovery-api/)
+- [Pydantic API Discovery Alerts Group Mappings API](https://apis.io/collections/pydantic-ai/open-pydantic-ai-group-mappings-api/)
+- [Pydantic API Discovery Alerts Instance API](https://apis.io/collections/pydantic-ai/open-pydantic-ai-instance-api/)
+- [Pydantic API Discovery Alerts Invitations API](https://apis.io/collections/pydantic-ai/open-pydantic-ai-invitations-api/)
+- [Pydantic API Discovery Alerts Members API](https://apis.io/collections/pydantic-ai/open-pydantic-ai-members-api/)
+- [Pydantic API Discovery Alerts OAuth API](https://apis.io/collections/pydantic-ai/open-pydantic-ai-oauth-api/)
+- [Pydantic API Discovery Alerts Organizations API](https://apis.io/collections/pydantic-ai/open-pydantic-ai-organizations-api/)
+- [Pydantic API Discovery Alerts Projects API](https://apis.io/collections/pydantic-ai/open-pydantic-ai-projects-api/)
+- [Pydantic API Discovery Alerts SCIM API](https://apis.io/collections/pydantic-ai/open-pydantic-ai-scim-api/)
+- [Pydantic API Discovery Alerts Usage API](https://apis.io/collections/pydantic-ai/open-pydantic-ai-usage-api/)
+- [Pydantic API Discovery Alerts Variables API](https://apis.io/collections/pydantic-ai/open-pydantic-ai-variables-api/)
+- [Pydantic API Discovery Alerts API](https://apis.io/collections/pydantic-ai/postman-pydantic-ai-alerts-api/)
+- [Pydantic API Discovery Alerts API Keys API](https://apis.io/collections/pydantic-ai/postman-pydantic-ai-api-keys-api/)
+- [Pydantic API Discovery Alerts Audit Logs API](https://apis.io/collections/pydantic-ai/postman-pydantic-ai-audit-logs-api/)
+- [Pydantic API Discovery Alerts Billing API](https://apis.io/collections/pydantic-ai/postman-pydantic-ai-billing-api/)
+- [Pydantic API Discovery Alerts Channels API](https://apis.io/collections/pydantic-ai/postman-pydantic-ai-channels-api/)
+- [Pydantic API Discovery Alerts Dashboards API](https://apis.io/collections/pydantic-ai/postman-pydantic-ai-dashboards-api/)
+- [Pydantic API Alerts discovery API](https://apis.io/collections/pydantic-ai/postman-pydantic-ai-discovery-api/)
+- [Pydantic API Discovery Alerts Group Mappings API](https://apis.io/collections/pydantic-ai/postman-pydantic-ai-group-mappings-api/)
+- …and 9 more published on APIs.io
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [PydanticAI — jsonschema rules](https://apis.io/rules/pydantic-ai/pydantic-ai-jsonschema-spectral-rules/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Pydantic Ai Authentication](https://apis.io/security/pydantic-ai/pydantic-ai-authentication/)
+- [Pydantic Ai Domain Security](https://apis.io/security/pydantic-ai/pydantic-ai-domain-security/)
+- [Pydantic Ai Trust Center](https://apis.io/security/pydantic-ai/pydantic-ai-trust-center/)
+- [Pydantic Ai Vulnerability Disclosure](https://apis.io/security/pydantic-ai/pydantic-ai-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Pydantic Ai Scopes](https://apis.io/scopes/pydantic-ai/pydantic-ai-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Pydantic Ai Plans Pricing](https://apis.io/plans/pydantic-ai/pydantic-ai-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Pydantic Ai Rate Limits](https://apis.io/rate-limits/pydantic-ai/pydantic-ai-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Pydantic Ai Finops](https://apis.io/finops/pydantic-ai/pydantic-ai-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://pydantic.dev/)
+- [Documentation](https://pydantic.dev/docs/ai/overview/)
+- [Pricing](https://pydantic.dev/pricing)
+- [Changelog](https://pydantic.dev/docs/ai/changelog/)
+- [Blog](https://pydantic.dev/articles)
+- [GitHub](https://github.com/pydantic)
+- [Status](https://logfirestatus.pydantic.dev/)
+
+## API Evangelist rating
+
+**Kin Score 48.3** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 61.1 |
+| Contract governance | 23.5 |
+| Operational transparency | 52.6 |
+| Developer ergonomics | 48.8 |
+| Access clarity | 26.3 |
+
+**Agent readiness 40.1** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | verified |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | conformant |
+| Dry Run Mode | — |
+| Delegated Identity | documented (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | mostly |
+
+**Regulatory alignment 34.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/pydantic-ai/](https://apis.io/providers/pydantic-ai/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for PydanticAI: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/pydantic-ai/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
